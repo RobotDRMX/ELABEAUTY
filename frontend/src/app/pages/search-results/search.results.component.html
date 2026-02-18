@@ -1,0 +1,115 @@
+<div class="search-results-page">
+  <div class="container">
+    <!-- Cabecera -->
+    <div class="search-header">
+      <h1>Resultados de búsqueda</h1>
+      
+      <div class="search-box-container">
+        <app-search></app-search>
+      </div>
+
+      <div class="search-info" *ngIf="query">
+        <p>
+          <span *ngIf="!isLoading">
+            {{ total }} resultado{{ total !== 1 ? 's' : '' }} para "<strong>{{ query }}</strong>"
+          </span>
+          <span *ngIf="isLoading">Buscando productos...</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Error -->
+    <div class="error-message" *ngIf="error">
+      <i class="fas fa-exclamation-circle"></i>
+      {{ error }}
+    </div>
+
+    <!-- Loading -->
+    <div class="loading" *ngIf="isLoading">
+      <div class="spinner"></div>
+      <p>Cargando resultados...</p>
+    </div>
+
+    <!-- Sin resultados -->
+    <div class="no-results" *ngIf="!isLoading && products.length === 0 && query">
+      <div class="no-results-content">
+        <i class="fas fa-search"></i>
+        <h3>No encontramos resultados para "{{ query }}"</h3>
+        <p>Intenta con otras palabras clave o explora nuestras categorías</p>
+        <div class="suggestions">
+          <a routerLink="/labiales" class="suggestion-btn">Labiales</a>
+          <a routerLink="/ojos" class="suggestion-btn">Productos para ojos</a>
+          <a routerLink="/rostro" class="suggestion-btn">Rostro</a>
+          <a routerLink="/unas" class="suggestion-btn">Uñas</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid de productos -->
+    <div class="products-grid" *ngIf="products.length > 0">
+      <div class="product-card" *ngFor="let product of products">
+        <div class="product-image">
+          <img 
+            [src]="product.imageUrl || 'assets/images/product-placeholder.jpg'" 
+            [alt]="product.name"
+            (error)="product.imageUrl = 'assets/images/product-placeholder.jpg'"
+          >
+          <div class="product-badge" *ngIf="product.stock === 0">
+            Agotado
+          </div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">{{ product.name }}</h3>
+          <p class="product-description">{{ product.description | truncate:80 }}</p>
+          <div class="product-meta">
+            <span class="product-category">{{ product.category }}</span>
+            <span class="product-stock" [class.low-stock]="product.stock <= 5 && product.stock > 0">
+              {{ product.stock > 0 ? (product.stock + ' disponibles') : 'Agotado' }}
+            </span>
+          </div>
+          <div class="product-footer">
+            <p class="product-price">{{ product.price | currency:'MXN':'symbol':'1.2-2' }}</p>
+            <button 
+              class="add-to-cart-btn" 
+              [disabled]="product.stock === 0"
+              (click)="addToCart(product)"
+            >
+              <i class="fas fa-shopping-bag"></i>
+              {{ product.stock > 0 ? 'Añadir' : 'Agotado' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paginación -->
+    <div class="pagination" *ngIf="totalPages > 1 && products.length > 0">
+      <button 
+        class="page-btn" 
+        [disabled]="page === 1" 
+        (click)="onPageChange(page - 1)"
+      >
+        <i class="fas fa-chevron-left"></i> Anterior
+      </button>
+      
+      <div class="page-numbers">
+        <button 
+          *ngFor="let pageNum of getPageNumbers()" 
+          class="page-number" 
+          [class.active]="pageNum === page"
+          (click)="onPageChange(pageNum)"
+        >
+          {{ pageNum }}
+        </button>
+      </div>
+      
+      <button 
+        class="page-btn" 
+        [disabled]="page === totalPages" 
+        (click)="onPageChange(page + 1)"
+      >
+        Siguiente <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,105 @@
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <!-- Sobre ELA Beauty -->
+      <div class="footer-section footer-about">
+        <h3>ELA Beauty</h3>
+        <p>Tu destino de confianza para productos de belleza auténticos y de alta calidad.</p>
+        <p>Embellecemos vidas desde 2024 💄</p>
+        <div class="social-links">
+          <a 
+            *ngFor="let social of socialLinks" 
+            [href]="social.url" 
+            class="social-link" 
+            [attr.aria-label]="social.name"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i [class]="social.icon"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Servicio al Cliente -->
+      <div class="footer-section">
+        <h3>Servicio al Cliente</h3>
+        <a 
+          *ngFor="let link of customerServiceLinks" 
+          [routerLink]="link.link"
+        >
+          <i [class]="link.icon"></i> {{ link.label }}
+        </a>
+      </div>
+
+      <!-- Información -->
+      <div class="footer-section">
+        <h3>Información</h3>
+        <a 
+          *ngFor="let link of infoLinks" 
+          [routerLink]="link.link"
+        >
+          <i [class]="link.icon"></i> {{ link.label }}
+        </a>
+      </div>
+
+      <!-- Newsletter y Pagos -->
+      <div class="footer-section">
+        <h3>Newsletter</h3>
+        <p>Suscríbete para recibir ofertas exclusivas y tips de belleza</p>
+        <form class="newsletter-form" (ngSubmit)="subscribeNewsletter()">
+          <input 
+            type="email" 
+            placeholder="Tu email" 
+            [(ngModel)]="newsletterEmail"
+            name="email"
+            required
+          >
+          <button type="submit">
+            <i class="fas fa-paper-plane"></i> Suscribir
+          </button>
+        </form>
+        
+        <div class="payment-section">
+          <h3>Métodos de Pago</h3>
+          <div class="payment-methods">
+            <span 
+              *ngFor="let payment of paymentMethods" 
+              class="payment-icon"
+            >
+              <i [class]="payment.icon"></i> {{ payment.name }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <p>&copy; {{ currentYear }} ELA Beauty. Todos los derechos reservados.</p>
+      <p>Hecho con <i class="fas fa-heart" style="color: var(--primary-color);"></i> para realzar tu belleza</p>
+      
+      <!-- Referencia a Maybelline - Discreta y elegante -->
+      <div class="design-reference">
+        <p class="reference-text">
+          <i class="fas fa-palette"></i> 
+          Estilo inspirado en 
+          <a href="https://www.maybelline.com" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             class="maybelline-link">
+            Maybelline New York
+          </a>
+          | 
+          <i class="fas fa-code"></i> 
+          Desarrollo propio
+        </p>
+      </div>
+      
+      <div class="footer-links">
+        <a href="/privacidad">Política de Privacidad</a>
+        <a href="/terminos">Términos y Condiciones</a>
+        <a href="/cookies">Política de Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,361 @@
+/* ===== MAYBELLINE FOOTER STYLES ===== */
+
+footer {
+  background: var(--secondary-color);
+  color: white;
+  margin-top: 6rem;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), #ff66cc);
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 3rem;
+  padding: 3rem 0 2rem;
+}
+
+.footer-section {
+  h3 {
+    color: white;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 0.75rem;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--primary-color);
+    }
+  }
+
+  p {
+    color: #cccccc;
+    line-height: 1.6;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  a {
+    color: #cccccc;
+    line-height: 2;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: block;
+    transition: all 0.3s;
+    margin-bottom: 0.25rem;
+
+    &:hover {
+      color: var(--primary-color);
+      padding-left: 5px;
+    }
+  }
+}
+
+.footer-about {
+  p {
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Social Links - Maybelline Style */
+.social-links {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.social-link {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+
+  &:hover {
+    background: var(--primary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(230, 0, 126, 0.4);
+  }
+
+  svg {
+    display: block;
+    fill: white;
+  }
+}
+
+/* Newsletter Form - Maybelline Style */
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+
+  input {
+    padding: 0.75rem 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    outline: none;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+
+    &:focus {
+      border-color: var(--primary-color);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    &::placeholder {
+      color: #999;
+    }
+  }
+
+  button {
+    padding: 0.75rem 1.5rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s;
+
+    &:hover {
+      background: #cc0066;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(230, 0, 126, 0.4);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Payment Methods - Maybelline Style */
+.payment-section {
+  margin-top: 2rem;
+  
+  h3 {
+    color: white;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+.payment-methods {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.payment-icon {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: white;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s;
+  
+  &:hover {
+    background: rgba(230, 0, 126, 0.2);
+  }
+}
+
+/* Footer Bottom - Maybelline Style */
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  p {
+    color: #bdbdbd;
+    font-size: 0.85rem;
+    margin: 0;
+    
+    &:first-child {
+      color: white;
+      font-weight: 500;
+    }
+  }
+}
+
+.footer-links {
+  display: flex;
+  gap: 2rem;
+  margin-top: 0.5rem;
+  
+  a {
+    color: #cccccc;
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: color 0.3s;
+    
+    &:hover {
+      color: var(--primary-color);
+    }
+  }
+}
+
+/* ===== RESPONSIVE ===== */
+@media screen and (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  
+  .newsletter-form {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .footer-links {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+}
+/* ===== DESIGN REFERENCE ===== */
+
+.design-reference {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border-left: 3px solid var(--primary-color);
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.reference-text {
+  color: #b0b0b0;
+  font-size: 0.8rem;
+  text-align: center;
+  margin: 0;
+  line-height: 1.4;
+  
+  i {
+    margin-right: 0.4rem;
+    color: var(--primary-color);
+    opacity: 0.7;
+  }
+}
+
+.maybelline-link {
+  color: #ff66cc;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s;
+  position: relative;
+  padding: 0 0.25rem;
+  
+  &:hover {
+    color: white;
+    text-decoration: underline;
+    
+    &::after {
+      content: '✨';
+      position: absolute;
+      right: -18px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.9rem;
+      animation: sparkle 1.5s infinite;
+    }
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0.7;
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.2);
+  }
+}
+
+/* Ajuste responsive para la referencia */
+@media screen and (max-width: 768px) {
+  .design-reference {
+    max-width: 90%;
+    padding: 0.5rem;
+  }
+  
+  .reference-text {
+    font-size: 0.75rem;
+    line-height: 1.3;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .design-reference {
+    border-left: 2px solid var(--primary-color);
+    margin: 0.5rem auto;
+  }
+  
+  .reference-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    
+    i {
+      margin-right: 0.3rem;
+    }
+  }
+  
+  .maybelline-link:hover::after {
+    display: none; /* Ocultar animación en móviles para mejor rendimiento */
+  }
+}

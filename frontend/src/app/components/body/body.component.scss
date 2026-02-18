@@ -1,0 +1,680 @@
+/* ===== MAYBELLINE BODY STYLES ===== */
+
+.content {
+  padding: 2rem 0 4rem;
+  min-height: 70vh;
+}
+
+/* Botón estilo Maybelline (local) */
+.btn-maybelline {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: #cc0066;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(230, 0, 126, 0.3);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+/* Sección de Bienvenida */
+.welcome-section {
+  text-align: center;
+  padding: 4rem 1rem;
+  background: linear-gradient(135deg, #fff0f8 0%, #ffffff 100%);
+  margin-bottom: 3rem;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), #ff66cc);
+  }
+
+  h1 {
+    color: var(--text-primary);
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    display: inline-block;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: var(--primary-color);
+      border-radius: 2px;
+    }
+  }
+
+  p {
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 3rem auto 0;
+    font-weight: 400;
+  }
+}
+
+/* Banner Section */
+.banner-section {
+  min-height: 500px;
+  background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
+              url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1887');
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  padding: 4rem 2rem;
+  margin-bottom: 4rem;
+  position: relative;
+
+  h2 {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    font-weight: 900;
+    position: relative;
+    z-index: 2;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  p {
+    font-size: 1.4rem;
+    max-width: 700px;
+    position: relative;
+    z-index: 2;
+    margin-bottom: 2.5rem;
+    opacity: 0.9;
+  }
+
+  .cta-button {
+    @extend .btn-maybelline; /* Ahora funciona porque está definido arriba */
+    padding: 1.2rem 3rem;
+    font-size: 1.1rem;
+    position: relative;
+    z-index: 2;
+  }
+}
+
+/* Categories Section */
+.categories-section {
+  margin-bottom: 5rem;
+  
+  h2 {
+    color: var(--text-primary);
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 1.5rem;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), #ff66cc);
+      border-radius: 2px;
+    }
+  }
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem;
+  margin-top: 2rem;
+}
+
+.category-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+
+  &:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(230, 0, 126, 0.15);
+    
+    .category-image {
+      transform: scale(1.1);
+    }
+    
+    .category-name {
+      color: var(--primary-color);
+    }
+    
+    .category-icon {
+      transform: scale(1.2);
+      animation: float 3s ease-in-out infinite;
+    }
+  }
+}
+
+.category-image {
+  height: 220px;
+  background: linear-gradient(135deg, #f9f9f9, #ffffff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.6s ease;
+  padding: 2rem;
+}
+
+.category-icon {
+  font-size: 4rem;
+  display: block;
+  transition: all 0.3s ease;
+}
+
+.category-info {
+  padding: 1.8rem;
+  text-align: center;
+  background: white;
+}
+
+.category-name {
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+  transition: color 0.3s;
+  color: var(--text-primary);
+}
+
+.category-count {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* Featured Products */
+.featured-products-section {
+  margin-bottom: 5rem;
+  
+  h2 {
+    color: var(--text-primary);
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 1.5rem;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), #ff66cc);
+      border-radius: 2px;
+    }
+  }
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+  margin-top: 2rem;
+}
+
+.product-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  position: relative;
+  
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(230, 0, 126, 0.15);
+    
+    .product-btn {
+      background: #cc0066;
+    }
+  }
+}
+
+.product-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: var(--primary-color);
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 2;
+}
+
+.product-image {
+  height: 250px;
+  background: linear-gradient(135deg, #f5f5f5, #ffffff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.product-icon {
+  font-size: 4rem;
+}
+
+.product-info {
+  padding: 1.8rem;
+}
+
+.product-info h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
+  color: var(--text-primary);
+}
+
+.product-description {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 1.2rem;
+  line-height: 1.6;
+}
+
+.product-price {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+}
+
+.product-btn {
+  @extend .btn-maybelline; /* Ahora funciona porque está definido arriba */
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 0.95rem;
+}
+
+/* Offers Section */
+.offers-section {
+  background: linear-gradient(135deg, #fff0f8 0%, #ffffff 100%);
+  padding: 4rem 2rem;
+  border-radius: 20px;
+  margin-bottom: 5rem;
+  text-align: center;
+  
+  h2 {
+    color: var(--text-primary);
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .offer-timer {
+    display: inline-block;
+    background: var(--primary-color);
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 30px;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    
+    .timer-icon {
+      margin-right: 0.5rem;
+    }
+  }
+}
+
+/* Brands Section */
+.brands-section {
+  padding: 4rem 2rem;
+  margin-bottom: 5rem;
+  text-align: center;
+  
+  h2 {
+    color: var(--text-primary);
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 1.5rem;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), #ff66cc);
+      border-radius: 2px;
+    }
+  }
+}
+
+.brands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 3rem;
+  margin-top: 2rem;
+}
+
+.brand-item {
+  background: white;
+  padding: 2.5rem 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(230, 0, 126, 0.1);
+    
+    .brand-icon {
+      transform: scale(1.1);
+    }
+  }
+  
+  .brand-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+  
+  h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+  
+  p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}
+
+/* Testimonials */
+.testimonials-section {
+  padding: 5rem 2rem;
+  background: linear-gradient(135deg, #f8f8f8 0%, #ffffff 100%);
+  border-radius: 20px;
+  margin-bottom: 4rem;
+  text-align: center;
+  
+  h2 {
+    color: var(--text-primary);
+    font-size: 2.5rem;
+    margin-bottom: 4rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 1.5rem;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), #ff66cc);
+      border-radius: 2px;
+    }
+  }
+}
+
+.testimonials-slider {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.testimonial-card {
+  background: white;
+  padding: 3rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.testimonial-rating {
+  margin-bottom: 1.5rem;
+  
+  span {
+    color: gold;
+    font-size: 1.5rem;
+    margin: 0 0.2rem;
+  }
+}
+
+.testimonial-text {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-bottom: 2rem;
+  position: relative;
+  
+  &::before, &::after {
+    content: '"';
+    font-size: 3rem;
+    color: var(--primary-color);
+    opacity: 0.3;
+    position: absolute;
+  }
+  
+  &::before {
+    top: -20px;
+    left: -15px;
+  }
+  
+  &::after {
+    bottom: -40px;
+    right: -15px;
+  }
+}
+
+.testimonial-author {
+  font-weight: 700;
+  color: var(--text-primary);
+  font-size: 1.1rem;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.05);
+  }
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  5% { transform: scale(1.1); }
+  10% { transform: scale(1); }
+  15% { transform: scale(1.1); }
+  20% { transform: scale(1); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media screen and (max-width: 1024px) {
+  .welcome-section {
+    h1 {
+      font-size: 2.8rem;
+    }
+    
+    p {
+      font-size: 1.1rem;
+    }
+  }
+  
+  .banner-section {
+    min-height: 400px;
+    
+    h2 {
+      font-size: 2.5rem;
+    }
+    
+    p {
+      font-size: 1.2rem;
+    }
+  }
+  
+  section h2 {
+    font-size: 2.2rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .content {
+    padding: 1.5rem 0 3rem;
+  }
+  
+  .welcome-section {
+    padding: 3rem 1rem;
+    
+    h1 {
+      font-size: 2.2rem;
+    }
+  }
+  
+  .banner-section {
+    min-height: 350px;
+    padding: 3rem 1.5rem;
+    
+    h2 {
+      font-size: 2rem;
+    }
+    
+    p {
+      font-size: 1.1rem;
+    }
+    
+    .cta-button {
+      padding: 1rem 2.5rem;
+    }
+  }
+  
+  .categories-grid,
+  .products-grid,
+  .brands-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+  
+  section h2 {
+    font-size: 1.8rem;
+  }
+  
+  .testimonial-card {
+    padding: 2rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .welcome-section {
+    h1 {
+      font-size: 1.8rem;
+    }
+    
+    p {
+      font-size: 1rem;
+    }
+  }
+  
+  .banner-section {
+    min-height: 300px;
+    padding: 2rem 1rem;
+    
+    h2 {
+      font-size: 1.6rem;
+    }
+    
+    p {
+      font-size: 1rem;
+    }
+    
+    .cta-button {
+      padding: 0.9rem 2rem;
+      font-size: 0.9rem;
+    }
+  }
+  
+  .categories-grid,
+  .products-grid,
+  .brands-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  section h2 {
+    font-size: 1.5rem;
+  }
+  
+  .category-icon,
+  .product-icon,
+  .brand-icon {
+    font-size: 3rem;
+  }
+}

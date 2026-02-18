@@ -1,0 +1,98 @@
+<div class="search-container" (clickOutside)="showResults = false">
+  <div class="search-box">
+    <div class="search-input-group">
+      <input
+        #searchInput
+        type="text"
+        [formControl]="searchControl"
+        placeholder="Buscar productos, marcas, categorías..."
+        aria-label="Buscar productos"
+        (keyup.enter)="onSearch()"
+        (focus)="onFocus()"
+        class="search-input"
+      >
+      
+      <button 
+        type="button" 
+        class="search-clear-btn" 
+        *ngIf="searchControl.value" 
+        (click)="onClear()"
+        aria-label="Limpiar búsqueda"
+      >
+        <i class="fas fa-times"></i>
+      </button>
+      
+      <button 
+        type="button" 
+        class="search-submit-btn" 
+        (click)="onSearch()"
+        [disabled]="!searchControl.value || searchControl.value.length < 2"
+        aria-label="Buscar"
+      >
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+
+    <!-- Resultados de búsqueda en tiempo real -->
+    <div class="search-results-dropdown" *ngIf="showResults && (hasResults || noResults || isLoading)">
+      <div class="results-container">
+        <!-- Estado de carga -->
+        <div class="search-loading" *ngIf="isLoading">
+          <div class="loading-spinner"></div>
+          <span>Buscando productos...</span>
+        </div>
+
+        <!-- Sin resultados -->
+        <div class="search-no-results" *ngIf="noResults && !isLoading">
+          <div class="no-results-icon">
+            <i class="fas fa-search"></i>
+          </div>
+          <div class="no-results-text">
+            <p>No encontramos "<strong>{{ searchControl.value }}</strong>"</p>
+            <small>Intenta con otras palabras o busca por categoría</small>
+          </div>
+        </div>
+
+        <!-- Con resultados -->
+        <div class="search-results-list" *ngIf="hasResults && !isLoading">
+          <div class="results-header">
+            <h4>Resultados ({{ searchResults.length }})</h4>
+          </div>
+          
+          <div class="products-list">
+            <a 
+              *ngFor="let product of searchResults; trackBy: trackByProductId"
+              class="product-result-item"
+              (click)="onSelectProduct(product)"
+            >
+              <div class="product-image">
+                <img 
+                  [src]="product.image_url" 
+                  [alt]="product.name"
+                  (error)="product.image_url = 'assets/images/product-placeholder.jpg'"
+                >
+              </div>
+              <div class="product-info">
+                <h5 class="product-name">{{ product.name }}</h5>
+                <p class="product-category">{{ product.category }}</p>
+                <div class="product-price-rating">
+                  <span class="product-price">{{ product.price | currency:'MXN':'symbol':'1.2-2' }}</span>
+                  <span class="product-rating" *ngIf="product.rating > 0">
+                    <i class="fas fa-star"></i> {{ product.rating | number:'1.1-1' }}
+                  </span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="results-footer" *ngIf="searchResults.length > 0">
+            <button class="view-all-btn" (click)="onSearch()">
+              Ver todos los resultados
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,89 @@
+<div class="container">
+  <div class="content">
+    <!-- Sección de Bienvenida -->
+    <div class="welcome-section">
+      <h1>ELA Beauty</h1>
+      <p>Descubre la magia del maquillaje con productos innovadores de alta calidad. Desde el icónico labial rojo hasta la máscara de pestañas número 1, realza tu belleza única.</p>
+    </div>
+
+    <!-- Banner promocional -->
+    <section class="banner-section">
+      <h2>COLECCIÓN DE OTOÑO 2024</h2>
+      <p>Descubre los nuevos tonos que están arrasando esta temporada</p>
+      <button class="cta-button">Descubrir Colección</button>
+    </section>
+    
+    <!-- Categorías destacadas -->
+    <section class="categories-section">
+      <h2>Categorías Destacadas</h2>
+      <div class="categories-grid">
+        <div class="category-card" *ngFor="let category of categories">
+          <div class="category-image">
+            <span class="category-icon">{{ category.icon }}</span>
+          </div>
+          <div class="category-info">
+            <h3 class="category-name">{{ category.name }}</h3>
+            <p class="category-count">{{ category.count }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Productos destacados -->
+    <section class="featured-products-section">
+      <h2>Productos Destacados</h2>
+      <div class="products-grid">
+        <div class="product-card" *ngFor="let product of featuredProducts">
+          <div class="product-badge">{{ product.badge }}</div>
+          <div class="product-image">
+            <span class="product-icon">{{ product.icon }}</span>
+          </div>
+          <div class="product-info">
+            <h3>{{ product.name }}</h3>
+            <p class="product-description">{{ product.description }}</p>
+            <p class="product-price">${{ product.price }} MXN</p>
+            <button class="product-btn">Añadir al carrito</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Ofertas especiales -->
+    <section class="offers-section">
+      <h2>Ofertas Especiales</h2>
+      <div class="offer-timer">
+        <span class="timer-icon">⏰</span> Termina en: 2 días
+      </div>
+    </section>
+
+    <!-- Marcas -->
+    <section class="brands-section">
+      <h2>Nuestra Filosofía de Belleza</h2>
+      <div class="brands-grid">
+        <div class="brand-item" *ngFor="let feature of brandFeatures">
+          <span class="brand-icon">{{ feature.icon }}</span>
+          <h3>{{ feature.title }}</h3>
+          <p>{{ feature.description }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section class="testimonials-section">
+      <h2>Lo que Dicen Nuestras Clientas</h2>
+      <div class="testimonials-slider">
+        <div class="testimonial-card">
+          <div class="testimonial-rating">
+            <span>⭐</span>
+            <span>⭐</span>
+            <span>⭐</span>
+            <span>⭐</span>
+            <span>⭐</span>
+          </div>
+          <p class="testimonial-text">"Los labiales de ELA Beauty son increíbles. No se mueven en todo el día y los colores son espectaculares."</p>
+          <p class="testimonial-author">- Ana G.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

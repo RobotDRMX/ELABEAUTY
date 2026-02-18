@@ -1,0 +1,77 @@
+<!-- HEADER TOP BAR -->
+<div class="header-top">
+  <div class="container">
+    <div class="header-top-content">
+      <span><i class="fas fa-shipping-fast"></i> ✨ Envío gratis en compras mayores a $500 MXN</span>
+      <div class="header-top-links">
+        <a href="#"><i class="fas fa-truck"></i> Seguir mi pedido</a>
+        <a href="#"><i class="fas fa-question-circle"></i> Ayuda</a>
+        <a href="#"><i class="fas fa-phone-alt"></i> Contacto</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER PRINCIPAL -->
+<header>
+  <div class="container">
+    <div class="header-content">
+      <!-- Logo y nombre de la tienda -->
+      <div class="logo" routerLink="/">
+        <h1>ELA Beauty</h1>
+        <p class="tagline">Tu belleza, nuestra pasión</p>
+      </div>
+
+      <!-- Navegación principal -->
+      <nav class="main-nav">
+        <a 
+          *ngFor="let item of navItems" 
+          [routerLink]="item.link" 
+          routerLinkActive="active"
+          class="nav-link"
+        >
+          <i *ngIf="item.icon" [class]="item.icon"></i>
+          {{ item.label }}
+        </a>
+      </nav>
+
+      <!-- Acciones del header -->
+      <div class="header-actions">
+        <!-- Búsqueda -->
+        <!-- En header.component.html -->
+      <div class="search-box-wrapper">
+        <app-search></app-search>
+      </div>
+
+        <!-- Usuario -->
+        <button 
+          class="icon-btn" 
+          aria-label="Mi cuenta"
+          (click)="openAccount()"
+        >
+          <i class="fas fa-user"></i>
+        </button>
+
+        <!-- Favoritos -->
+        <button 
+          class="icon-btn" 
+          aria-label="Favoritos"
+          (click)="openFavorites()"
+        >
+          <i class="fas fa-heart"></i>
+          <span class="badge" *ngIf="favoritesCount > 0">{{ favoritesCount }}</span>
+        </button>
+
+        <!-- Carrito -->
+        <button 
+          class="icon-btn cart-btn" 
+          aria-label="Carrito de compras"
+          (click)="openCart()"
+        >
+          <i class="fas fa-shopping-bag"></i>
+          <span class="badge" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,15 @@
+/* Estilos mínimos para app component */
+:host {
+  display: block;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+app-header, app-footer {
+  flex-shrink: 0;
+}
+
+app-body {
+  flex-grow: 1;
+}
