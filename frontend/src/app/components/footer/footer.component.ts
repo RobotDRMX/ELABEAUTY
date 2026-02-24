@@ -30,34 +30,34 @@ export class FooterComponent {
     { label: 'Nuestras Tiendas', link: '/tiendas', icon: 'fas fa-store' },
     { label: 'Blog de Belleza', link: '/blog', icon: 'fas fa-blog' },
     { label: 'Programa de Lealtad', link: '/lealtad', icon: 'fas fa-crown' },
-    { label: 'Términos y Condiciones', link: '/terminos', icon: 'fas fa-file-contract' },
+    { label: 'Términos de Uso', link: '/terminos-de-uso', icon: 'fas fa-file-contract' },
     { label: 'Política de Privacidad', link: '/privacidad', icon: 'fas fa-shield-alt' }
   ];
 
   // Redes sociales
   socialLinks = [
-    { 
-      name: 'Facebook', 
+    {
+      name: 'Facebook',
       url: 'https://facebook.com/maybelline',
       icon: 'fab fa-facebook-f'
     },
-    { 
-      name: 'Instagram', 
+    {
+      name: 'Instagram',
       url: 'https://instagram.com/maybelline',
       icon: 'fab fa-instagram'
     },
-    { 
-      name: 'TikTok', 
+    {
+      name: 'TikTok',
       url: 'https://tiktok.com/@maybelline',
       icon: 'fab fa-tiktok'
     },
-    { 
-      name: 'YouTube', 
+    {
+      name: 'YouTube',
       url: 'https://youtube.com/maybelline',
       icon: 'fab fa-youtube'
     },
-    { 
-      name: 'Twitter', 
+    {
+      name: 'Twitter',
       url: 'https://twitter.com/maybelline',
       icon: 'fab fa-twitter'
     }
