@@ -20,11 +20,14 @@ Single `AdminModule` at `src/admin/` grouping all admin controllers. Every endpo
 
 | Entity | File | Soft-delete field | Status |
 |--------|------|-------------------|--------|
-| Product | `src/products/entities/product.entity.ts` | `is_active` | Exists, complete |
-| Hairstyle | `src/hairstyles/hairstyles.module.ts` | `is_available` | Exists, needs CRUD |
-| NailDesign | `src/nail-designs/nail-designs.module.ts` | `is_available` | Exists, needs CRUD |
-| Service | `src/services/entities/service.entity.ts` | `isActive` | Exists, needs CRUD |
-| User | `src/users/entities/user.entity.ts` | `isActive` | Exists, needs CRUD |
+| Product | `src/products/entities/product.entity.ts` | `is_active` (snake_case) | Exists, complete |
+| Hairstyle | `src/hairstyles/hairstyles.module.ts` | `is_available` (snake_case) | Exists, needs CRUD |
+| NailDesign | `src/nail-designs/nail-designs.module.ts` | `is_available` (snake_case) | Exists, needs CRUD |
+| Service | `src/services/entities/service.entity.ts` | `isActive` (camelCase) | Stub — needs scaffold first |
+| User | `src/users/entities/user.entity.ts` | `isActive` (camelCase) | Exists, needs CRUD |
+
+> ⚠️ Field names differ per entity. Hard-delete logic must check the correct field per entity type.
+> ⚠️ `ServicesModule` is currently an empty stub — must be scaffolded before AdminModule can import it.
 
 ### New Files
 
@@ -78,9 +81,20 @@ Same pattern for: `hairstyles`, `nail-designs`, `services`, `users`.
 POST /api/admin/seed-admin
 ```
 - No auth required (first-run only)
-- Creates admin user if zero admins exist in DB
-- Returns 409 Conflict if any admin already exists
-- Credentials: email `admin@elabeauty.com`, password `Admin@Ela2026`
+- Checks for any user with `role = 'admin'` AND `isActive = true`
+- If none exists: creates admin and returns 201 with `{ message, email }`
+- If admin already exists: returns 409 `{ message: 'Ya existe un administrador activo' }`
+- If admin exists but `isActive = false`: returns 409 (must reactivate manually via DB)
+- Credentials created: email `admin@elabeauty.com`, password `Admin@Ela2026`
+- Password must be changed after first login (documented in response)
+
+### RBAC Infrastructure
+
+`@Roles` decorator and `RolesGuard` **already exist** from previous security implementation:
+- `src/common/decorators/roles.decorator.ts`
+- `src/common/guards/roles.guard.ts`
+
+AdminModule will import `JwtAuthGuard` from `AuthModule` (already exported) and use the existing `RolesGuard` and `@Roles` decorator. No circular dependency risk.
 
 ### Hard Delete Guard
 
@@ -184,8 +198,33 @@ Slide-over panel (off-canvas Bootstrap) for create/edit. Does NOT navigate away 
 
 ```typescript
 // Calls GET /api/auth/profile, checks user.role === 'admin'
-// Redirects to '/' if not admin (not to /auth/login)
+// Redirects to '/' if authenticated but not admin
+// Redirects to '/auth/login' if not authenticated at all
 ```
+
+### Route Configuration (Angular 17)
+
+```typescript
+{
+  path: 'admin',
+  loadComponent: () => import('./pages/admin/admin.component').then(m => m.AdminComponent),
+  canActivate: [adminGuard],
+  children: [
+    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+    { path: 'dashboard', loadComponent: () => import('./pages/admin/dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent) },
+    { path: 'products', loadComponent: () => import('./pages/admin/products/admin-products.component').then(m => m.AdminProductsComponent) },
+    { path: 'hairstyles', loadComponent: () => import('./pages/admin/hairstyles/admin-hairstyles.component').then(m => m.AdminHairstylesComponent) },
+    { path: 'nail-designs', loadComponent: () => import('./pages/admin/nail-designs/admin-nail-designs.component').then(m => m.AdminNailDesignsComponent) },
+    { path: 'services', loadComponent: () => import('./pages/admin/services/admin-services.component').then(m => m.AdminServicesComponent) },
+    { path: 'users', loadComponent: () => import('./pages/admin/users/admin-users.component').then(m => m.AdminUsersComponent) },
+  ]
+}
+```
+
+### Pagination
+
+Admin list endpoints accept: `?page=1&limit=20&showInactive=true`
+Response format matches existing search endpoint: `{ data[], total, page, limit, totalPages }`
 
 ---
 
