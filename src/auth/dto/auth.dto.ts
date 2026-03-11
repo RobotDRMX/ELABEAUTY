@@ -1,4 +1,4 @@
-import { IsEmail, IsString, MinLength, Matches } from 'class-validator';
+import { IsEmail, IsString, MinLength, Matches, IsIn } from 'class-validator';
 
 export class RegisterDto {
   @IsEmail({}, { message: 'Email inválido' })
@@ -28,6 +28,6 @@ export class LoginDto {
 }
 
 export class UpdateRoleDto {
-  @IsString()
+  @IsIn(['user', 'admin'], { message: 'Rol inválido. Valores permitidos: user, admin' })
   role!: string;
 }

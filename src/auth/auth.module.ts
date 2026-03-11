@@ -251,8 +251,9 @@ export class AuthController {
 
   @Post('logout')
   logout(@Res({ passthrough: true }) res: Response) {
-    res.clearCookie('access_token');
-    res.clearCookie('refresh_token');
+    const isProduction = process.env['NODE_ENV'] === 'production';
+    res.clearCookie('access_token', { httpOnly: true, secure: isProduction, sameSite: 'strict' });
+    res.clearCookie('refresh_token', { httpOnly: true, secure: isProduction, sameSite: 'strict' });
     return { message: 'Sesión cerrada' };
   }
 

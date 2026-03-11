@@ -53,14 +53,24 @@ export class AuthService {
   }
 
   logout() {
-    // Limpiar cookies en el servidor
+    // Limpiar cookies en el servidor, luego redirigir
     this.http
       .post(`${this.apiUrl}/logout`, {}, { withCredentials: true })
-      .subscribe();
-    sessionStorage.removeItem('user');
-    this.currentUser.set(null);
-    this.isAuthenticated.set(false);
-    this.router.navigate(['/auth/login']);
+      .subscribe({
+        next: () => {
+          sessionStorage.removeItem('user');
+          this.currentUser.set(null);
+          this.isAuthenticated.set(false);
+          this.router.navigate(['/auth/login']);
+        },
+        error: () => {
+          // Limpiar estado local aunque el servidor falle
+          sessionStorage.removeItem('user');
+          this.currentUser.set(null);
+          this.isAuthenticated.set(false);
+          this.router.navigate(['/auth/login']);
+        },
+      });
   }
 
   getProfile(): Observable<any> {

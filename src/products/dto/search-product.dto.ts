@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsNumber, Min, Max } from 'class-validator';
+import { IsString, IsOptional, IsNumber, Min, Max, IsBoolean, IsIn } from 'class-validator';
 import { Transform } from 'class-transformer';
 
 export class SearchProductDto {
@@ -27,7 +27,7 @@ export class SearchProductDto {
   @IsOptional()
   sortBy?: string = 'created_at';
 
-  @IsString()
+  @IsIn(['ASC', 'DESC'], { message: 'order debe ser ASC o DESC' })
   @IsOptional()
   order?: 'ASC' | 'DESC' = 'DESC';
 
@@ -41,4 +41,13 @@ export class SearchProductDto {
   @Transform(({ value }) => parseFloat(value))
   @IsOptional()
   maxPrice?: number;
+
+  @IsBoolean()
+  @Transform(({ value }) => value === 'true' || value === true)
+  @IsOptional()
+  onlyInStock?: boolean;
+
+  @IsString()
+  @IsOptional()
+  targetAge?: string;
 }
