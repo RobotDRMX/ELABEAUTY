@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
@@ -11,36 +13,49 @@ import { BlogModule } from './blog/blog.module';
 import { GalleryModule } from './gallery/gallery.module';
 import { ContactsModule } from './contacts/contacts.module';
 import { HomeModule } from './home/home.module';
+import { FavoritesModule } from './favorites/favorites.module';
+import { CartModule } from './cart/cart.module';
+import { HairstylesModule } from './hairstyles/hairstyles.module';
+import { NailDesignsModule } from './nail-designs/nail-designs.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
-    // Configuración de variables de entorno
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
     }),
-    
-    // Configuración de TypeORM para MySQL (XAMPP)
+
+    // Rate limiting global: 100 peticiones por minuto por defecto
+    ThrottlerModule.forRoot([
+      {
+        name: 'global',
+        ttl: 60000,
+        limit: 100,
+      },
+    ]),
+
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         type: 'mysql',
         host: configService.get<string>('DB_HOST', 'localhost'),
-        port: configService.get<number>('DB_PORT', 3306), // Puerto default de MySQL
-        username: configService.get<string>('DB_USERNAME', 'root'), // Usuario default de XAMPP
-        password: configService.get<string>('DB_PASSWORD', ''), // Password default vacío en XAMPP
+        port: configService.get<number>('DB_PORT', 3306),
+        username: configService.get<string>('DB_USERNAME', 'root'),
+        password: configService.get<string>('DB_PASSWORD', ''),
         database: configService.get<string>('DB_NAME', 'ela_beauty'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: configService.get<boolean>('DB_SYNCHRONIZE', true), // true solo en desarrollo
-        logging: configService.get<boolean>('DB_LOGGING', true),
+        // IMPORTANTE: false por defecto — usar DB_SYNCHRONIZE=true solo en desarrollo
+        synchronize: configService.get<string>('DB_SYNCHRONIZE') === 'true',
+        logging: configService.get<boolean>('DB_LOGGING', false),
         autoLoadEntities: true,
-        charset: 'utf8mb4', // Para soportar emojis y caracteres especiales
+        charset: 'utf8mb4',
       }),
       inject: [ConfigService],
     }),
-    
-    // Módulos de la aplicación
+
     AuthModule,
+    UsersModule,
     ServicesModule,
     ProductsModule,
     AppointmentsModule,
@@ -48,8 +63,19 @@ import { HomeModule } from './home/home.module';
     GalleryModule,
     ContactsModule,
     HomeModule,
+    FavoritesModule,
+    CartModule,
+    HairstylesModule,
+    NailDesignsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    // ThrottlerGuard aplicado globalmente a todos los endpoints
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
 })
 export class AppModule {}
