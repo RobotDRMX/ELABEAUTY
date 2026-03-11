@@ -1,21 +1,28 @@
-import { 
-  Controller, 
-  Get, 
-  Post, 
-  Body, 
-  Param, 
-  Query, 
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Query,
   HttpStatus,
-  HttpCode 
+  HttpCode,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { SearchProductDto } from './dto/search-product.dto';
+import { JwtAuthGuard } from '../auth/auth.module';
+import { RolesGuard } from '../common/guards/roles.guard';
+import { Roles } from '../common/decorators/roles.decorator';
 
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
+  // Solo admin puede crear productos
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   @Post()
   @HttpCode(HttpStatus.CREATED)
   create(@Body() createProductDto: CreateProductDto) {
@@ -42,6 +49,9 @@ export class ProductsController {
     return this.productsService.findOne(+id);
   }
 
+  // Solo admin puede ejecutar seed
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   @Post('seed')
   @HttpCode(HttpStatus.OK)
   seedProducts() {
