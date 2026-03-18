@@ -1,0 +1,207 @@
+// frontend/src/app/pages/admin/shared-admin.scss
+// Shared styles for all admin CRUD pages — import in each component's .scss
+
+.crud-page { }
+
+.crud-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+.crud-title {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 700;
+  color: #111;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.btn {
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-family: var(--font-body);
+  transition: opacity 0.2s;
+
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  &--primary {
+    background: #e6007e;
+    color: #fff;
+    &:hover:not(:disabled) { background: #b3005e; }
+  }
+
+  &--outline {
+    background: transparent;
+    border: 1.5px solid var(--gray-300);
+    color: #333;
+    &:hover:not(:disabled) { border-color: #999; }
+  }
+
+  &--danger {
+    background: #dc3545;
+    color: #fff;
+    &:hover:not(:disabled) { background: #b02a37; }
+  }
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 15px;
+  color: #555;
+  transition: background 0.15s;
+  &:hover { background: var(--gray-200); }
+  &--warn    { color: #e6a817; }
+  &--success { color: #1a7a4a; }
+  &--danger  { color: #dc3545; }
+}
+
+.actions { white-space: nowrap; }
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.loading { color: var(--text-secondary); padding: 20px 0; }
+
+// Admin table (also in dashboard.component.scss — keep consistent)
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+
+  th, td { padding: 12px 16px; text-align: left; font-size: 14px; }
+  th { background: #f9f9f9; font-weight: 600; color: #333; border-bottom: 1px solid var(--gray-300); }
+  td { border-bottom: 1px solid var(--gray-200); }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafafa; }
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  &--active, &--user  { background: #d4edda; color: #1a7a4a; }
+  &--inactive          { background: #f8d7da; color: #721c24; }
+  &--admin             { background: #fff3cd; color: #856404; }
+}
+
+// Modal
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 580px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--gray-200);
+
+  h3 { font-family: var(--font-heading); font-size: 18px; font-weight: 700; }
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #999;
+  &:hover { color: #333; }
+}
+
+.modal-form { padding: 20px 24px; }
+
+.form-row {
+  display: flex;
+  gap: 12px;
+  .form-group { flex: 1; }
+}
+
+.form-group {
+  margin-bottom: 14px;
+  label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #444; }
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1.5px solid var(--gray-300);
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: var(--font-body);
+  outline: none;
+  transition: border-color 0.2s;
+  &:focus { border-color: #e6007e; }
+}
+
+textarea.form-control { resize: vertical; }
+
+.modal-error {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--gray-200);
+  margin-top: 16px;
+}
