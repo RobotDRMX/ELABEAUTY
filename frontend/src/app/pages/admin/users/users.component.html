@@ -1,0 +1,93 @@
+<!-- frontend/src/app/pages/admin/users/users.component.html -->
+<div class="crud-page">
+  <div class="crud-toolbar">
+    <h2 class="crud-title">Usuarios</h2>
+    <div class="crud-toolbar__actions">
+      <label class="toggle-label">
+        <input type="checkbox" [checked]="showInactive()" (change)="toggleInactive()">
+        Mostrar inactivos
+      </label>
+    </div>
+  </div>
+
+  @if (loading()) { <div class="loading">Cargando...</div> }
+  @else {
+    <table class="admin-table">
+      <thead>
+        <tr><th>Email</th><th>Nombre</th><th>Apellido</th><th>Rol</th><th>Estado</th><th>Registro</th><th>Acciones</th></tr>
+      </thead>
+      <tbody>
+        @for (user of items(); track user.id) {
+          <tr>
+            <td>{{ user.email }}</td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td><span class="badge badge--{{ user.role }}">{{ user.role }}</span></td>
+            <td>
+              <span class="badge" [class.badge--active]="user.isActive" [class.badge--inactive]="!user.isActive">
+                {{ user.isActive ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+            <td>{{ user.createdAt | date:'dd/MM/yyyy' }}</td>
+            <td class="actions">
+              <button class="icon-btn" title="Cambiar rol" (click)="openRoleModal(user)">
+                <i class="fas fa-user-tag"></i>
+              </button>
+              @if (user.isActive) {
+                <button class="icon-btn icon-btn--warn" title="Desactivar" (click)="deactivate(user)">
+                  <i class="fas fa-toggle-on"></i>
+                </button>
+              } @else {
+                <button class="icon-btn icon-btn--success" title="Restaurar" (click)="restore(user)">
+                  <i class="fas fa-toggle-off"></i>
+                </button>
+                @if (canDelete(user)) {
+                  <button class="icon-btn icon-btn--danger" title="Eliminar" (click)="remove(user)">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                }
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <div class="pagination">
+      <button class="btn btn--outline" [disabled]="currentPage() === 1" (click)="prevPage()">← Anterior</button>
+      <span>Página {{ currentPage() }} de {{ totalPages() }}</span>
+      <button class="btn btn--outline" [disabled]="currentPage() === totalPages()" (click)="nextPage()">Siguiente →</button>
+    </div>
+  }
+</div>
+
+<!-- ROLE MODAL -->
+@if (showRoleModal()) {
+  <div class="modal-backdrop" (click)="closeRoleModal()">
+    <div class="modal" style="max-width: 360px" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Cambiar Rol</h3>
+        <button class="modal-close" (click)="closeRoleModal()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-form">
+        <p style="font-size:14px; margin-bottom:12px; color:#555">
+          Usuario: <strong>{{ selectedUser()?.email }}</strong>
+        </p>
+        <div class="form-group">
+          <label>Rol</label>
+          <select class="form-control" [ngModel]="newRole()" (ngModelChange)="newRole.set($event)">
+            <option value="user">user</option>
+            <option value="admin">admin</option>
+          </select>
+        </div>
+        @if (roleError()) { <div class="modal-error">{{ roleError() }}</div> }
+        <div class="modal-footer">
+          <button type="button" class="btn btn--outline" (click)="closeRoleModal()">Cancelar</button>
+          <button type="button" class="btn btn--primary" [disabled]="saving()" (click)="saveRole()">
+            {{ saving() ? 'Guardando...' : 'Guardar' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
