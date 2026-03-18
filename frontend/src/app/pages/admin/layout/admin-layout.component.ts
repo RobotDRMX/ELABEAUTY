@@ -12,13 +12,13 @@ import { ToastComponent } from '../shared/toast/toast.component';
   styleUrls: ['./admin-layout.component.scss'],
 })
 export class AdminLayoutComponent {
-  authService = inject(AuthService);
+  private readonly authService = inject(AuthService);
 
   get adminName(): string {
     return this.authService.currentUser()?.firstName ?? 'Admin';
   }
 
-  navItems = [
+  protected readonly navItems: { label: string; icon: string; path: string }[] = [
     { label: 'Dashboard',        icon: 'fa-home',        path: '/admin' },
     { label: 'Productos',        icon: 'fa-box',         path: '/admin/productos' },
     { label: 'Peinados',         icon: 'fa-cut',         path: '/admin/peinados' },
