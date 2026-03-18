@@ -1,0 +1,46 @@
+<!-- frontend/src/app/pages/admin/layout/admin-layout.component.html -->
+<div class="admin-shell">
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">
+      <img src="assets/logo/LOGOELAUNICO.jpg" alt="ELA Beauty" />
+    </div>
+
+    <nav class="sidebar-nav">
+      @for (item of navItems; track item.path) {
+        <a
+          [routerLink]="item.path"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: item.path === '/admin' }"
+          class="sidebar-link"
+        >
+          <i class="fas {{ item.icon }}"></i>
+          <span>{{ item.label }}</span>
+        </a>
+      }
+    </nav>
+
+    <div class="sidebar-footer">
+      <a routerLink="/" class="sidebar-link sidebar-link--back">
+        <i class="fas fa-arrow-left"></i>
+        <span>Volver al sitio</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- CONTENT AREA -->
+  <div class="admin-content">
+    <header class="admin-topbar">
+      <span class="admin-topbar-title">Panel de Administración</span>
+      <span class="admin-topbar-user">
+        <i class="fas fa-user-circle"></i> {{ adminName }}
+      </span>
+    </header>
+
+    <main class="admin-main">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+
+  <app-toast></app-toast>
+</div>
