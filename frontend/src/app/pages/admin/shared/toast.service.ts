@@ -8,16 +8,17 @@ export interface Toast {
 
 @Injectable({ providedIn: 'root' })
 export class ToastService {
-  toasts = signal<Toast[]>([]);
+  private _toasts = signal<Toast[]>([]);
+  readonly toasts = this._toasts.asReadonly();
 
   show(message: string, type: 'success' | 'error' | 'warning' = 'success') {
     const id = Date.now();
     // Replace any existing toast — only one visible at a time
-    this.toasts.set([{ id, message, type }]);
+    this._toasts.set([{ id, message, type }]);
     setTimeout(() => this.dismiss(id), 3000);
   }
 
   dismiss(id: number) {
-    this.toasts.update(t => t.filter(toast => toast.id !== id));
+    this._toasts.update(t => t.filter(toast => toast.id !== id));
   }
 }
