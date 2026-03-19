@@ -22,6 +22,8 @@ import { PassportModule } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { AuthGuard, PassportStrategy } from '@nestjs/passport';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { HttpModule, HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
 import { Request, Response } from 'express';
 import { Throttle } from '@nestjs/throttler';
 import { WebAuthnService } from './webauthn.service';
@@ -75,6 +77,7 @@ export class AuthService {
     private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private readonly httpService: HttpService,
   ) {}
 
   async register(registerDto: RegisterDto) {
@@ -106,6 +109,9 @@ export class AuthService {
     access_token: string;
     refresh_token: string;
   }> {
+    // Verify reCAPTCHA before any DB query
+    await this.verifyRecaptcha(loginDto.recaptchaToken);
+
     const user = await this.userRepository.findOne({
       where: { email: loginDto.email },
     });
@@ -204,6 +210,28 @@ export class AuthService {
       access_token: this.jwtService.sign(payload, { secret, expiresIn: '15m' }),
       refresh_token: this.jwtService.sign({ sub: user.id }, { secret, expiresIn: '7d' }),
     };
+  }
+
+  async verifyRecaptcha(token: string): Promise<void> {
+    const secret = this.configService.get<string>('RECAPTCHA_SECRET_KEY');
+    if (!secret || secret === 'YOUR_RECAPTCHA_SECRET_KEY') {
+      // Skip verification in dev if key not configured
+      console.warn('[Auth] reCAPTCHA secret not configured — skipping verification');
+      return;
+    }
+
+    const url = 'https://www.google.com/recaptcha/api/siteverify';
+    const params = new URLSearchParams({ secret, response: token });
+
+    const { data } = await firstValueFrom(
+      this.httpService.post<{ success: boolean; score: number; action: string }>(
+        `${url}?${params.toString()}`,
+      ),
+    );
+
+    if (!data.success || data.score < 0.5) {
+      throw new UnauthorizedException('Verificación de seguridad fallida. Inténtalo de nuevo.');
+    }
   }
 }
 
@@ -393,6 +421,7 @@ export class AuthController {
       },
       inject: [ConfigService],
     }),
+    HttpModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy, JwtAuthGuard, WebAuthnService, FaceService],

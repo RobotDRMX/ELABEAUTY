@@ -5,6 +5,13 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { BiometricAuthService } from '../../../services/biometric-auth.service';
 
+// Global object injected by Google reCAPTCHA v3 script
+declare const grecaptcha: {
+  execute(siteKey: string, options: { action: string }): Promise<string>;
+};
+
+const RECAPTCHA_SITE_KEY = 'YOUR_RECAPTCHA_SITE_KEY';
+
 type BiometricMode = 'none' | 'face';
 
 @Component({
@@ -38,15 +45,27 @@ export class LoginComponent implements OnDestroy {
     this.biometric.stopCamera();
   }
 
-  // ── Standard login (reCAPTCHA token added in Task 11) ────────────────────
-  onSubmit(): void {
+  // ── Standard login ────────────────────────────────────────────────────────
+  async onSubmit(): Promise<void> {
     if (this.loginForm.invalid) return;
     this.loading = true;
     this.error   = '';
-    // Note: recaptchaToken will be added to this call in Task 11
-    this.authService.login(this.loginForm.value).subscribe({
+
+    let recaptchaToken: string;
+    try {
+      recaptchaToken = await grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'login' });
+    } catch {
+      this.error   = 'Error al verificar seguridad. Recarga la página e inténtalo de nuevo.';
+      this.loading = false;
+      return;
+    }
+
+    this.authService.login({ ...this.loginForm.value, recaptchaToken }).subscribe({
       next:  (r: any) => this.redirect(r),
-      error: (e: any) => { this.error = e.error?.message || 'Error al iniciar sesión'; this.loading = false; },
+      error: (e: any) => {
+        this.error   = e.error?.message || 'Error al iniciar sesión';
+        this.loading = false;
+      },
     });
   }
 
