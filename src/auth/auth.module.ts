@@ -297,6 +297,7 @@ export class AuthController {
   }
 
   // userId comes from client (returned by /login/options) — never regenerate challenge here
+  @Throttle({ global: { limit: 5, ttl: 60000 } })
   @Post('webauthn/login/verify')
   async webauthnLoginVerify(
     @Body() body: WebAuthnVerifyAuthDto,
