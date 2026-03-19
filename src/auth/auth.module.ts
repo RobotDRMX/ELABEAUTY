@@ -24,6 +24,18 @@ import { AuthGuard, PassportStrategy } from '@nestjs/passport';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Request, Response } from 'express';
 import { Throttle } from '@nestjs/throttler';
+import { WebAuthnService } from './webauthn.service';
+import { FaceService } from './face.service';
+import {
+  WebAuthnVerifyRegistrationDto,
+  WebAuthnVerifyAuthDto,
+  FaceDescriptorDto,
+  FaceLoginDto,
+} from './dto/auth.dto';
+import type {
+  RegistrationResponseJSON,
+  AuthenticationResponseJSON,
+} from '@simplewebauthn/server';
 
 // --- ESTRATEGIA JWT (lee token de cookie HttpOnly) ---
 @Injectable()
@@ -198,7 +210,11 @@ export class AuthService {
 // --- CONTROLADOR DE AUTENTICACIÓN ---
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly webAuthnService: WebAuthnService,
+    private readonly faceService: FaceService,
+  ) {}
 
   @Post('register')
   register(@Body() registerDto: RegisterDto) {
@@ -254,6 +270,84 @@ export class AuthController {
     return { message: 'Sesión cerrada' };
   }
 
+  // ── WebAuthn ──────────────────────────────────────────────────────────────
+
+  @UseGuards(JwtAuthGuard)
+  @Get('webauthn/register/options')
+  webauthnRegisterOptions(@Req() req: any) {
+    return this.webAuthnService.generateRegistrationOptions(req.user.userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('webauthn/register/verify')
+  webauthnRegisterVerify(
+    @Req() req: any,
+    @Body() body: WebAuthnVerifyRegistrationDto,
+  ) {
+    return this.webAuthnService.verifyRegistration(
+      req.user.userId,
+      body.registrationResponse as unknown as RegistrationResponseJSON,
+    );
+  }
+
+  // Returns { options, userId } — client must send userId back in /login/verify
+  @Post('webauthn/login/options')
+  webauthnLoginOptions(@Body('email') email: string) {
+    return this.webAuthnService.generateAuthOptions(email);
+  }
+
+  // userId comes from client (returned by /login/options) — never regenerate challenge here
+  @Post('webauthn/login/verify')
+  async webauthnLoginVerify(
+    @Body() body: WebAuthnVerifyAuthDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const user = await this.webAuthnService.verifyAuthentication(
+      body.userId,
+      body.authenticationResponse as unknown as AuthenticationResponseJSON,
+    );
+    const { password: _p, ...userResult } = user;
+    this.setCookies(res, this.authService.issueTokenPair(userResult));
+    return { user: userResult };
+  }
+
+  // ── Face (second factor) ──────────────────────────────────────────────────
+
+  @UseGuards(JwtAuthGuard)
+  @Post('face/save')
+  saveFaceDescriptor(@Req() req: any, @Body() body: FaceDescriptorDto) {
+    return this.faceService.saveDescriptor(req.user.userId, body.descriptor);
+  }
+
+  // Same as /login but adds face verification if descriptor is sent.
+  // If user has no saved face, login proceeds with password only.
+  // If user has saved face and descriptor doesn't match, reject.
+  @Throttle({ global: { limit: 5, ttl: 60000 } })
+  @Post('login/face')
+  async loginWithFace(
+    @Body() body: FaceLoginDto,
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const ip = (req.headers['x-forwarded-for'] as string) || req.ip || 'unknown';
+    const result = await this.authService.login(body, ip);  // validates password
+    const user = result.user as Omit<User, 'password'>;
+
+    if (body.faceDescriptor) {
+      const { hasDescriptor, match } = await this.faceService.verifyDescriptor(
+        user.id,
+        body.faceDescriptor,
+      );
+      // Only block if user has a face registered AND it doesn't match
+      if (hasDescriptor && !match) {
+        throw new UnauthorizedException('Rostro no reconocido');
+      }
+    }
+
+    this.setCookies(res, this.authService.issueTokenPair(user));
+    return { user };
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Req() req: any) {
@@ -300,7 +394,7 @@ export class AuthController {
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, JwtAuthGuard, WebAuthnService, FaceService],
   exports: [AuthService, JwtAuthGuard],
 })
 export class AuthModule {}
