@@ -27,7 +27,7 @@ export class User {
     webauthnCredential!: string | null;  // JSON: { credentialID, publicKey, counter, rpID }
 
     @Column({ type: 'text', nullable: true })
-    faceDescriptor!: string | null;  // JSON: number[] of 128 floats — never store the photo
+    faceDescriptor!: string | null;  // JSON: number[] de 128 valores — nunca almacenar la foto
 
     @CreateDateColumn()
     createdAt!: Date;
