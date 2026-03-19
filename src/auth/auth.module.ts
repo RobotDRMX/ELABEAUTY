@@ -182,6 +182,17 @@ export class AuthService {
     await this.userRepository.update(id, { role });
     return this.findOne(id);
   }
+
+  // Public method reusable by new biometric endpoints.
+  // Signs and returns the token pair; controller writes the cookies.
+  issueTokenPair(user: Omit<User, 'password'>): { access_token: string; refresh_token: string } {
+    const secret = this.configService.get<string>('JWT_SECRET')!;
+    const payload = { email: user.email, sub: user.id, role: user.role };
+    return {
+      access_token: this.jwtService.sign(payload, { secret, expiresIn: '15m' }),
+      refresh_token: this.jwtService.sign({ sub: user.id }, { secret, expiresIn: '7d' }),
+    };
+  }
 }
 
 // --- CONTROLADOR DE AUTENTICACIÓN ---
@@ -206,22 +217,7 @@ export class AuthController {
       (req.headers['x-forwarded-for'] as string) || req.ip || 'unknown';
     const result = await this.authService.login(loginDto, ip);
 
-    const isProduction = process.env['NODE_ENV'] === 'production';
-
-    res.cookie('access_token', result.access_token, {
-      httpOnly: true,
-      secure: isProduction,
-      sameSite: 'strict',
-      maxAge: 15 * 60 * 1000, // 15 minutos
-    });
-
-    res.cookie('refresh_token', result.refresh_token, {
-      httpOnly: true,
-      secure: isProduction,
-      sameSite: 'strict',
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
-    });
-
+    this.setCookies(res, result);
     return { user: result.user };
   }
 
@@ -267,6 +263,18 @@ export class AuthController {
   @Post('profile/update')
   updateProfile(@Req() req: any, @Body() updateData: any) {
     return this.authService.update(req.user.userId, updateData);
+  }
+
+  // Private helper: writes access_token and refresh_token as HttpOnly cookies.
+  // Used by all login endpoints (password, WebAuthn, face).
+  private setCookies(
+    res: Response,
+    tokens: { access_token: string; refresh_token: string },
+  ): void {
+    const isProd = process.env['NODE_ENV'] === 'production';
+    const cookieOpts = { httpOnly: true, secure: isProd, sameSite: 'strict' as const };
+    res.cookie('access_token',  tokens.access_token,  { ...cookieOpts, maxAge: 15 * 60 * 1000 });
+    res.cookie('refresh_token', tokens.refresh_token, { ...cookieOpts, maxAge: 7 * 24 * 60 * 60 * 1000 });
   }
 }
 
