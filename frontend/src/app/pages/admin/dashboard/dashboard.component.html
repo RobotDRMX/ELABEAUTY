@@ -1,0 +1,74 @@
+<!-- frontend/src/app/pages/admin/dashboard/dashboard.component.html -->
+<div class="dashboard">
+  <h2 class="dashboard-title">Dashboard</h2>
+
+  @if (loading()) {
+    <div class="loading">Cargando...</div>
+  } @else {
+    <div class="cards-grid">
+      <div class="stat-card">
+        <i class="fas fa-box stat-card__icon"></i>
+        <div class="stat-card__info">
+          <span class="stat-card__number">{{ counts().products }}</span>
+          <span class="stat-card__label">Productos</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-cut stat-card__icon"></i>
+        <div class="stat-card__info">
+          <span class="stat-card__number">{{ counts().hairstyles }}</span>
+          <span class="stat-card__label">Peinados</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-paint-brush stat-card__icon"></i>
+        <div class="stat-card__info">
+          <span class="stat-card__number">{{ counts().nailDesigns }}</span>
+          <span class="stat-card__label">Diseños de Uñas</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-spa stat-card__icon"></i>
+        <div class="stat-card__info">
+          <span class="stat-card__number">{{ counts().services }}</span>
+          <span class="stat-card__label">Servicios</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-users stat-card__icon"></i>
+        <div class="stat-card__info">
+          <span class="stat-card__number">{{ counts().users }}</span>
+          <span class="stat-card__label">Usuarios</span>
+        </div>
+      </div>
+    </div>
+  }
+
+  <div class="recent-users">
+    <h3 class="section-title">Usuarios Recientes</h3>
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Nombre</th>
+          <th>Rol</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (user of recentUsers(); track user.id) {
+          <tr>
+            <td>{{ user.email }}</td>
+            <td>{{ user.firstName }} {{ user.lastName }}</td>
+            <td><span class="badge badge--{{ user.role }}">{{ user.role }}</span></td>
+            <td>
+              <span class="badge" [class.badge--active]="user.isActive" [class.badge--inactive]="!user.isActive">
+                {{ user.isActive ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

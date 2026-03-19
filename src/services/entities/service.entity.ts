@@ -1,38 +1,44 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('services')
 export class Service {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   @Column()
-  name: string;
+  name!: string;
 
   @Column('text')
-  description: string;
+  description!: string;
 
   @Column('decimal', { precision: 10, scale: 2 })
-  price: number;
+  price!: number;
 
   @Column()
-  duration: number; // en minutos
+  duration!: number; // en minutos
 
   @Column({
     type: 'enum',
     enum: ['facial', 'corporal', 'spa', 'masajes', 'manicure', 'pedicure'],
-    default: 'facial'
+    default: 'facial',
   })
-  category: string;
+  category!: string;
 
   @Column({ nullable: true })
-  imageUrl: string;
+  imageUrl?: string;
 
   @Column({ default: true })
-  isActive: boolean;
+  isActive!: boolean;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: Date;
+  @CreateDateColumn()
+  createdAt!: Date;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
-  updatedAt: Date;
+  @UpdateDateColumn()
+  updatedAt!: Date;
 }

@@ -18,6 +18,7 @@ import { CartModule } from './cart/cart.module';
 import { HairstylesModule } from './hairstyles/hairstyles.module';
 import { NailDesignsModule } from './nail-designs/nail-designs.module';
 import { UsersModule } from './users/users.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -67,6 +68,7 @@ import { UsersModule } from './users/users.module';
     CartModule,
     HairstylesModule,
     NailDesignsModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [
