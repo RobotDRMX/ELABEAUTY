@@ -22,8 +22,22 @@ import { PassportModule } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { AuthGuard, PassportStrategy } from '@nestjs/passport';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { HttpModule, HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
 import { Request, Response } from 'express';
 import { Throttle } from '@nestjs/throttler';
+import { WebAuthnService } from './webauthn.service';
+import { FaceService } from './face.service';
+import {
+  WebAuthnVerifyRegistrationDto,
+  WebAuthnVerifyAuthDto,
+  FaceDescriptorDto,
+  FaceLoginDto,
+} from './dto/auth.dto';
+import type {
+  RegistrationResponseJSON,
+  AuthenticationResponseJSON,
+} from '@simplewebauthn/server';
 
 // --- ESTRATEGIA JWT (lee token de cookie HttpOnly) ---
 @Injectable()
@@ -63,6 +77,7 @@ export class AuthService {
     private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private readonly httpService: HttpService,
   ) {}
 
   async register(registerDto: RegisterDto) {
@@ -94,6 +109,9 @@ export class AuthService {
     access_token: string;
     refresh_token: string;
   }> {
+    // Verify reCAPTCHA before any DB query
+    await this.verifyRecaptcha(loginDto.recaptchaToken);
+
     const user = await this.userRepository.findOne({
       where: { email: loginDto.email },
     });
@@ -182,12 +200,49 @@ export class AuthService {
     await this.userRepository.update(id, { role });
     return this.findOne(id);
   }
+
+  // Public method reusable by new biometric endpoints.
+  // Signs and returns the token pair; controller writes the cookies.
+  issueTokenPair(user: Omit<User, 'password'>): { access_token: string; refresh_token: string } {
+    const secret = this.configService.get<string>('JWT_SECRET')!;
+    const payload = { email: user.email, sub: user.id, role: user.role };
+    return {
+      access_token: this.jwtService.sign(payload, { secret, expiresIn: '15m' }),
+      refresh_token: this.jwtService.sign({ sub: user.id }, { secret, expiresIn: '7d' }),
+    };
+  }
+
+  async verifyRecaptcha(token: string): Promise<void> {
+    const secret = this.configService.get<string>('RECAPTCHA_SECRET_KEY');
+    if (!secret || secret === 'YOUR_RECAPTCHA_SECRET_KEY') {
+      // Skip verification in dev if key not configured
+      console.warn('[Auth] reCAPTCHA secret not configured — skipping verification');
+      return;
+    }
+
+    const url = 'https://www.google.com/recaptcha/api/siteverify';
+    const params = new URLSearchParams({ secret, response: token });
+
+    const { data } = await firstValueFrom(
+      this.httpService.post<{ success: boolean; score: number; action: string }>(
+        `${url}?${params.toString()}`,
+      ),
+    );
+
+    if (!data.success || data.score < 0.5) {
+      throw new UnauthorizedException('Verificación de seguridad fallida. Inténtalo de nuevo.');
+    }
+  }
 }
 
 // --- CONTROLADOR DE AUTENTICACIÓN ---
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly webAuthnService: WebAuthnService,
+    private readonly faceService: FaceService,
+  ) {}
 
   @Post('register')
   register(@Body() registerDto: RegisterDto) {
@@ -206,25 +261,11 @@ export class AuthController {
       (req.headers['x-forwarded-for'] as string) || req.ip || 'unknown';
     const result = await this.authService.login(loginDto, ip);
 
-    const isProduction = process.env['NODE_ENV'] === 'production';
-
-    res.cookie('access_token', result.access_token, {
-      httpOnly: true,
-      secure: isProduction,
-      sameSite: 'strict',
-      maxAge: 15 * 60 * 1000, // 15 minutos
-    });
-
-    res.cookie('refresh_token', result.refresh_token, {
-      httpOnly: true,
-      secure: isProduction,
-      sameSite: 'strict',
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
-    });
-
+    this.setCookies(res, result);
     return { user: result.user };
   }
 
+  // Only refreshes access_token. Refresh token rotation is out of scope for this project.
   @Post('refresh')
   async refresh(
     @Req() req: Request,
@@ -237,11 +278,11 @@ export class AuthController {
     }
 
     const result = await this.authService.refresh(refreshToken);
-    const isProduction = process.env['NODE_ENV'] === 'production';
+    const isProd = process.env['NODE_ENV'] === 'production';
 
     res.cookie('access_token', result.access_token, {
       httpOnly: true,
-      secure: isProduction,
+      secure: isProd,
       sameSite: 'strict',
       maxAge: 15 * 60 * 1000,
     });
@@ -257,6 +298,85 @@ export class AuthController {
     return { message: 'Sesión cerrada' };
   }
 
+  // ── WebAuthn ──────────────────────────────────────────────────────────────
+
+  @UseGuards(JwtAuthGuard)
+  @Get('webauthn/register/options')
+  webauthnRegisterOptions(@Req() req: any) {
+    return this.webAuthnService.generateRegistrationOptions(req.user.userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('webauthn/register/verify')
+  webauthnRegisterVerify(
+    @Req() req: any,
+    @Body() body: WebAuthnVerifyRegistrationDto,
+  ) {
+    return this.webAuthnService.verifyRegistration(
+      req.user.userId,
+      body.registrationResponse as unknown as RegistrationResponseJSON,
+    );
+  }
+
+  // Returns { options, userId } — client must send userId back in /login/verify
+  @Post('webauthn/login/options')
+  webauthnLoginOptions(@Body('email') email: string) {
+    return this.webAuthnService.generateAuthOptions(email);
+  }
+
+  // userId comes from client (returned by /login/options) — never regenerate challenge here
+  @Throttle({ global: { limit: 5, ttl: 60000 } })
+  @Post('webauthn/login/verify')
+  async webauthnLoginVerify(
+    @Body() body: WebAuthnVerifyAuthDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const user = await this.webAuthnService.verifyAuthentication(
+      body.userId,
+      body.authenticationResponse as unknown as AuthenticationResponseJSON,
+    );
+    const { password: _p, ...userResult } = user;
+    this.setCookies(res, this.authService.issueTokenPair(userResult));
+    return { user: userResult };
+  }
+
+  // ── Face (second factor) ──────────────────────────────────────────────────
+
+  @UseGuards(JwtAuthGuard)
+  @Post('face/save')
+  saveFaceDescriptor(@Req() req: any, @Body() body: FaceDescriptorDto) {
+    return this.faceService.saveDescriptor(req.user.userId, body.descriptor);
+  }
+
+  // Same as /login but adds face verification if descriptor is sent.
+  // If user has no saved face, login proceeds with password only.
+  // If user has saved face and descriptor doesn't match, reject.
+  @Throttle({ global: { limit: 5, ttl: 60000 } })
+  @Post('login/face')
+  async loginWithFace(
+    @Body() body: FaceLoginDto,
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const ip = (req.headers['x-forwarded-for'] as string) || req.ip || 'unknown';
+    const result = await this.authService.login(body, ip);  // validates password
+    const user = result.user as Omit<User, 'password'>;
+
+    if (body.faceDescriptor) {
+      const { hasDescriptor, match } = await this.faceService.verifyDescriptor(
+        user.id,
+        body.faceDescriptor,
+      );
+      // Only block if user has a face registered AND it doesn't match
+      if (hasDescriptor && !match) {
+        throw new UnauthorizedException('Rostro no reconocido');
+      }
+    }
+
+    this.setCookies(res, this.authService.issueTokenPair(user));
+    return { user };
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Req() req: any) {
@@ -267,6 +387,18 @@ export class AuthController {
   @Post('profile/update')
   updateProfile(@Req() req: any, @Body() updateData: any) {
     return this.authService.update(req.user.userId, updateData);
+  }
+
+  // Private helper: writes access_token and refresh_token as HttpOnly cookies.
+  // Used by all login endpoints (password, WebAuthn, face).
+  private setCookies(
+    res: Response,
+    tokens: { access_token: string; refresh_token: string },
+  ): void {
+    const isProd = process.env['NODE_ENV'] === 'production';
+    const cookieOpts = { httpOnly: true, secure: isProd, sameSite: 'strict' as const };
+    res.cookie('access_token',  tokens.access_token,  { ...cookieOpts, maxAge: 15 * 60 * 1000 });
+    res.cookie('refresh_token', tokens.refresh_token, { ...cookieOpts, maxAge: 7 * 24 * 60 * 60 * 1000 });
   }
 }
 
@@ -289,9 +421,10 @@ export class AuthController {
       },
       inject: [ConfigService],
     }),
+    HttpModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, JwtAuthGuard, WebAuthnService, FaceService],
   exports: [AuthService, JwtAuthGuard],
 })
 export class AuthModule {}

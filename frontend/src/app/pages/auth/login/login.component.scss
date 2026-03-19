@@ -1,0 +1,71 @@
+.biometric-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0 16px;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+
+  &::before, &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--gray-300);
+  }
+}
+
+.biometric-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.btn-biometric {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  border: 1px solid var(--gray-300);
+  background: var(--gray-100);
+
+  &:hover:not(:disabled) {
+    border-color: var(--primary-color);
+    background: white;
+  }
+
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.face-panel {
+  background: var(--gray-100);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.face-hint {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.face-video {
+  width: 100%;
+  max-width: 280px;
+  border-radius: 8px;
+  border: 2px solid var(--primary-color);
+  display: block;
+  margin: 0 auto 12px;
+  background: #000;
+}
+
+.face-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}

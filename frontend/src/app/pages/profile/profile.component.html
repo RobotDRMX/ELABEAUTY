@@ -1,0 +1,102 @@
+<div class="profile-container fade-in">
+    <div class="profile-card">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <h2>Mi Perfil</h2>
+            <p>Gestiona tu información personal</p>
+        </div>
+
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-form">
+            <div class="row">
+                <div class="form-group col">
+                    <label>Nombre</label>
+                    <input type="text" formControlName="firstName">
+                </div>
+                <div class="form-group col">
+                    <label>Apellido</label>
+                    <input type="text" formControlName="lastName">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Correo Electrónico (No modificable)</label>
+                <input type="email" formControlName="email">
+            </div>
+
+            <div *ngIf="success" class="alert alert-success">{{ success }}</div>
+            <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+            <button type="submit" class="btn-maybelline" [disabled]="profileForm.invalid || loading">
+                {{ loading ? 'Guardando...' : 'Actualizar Perfil' }}
+            </button>
+        </form>
+
+        <div class="orders-preview mt-4">
+            <h3>Mis Pedidos Recientes</h3>
+            <div class="no-orders">
+                <i class="fas fa-shopping-bag"></i>
+                <p>Aún no has realizado pedidos.</p>
+                <button class="btn-outline" routerLink="/">Ir a comprar</button>
+            </div>
+        </div>
+
+        <!-- ── Acceso Biométrico ── -->
+        <div class="profile-section">
+            <h3>Acceso Biométrico</h3>
+            <p class="section-desc">Configura métodos de inicio de sesión adicionales.</p>
+
+            <div class="biometric-options">
+                <div class="biometric-option" *ngIf="biometric.webAuthnSupported()">
+                    <div class="option-info">
+                        <span class="option-icon">🔑</span>
+                        <div>
+                            <strong>Passkey</strong>
+                            <small>Huella dactilar o Face ID del sistema</small>
+                        </div>
+                    </div>
+                    <button class="btn-outline" [disabled]="enrollLoading" (click)="enrollPasskey()">
+                        {{ enrollLoading ? 'Registrando...' : 'Registrar Passkey' }}
+                    </button>
+                </div>
+
+                <div class="biometric-option">
+                    <div class="option-info">
+                        <span class="option-icon">📷</span>
+                        <div>
+                            <strong>Reconocimiento Facial</strong>
+                            <small>Tu cámara como segundo factor de login</small>
+                        </div>
+                    </div>
+                    <button
+                        class="btn-outline"
+                        [disabled]="enrollLoading || enrollMode === 'face'"
+                        (click)="startFaceEnroll()">
+                        Registrar Rostro
+                    </button>
+                </div>
+            </div>
+
+            <div *ngIf="enrollMode === 'face'" class="enroll-camera">
+                <p>Mira de frente a la cámara y pulsa <strong>Guardar rostro</strong>.</p>
+                <video #enrollVideo autoplay muted playsinline class="face-video"></video>
+                <div class="face-actions">
+                    <button
+                        class="btn-maybelline"
+                        [disabled]="!biometric.cameraActive() || enrollLoading"
+                        (click)="saveFace()">
+                        {{ enrollLoading ? 'Guardando...' : 'Guardar rostro' }}
+                    </button>
+                    <button class="btn-ghost" (click)="cancelEnroll()">Cancelar</button>
+                </div>
+            </div>
+
+            <p *ngIf="enrollMsg"
+               class="enroll-msg"
+               [style.color]="enrollMsg.startsWith('✓') ? 'green' : 'var(--primary-color)'">
+                {{ enrollMsg }}
+            </p>
+        </div>
+    </div>
+</div>

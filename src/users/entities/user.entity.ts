@@ -24,10 +24,10 @@ export class User {
     isActive!: boolean;
 
     @Column({ type: 'text', nullable: true })
-    webauthnCredential!: string | null;
+    webauthnCredential!: string | null;  // JSON: { credentialID, publicKey, counter, rpID }
 
     @Column({ type: 'text', nullable: true })
-    faceDescriptor!: string | null;
+    faceDescriptor!: string | null;  // JSON: number[] de 128 valores — nunca almacenar la foto
 
     @CreateDateColumn()
     createdAt!: Date;
