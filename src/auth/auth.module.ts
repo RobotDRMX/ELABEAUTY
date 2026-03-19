@@ -221,6 +221,7 @@ export class AuthController {
     return { user: result.user };
   }
 
+  // Only refreshes access_token. Refresh token rotation is out of scope for this project.
   @Post('refresh')
   async refresh(
     @Req() req: Request,
@@ -233,11 +234,11 @@ export class AuthController {
     }
 
     const result = await this.authService.refresh(refreshToken);
-    const isProduction = process.env['NODE_ENV'] === 'production';
+    const isProd = process.env['NODE_ENV'] === 'production';
 
     res.cookie('access_token', result.access_token, {
       httpOnly: true,
-      secure: isProduction,
+      secure: isProd,
       sameSite: 'strict',
       maxAge: 15 * 60 * 1000,
     });

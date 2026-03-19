@@ -30,6 +30,9 @@ export class FaceService {
     userId: number,
     incoming: number[],
   ): Promise<{ hasDescriptor: boolean; match: boolean }> {
+    if (incoming.length !== 128) {
+      throw new BadRequestException('El descriptor facial entrante debe tener exactamente 128 valores');
+    }
     const user = await this.userRepo.findOneOrFail({ where: { id: userId } });
     if (!user.faceDescriptor) return { hasDescriptor: false, match: false };
 
