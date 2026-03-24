@@ -6,7 +6,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NotificationsComponent } from './components/ui/notifications.component';
 import { filter } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
