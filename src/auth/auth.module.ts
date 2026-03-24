@@ -130,6 +130,86 @@ export class AuthService {
     return { message: 'Registro exitoso. Revisa tu correo para confirmar tu cuenta.' };
   }
 
+  async verifyEmail(token_hash: string): Promise<{ message: string }> {
+    let email: string;
+    try {
+      email = await this.supabase.verifyOtp(token_hash, 'email');
+    } catch {
+      throw new BadRequestException('El enlace de confirmación es inválido o ya expiró.');
+    }
+
+    const user = await this.userRepository.findOne({ where: { email } });
+    if (!user) {
+      throw new BadRequestException('Usuario no encontrado.');
+    }
+    if (user.isEmailVerified) {
+      return { message: 'Tu correo ya estaba confirmado. Puedes iniciar sesión.' };
+    }
+
+    await this.userRepository.update(user.id, {
+      isEmailVerified: true,
+      isActive:        true,
+    });
+
+    return { message: 'Correo confirmado correctamente. Ya puedes iniciar sesión.' };
+  }
+
+  async resendVerification(email: string): Promise<{ message: string }> {
+    const user = await this.userRepository.findOne({ where: { email } });
+
+    const genericMessage = { message: 'Si el correo existe y no está verificado, recibirás un nuevo enlace.' };
+
+    if (!user || user.isEmailVerified) {
+      return genericMessage;
+    }
+
+    try {
+      await this.supabase.resendConfirmation(email);
+    } catch (err) {
+      console.error('[Auth] resendVerification Supabase error:', err);
+    }
+
+    return genericMessage;
+  }
+
+  async forgotPassword(email: string): Promise<{ message: string }> {
+    const user = await this.userRepository.findOne({ where: { email } });
+
+    const genericMessage = { message: 'Si el correo existe en nuestra base de datos, recibirás un enlace para restablecer tu contraseña.' };
+
+    if (!user || !user.isEmailVerified || !user.isActive) {
+      return genericMessage;
+    }
+
+    try {
+      await this.supabase.sendPasswordRecovery(email);
+    } catch (err) {
+      console.error('[Auth] forgotPassword Supabase error:', err);
+    }
+
+    return genericMessage;
+  }
+
+  async resetPassword(token_hash: string, newPassword: string): Promise<{ message: string }> {
+    let email: string;
+    try {
+      email = await this.supabase.verifyOtp(token_hash, 'recovery');
+    } catch {
+      throw new BadRequestException('El enlace de recuperación es inválido o ya expiró.');
+    }
+
+    const user = await this.userRepository.findOne({ where: { email } });
+    if (!user) {
+      throw new BadRequestException('Usuario no encontrado.');
+    }
+
+    const salt = await bcrypt.genSalt(12);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    await this.userRepository.update(user.id, { password: hashedPassword });
+
+    return { message: 'Contraseña actualizada correctamente. Ya puedes iniciar sesión.' };
+  }
+
   async login(
     loginDto: LoginDto,
     ip: string,
@@ -158,6 +238,12 @@ export class AuthService {
         `[Auth] Login fallido — email: ${loginDto.email} — IP: ${ip}`,
       );
       throw new UnauthorizedException('Credenciales inválidas');
+    }
+
+    if (!user.isEmailVerified) {
+      throw new UnauthorizedException(
+        'Debes confirmar tu correo antes de iniciar sesión. Revisa tu bandeja de entrada.'
+      );
     }
 
     const secret = this.configService.get<string>('JWT_SECRET')!;
@@ -276,6 +362,28 @@ export class AuthController {
   @Post('register')
   register(@Body() registerDto: RegisterDto) {
     return this.authService.register(registerDto);
+  }
+
+  @Post('verificar-correo')
+  verifyEmail(@Body() body: VerifyEmailDto) {
+    return this.authService.verifyEmail(body.token_hash);
+  }
+
+  @Throttle({ global: { limit: 5, ttl: 60000 } })
+  @Post('reenviar-verificacion')
+  resendVerification(@Body() body: ResendVerificationDto) {
+    return this.authService.resendVerification(body.email);
+  }
+
+  @Throttle({ global: { limit: 5, ttl: 60000 } })
+  @Post('olvide-contrasena')
+  forgotPassword(@Body() body: ForgotPasswordDto) {
+    return this.authService.forgotPassword(body.email);
+  }
+
+  @Post('nueva-contrasena')
+  resetPassword(@Body() body: ResetPasswordDto) {
+    return this.authService.resetPassword(body.token_hash, body.newPassword);
   }
 
   // Rate limit estricto: 5 intentos por minuto por IP
