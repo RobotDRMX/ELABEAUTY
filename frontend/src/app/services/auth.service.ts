@@ -26,11 +26,7 @@ export class AuthService {
           this.isAuthenticated.set(true);
           sessionStorage.setItem('user', JSON.stringify(user));
         },
-        error: (err) => {
-          // ERR_CONNECTION_REFUSED is expected in dev when backend is restarting — suppress it
-          if (err?.status !== 0) {
-            console.warn('[Auth] checkSession failed:', err?.status);
-          }
+        error: () => {
           this.currentUser.set(null);
           this.isAuthenticated.set(false);
           sessionStorage.removeItem('user');
