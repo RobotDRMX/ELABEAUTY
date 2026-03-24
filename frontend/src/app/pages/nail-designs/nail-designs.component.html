@@ -1,0 +1,116 @@
+<div class="page-nails">
+
+  <!-- ===== PAGE HERO ===== -->
+  <div class="page-hero">
+    <div class="page-hero-shapes">
+      <span class="hero-shape s1"></span>
+      <span class="hero-shape s2"></span>
+      <span class="hero-shape s3"></span>
+    </div>
+    <div class="container">
+      <div class="page-hero-content fade-in-up">
+        <span class="page-eyebrow"><i class="fas fa-hand-sparkles"></i> Nail Art Studio</span>
+        <h1>Diseños de Uñas</h1>
+        <p>Arte en tus manos. Desde el clásico French hasta elaborados Nail Art, nuestras especialistas crean diseños únicos que reflejan tu personalidad.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FILTROS ===== -->
+  <div class="filter-bar">
+    <div class="container">
+      <div class="filter-bar-inner">
+        <button class="filter-chip" [class.active]="activeStyle === ''" (click)="setStyle('')">
+          <i class="fas fa-th-large"></i> Todos
+        </button>
+        <button class="filter-chip" *ngFor="let s of styles"
+                [class.active]="activeStyle === s"
+                (click)="setStyle(s)">
+          {{ s }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CONTENIDO ===== -->
+  <div class="container page-body">
+
+    <!-- Loading skeleton -->
+    <div class="designs-grid" *ngIf="isLoading">
+      <div class="design-card skeleton-card" *ngFor="let i of [1,2,3,4,5,6,7,8]">
+        <div class="skeleton" style="height:220px;width:100%;"></div>
+        <div style="padding:1.4rem">
+          <div class="skeleton" style="height:14px;width:35%;margin-bottom:.6rem;"></div>
+          <div class="skeleton" style="height:20px;width:80%;margin-bottom:.5rem;"></div>
+          <div class="skeleton" style="height:13px;width:90%;margin-bottom:.3rem;"></div>
+          <div class="skeleton" style="height:13px;width:60%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error -->
+    <div class="error-box" *ngIf="error && !isLoading">
+      <i class="fas fa-exclamation-triangle"></i>
+      <p>{{ error }}</p>
+    </div>
+
+    <!-- Sin resultados -->
+    <div class="empty-state" *ngIf="!isLoading && !error && filtered.length === 0">
+      <i class="fas fa-hand-sparkles"></i>
+      <h3>No hay diseños en este estilo</h3>
+      <button (click)="setStyle('')">Ver todos</button>
+    </div>
+
+    <!-- Grid de diseños -->
+    <div class="designs-grid" *ngIf="!isLoading && filtered.length > 0">
+      <div class="design-card fade-in-up"
+           *ngFor="let d of filtered; let i = index"
+           [class]="'delay-' + ((i % 8) + 1)"
+           [class.expanded]="expandedId === d.id">
+
+        <!-- Imagen -->
+        <div class="design-img">
+          <img [src]="d.image_url || 'assets/images/nails-placeholder.jpg'"
+               [alt]="d.name"
+               (error)="d.image_url = 'assets/images/nails-placeholder.jpg'">
+          <div class="design-style-tag" *ngIf="d.style">{{ d.style }}</div>
+        </div>
+
+        <!-- Info principal -->
+        <div class="design-info">
+          <h3>{{ d.name }}</h3>
+          <p class="design-description">{{ d.description }}</p>
+
+          <div class="design-meta">
+            <span class="meta-item" *ngIf="d.duration">
+              <i class="fas fa-clock"></i> {{ d.duration }}
+            </span>
+            <span class="meta-item price" *ngIf="d.price">
+              <i class="fas fa-tag"></i> ${{ d.price | number:'1.0-0' }} MXN
+            </span>
+          </div>
+
+          <!-- Botón ver proceso -->
+          <button class="process-toggle" (click)="toggleExpand(d.id)">
+            <span>{{ expandedId === d.id ? 'Ocultar proceso' : 'Ver proceso paso a paso' }}</span>
+            <i class="fas" [class.fa-chevron-down]="expandedId !== d.id" [class.fa-chevron-up]="expandedId === d.id"></i>
+          </button>
+
+          <!-- Panel de proceso -->
+          <div class="process-panel" [class.open]="expandedId === d.id">
+            <h4><i class="fas fa-list-ol"></i> Proceso</h4>
+            <ol class="process-steps">
+              <li *ngFor="let step of formatProcess(d.process)">{{ step }}</li>
+            </ol>
+          </div>
+
+          <button class="btn-agenda">
+            <i class="fas fa-calendar-check"></i> Agendar cita
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

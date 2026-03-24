@@ -1,0 +1,38 @@
+<div class="favorites-page">
+    <div class="container">
+        <div class="favorites-header">
+            <h1>Mis Favoritos</h1>
+            <p *ngIf="favorites.length > 0">Tienes {{ favorites.length }} productos guardados</p>
+        </div>
+
+        <div class="favorites-grid" *ngIf="favorites.length > 0; else emptyFavs">
+            <div class="fav-card" *ngFor="let fav of favorites">
+                <div class="fav-image">
+                    <img [src]="fav.product.image_url" [alt]="fav.product.name">
+                    <button class="remove-btn" (click)="removeFavorite(fav.product.id)" title="Eliminar de favoritos">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="fav-info">
+                    <span class="category">{{ fav.product.category }}</span>
+                    <h3 routerLink="/busqueda" [queryParams]="{ q: fav.product.name }">{{ fav.product.name }}</h3>
+                    <p class="price">{{ fav.product.price | currency:'MXN' }}</p>
+
+                    <button class="btn-maybelline" [disabled]="fav.product.stock === 0"
+                        (click)="addToCart(fav.product)">
+                        {{ fav.product.stock > 0 ? 'Añadir al carrito' : 'Agotado' }}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <ng-template #emptyFavs>
+            <div class="empty-state fade-in">
+                <i class="fas fa-heart"></i>
+                <h2>Aún no tienes favoritos</h2>
+                <p>Guarda los productos que más te gustan para verlos después.</p>
+                <button class="btn-maybelline" routerLink="/busqueda">Explorar Catálogo</button>
+            </div>
+        </ng-template>
+    </div>
+</div>

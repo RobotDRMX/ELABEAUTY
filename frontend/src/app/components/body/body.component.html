@@ -1,89 +1,193 @@
-<div class="container">
-  <div class="content">
-    <!-- Sección de Bienvenida -->
-    <div class="welcome-section">
-      <h1>ELA Beauty</h1>
-      <p>Descubre la magia del maquillaje con productos innovadores de alta calidad. Desde el icónico labial rojo hasta la máscara de pestañas número 1, realza tu belleza única.</p>
+<!-- ===== HERO SECTION ===== -->
+<section class="hero-section">
+  <div class="hero-bg-shapes">
+    <span class="shape shape-1"></span>
+    <span class="shape shape-2"></span>
+    <span class="shape shape-3"></span>
+  </div>
+
+  <div class="container">
+    <div class="hero-content">
+
+      <div class="hero-text fade-in-left">
+        <span class="hero-eyebrow">Nueva Colección 2025</span>
+        <h1 class="hero-title">
+          Tu belleza,<br>
+          <span class="hero-title-accent">nuestra pasión</span>
+        </h1>
+        <p class="hero-subtitle">
+          Descubre productos de maquillaje de alta calidad diseñados para realzar tu belleza única. Fórmulas innovadoras, colores vibrantes.
+        </p>
+        <div class="hero-actions">
+          <a routerLink="/busqueda" class="btn-hero-primary">
+            <i class="fas fa-th-large"></i> Explorar Catálogo
+          </a>
+          <a routerLink="/busqueda" [queryParams]="{ sortBy: 'price', order: 'ASC' }" class="btn-hero-secondary">
+            Ver Ofertas <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <strong>+200</strong>
+            <span>Productos</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <strong>4.9</strong>
+            <span>Valoración</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <strong>+5k</strong>
+            <span>Clientas</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual fade-in-right">
+        <div class="hero-icon-grid">
+          <div class="hero-icon-card delay-1">
+            <i class="fas fa-kiss-wink-heart"></i>
+            <span>Labiales</span>
+          </div>
+          <div class="hero-icon-card delay-2">
+            <i class="fas fa-eye"></i>
+            <span>Ojos</span>
+          </div>
+          <div class="hero-icon-card highlight delay-3">
+            <i class="fas fa-palette"></i>
+            <span>Rostro</span>
+          </div>
+          <div class="hero-icon-card delay-4">
+            <i class="fas fa-hand-sparkles"></i>
+            <span>Uñas</span>
+          </div>
+          <div class="hero-icon-card delay-5">
+            <i class="fas fa-moon"></i>
+            <span>Sombras</span>
+          </div>
+          <div class="hero-icon-card delay-6">
+            <i class="fas fa-circle"></i>
+            <span>Rubores</span>
+          </div>
+        </div>
+      </div>
+
     </div>
+  </div>
+</section>
 
-    <!-- Banner promocional -->
-    <section class="banner-section">
-      <h2>COLECCIÓN DE OTOÑO 2024</h2>
-      <p>Descubre los nuevos tonos que están arrasando esta temporada</p>
-      <button class="cta-button">Descubrir Colección</button>
-    </section>
-    
-    <!-- Categorías destacadas -->
-    <section class="categories-section">
-      <h2>Categorías Destacadas</h2>
-      <div class="categories-grid">
-        <div class="category-card" *ngFor="let category of categories">
-          <div class="category-image">
-            <span class="category-icon">{{ category.icon }}</span>
-          </div>
-          <div class="category-info">
-            <h3 class="category-name">{{ category.name }}</h3>
-            <p class="category-count">{{ category.count }}</p>
-          </div>
-        </div>
-      </div>
-    </section>
-    
-    <!-- Productos destacados -->
-    <section class="featured-products-section">
-      <h2>Productos Destacados</h2>
-      <div class="products-grid">
-        <div class="product-card" *ngFor="let product of featuredProducts">
-          <div class="product-badge">{{ product.badge }}</div>
-          <div class="product-image">
-            <span class="product-icon">{{ product.icon }}</span>
-          </div>
-          <div class="product-info">
-            <h3>{{ product.name }}</h3>
-            <p class="product-description">{{ product.description }}</p>
-            <p class="product-price">${{ product.price }} MXN</p>
-            <button class="product-btn">Añadir al carrito</button>
-          </div>
-        </div>
-      </div>
-    </section>
-    
-    <!-- Ofertas especiales -->
-    <section class="offers-section">
-      <h2>Ofertas Especiales</h2>
-      <div class="offer-timer">
-        <span class="timer-icon">⏰</span> Termina en: 2 días
-      </div>
-    </section>
-
-    <!-- Marcas -->
-    <section class="brands-section">
-      <h2>Nuestra Filosofía de Belleza</h2>
-      <div class="brands-grid">
-        <div class="brand-item" *ngFor="let feature of brandFeatures">
-          <span class="brand-icon">{{ feature.icon }}</span>
-          <h3>{{ feature.title }}</h3>
-          <p>{{ feature.description }}</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Testimonios -->
-    <section class="testimonials-section">
-      <h2>Lo que Dicen Nuestras Clientas</h2>
-      <div class="testimonials-slider">
-        <div class="testimonial-card">
-          <div class="testimonial-rating">
-            <span>⭐</span>
-            <span>⭐</span>
-            <span>⭐</span>
-            <span>⭐</span>
-            <span>⭐</span>
-          </div>
-          <p class="testimonial-text">"Los labiales de ELA Beauty son increíbles. No se mueven en todo el día y los colores son espectaculares."</p>
-          <p class="testimonial-author">- Ana G.</p>
-        </div>
-      </div>
-    </section>
+<!-- ===== PROMO TICKER ===== -->
+<div class="promo-ticker">
+  <div class="ticker-track">
+    <span><i class="fas fa-shipping-fast"></i> Envío gratis en compras mayores a $500 MXN</span>
+    <span><i class="fas fa-star"></i> Productos cruelty-free certificados</span>
+    <span><i class="fas fa-tag"></i> Hasta 30% de descuento en ofertas semanales</span>
+    <span><i class="fas fa-shield-alt"></i> Devoluciones gratis en 30 días</span>
+    <span><i class="fas fa-shipping-fast"></i> Envío gratis en compras mayores a $500 MXN</span>
+    <span><i class="fas fa-star"></i> Productos cruelty-free certificados</span>
+    <span><i class="fas fa-tag"></i> Hasta 30% de descuento en ofertas semanales</span>
+    <span><i class="fas fa-shield-alt"></i> Devoluciones gratis en 30 días</span>
   </div>
 </div>
+
+<!-- ===== CATEGORIES SECTION ===== -->
+<section class="categories-section">
+  <div class="container">
+    <h2 class="section-title fade-in-up">Categorías Destacadas</h2>
+
+    <div class="categories-grid">
+      <a class="category-card fade-in-up"
+         *ngFor="let cat of categories; let i = index"
+         [class]="'delay-' + (i + 1)"
+         routerLink="/busqueda"
+         [queryParams]="{ category: cat.searchKey }">
+        <div class="category-icon-wrap" [style.background]="cat.gradient">
+          <i [class]="cat.faIcon"></i>
+        </div>
+        <div class="category-info">
+          <h3>{{ cat.name }}</h3>
+          <p>{{ cat.count }}</p>
+        </div>
+        <div class="category-arrow">
+          <i class="fas fa-arrow-right"></i>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FEATURED PRODUCTS SECTION ===== -->
+<section class="featured-section">
+  <div class="container">
+    <h2 class="section-title fade-in-up">Productos Destacados</h2>
+
+    <div class="featured-grid">
+      <div class="featured-card fade-in-up"
+           *ngFor="let product of featuredProducts; let i = index"
+           [class]="'delay-' + (i + 1)">
+        <div class="featured-badge">{{ product.badge }}</div>
+        <div class="featured-image" [style.background]="product.gradient">
+          <i [class]="product.faIcon" [style.color]="product.iconColor"></i>
+        </div>
+        <div class="featured-info">
+          <h3>{{ product.name }}</h3>
+          <p>{{ product.description }}</p>
+          <div class="featured-footer">
+            <span class="featured-price">${{ product.price }} MXN</span>
+            <a routerLink="/busqueda" class="featured-btn">
+              Ver más <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BRAND FEATURES SECTION ===== -->
+<section class="features-section">
+  <div class="container">
+    <h2 class="section-title fade-in-up">Nuestra Filosofía</h2>
+    <div class="features-grid">
+      <div class="feature-item fade-in-up"
+           *ngFor="let feat of brandFeatures; let i = index"
+           [class]="'delay-' + (i + 1)">
+        <div class="feature-icon-wrap">
+          <i [class]="feat.faIcon"></i>
+        </div>
+        <h3>{{ feat.title }}</h3>
+        <p>{{ feat.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIALS SECTION ===== -->
+<section class="testimonials-section">
+  <div class="container">
+    <h2 class="section-title fade-in-up">Lo que Dicen Nuestras Clientas</h2>
+
+    <div class="testimonials-wrapper">
+      <div class="testimonial-card fade-in-up"
+           *ngFor="let t of testimonials; let i = index"
+           [class.active]="i === activeTestimonial"
+           [class]="'delay-' + (i + 1)">
+        <div class="testimonial-avatar">{{ t.avatar }}</div>
+        <div class="testimonial-stars">
+          <i class="fas fa-star" *ngFor="let s of getStars(t.rating)"></i>
+        </div>
+        <p class="testimonial-text">"{{ t.text }}"</p>
+        <p class="testimonial-author">— {{ t.author }}</p>
+      </div>
+    </div>
+
+    <div class="testimonial-dots">
+      <button class="dot"
+              *ngFor="let t of testimonials; let i = index"
+              [class.active]="i === activeTestimonial"
+              (click)="setTestimonial(i)">
+      </button>
+    </div>
+  </div>
+</section>

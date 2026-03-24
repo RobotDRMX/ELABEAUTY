@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdminProductsService } from '../services-api/admin-products.service';
 import { ToastService } from '../shared/toast.service';
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-admin-products',
@@ -15,6 +16,7 @@ export class ProductsComponent implements OnInit {
   private service = inject(AdminProductsService);
   private fb = inject(FormBuilder);
   protected toastService = inject(ToastService);
+  private notif = inject(NotificationService);
 
   items = signal<any[]>([]);
   total = signal(0);
@@ -127,8 +129,9 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  remove(item: any) {
-    if (!confirm(`¿Eliminar permanentemente "${item.name}"?`)) return;
+  async remove(item: any) {
+    const ok = await this.notif.confirm('Eliminar producto', `¿Eliminar permanentemente "${item.name}"?`, { danger: true, confirmText: 'Eliminar' });
+    if (!ok) return;
     this.service.remove(item.id).subscribe({
       next: () => { this.loadData(); this.toastService.show('Producto eliminado'); },
       error: (err) => this.toastService.show(err?.error?.message ?? 'Error', 'error'),

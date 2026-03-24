@@ -1,0 +1,410 @@
+<div class="cart-page">
+    <div class="container">
+        <div class="cart-header">
+            <h1>Tu Carrito de Compras</h1>
+            <p *ngIf="cart?.items?.length > 0">Tienes {{ cartService.itemCount() }} productos en tu bolsa</p>
+        </div>
+
+        <div class="cart-container" *ngIf="cart?.items?.length > 0; else emptyCart">
+            <!-- Lista de Items -->
+            <div class="cart-items">
+                <div class="cart-item" *ngFor="let item of cart.items">
+                    <div class="item-image">
+                        <img [src]="item.product.image_url" [alt]="item.product.name">
+                    </div>
+                    <div class="item-details">
+                        <h3 routerLink="/busqueda" [queryParams]="{ q: item.product.name }">{{ item.product.name }}</h3>
+                        <p class="item-category">{{ item.product.category }}</p>
+                        <div class="item-actions">
+                            <div class="quantity-control">
+                                <button (click)="updateQuantity(item.product.id, item.quantity - 1)">−</button>
+                                <span>{{ item.quantity }}</span>
+                                <button (click)="updateQuantity(item.product.id, item.quantity + 1)">+</button>
+                            </div>
+                            <button class="remove-btn" (click)="removeItem(item.product.id)">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
+                                </svg>
+                                Eliminar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="item-price">
+                        <p class="unit-price">{{ item.product.price | currency:'MXN' }} c/u</p>
+                        <p class="subtotal">{{ (item.product.price * item.quantity) | currency:'MXN' }}</p>
+                    </div>
+                </div>
+
+                <button class="clear-btn" (click)="clearCart()">Vaciar Carrito</button>
+            </div>
+
+            <!-- Resumen de Compra -->
+            <aside class="cart-summary">
+                <div class="summary-card">
+                    <h2>Resumen del pedido</h2>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>{{ total | currency:'MXN' }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Envío</span>
+                        <span class="free-shipping" *ngIf="total >= 500">GRATIS</span>
+                        <span *ngIf="total < 500">{{ 50 | currency:'MXN' }}</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>Total</span>
+                        <span>{{ finalTotal | currency:'MXN' }}</span>
+                    </div>
+
+                    <button class="btn-maybelline checkout-btn" (click)="checkout()">
+                        Proceder al Pago
+                    </button>
+
+                    <div class="shipping-info" *ngIf="total < 500">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        <p>¡Agrega <strong>{{ (500 - total) | currency:'MXN' }}</strong> más para obtener <strong>envío gratis</strong>!</p>
+                    </div>
+                    <div class="shipping-info-success" *ngIf="total >= 500">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                        <p>¡Tienes <strong>envío gratis</strong>! ✨</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Carrito Vacío -->
+        <ng-template #emptyCart>
+            <div class="empty-state fade-in">
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+                </svg>
+                <h2>Tu carrito está vacío</h2>
+                <p>¿Aún no te has decidido? ¡Explora nuestro catálogo y encuentra lo que amas!</p>
+                <button class="btn-maybelline" routerLink="/busqueda">Ver Productos</button>
+            </div>
+        </ng-template>
+    </div>
+</div>
+
+<!-- ====== CHECKOUT MODAL ====== -->
+@if (showCheckout()) {
+<div class="checkout-overlay" (click)="closeCheckout()">
+    <div class="checkout-modal" (click)="$event.stopPropagation()">
+
+        <!-- Header -->
+        @if (currentStep() !== 'success') {
+        <div class="checkout-header">
+            <div class="checkout-steps">
+                <div class="step" [class.active]="stepIndex() >= 0" [class.done]="stepIndex() > 0">
+                    <div class="step-dot">
+                        @if (stepIndex() > 0) {
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                        } @else { 1 }
+                    </div>
+                    <span>Envío</span>
+                </div>
+                <div class="step-line" [class.done]="stepIndex() > 0"></div>
+                <div class="step" [class.active]="stepIndex() >= 1" [class.done]="stepIndex() > 1">
+                    <div class="step-dot">
+                        @if (stepIndex() > 1) {
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                        } @else { 2 }
+                    </div>
+                    <span>Pago</span>
+                </div>
+                <div class="step-line" [class.done]="stepIndex() > 1"></div>
+                <div class="step" [class.active]="stepIndex() >= 2">
+                    <div class="step-dot">3</div>
+                    <span>Confirmar</span>
+                </div>
+            </div>
+            <button class="checkout-close" (click)="closeCheckout()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+        }
+
+        <!-- STEP 1: Dirección -->
+        @if (currentStep() === 'address') {
+        <div class="checkout-body">
+            <h2 class="step-title">Dirección de envío</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Nombre *</label>
+                    <input type="text" [(ngModel)]="address.firstName" placeholder="Nombre">
+                </div>
+                <div class="form-group">
+                    <label>Apellido *</label>
+                    <input type="text" [(ngModel)]="address.lastName" placeholder="Apellido">
+                </div>
+                <div class="form-group full-width">
+                    <label>Calle y número *</label>
+                    <input type="text" [(ngModel)]="address.street" placeholder="Ej: Av. Insurgentes 123, Int. 4">
+                </div>
+                <div class="form-group">
+                    <label>Colonia *</label>
+                    <input type="text" [(ngModel)]="address.colonia" placeholder="Colonia">
+                </div>
+                <div class="form-group">
+                    <label>Ciudad *</label>
+                    <input type="text" [(ngModel)]="address.city" placeholder="Ciudad">
+                </div>
+                <div class="form-group">
+                    <label>Estado *</label>
+                    <select [(ngModel)]="address.state">
+                        <option value="">Selecciona un estado</option>
+                        <option>Aguascalientes</option><option>Baja California</option>
+                        <option>CDMX</option><option>Chihuahua</option>
+                        <option>Coahuila</option><option>Colima</option>
+                        <option>Durango</option><option>Guanajuato</option>
+                        <option>Guerrero</option><option>Hidalgo</option>
+                        <option>Jalisco</option><option>México</option>
+                        <option>Michoacán</option><option>Morelos</option>
+                        <option>Nayarit</option><option>Nuevo León</option>
+                        <option>Oaxaca</option><option>Puebla</option>
+                        <option>Querétaro</option><option>Quintana Roo</option>
+                        <option>San Luis Potosí</option><option>Sinaloa</option>
+                        <option>Sonora</option><option>Tabasco</option>
+                        <option>Tamaulipas</option><option>Tlaxcala</option>
+                        <option>Veracruz</option><option>Yucatán</option>
+                        <option>Zacatecas</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Código postal *</label>
+                    <input type="text" [(ngModel)]="address.zip" placeholder="00000" maxlength="5">
+                </div>
+                <div class="form-group">
+                    <label>Teléfono *</label>
+                    <input type="tel" [(ngModel)]="address.phone" placeholder="10 dígitos">
+                </div>
+            </div>
+        </div>
+        <div class="checkout-footer">
+            <span></span>
+            <button class="btn-maybelline" [disabled]="!isAddressValid()" (click)="goToStep('payment')">
+                Continuar al Pago →
+            </button>
+        </div>
+        }
+
+        <!-- STEP 2: Método de pago -->
+        @if (currentStep() === 'payment') {
+        <div class="checkout-body">
+            <h2 class="step-title">Método de pago</h2>
+
+            <div class="payment-options">
+                <label class="payment-option" [class.selected]="paymentMethod() === 'card'">
+                    <input type="radio" name="payment" value="card" (change)="paymentMethod.set('card')" [checked]="paymentMethod() === 'card'">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+                    </svg>
+                    <div>
+                        <strong>Tarjeta de crédito / débito</strong>
+                        <span>Visa, Mastercard, AMEX</span>
+                    </div>
+                </label>
+                <label class="payment-option" [class.selected]="paymentMethod() === 'cash'">
+                    <input type="radio" name="payment" value="cash" (change)="paymentMethod.set('cash')" [checked]="paymentMethod() === 'cash'">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/>
+                        <path d="M6 12h.01M18 12h.01"/>
+                    </svg>
+                    <div>
+                        <strong>Efectivo en tienda</strong>
+                        <span>Recoge y paga en sucursal</span>
+                    </div>
+                </label>
+                <label class="payment-option" [class.selected]="paymentMethod() === 'oxxo'">
+                    <input type="radio" name="payment" value="oxxo" (change)="paymentMethod.set('oxxo')" [checked]="paymentMethod() === 'oxxo'">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                    <div>
+                        <strong>Pago en OXXO</strong>
+                        <span>Genera tu referencia y paga en cualquier OXXO</span>
+                    </div>
+                </label>
+            </div>
+
+            @if (paymentMethod() === 'card') {
+            <div class="card-form">
+                <div class="card-preview">
+                    <div class="card-chip">
+                        <svg width="30" height="24" viewBox="0 0 30 24" fill="none">
+                            <rect width="30" height="24" rx="4" fill="rgba(255,255,255,0.2)"/>
+                            <rect x="6" y="4" width="18" height="16" rx="2" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.4)"/>
+                        </svg>
+                    </div>
+                    <div class="card-number-preview">{{ maskedCard() }}</div>
+                    <div class="card-info-preview">
+                        <span>{{ card.name || 'NOMBRE EN TARJETA' }}</span>
+                        <span>{{ card.expiry || 'MM/AA' }}</span>
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label>Número de tarjeta *</label>
+                        <input type="text" [value]="card.number" (input)="formatCardNumber($event)" placeholder="0000 0000 0000 0000" maxlength="19">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Nombre en la tarjeta *</label>
+                        <input type="text" [(ngModel)]="card.name" placeholder="Como aparece en la tarjeta" style="text-transform:uppercase">
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de vencimiento *</label>
+                        <input type="text" [value]="card.expiry" (input)="formatExpiry($event)" placeholder="MM/AA" maxlength="5">
+                    </div>
+                    <div class="form-group">
+                        <label>CVV *</label>
+                        <input type="password" [(ngModel)]="card.cvv" placeholder="•••" maxlength="4">
+                    </div>
+                </div>
+            </div>
+            }
+
+            @if (paymentMethod() === 'oxxo') {
+            <div class="oxxo-info">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary-color)" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                <p>Después de confirmar, recibirás una <strong>referencia de pago</strong>. Tienes <strong>48 horas</strong> para pagar en cualquier tienda OXXO del país.</p>
+            </div>
+            }
+
+            @if (paymentMethod() === 'cash') {
+            <div class="oxxo-info">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary-color)" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                <p>Tu pedido quedará reservado por <strong>24 horas</strong>. Preséntate en sucursal con tu número de orden para pagar y recoger.</p>
+            </div>
+            }
+        </div>
+        <div class="checkout-footer">
+            <button class="btn-outline" (click)="goToStep('address')">← Volver</button>
+            <button class="btn-maybelline" [disabled]="!isPaymentValid()" (click)="goToStep('review')">
+                Revisar pedido →
+            </button>
+        </div>
+        }
+
+        <!-- STEP 3: Revisión / procesando -->
+        @if (currentStep() === 'review') {
+        <div class="checkout-body">
+            @if (processingPayment()) {
+            <div class="processing-state">
+                <div class="processing-spinner"></div>
+                <h2>Procesando tu pago...</h2>
+                <p>No cierres esta ventana. Estamos verificando tu información de manera segura.</p>
+                <div class="processing-steps">
+                    <div class="proc-step active">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        Verificando datos
+                    </div>
+                    <div class="proc-step active">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        Procesando pago
+                    </div>
+                    <div class="proc-step loading">
+                        <div class="mini-spinner"></div>
+                        Confirmando orden
+                    </div>
+                </div>
+            </div>
+            } @else {
+            <h2 class="step-title">Revisa tu pedido</h2>
+            <div class="review-section">
+                <h3>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    Dirección de envío
+                </h3>
+                <p>{{ address.firstName }} {{ address.lastName }}</p>
+                <p>{{ address.street }}, {{ address.colonia }}</p>
+                <p>{{ address.city }}, {{ address.state }} {{ address.zip }}</p>
+                <p>Tel: {{ address.phone }}</p>
+            </div>
+            <div class="review-section">
+                <h3>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                    Método de pago
+                </h3>
+                <p>{{ paymentLabel() }}</p>
+                @if (paymentMethod() === 'card') {
+                    <p class="card-masked">{{ maskedCard() }}</p>
+                }
+            </div>
+            <div class="review-section">
+                <h3>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
+                    Productos ({{ cartService.itemCount() }})
+                </h3>
+                <div class="review-items">
+                    @for (item of cart?.items; track item.product.id) {
+                    <div class="review-item">
+                        <span>{{ item.product.name }} × {{ item.quantity }}</span>
+                        <span>{{ (item.product.price * item.quantity) | currency:'MXN' }}</span>
+                    </div>
+                    }
+                </div>
+                <div class="review-total">
+                    <div class="review-row"><span>Subtotal</span><span>{{ total | currency:'MXN' }}</span></div>
+                    <div class="review-row"><span>Envío</span><span>{{ shipping === 0 ? 'GRATIS' : (shipping | currency:'MXN') }}</span></div>
+                    <div class="review-row grand-total"><strong>Total</strong><strong>{{ finalTotal | currency:'MXN' }}</strong></div>
+                </div>
+            </div>
+            }
+        </div>
+        @if (!processingPayment()) {
+        <div class="checkout-footer">
+            <button class="btn-outline" (click)="goToStep('payment')">← Volver</button>
+            <button class="btn-maybelline confirm-btn" (click)="confirmOrder()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                Confirmar y Pagar
+            </button>
+        </div>
+        }
+        }
+
+        <!-- STEP 4: Éxito -->
+        @if (currentStep() === 'success') {
+        <div class="checkout-body success-body">
+            <div class="success-icon">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+                    <polyline points="20 6 9 17 4 12"/>
+                </svg>
+            </div>
+            <h2>¡Pedido confirmado!</h2>
+            <p class="success-subtitle">Tu orden ha sido procesada con éxito</p>
+            <div class="order-number">
+                <span class="order-label">Número de orden</span>
+                <span class="order-code">{{ orderNumber() }}</span>
+            </div>
+            <p class="success-msg">
+                @if (paymentMethod() === 'card') {
+                    Recibirás un correo de confirmación con los detalles de tu pedido. El tiempo de entrega estimado es de <strong>3–5 días hábiles</strong>.
+                }
+                @if (paymentMethod() === 'oxxo') {
+                    Tu referencia de pago será enviada a tu correo. Tienes <strong>48 horas</strong> para realizar el pago en OXXO.
+                }
+                @if (paymentMethod() === 'cash') {
+                    Tu pedido está reservado por <strong>24 horas</strong>. Visita cualquier sucursal con tu número de orden para pagar y recoger.
+                }
+            </p>
+            <div class="success-actions">
+                <button class="btn-maybelline" (click)="closeCheckout()" routerLink="/">Seguir comprando</button>
+            </div>
+        </div>
+        }
+
+    </div>
+</div>
+}

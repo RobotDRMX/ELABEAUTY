@@ -3,43 +3,46 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateCol
 @Entity('products')
 export class Product {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column()
-  name: string;
+  name!: string;
 
   @Column('text')
-  description: string;
+  description!: string;
 
   @Column('decimal', { precision: 10, scale: 2 })
-  price: number;
+  price!: number;
 
   @Column()
-  category: string;
+  category!: string;
 
   @Column()
-  subcategory: string;
+  subcategory!: string;
 
   @Column({ default: 0 })
-  stock: number;
+  stock!: number;
 
   @Column()
-  image_url: string;
+  image_url!: string;
 
   @Column({ default: true })
-  is_active: boolean;
+  is_active!: boolean;
 
   @Column({ default: 0 })
-  rating: number;
+  rating!: number;
 
   @Column({ default: 0 })
-  review_count: number;
+  review_count!: number;
+
+  @Column({ default: 'Todas' })
+  target_age!: string;
 
   @CreateDateColumn()
-  created_at: Date;
+  created_at!: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updated_at!: Date;
 
   // Métodos
   hasStock(): boolean {

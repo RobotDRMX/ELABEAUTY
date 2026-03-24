@@ -2,17 +2,17 @@ import { IsString, IsNumber, IsUrl, IsOptional, Min, Max } from 'class-validator
 
 export class CreateProductDto {
   @IsString()
-  name: string;
+  name!: string;
 
   @IsString()
-  description: string;
+  description!: string;
 
   @IsNumber()
   @Min(0)
-  price: number;
+  price!: number;
 
   @IsString()
-  category: string;
+  category!: string;
 
   @IsString()
   @IsOptional()
@@ -20,7 +20,7 @@ export class CreateProductDto {
 
   @IsNumber()
   @Min(0)
-  stock: number;
+  stock!: number;
 
   @IsUrl()
   @IsOptional()
@@ -31,4 +31,8 @@ export class CreateProductDto {
   @Max(5)
   @IsOptional()
   rating?: number;
+
+  @IsString()
+  @IsOptional()
+  target_age?: string;
 }

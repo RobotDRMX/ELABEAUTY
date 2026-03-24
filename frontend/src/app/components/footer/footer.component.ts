@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-footer',
@@ -11,7 +12,7 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent {
-  // Email para newsletter
+  private notif = inject(NotificationService);
   newsletterEmail: string = '';
 
   // Enlaces de atención al cliente
@@ -78,9 +79,7 @@ export class FooterComponent {
   // Método para suscribir al newsletter
   subscribeNewsletter() {
     if (this.newsletterEmail) {
-      console.log('Suscribiendo email:', this.newsletterEmail);
-      // TODO: Implementar lógica de suscripción real
-      alert('¡Gracias por suscribirte a MAYBELLINE! Pronto recibirás nuestras ofertas exclusivas y tips de belleza.');
+      this.notif.toast('¡Suscripción exitosa! Pronto recibirás nuestras ofertas exclusivas.', 'success');
       this.newsletterEmail = '';
     }
   }

@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from '../auth/auth.module';
+import { RolesGuard } from '../common/guards/roles.guard';
 import { User } from '../users/entities/user.entity';
 import { Product } from '../products/entities/product.entity';
 import { Hairstyle } from '../hairstyles/hairstyles.module';
@@ -21,6 +23,7 @@ import { AdminUsersService } from './users/admin-users.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, Product, Hairstyle, NailDesign, Service]),
+    AuthModule,
   ],
   controllers: [
     AdminController,
@@ -31,6 +34,7 @@ import { AdminUsersService } from './users/admin-users.service';
     AdminUsersController,
   ],
   providers: [
+    RolesGuard,
     AdminService,
     AdminProductsService,
     AdminHairstylesService,

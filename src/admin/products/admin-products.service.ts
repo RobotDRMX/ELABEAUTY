@@ -5,12 +5,14 @@ import { Product } from '../../products/entities/product.entity';
 import { CreateProductDto } from '../../products/dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { AdminListDto } from '../dto/admin-list.dto';
+import { EventsService } from '../../events/events.service';
 
 @Injectable()
 export class AdminProductsService {
   constructor(
     @InjectRepository(Product)
     private readonly repo: Repository<Product>,
+    private readonly events: EventsService,
   ) {}
 
   async findAll(dto: AdminListDto) {
@@ -28,14 +30,18 @@ export class AdminProductsService {
 
   async create(dto: CreateProductDto): Promise<Product> {
     const product = this.repo.create(dto);
-    return this.repo.save(product);
+    const saved = await this.repo.save(product);
+    this.events.emit('products:updated');
+    return saved;
   }
 
   async update(id: number, dto: UpdateProductDto): Promise<Product> {
     const product = await this.repo.findOne({ where: { id } });
     if (!product) throw new NotFoundException(`Producto #${id} no encontrado`);
     Object.assign(product, dto);
-    return this.repo.save(product);
+    const saved = await this.repo.save(product);
+    this.events.emit('products:updated');
+    return saved;
   }
 
   async deactivate(id: number): Promise<Product> {
@@ -43,7 +49,9 @@ export class AdminProductsService {
     if (!product) throw new NotFoundException(`Producto #${id} no encontrado`);
     if (!product.is_active) throw new BadRequestException('El producto ya está desactivado');
     product.is_active = false;
-    return this.repo.save(product);
+    const saved = await this.repo.save(product);
+    this.events.emit('products:updated');
+    return saved;
   }
 
   async restore(id: number): Promise<Product> {
@@ -51,7 +59,9 @@ export class AdminProductsService {
     if (!product) throw new NotFoundException(`Producto #${id} no encontrado`);
     if (product.is_active) throw new BadRequestException('El producto ya está activo');
     product.is_active = true;
-    return this.repo.save(product);
+    const saved = await this.repo.save(product);
+    this.events.emit('products:updated');
+    return saved;
   }
 
   async remove(id: number): Promise<{ message: string }> {
@@ -63,6 +73,7 @@ export class AdminProductsService {
       );
     }
     await this.repo.delete(id);
+    this.events.emit('products:updated');
     return { message: `Producto #${id} eliminado permanentemente` };
   }
 }

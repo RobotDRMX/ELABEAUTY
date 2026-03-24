@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdminServicesService } from '../services-api/admin-services.service';
 import { ToastService } from '../shared/toast.service';
+import { NotificationService } from '../../../services/notification.service';
 
 const SERVICE_CATEGORIES = ['facial', 'corporal', 'spa', 'masajes', 'manicure', 'pedicure'];
 
@@ -17,6 +18,7 @@ export class ServicesComponent implements OnInit {
   private service = inject(AdminServicesService);
   private fb = inject(FormBuilder);
   protected toastService = inject(ToastService);
+  private notif = inject(NotificationService);
 
   categories = SERVICE_CATEGORIES;
   items = signal<any[]>([]);
@@ -85,8 +87,9 @@ export class ServicesComponent implements OnInit {
     });
   }
 
-  remove(item: any) {
-    if (!confirm(`¿Eliminar permanentemente "${item.name}"?`)) return;
+  async remove(item: any) {
+    const ok = await this.notif.confirm('Eliminar servicio', `¿Eliminar permanentemente "${item.name}"?`, { danger: true, confirmText: 'Eliminar' });
+    if (!ok) return;
     this.service.remove(item.id).subscribe({
       next: () => { this.loadData(); this.toastService.show('Servicio eliminado'); },
       error: (err) => this.toastService.show(err?.error?.message ?? 'Error', 'error'),

@@ -14,14 +14,15 @@
   @else {
     <table class="admin-table">
       <thead>
-        <tr><th>Email</th><th>Nombre</th><th>Apellido</th><th>Rol</th><th>Estado</th><th>Registro</th><th>Acciones</th></tr>
+        <tr><th>Email</th><th>Nombre</th><th>Apellido Paterno</th><th>Apellido Materno</th><th>Rol</th><th>Estado</th><th>Registro</th><th>Acciones</th></tr>
       </thead>
       <tbody>
         @for (user of items(); track user.id) {
           <tr>
             <td>{{ user.email }}</td>
             <td>{{ user.firstName }}</td>
-            <td>{{ user.lastName }}</td>
+            <td>{{ user.apellidoPaterno }}</td>
+            <td>{{ user.apellidoMaterno }}</td>
             <td><span class="badge badge--{{ user.role }}">{{ user.role }}</span></td>
             <td>
               <span class="badge" [class.badge--active]="user.isActive" [class.badge--inactive]="!user.isActive">

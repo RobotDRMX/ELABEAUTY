@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ELA Beauty — Guía de Estilos</title>
+  <style>
+    :root {
+      --pink: #e6007e;
+      --pink-light: #ff4da6;
+      --pink-dark: #b3005e;
+      --black: #000000;
+      --white: #ffffff;
+      --gray-100: #f5f5f5;
+      --gray-200: #eeeeee;
+      --gray-300: #e0e0e0;
+      --text-secondary: #666666;
+      --font-heading: 'Montserrat', sans-serif;
+      --font-body: 'Open Sans', sans-serif;
+    }
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Open+Sans:wght@400;600&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: var(--font-body); color: #111; background: #fafafa; line-height: 1.6; }
+
+    /* Layout */
+    .page-header {
+      background: linear-gradient(135deg, #000 60%, #e6007e);
+      color: white;
+      padding: 48px 40px;
+    }
+    .page-header h1 { font-family: var(--font-heading); font-size: 2.2rem; font-weight: 900; letter-spacing: 1px; }
+    .page-header p  { opacity: 0.7; margin-top: 6px; font-size: 0.95rem; }
+
+    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 48px 0; border-bottom: 1px solid var(--gray-300); }
+    .section:last-child { border-bottom: none; }
+    h2 {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--pink);
+      margin-bottom: 28px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--pink);
+      display: inline-block;
+    }
+    h3 { font-family: var(--font-heading); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 12px; }
+
+    /* Grid */
+    .grid { display: flex; flex-wrap: wrap; gap: 16px; }
+    .card {
+      background: white;
+      border: 1px solid var(--gray-300);
+      border-radius: 10px;
+      padding: 20px;
+      min-width: 160px;
+      flex: 1;
+    }
+
+    /* ── COLORES ── */
+    .swatch-grid { display: flex; flex-wrap: wrap; gap: 16px; }
+    .swatch {
+      width: 110px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      font-size: 0.78rem;
+    }
+    .swatch-color { height: 70px; }
+    .swatch-info { background: white; padding: 8px 10px; }
+    .swatch-name { font-weight: 700; display: block; }
+    .swatch-hex  { color: #888; font-family: monospace; }
+
+    /* ── TIPOGRAFÍA ── */
+    .type-sample { margin-bottom: 20px; }
+    .type-sample .label { font-size: 0.75rem; color: #888; font-family: monospace; margin-bottom: 4px; }
+
+    /* ── BOTONES ── */
+    .btn-primary {
+      background: var(--pink);
+      color: white;
+      border: none;
+      padding: 11px 24px;
+      border-radius: 25px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.3s;
+    }
+    .btn-primary:hover { background: var(--pink-dark); transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--pink);
+      border: 2px solid var(--pink);
+      padding: 9px 22px;
+      border-radius: 25px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.3s;
+    }
+    .btn-outline:hover { background: var(--pink); color: white; }
+
+    .btn-dark {
+      background: #111;
+      color: white;
+      border: none;
+      padding: 11px 24px;
+      border-radius: 25px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: #111;
+      border: 1px solid #ddd;
+      padding: 9px 22px;
+      border-radius: 25px;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+    .btn-ghost:hover { border-color: #aaa; }
+
+    .btn-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+    /* ── SOMBRAS ── */
+    .shadow-demo {
+      background: white;
+      border-radius: 10px;
+      padding: 24px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #888;
+      flex: 1;
+      min-width: 140px;
+    }
+    .shadow-sm  { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .shadow-md  { box-shadow: 0 8px 25px rgba(0,0,0,0.10); }
+    .shadow-lg  { box-shadow: 0 15px 40px rgba(0,0,0,0.14); }
+    .shadow-pink{ box-shadow: 0 8px 25px rgba(230,0,126,0.25); }
+
+    /* ── ANIMACIONES ── */
+    @keyframes fadeIn      { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeInUp    { from { opacity:0; transform:translateY(40px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes shimmer     { 0%{background-position:-600px 0} 100%{background-position:600px 0} }
+    @keyframes spin        { to { transform: rotate(360deg); } }
+    @keyframes pulse       { 0%{box-shadow:0 0 0 0 rgba(230,0,126,.7)} 70%{box-shadow:0 0 0 8px rgba(230,0,126,0)} 100%{box-shadow:0 0 0 0 rgba(230,0,126,0)} }
+
+    .anim-demo { display: flex; flex-wrap: wrap; gap: 16px; }
+    .anim-box {
+      background: white;
+      border: 1px solid var(--gray-300);
+      border-radius: 8px;
+      padding: 20px 24px;
+      text-align: center;
+      font-size: 0.82rem;
+      cursor: pointer;
+      min-width: 120px;
+    }
+    .anim-box:hover { animation: fadeIn 0.6s ease-out both; }
+
+    .skeleton {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 600px 100%;
+      animation: shimmer 1.4s infinite ease-in-out;
+      border-radius: 6px;
+      height: 18px;
+      margin-bottom: 8px;
+    }
+    .skeleton.w-full  { width: 100%; }
+    .skeleton.w-3-4   { width: 75%; }
+    .skeleton.w-1-2   { width: 50%; }
+
+    .spinner {
+      width: 40px; height: 40px;
+      border: 4px solid #eee;
+      border-top-color: var(--pink);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto;
+    }
+
+    /* ── ESPACIADO ── */
+    .spacing-demo { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end; }
+    .sp-block { background: rgba(230,0,126,0.12); border: 1px dashed var(--pink); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: var(--pink); font-family: monospace; }
+
+    /* ── TEMAS ── */
+    .theme-grid { display: flex; gap: 16px; flex-wrap: wrap; }
+    .theme-card {
+      flex: 1; min-width: 200px; border-radius: 12px; overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    .theme-preview { padding: 20px; }
+    .theme-bar { height: 8px; border-radius: 4px; margin-bottom: 10px; }
+    .theme-label { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+    .theme-meta { padding: 12px 16px; font-size: 0.75rem; background: #f5f5f5; color: #666; }
+
+    /* code */
+    code {
+      background: #f0f0f0;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.82rem;
+      color: #c00060;
+    }
+    .code-block {
+      background: #1a1a1a;
+      color: #f0f0f0;
+      border-radius: 8px;
+      padding: 18px 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      overflow-x: auto;
+      margin-top: 12px;
+    }
+    .code-block .c  { color: #888; }
+    .code-block .v  { color: #ff79c6; }
+    .code-block .p  { color: #8be9fd; }
+    .code-block .s  { color: #f1fa8c; }
+  </style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="container">
+    <h1>ELA Beauty — Guía de Estilos</h1>
+    <p>Referencia visual de tokens, componentes y utilidades del design system</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ── COLORES ── -->
+  <div class="section">
+    <h2>Paleta de Colores</h2>
+
+    <h3>Marca</h3>
+    <div class="swatch-grid" style="margin-bottom:24px">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#e6007e"></div>
+        <div class="swatch-info"><span class="swatch-name">Primary</span><span class="swatch-hex">#e6007e</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#ff4da6"></div>
+        <div class="swatch-info"><span class="swatch-name">Primary Light</span><span class="swatch-hex">#ff4da6</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#b3005e"></div>
+        <div class="swatch-info"><span class="swatch-name">Primary Dark</span><span class="swatch-hex">#b3005e</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#000"></div>
+        <div class="swatch-info"><span class="swatch-name">Secondary</span><span class="swatch-hex">#000000</span></div>
+      </div>
+    </div>
+
+    <h3>Neutros</h3>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#ffffff; border:1px solid #eee"></div>
+        <div class="swatch-info"><span class="swatch-name">Background</span><span class="swatch-hex">#ffffff</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#f5f5f5"></div>
+        <div class="swatch-info"><span class="swatch-name">Gray 100</span><span class="swatch-hex">#f5f5f5</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#eeeeee"></div>
+        <div class="swatch-info"><span class="swatch-name">Gray 200</span><span class="swatch-hex">#eeeeee</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#e0e0e0"></div>
+        <div class="swatch-info"><span class="swatch-name">Gray 300</span><span class="swatch-hex">#e0e0e0</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#666666"></div>
+        <div class="swatch-info"><span class="swatch-name">Text Secondary</span><span class="swatch-hex">#666666</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#000000"></div>
+        <div class="swatch-info"><span class="swatch-name">Text Primary</span><span class="swatch-hex">#000000</span></div>
+      </div>
+    </div>
+
+    <div class="code-block" style="margin-top:24px">
+<span class="c">/* Uso en SCSS / CSS */</span>
+<span class="p">color</span>: <span class="v">var(--primary-color)</span>;        <span class="c">/* #e6007e */</span>
+<span class="p">color</span>: <span class="v">var(--primary-light)</span>;        <span class="c">/* #ff4da6 */</span>
+<span class="p">color</span>: <span class="v">var(--primary-dark)</span>;         <span class="c">/* #b3005e */</span>
+<span class="p">color</span>: <span class="v">var(--text-primary)</span>;         <span class="c">/* #000000 */</span>
+<span class="p">color</span>: <span class="v">var(--text-secondary)</span>;       <span class="c">/* #666666 */</span>
+<span class="p">background</span>: <span class="v">var(--gray-100)</span>;       <span class="c">/* #f5f5f5 */</span>
+    </div>
+  </div>
+
+  <!-- ── TIPOGRAFÍA ── -->
+  <div class="section">
+    <h2>Tipografía</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Headings — Montserrat</h3>
+        <div class="type-sample">
+          <div class="label">h1 · 2.5rem · 900 · uppercase</div>
+          <div style="font-family:'Montserrat',sans-serif; font-size:2.2rem; font-weight:900; text-transform:uppercase; letter-spacing:1px; line-height:1.1">ELA Beauty</div>
+        </div>
+        <div class="type-sample">
+          <div class="label">h2 · 1.8rem · 700</div>
+          <div style="font-family:'Montserrat',sans-serif; font-size:1.8rem; font-weight:700">Panel de Administración</div>
+        </div>
+        <div class="type-sample">
+          <div class="label">h3 · 1.2rem · 700</div>
+          <div style="font-family:'Montserrat',sans-serif; font-size:1.2rem; font-weight:700">Categoría de Producto</div>
+        </div>
+        <code>--font-heading: 'Montserrat'</code>
+      </div>
+      <div class="card">
+        <h3>Body — Open Sans</h3>
+        <div class="type-sample">
+          <div class="label">body · 1rem · 400</div>
+          <div style="font-family:'Open Sans',sans-serif; font-size:1rem">Texto de cuerpo principal. Descripción de producto y contenido general de la página.</div>
+        </div>
+        <div class="type-sample">
+          <div class="label">small · 0.85rem · 600</div>
+          <div style="font-family:'Open Sans',sans-serif; font-size:0.85rem; font-weight:600">Etiqueta de formulario, badge, metadata</div>
+        </div>
+        <div class="type-sample">
+          <div class="label">caption · 0.75rem · 400</div>
+          <div style="font-family:'Open Sans',sans-serif; font-size:0.75rem; color:#888">Texto de ayuda, pie de imagen, timestamp</div>
+        </div>
+        <code>--font-body: 'Open Sans'</code>
+      </div>
+    </div>
+
+    <div class="code-block" style="margin-top:20px">
+<span class="c">/* Variables de tipografía */</span>
+<span class="p">font-family</span>: <span class="v">var(--font-heading)</span>;  <span class="c">/* Montserrat — títulos */</span>
+<span class="p">font-family</span>: <span class="v">var(--font-body)</span>;     <span class="c">/* Open Sans — cuerpo */</span>
+
+<span class="c">/* Clase de título de sección */</span>
+<span class="s">.section-title</span> { <span class="c">/* 2.5rem, 900, uppercase, subrayado pink */</span> }
+    </div>
+  </div>
+
+  <!-- ── BOTONES ── -->
+  <div class="section">
+    <h2>Botones</h2>
+    <div class="btn-row" style="margin-bottom:24px">
+      <button class="btn-primary">Primario</button>
+      <button class="btn-outline">Outline</button>
+      <button class="btn-dark">Secundario</button>
+      <button class="btn-ghost">Ghost</button>
+    </div>
+    <div class="code-block">
+<span class="c">/* Botón principal — .btn-maybelline */</span>
+<span class="s">.btn-maybelline</span> {
+  <span class="p">background</span>: <span class="v">var(--primary-color)</span>;
+  <span class="p">padding</span>: <span class="s">12px 24px</span>;
+  <span class="p">border-radius</span>: <span class="s">25px</span>;
+  <span class="p">font-weight</span>: <span class="s">700</span>;
+  <span class="p">text-transform</span>: <span class="s">uppercase</span>;
+  <span class="p">letter-spacing</span>: <span class="s">1px</span>;
+}
+
+<span class="c">/* Hover: translateY(-2px) + shadow-pink */</span>
+<span class="c">/* Active: translateY(0) */</span>
+    </div>
+  </div>
+
+  <!-- ── SOMBRAS ── -->
+  <div class="section">
+    <h2>Sombras</h2>
+    <div class="grid">
+      <div class="shadow-demo shadow-sm">
+        <strong>shadow-sm</strong><br>
+        <code style="font-size:0.72rem">0 2px 8px rgba(0,0,0,.08)</code>
+      </div>
+      <div class="shadow-demo shadow-md">
+        <strong>shadow-md</strong><br>
+        <code style="font-size:0.72rem">0 8px 25px rgba(0,0,0,.10)</code>
+      </div>
+      <div class="shadow-demo shadow-lg">
+        <strong>shadow-lg</strong><br>
+        <code style="font-size:0.72rem">0 15px 40px rgba(0,0,0,.14)</code>
+      </div>
+      <div class="shadow-demo shadow-pink">
+        <strong>shadow-pink</strong><br>
+        <code style="font-size:0.72rem">0 8px 25px rgba(230,0,126,.25)</code>
+      </div>
+    </div>
+    <div class="code-block" style="margin-top:20px">
+<span class="p">box-shadow</span>: <span class="v">var(--shadow-sm)</span>;   <span class="c">/* Cards, inputs */</span>
+<span class="p">box-shadow</span>: <span class="v">var(--shadow-md)</span>;   <span class="c">/* Modales, dropdowns */</span>
+<span class="p">box-shadow</span>: <span class="v">var(--shadow-lg)</span>;   <span class="c">/* Overlays */</span>
+<span class="p">box-shadow</span>: <span class="v">var(--shadow-pink)</span>; <span class="c">/* Hover en btn-maybelline */</span>
+    </div>
+  </div>
+
+  <!-- ── ESPACIADO ── -->
+  <div class="section">
+    <h2>Espaciado</h2>
+    <p style="color:#888; font-size:0.88rem; margin-bottom:20px">Escala de utilidades de margen. Prefijos <code>mt-*</code> (margin-top) y <code>mb-*</code> (margin-bottom).</p>
+    <div class="spacing-demo">
+      <div class="sp-block" style="width:40px; height:8px">mt-1<br>0.5r</div>
+      <div class="sp-block" style="width:40px; height:16px">mt-2<br>1r</div>
+      <div class="sp-block" style="width:40px; height:24px">mt-3<br>1.5r</div>
+      <div class="sp-block" style="width:40px; height:32px">mt-4<br>2r</div>
+      <div class="sp-block" style="width:40px; height:48px">mt-5<br>3r</div>
+    </div>
+    <div class="code-block" style="margin-top:20px">
+<span class="s">.mt-1</span> { <span class="p">margin-top</span>: <span class="s">0.5rem</span>; }
+<span class="s">.mt-2</span> { <span class="p">margin-top</span>: <span class="s">1rem</span>;   }
+<span class="s">.mt-3</span> { <span class="p">margin-top</span>: <span class="s">1.5rem</span>; }
+<span class="s">.mt-4</span> { <span class="p">margin-top</span>: <span class="s">2rem</span>;   }
+<span class="s">.mt-5</span> { <span class="p">margin-top</span>: <span class="s">3rem</span>;   }
+<span class="c">/* mb-* tiene la misma escala con margin-bottom */</span>
+    </div>
+  </div>
+
+  <!-- ── TRANSICIONES ── -->
+  <div class="section">
+    <h2>Transiciones</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>fast</h3>
+        <code>0.2s ease</code>
+        <p style="font-size:0.82rem; color:#888; margin-top:8px">Hover en íconos, toggles, badges</p>
+      </div>
+      <div class="card">
+        <h3>normal</h3>
+        <code>0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)</code>
+        <p style="font-size:0.82rem; color:#888; margin-top:8px">Botones, cards, menús</p>
+      </div>
+      <div class="card">
+        <h3>bounce</h3>
+        <code>0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)</code>
+        <p style="font-size:0.82rem; color:#888; margin-top:8px">Aparición de modales, tooltips</p>
+      </div>
+    </div>
+    <div class="code-block" style="margin-top:20px">
+<span class="p">transition</span>: <span class="v">var(--transition-fast)</span>;    <span class="c">/* 0.2s ease */</span>
+<span class="p">transition</span>: <span class="v">var(--transition-normal)</span>;  <span class="c">/* 0.35s cubic */</span>
+<span class="p">transition</span>: <span class="v">var(--transition-bounce)</span>;  <span class="c">/* 0.4s bounce */</span>
+    </div>
+  </div>
+
+  <!-- ── ANIMACIONES ── -->
+  <div class="section">
+    <h2>Animaciones</h2>
+    <div class="anim-demo" style="margin-bottom:24px">
+      <div class="anim-box">.fade-in<br><span style="font-size:0.7rem;color:#aaa">fadeIn 0.6s</span></div>
+      <div class="anim-box">.fade-in-up<br><span style="font-size:0.7rem;color:#aaa">fadeInUp 0.6s</span></div>
+      <div class="anim-box">.fade-in-left<br><span style="font-size:0.7rem;color:#aaa">fadeInLeft 0.6s</span></div>
+      <div class="anim-box">.fade-in-right<br><span style="font-size:0.7rem;color:#aaa">fadeInRight 0.6s</span></div>
+      <div class="anim-box">.scale-in<br><span style="font-size:0.7rem;color:#aaa">scaleIn 0.5s</span></div>
+    </div>
+
+    <h3>Skeleton Loading</h3>
+    <div style="background:white; border-radius:8px; padding:20px; max-width:320px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <div class="skeleton w-full"></div>
+      <div class="skeleton w-3-4"></div>
+      <div class="skeleton w-1-2"></div>
+    </div>
+
+    <h3>Spinner</h3>
+    <div style="padding:16px 0">
+      <div class="spinner"></div>
+    </div>
+
+    <div class="code-block" style="margin-top:16px">
+<span class="c">/* Clases de animación de entrada */</span>
+<span class="s">.fade-in</span>       { animation: fadeIn 0.6s ease-out both; }
+<span class="s">.fade-in-up</span>    { animation: fadeInUp 0.6s ease-out both; }
+<span class="s">.fade-in-left</span>  { animation: fadeInLeft 0.6s ease-out both; }
+<span class="s">.fade-in-right</span> { animation: fadeInRight 0.6s ease-out both; }
+<span class="s">.scale-in</span>      { animation: scaleIn 0.5s ease-out both; }
+
+<span class="c">/* Delays escalonados: .delay-1 a .delay-8 (0.1s–0.8s) */</span>
+<span class="s">.delay-3</span> { animation-delay: 0.3s; }
+
+<span class="c">/* Skeleton */</span>
+<span class="s">.skeleton</span>  { animation: shimmer 1.4s infinite ease-in-out; }
+
+<span class="c">/* Spinner */</span>
+<span class="s">.spinner</span>   { border-top-color: var(--primary-color); animation: spin 0.8s linear infinite; }
+    </div>
+  </div>
+
+  <!-- ── TEMAS ── -->
+  <div class="section">
+    <h2>Temas del Sistema</h2>
+    <p style="color:#888; font-size:0.88rem; margin-bottom:20px">
+      El tema se aplica con el atributo <code>data-theme</code> en <code>&lt;html&gt;</code>.
+      Se gestiona con <code>ThemeService</code> y se persiste en <code>localStorage</code>.
+    </p>
+    <div class="theme-grid">
+      <div class="theme-card">
+        <div class="theme-preview" style="background:#fff">
+          <div class="theme-bar" style="background:#e6007e"></div>
+          <div class="theme-label" style="color:#000">☀️ Claro (light)</div>
+        </div>
+        <div class="theme-meta">Default. Fondo blanco, texto negro, acento pink #e6007e</div>
+      </div>
+      <div class="theme-card">
+        <div class="theme-preview" style="background:#1a1a1a">
+          <div class="theme-bar" style="background:#e6007e"></div>
+          <div class="theme-label" style="color:#f0f0f0">🌙 Oscuro (dark)</div>
+        </div>
+        <div class="theme-meta">Fondo #1a1a1a, texto #f0f0f0. Grises oscuros para superficies.</div>
+      </div>
+      <div class="theme-card">
+        <div class="theme-preview" style="background:#fff">
+          <div class="theme-bar" style="background:#0077cc"></div>
+          <div class="theme-label" style="color:#000">👁️ Daltonismo (colorblind)</div>
+        </div>
+        <div class="theme-meta">Reemplaza el pink por azul #0077cc. Deuteranopia-friendly.</div>
+      </div>
+    </div>
+    <div class="code-block" style="margin-top:20px">
+<span class="c">/* Tema oscuro — [data-theme="dark"] */</span>
+--<span class="p">background</span>:   <span class="s">#1a1a1a</span>;
+--<span class="p">text-primary</span>: <span class="s">#f0f0f0</span>;
+--<span class="p">gray-100</span>:     <span class="s">#252525</span>;
+--<span class="p">gray-200</span>:     <span class="s">#2e2e2e</span>;
+
+<span class="c">/* Tema daltonismo — [data-theme="colorblind"] */</span>
+--<span class="p">primary-color</span>: <span class="s">#0077cc</span>;
+--<span class="p">primary-light</span>: <span class="s">#3399ff</span>;
+--<span class="p">primary-dark</span>:  <span class="s">#005599</span>;
+
+<span class="c">/* ThemeService — uso en Angular */</span>
+<span class="p">themeService</span>.<span class="s">setTheme</span>(<span class="v">'dark'</span>);       <span class="c">// aplica y persiste</span>
+<span class="p">themeService</span>.<span class="s">theme</span>();               <span class="c">// signal: 'light' | 'dark' | 'colorblind'</span>
+    </div>
+  </div>
+
+  <!-- ── ADMIN PANEL ── -->
+  <div class="section">
+    <h2>Panel de Administración</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Sidebar</h3>
+        <ul style="font-size:0.84rem; color:#555; line-height:2; list-style:none">
+          <li>Ancho: <code>240px</code> fijo</li>
+          <li>Fondo: <code>#111111</code></li>
+          <li>Position: <code>sticky top:0 height:100vh</code></li>
+          <li>Link activo: borde izq. pink + bg rgba(pink, 0.1)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Topbar</h3>
+        <ul style="font-size:0.84rem; color:#555; line-height:2; list-style:none">
+          <li>Fondo: <code>var(--background)</code></li>
+          <li>Position: <code>sticky top:0 z-index:10</code></li>
+          <li>Borde inferior: <code>var(--gray-300)</code></li>
+          <li>Sombra: <code>var(--shadow-sm)</code></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Content Area</h3>
+        <ul style="font-size:0.84rem; color:#555; line-height:2; list-style:none">
+          <li>Fondo: <code>var(--gray-100)</code></li>
+          <li>Padding main: <code>28px</code></li>
+          <li>Layout: <code>flex column min-height:100vh</code></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<footer style="background:#111; color:#666; text-align:center; padding:28px; font-size:0.82rem; margin-top:32px">
+  ELA Beauty — Guía de Estilos · Generado el 2026-03-18
+</footer>
+
+</body>
+</html>

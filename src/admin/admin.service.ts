@@ -29,7 +29,8 @@ export class AdminService {
       email: 'admin@elabeauty.com',
       password: hashedPassword,
       firstName: 'Admin',
-      lastName: 'ELA Beauty',
+      apellidoPaterno: 'ELA',
+      apellidoMaterno: 'Beauty',
       role: 'admin',
       isActive: true,
     });

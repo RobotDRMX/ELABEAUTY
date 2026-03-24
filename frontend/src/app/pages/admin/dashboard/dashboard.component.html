@@ -59,7 +59,7 @@
         @for (user of recentUsers(); track user.id) {
           <tr>
             <td>{{ user.email }}</td>
-            <td>{{ user.firstName }} {{ user.lastName }}</td>
+            <td>{{ user.firstName }} {{ user.apellidoPaterno }}</td>
             <td><span class="badge badge--{{ user.role }}">{{ user.role }}</span></td>
             <td>
               <span class="badge" [class.badge--active]="user.isActive" [class.badge--inactive]="!user.isActive">

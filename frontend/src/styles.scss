@@ -1,7 +1,9 @@
 /* ===== GLOBAL STYLES ===== */
 :root {
-  /* Maybelline Color Palette */
+  /* ELA Beauty Color Palette */
   --primary-color: #e6007e;
+  --primary-light: #ff4da6;
+  --primary-dark: #b3005e;
   --secondary-color: #000000;
   --accent-color: #e6007e;
   --background: #ffffff;
@@ -10,10 +12,54 @@
   --gray-100: #f5f5f5;
   --gray-200: #eeeeee;
   --gray-300: #e0e0e0;
-  
-  /* Maybelline Typography */
+
+  /* Surface tokens — usar en lugar de 'white' y '#fafafa' hardcodeados */
+  --surface-1: #ffffff;    /* cards, inputs, paneles */
+  --surface-2: #fafafa;    /* fondos de sección */
+  --border-color: #e0e0e0; /* bordes generales */
+  --header-bg: #000000;    /* fondo del header — siempre oscuro */
+  --heading-color: #000000; /* color de títulos/headings */
+
+  /* Typography */
   --font-heading: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
   --font-body: 'Open Sans', Arial, sans-serif;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-md: 0 8px 25px rgba(0,0,0,0.10);
+  --shadow-lg: 0 15px 40px rgba(0,0,0,0.14);
+  --shadow-pink: 0 8px 25px rgba(230, 0, 126, 0.25);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-bounce: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* ===== DARK THEME ===== */
+[data-theme="dark"] {
+  --background: #1a1a1a;
+  --heading-color: #f0f0f0;   /* títulos legibles en dark mode */
+  --text-primary: #f0f0f0;
+  --text-secondary: #aaaaaa;
+  --gray-100: #2a2a2a;
+  --gray-200: #333333;
+  --gray-300: #444444;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.35);
+  --shadow-md: 0 8px 25px rgba(0,0,0,0.45);
+  --shadow-lg: 0 15px 40px rgba(0,0,0,0.55);
+  --surface-1: #262626;
+  --surface-2: #1e1e1e;
+  --border-color: #3a3a3a;
+}
+
+/* ===== COLORBLIND THEME (Deuteranopia-friendly) ===== */
+[data-theme="colorblind"] {
+  --primary-color: #0077cc;
+  --primary-light: #3399ff;
+  --primary-dark: #005599;
+  --accent-color: #0077cc;
+  --shadow-pink: 0 8px 25px rgba(0, 119, 204, 0.25);
 }
 
 * {
@@ -22,12 +68,17 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-body);
   background-color: var(--background);
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -41,7 +92,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0 20px;
 }
 
-/* Botones estilo Maybelline */
+/* ===== BOTONES ===== */
 .btn-maybelline {
   background: var(--primary-color);
   color: white;
@@ -52,27 +103,59 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
   letter-spacing: 1px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    background: #cc0066;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(230, 0, 126, 0.3);
+  transition: var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.15);
+    opacity: 0;
+    transition: opacity 0.2s;
   }
-  
+
+  &:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-pink);
+
+    &::after { opacity: 1; }
+  }
+
   &:active {
     transform: translateY(0);
   }
 }
 
-/* Utilidades */
-.text-primary {
-  color: var(--primary-color) !important;
+/* ===== SECTION TITLES ===== */
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  padding-bottom: 1.5rem;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+    border-radius: 2px;
+  }
 }
 
-.text-center {
-  text-align: center;
-}
+/* ===== UTILITIES ===== */
+.text-primary { color: var(--primary-color) !important; }
+.text-center  { text-align: center; }
 
 .mt-1 { margin-top: 0.5rem; }
 .mt-2 { margin-top: 1rem; }
@@ -86,25 +169,101 @@ h1, h2, h3, h4, h5, h6 {
 .mb-4 { margin-bottom: 2rem; }
 .mb-5 { margin-bottom: 3rem; }
 
-/* Animaciones */
+/* ===== KEYFRAME ANIMATIONS ===== */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.fade-in {
-  animation: fadeIn 0.6s ease-out;
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Responsive */
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(230, 0, 126, 0.7); }
+  70%  { box-shadow: 0 0 0 8px rgba(230, 0, 126, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(230, 0, 126, 0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===== ANIMATION UTILITY CLASSES ===== */
+.fade-in      { animation: fadeIn 0.6s ease-out both; }
+.fade-in-up   { animation: fadeInUp 0.6s ease-out both; }
+.fade-in-left { animation: fadeInLeft 0.6s ease-out both; }
+.fade-in-right{ animation: fadeInRight 0.6s ease-out both; }
+.scale-in     { animation: scaleIn 0.5s ease-out both; }
+
+/* Stagger delay helpers */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+.delay-6 { animation-delay: 0.6s; }
+.delay-7 { animation-delay: 0.7s; }
+.delay-8 { animation-delay: 0.8s; }
+
+/* ===== SKELETON LOADING ===== */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 600px 100%;
+  animation: shimmer 1.4s infinite ease-in-out;
+  border-radius: 6px;
+}
+
+/* ===== SPINNER ===== */
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--gray-200);
+  border-top-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto;
+}
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
-  .container {
-    padding: 0 15px;
-  }
+  .container { padding: 0 15px; }
+  .section-title { font-size: 1.9rem; }
 }
 
 @media (max-width: 480px) {
-  .container {
-    padding: 0 10px;
-  }
+  .container { padding: 0 10px; }
+  .section-title { font-size: 1.5rem; }
 }

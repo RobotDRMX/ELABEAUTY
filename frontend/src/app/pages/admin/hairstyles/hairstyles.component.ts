@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdminHairstylesService } from '../services-api/admin-hairstyles.service';
 import { ToastService } from '../shared/toast.service';
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-admin-hairstyles',
@@ -15,6 +16,7 @@ export class HairstylesComponent implements OnInit {
   private service = inject(AdminHairstylesService);
   private fb = inject(FormBuilder);
   protected toastService = inject(ToastService);
+  private notif = inject(NotificationService);
 
   items = signal<any[]>([]);
   total = signal(0);
@@ -89,8 +91,9 @@ export class HairstylesComponent implements OnInit {
     });
   }
 
-  remove(item: any) {
-    if (!confirm(`¿Eliminar permanentemente "${item.name}"?`)) return;
+  async remove(item: any) {
+    const ok = await this.notif.confirm('Eliminar peinado', `¿Eliminar permanentemente "${item.name}"?`, { danger: true, confirmText: 'Eliminar' });
+    if (!ok) return;
     this.service.remove(item.id).subscribe({
       next: () => { this.loadData(); this.toastService.show('Peinado eliminado'); },
       error: (err) => this.toastService.show(err?.error?.message ?? 'Error', 'error'),

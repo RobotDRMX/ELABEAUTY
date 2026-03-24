@@ -1,16 +1,16 @@
-import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { Component, ChangeDetectorRef, ElementRef, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { BiometricAuthService } from '../../../services/biometric-auth.service';
 
-// Global object injected by Google reCAPTCHA v3 script
 declare const grecaptcha: {
   execute(siteKey: string, options: { action: string }): Promise<string>;
+  ready(cb: () => void): void;
 };
 
-const RECAPTCHA_SITE_KEY = 'YOUR_RECAPTCHA_SITE_KEY';
+const RECAPTCHA_SITE_KEY = '6LeqmY8sAAAAADgH7gWc781zZUOvle2mpCMt-gtR';
 
 type BiometricMode = 'none' | 'face';
 
@@ -21,19 +21,23 @@ type BiometricMode = 'none' | 'face';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnDestroy {
-  @ViewChild('videoRef') videoRef!: ElementRef<HTMLVideoElement>;
+export class LoginComponent implements OnInit, OnDestroy {
+  @ViewChild('videoRef') videoRef?: ElementRef<HTMLVideoElement>;
 
   loginForm: FormGroup;
   error        = '';
   loading      = false;
   biometricMode: BiometricMode = 'none';
+  countdown    = 0; // seconds remaining before next attempt is allowed
+
+  private countdownInterval: ReturnType<typeof setInterval> | null = null;
 
   constructor(
     private fb:          FormBuilder,
     private authService: AuthService,
     public  biometric:   BiometricAuthService,
     private router:      Router,
+    private cdr:         ChangeDetectorRef,
   ) {
     this.loginForm = this.fb.group({
       email:    ['', [Validators.required, Validators.email]],
@@ -41,13 +45,28 @@ export class LoginComponent implements OnDestroy {
     });
   }
 
+  ngOnInit(): void {
+    try {
+      grecaptcha.ready(() => {
+        grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'auth_page_view' }).catch(() => {});
+      });
+    } catch {
+      // script still loading — will execute on submit
+    }
+  }
+
   ngOnDestroy(): void {
     this.biometric.stopCamera();
+    if (this.countdownInterval) clearInterval(this.countdownInterval);
+  }
+
+  get isBlocked(): boolean {
+    return this.countdown > 0;
   }
 
   // ── Standard login ────────────────────────────────────────────────────────
   async onSubmit(): Promise<void> {
-    if (this.loginForm.invalid) return;
+    if (this.loginForm.invalid || this.isBlocked) return;
     this.loading = true;
     this.error   = '';
 
@@ -63,69 +82,119 @@ export class LoginComponent implements OnDestroy {
     this.authService.login({ ...this.loginForm.value, recaptchaToken }).subscribe({
       next:  (r: any) => this.redirect(r),
       error: (e: any) => {
-        this.error   = e.error?.message || 'Error al iniciar sesión';
+        this.handleError(e);
         this.loading = false;
       },
     });
   }
 
-  // ── WebAuthn ──────────────────────────────────────────────────────────────
+  // ── Passkey ───────────────────────────────────────────────────────────────
   async loginPasskey(): Promise<void> {
-    const email = this.loginForm.get('email')?.value as string;
-    if (!email) { this.error = 'Escribe tu email primero'; return; }
+    if (this.isBlocked) return;
     this.loading = true;
     this.error   = '';
+    const email = this.loginForm.get('email')?.value as string | undefined;
     try {
-      const r = await this.biometric.loginWithPasskey(email);
+      const r = await this.biometric.loginWithPasskey(email || undefined);
       this.redirect(r);
     } catch (e: any) {
-      this.error = e.error?.message || e.message || 'Passkey fallido';
+      this.handleError(e);
       this.loading = false;
     }
   }
 
-  // ── Face (second factor) ─────────────────────────────────────────────────
+  // ── Face-only login ───────────────────────────────────────────────────────
   async activateFaceLogin(): Promise<void> {
-    if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched();
-      this.error = 'Completa email y contraseña primero (son necesarios junto al reconocimiento facial)';
-      return;
-    }
+    if (this.isBlocked) return;
     this.biometricMode = 'face';
     this.error         = '';
-    await this.biometric.loadModels();
-    // Wait for Angular to render the <video> element
-    setTimeout(() => this.biometric.startCamera(this.videoRef.nativeElement), 100);
+
+    try {
+      await this.biometric.loadModels();
+      this.cdr.detectChanges();
+      await new Promise(resolve => requestAnimationFrame(resolve));
+
+      if (!this.videoRef?.nativeElement) throw new Error('No se pudo inicializar el video');
+      await this.biometric.startCamera(this.videoRef.nativeElement);
+    } catch (e: any) {
+      this.biometricMode = 'none';
+      this.cdr.detectChanges();
+      this.error = e.message || 'No se pudo acceder a la cámara';
+    }
   }
 
   async loginWithFace(): Promise<void> {
+    if (this.isBlocked) return;
     this.loading = true;
     this.error   = '';
     try {
-      const { email, password } = this.loginForm.value as { email: string; password: string };
-      const r = await this.biometric.loginWithFace(email, password);
+      const r = await this.biometric.loginWithFaceOnly();
       this.biometric.stopCamera();
       this.redirect(r);
     } catch (e: any) {
-      // Automatic fallback: if face not detected → try standard login
-      if (e.message?.includes('No se detectó')) {
-        this.biometric.stopCamera();
-        this.biometricMode = 'none';
-        this.error = 'No se detectó tu rostro. Ingresando con contraseña...';
-        this.authService.login(this.loginForm.value).subscribe({
-          next: (r: any) => this.redirect(r),
-          error: (err: any) => { this.error = err.error?.message || 'Error al iniciar sesión'; this.loading = false; },
-        });
-      } else {
-        this.error   = e.error?.message || e.message || 'Reconocimiento fallido';
-        this.loading = false;
-      }
+      this.handleError(e);
+      this.loading = false;
     }
   }
 
   cancelFace(): void {
     this.biometricMode = 'none';
     this.biometric.stopCamera();
+    this.error = '';
+  }
+
+  // ── Error handling ────────────────────────────────────────────────────────
+  private handleError(e: any): void {
+    // Rate limit (429) — start countdown
+    if (e?.status === 429) {
+      const retryAfter = parseInt(e.headers?.get('Retry-After') ?? '60', 10);
+      this.startCountdown(isNaN(retryAfter) ? 60 : retryAfter);
+      this.error = `Demasiados intentos fallidos. Podrás intentarlo de nuevo en breve.`;
+      return;
+    }
+
+    // WebAuthn / browser errors
+    const name    = e?.name ?? '';
+    const message = (e?.message ?? e?.error?.message ?? '').toLowerCase();
+
+    if (name === 'NotAllowedError' || message.includes('timed out') || message.includes('not allowed')) {
+      this.error = 'Se agotó el tiempo o cancelaste la operación. Pulsa el botón de nuevo cuando estés listo.';
+      return;
+    }
+
+    if (name === 'AbortError') {
+      this.error = 'La operación fue cancelada. Puedes intentarlo de nuevo.';
+      return;
+    }
+
+    if (message.includes('no passkey') || message.includes('no credentials') || message.includes('sin passkey') || message.includes('no tiene passkey')) {
+      this.error = 'No tienes un Passkey registrado. Inicia sesión con tu contraseña y regístralo desde tu perfil.';
+      return;
+    }
+
+    if (message.includes('rostro no reconocido') || message.includes('no se detectó')) {
+      this.error = 'No se reconoció tu rostro. Asegúrate de tener buena iluminación y mira de frente a la cámara.';
+      return;
+    }
+
+    // Generic fallback
+    this.error = e?.error?.message || e?.message || 'Algo salió mal. Inténtalo de nuevo.';
+  }
+
+  private startCountdown(seconds: number): void {
+    this.countdown = seconds;
+    if (this.countdownInterval) clearInterval(this.countdownInterval);
+
+    this.countdownInterval = setInterval(() => {
+      this.countdown--;
+      if (this.countdown <= 0) {
+        this.countdown = 0;
+        this.error = '';
+        clearInterval(this.countdownInterval!);
+        this.countdownInterval = null;
+      }
+      this.cdr.detectChanges();
+    }, 1000);
   }
 
   private redirect(r: any): void {

@@ -1,6 +1,6 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Not, IsNull } from 'typeorm';
 import { User } from '../users/entities/user.entity';
 
 @Injectable()
@@ -39,6 +39,36 @@ export class FaceService {
     const stored: number[] = JSON.parse(user.faceDescriptor);
     const match = this.euclideanDistance(stored, incoming) < this.THRESHOLD;
     return { hasDescriptor: true, match };
+  }
+
+  // Face-only login: scans all stored descriptors to find a match.
+  // Returns the matched user (without password) or throws UnauthorizedException.
+  async findUserByFace(incoming: number[]): Promise<Omit<User, 'password'>> {
+    if (incoming.length !== 128) {
+      throw new BadRequestException('Descriptor facial inválido');
+    }
+    const users = await this.userRepo.find({
+      where: { faceDescriptor: Not(IsNull()), isActive: true },
+    });
+
+    let bestMatch: User | null = null;
+    let bestDistance = Infinity;
+
+    for (const user of users) {
+      const stored: number[] = JSON.parse(user.faceDescriptor!);
+      const dist = this.euclideanDistance(stored, incoming);
+      if (dist < this.THRESHOLD && dist < bestDistance) {
+        bestMatch = user;
+        bestDistance = dist;
+      }
+    }
+
+    if (!bestMatch) {
+      throw new UnauthorizedException('Rostro no reconocido. Asegúrate de haber registrado tu cara en tu perfil.');
+    }
+
+    const { password, ...result } = bestMatch;
+    return result as Omit<User, 'password'>;
   }
 
   private euclideanDistance(a: number[], b: number[]): number {

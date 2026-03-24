@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { ThemeService, Theme } from '../../../services/theme.service';
 import { ToastComponent } from '../shared/toast/toast.component';
 
 @Component({
@@ -13,10 +14,21 @@ import { ToastComponent } from '../shared/toast/toast.component';
 })
 export class AdminLayoutComponent {
   private readonly authService = inject(AuthService);
+  readonly themeService = inject(ThemeService);
 
   get adminName(): string {
     return this.authService.currentUser()?.firstName ?? 'Admin';
   }
+
+  logout() {
+    this.authService.logout();
+  }
+
+  readonly themes: { value: Theme; label: string }[] = [
+    { value: 'light',      label: 'Claro' },
+    { value: 'dark',       label: 'Oscuro' },
+    { value: 'colorblind', label: 'Daltonismo' },
+  ];
 
   protected readonly navItems: { label: string; icon: string; path: string }[] = [
     { label: 'Dashboard',        icon: 'fa-home',        path: '/admin' },

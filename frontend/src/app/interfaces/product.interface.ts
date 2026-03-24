@@ -9,6 +9,7 @@ export interface Product {
   image_url: string;
   rating: number;
   review_count: number;
+  target_age: string;
   created_at: string;
   updated_at: string;
   is_active: boolean;
@@ -31,6 +32,8 @@ export interface SearchParams {
   order?: 'ASC' | 'DESC';
   minPrice?: number;
   maxPrice?: number;
+  onlyInStock?: boolean;
+  targetAge?: string;
 }
 
 export interface Category {

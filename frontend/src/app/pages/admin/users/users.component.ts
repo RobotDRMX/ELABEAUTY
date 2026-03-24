@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AdminUsersService } from '../services-api/admin-users.service';
 import { ToastService } from '../shared/toast.service';
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-admin-users',
@@ -14,6 +15,7 @@ import { ToastService } from '../shared/toast.service';
 export class UsersComponent implements OnInit {
   private service = inject(AdminUsersService);
   protected toastService = inject(ToastService);
+  private notif = inject(NotificationService);
 
   items = signal<any[]>([]);
   total = signal(0);
@@ -78,8 +80,9 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  remove(user: any) {
-    if (!confirm(`¿Eliminar permanentemente a ${user.email}?`)) return;
+  async remove(user: any) {
+    const ok = await this.notif.confirm('Eliminar usuario', `¿Eliminar permanentemente a ${user.email}?`, { danger: true, confirmText: 'Eliminar' });
+    if (!ok) return;
     this.service.remove(user.id).subscribe({
       next: () => { this.loadData(); this.toastService.show('Usuario eliminado'); },
       error: (err) => this.toastService.show(err?.error?.message ?? 'Error', 'error'),

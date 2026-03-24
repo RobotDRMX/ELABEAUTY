@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { SearchComponent } from '../search/search.component';
+import { AuthService } from '../../services/auth.service';
+import { CartService } from '../../services/cart.service';
+import { FavoritesService } from '../../services/favorites.service';
+import { ThemeService, Theme } from '../../services/theme.service';
 
 @Component({
   selector: 'app-header',
@@ -11,45 +15,80 @@ import { SearchComponent } from '../search/search.component';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  // Contador de items en el carrito
-  cartItemCount: number = 3;
-  
-  // Contador de favoritos
-  favoritesCount: number = 5;
+  authService    = inject(AuthService);
+  cartService    = inject(CartService);
+  favoritesService = inject(FavoritesService);
+  router         = inject(Router);
+  themeService   = inject(ThemeService);
 
-  // Menú de navegación con iconos
-  navItems = [
-    { label: 'Labiales', link: '/labiales', icon: 'fas fa-kiss-wink-heart' },
-    { label: 'Rostro', link: '/rostro', icon: 'fas fa-palette' },
-    { label: 'Ojos', link: '/ojos', icon: 'fas fa-eye' },
-    { label: 'Uñas', link: '/unas', icon: 'fas fa-hand-sparkles' },
-    { label: 'Ofertas', link: '/ofertas', icon: 'fas fa-tag' },
-    { label: 'Nuevo', link: '/nuevo', icon: 'fas fa-star' }
+  readonly themeOptions: { value: Theme; label: string }[] = [
+    { value: 'light',      label: 'Claro' },
+    { value: 'dark',       label: 'Oscuro' },
+    { value: 'colorblind', label: 'Daltonismo' },
   ];
 
-  // Método para búsqueda
+  get isLoggedIn(): boolean {
+    return this.authService.isAuthenticated();
+  }
+
+  get isAdmin(): boolean {
+    return this.authService.currentUser()?.role === 'admin';
+  }
+
+  get userName(): string {
+    return this.authService.currentUser()?.firstName || 'Usuario';
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+
+  get cartItemCount(): number {
+    return this.cartService.itemCount();
+  }
+
+  get favoritesCount(): number {
+    return this.favoritesService.favoritesCount();
+  }
+
+  navItems = [
+    { label: 'Catálogo', link: '/busqueda', icon: 'fas fa-th-large' },
+    { label: 'Labiales', link: '/busqueda', queryParams: { category: 'Labiales' }, icon: 'fas fa-kiss-wink-heart' },
+    { label: 'Rostro', link: '/busqueda', queryParams: { category: 'Rostro' }, icon: 'fas fa-palette' },
+    { label: 'Ojos', link: '/busqueda', queryParams: { category: 'Ojos' }, icon: 'fas fa-eye' },
+    { label: 'Uñas', link: '/busqueda', queryParams: { category: 'Uñas' }, icon: 'fas fa-hand-sparkles' },
+    { label: 'Peinados', link: '/peinados', icon: 'fas fa-scissors' },
+    { label: 'Diseños de Uñas', link: '/disenos-unas', icon: 'fas fa-spa' },
+    { label: 'Ofertas', link: '/busqueda', queryParams: { sortBy: 'price', order: 'ASC' }, icon: 'fas fa-tag' }
+  ];
+
   onSearch(searchTerm: string) {
     if (searchTerm.trim()) {
-      console.log('Buscando productos:', searchTerm);
-      // TODO: Implementar lógica de búsqueda real
+      this.router.navigate(['/busqueda'], { queryParams: { q: searchTerm } });
     }
   }
 
-  // Método para abrir el carrito
   openCart() {
-    console.log('Abrir carrito de compras');
-    // TODO: Implementar modal/drawer del carrito
+    if (this.isLoggedIn) {
+      this.router.navigate(['/carrito']);
+    } else {
+      this.router.navigate(['/auth/login']);
+    }
   }
 
-  // Método para abrir favoritos
   openFavorites() {
-    console.log('Abrir lista de favoritos');
-    // TODO: Implementar página de favoritos
+    if (this.isLoggedIn) {
+      this.router.navigate(['/favoritos']);
+    } else {
+      this.router.navigate(['/auth/login']);
+    }
   }
 
-  // Método para abrir cuenta de usuario
   openAccount() {
-    console.log('Abrir cuenta de usuario');
-    // TODO: Implementar login/modal de cuenta
+    if (this.isLoggedIn) {
+      this.router.navigate(['/perfil']);
+    } else {
+      this.router.navigate(['/auth/login']);
+    }
   }
 }

@@ -5,12 +5,14 @@ import { Service } from '../../services/entities/service.entity';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 import { AdminListDto } from '../dto/admin-list.dto';
+import { EventsService } from '../../events/events.service';
 
 @Injectable()
 export class AdminServicesService {
   constructor(
     @InjectRepository(Service)
     private readonly repo: Repository<Service>,
+    private readonly events: EventsService,
   ) {}
 
   async findAll(dto: AdminListDto) {
@@ -24,14 +26,18 @@ export class AdminServicesService {
   }
 
   async create(dto: CreateServiceDto): Promise<Service> {
-    return this.repo.save(this.repo.create(dto));
+    const saved = await this.repo.save(this.repo.create(dto));
+    this.events.emit('services:updated');
+    return saved;
   }
 
   async update(id: string, dto: UpdateServiceDto): Promise<Service> {
     const item = await this.repo.findOne({ where: { id } });
     if (!item) throw new NotFoundException(`Servicio #${id} no encontrado`);
     Object.assign(item, dto);
-    return this.repo.save(item);
+    const saved = await this.repo.save(item);
+    this.events.emit('services:updated');
+    return saved;
   }
 
   async deactivate(id: string): Promise<Service> {
@@ -39,7 +45,9 @@ export class AdminServicesService {
     if (!item) throw new NotFoundException(`Servicio #${id} no encontrado`);
     if (!item.isActive) throw new BadRequestException('El servicio ya está desactivado');
     item.isActive = false;
-    return this.repo.save(item);
+    const saved = await this.repo.save(item);
+    this.events.emit('services:updated');
+    return saved;
   }
 
   async restore(id: string): Promise<Service> {
@@ -47,7 +55,9 @@ export class AdminServicesService {
     if (!item) throw new NotFoundException(`Servicio #${id} no encontrado`);
     if (item.isActive) throw new BadRequestException('El servicio ya está activo');
     item.isActive = true;
-    return this.repo.save(item);
+    const saved = await this.repo.save(item);
+    this.events.emit('services:updated');
+    return saved;
   }
 
   async remove(id: string): Promise<{ message: string }> {
@@ -57,6 +67,7 @@ export class AdminServicesService {
       throw new BadRequestException('Desactiva el servicio antes de eliminarlo permanentemente');
     }
     await this.repo.delete(id);
+    this.events.emit('services:updated');
     return { message: `Servicio eliminado permanentemente` };
   }
 }

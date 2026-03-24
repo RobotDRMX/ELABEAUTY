@@ -28,8 +28,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
         public biometric: BiometricAuthService,
     ) {
         this.profileForm = this.fb.group({
-            firstName: ['', Validators.required],
-            lastName: ['', Validators.required],
+            firstName:       ['', Validators.required],
+            apellidoPaterno: ['', Validators.required],
+            apellidoMaterno: ['', Validators.required],
             email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
         });
     }

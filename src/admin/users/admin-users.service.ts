@@ -17,7 +17,7 @@ export class AdminUsersService {
     const where = showInactive ? {} : { isActive: true };
     const [rawData, total] = await this.repo.findAndCount({
       where, skip, take: limit, order: { createdAt: 'DESC' },
-      select: ['id', 'email', 'firstName', 'lastName', 'role', 'isActive', 'createdAt'],
+      select: ['id', 'email', 'firstName', 'apellidoPaterno', 'apellidoMaterno', 'role', 'isActive', 'createdAt'],
     });
     return { data: rawData, total, page, limit, totalPages: Math.ceil(total / limit) };
   }
