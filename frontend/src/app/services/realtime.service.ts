@@ -15,6 +15,7 @@ export class RealtimeService implements OnDestroy {
   private events$ = new Subject<ServerEvent>();
   private reconnectTimer: ReturnType<typeof setTimeout> | null = null;
   private destroyed = false;
+  private failCount = 0;
 
   constructor(private zone: NgZone) {
     this.connect();
@@ -35,8 +36,11 @@ export class RealtimeService implements OnDestroy {
     this.eventSource.onerror = () => {
       this.eventSource?.close();
       this.eventSource = null;
-      if (!this.destroyed) {
-        this.reconnectTimer = setTimeout(() => this.connect(), 5000);
+      // Don't reconnect if the error is QUIC/HTTP3 incompatibility (production)
+      // or if the stream returned a non-2xx status
+      if (!this.destroyed && !this.failCount) {
+        this.failCount = (this.failCount ?? 0) + 1;
+        this.reconnectTimer = setTimeout(() => this.connect(), 30000);
       }
     };
 
