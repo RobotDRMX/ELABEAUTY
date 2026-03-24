@@ -5,7 +5,7 @@ import { randomUUID } from 'crypto';
 
 @Injectable()
 export class SupabaseService {
-  readonly client: SupabaseClient;
+  private readonly client: SupabaseClient;
 
   constructor(private readonly config: ConfigService) {
     const url = config.get<string>('SUPABASE_URL');
