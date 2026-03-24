@@ -4,13 +4,14 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } 
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { BiometricAuthService } from '../../../services/biometric-auth.service';
+import { environment } from '../../../../environments/environment';
 
 declare const grecaptcha: {
   execute(siteKey: string, options: { action: string }): Promise<string>;
   ready(cb: () => void): void;
 };
 
-const RECAPTCHA_SITE_KEY = '6LeqmY8sAAAAADgH7gWc781zZUOvle2mpCMt-gtR';
+const RECAPTCHA_SITE_KEY = environment.recaptchaSiteKey;
 
 type BiometricMode = 'none' | 'face';
 
