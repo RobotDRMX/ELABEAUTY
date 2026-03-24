@@ -177,6 +177,12 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
 
+    // Server waking up or unreachable
+    if (e?.status === 0 || e?.status === 502 || e?.status === 503 || typeof e?.error === 'string') {
+      this.error = 'El servidor está iniciando, espera unos segundos e inténtalo de nuevo.';
+      return;
+    }
+
     // Generic fallback
     this.error = e?.error?.message || e?.message || 'Algo salió mal. Inténtalo de nuevo.';
   }
