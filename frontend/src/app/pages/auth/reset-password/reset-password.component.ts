@@ -54,6 +54,16 @@ export class ResetPasswordComponent implements OnInit {
     return this.form.get('newPassword')?.value ?? '';
   }
 
+  get passwordRules() {
+    const v = this.passwordValue;
+    return {
+      minLength: v.length >= 8,
+      hasUpper:  /[A-Z]/.test(v),
+      hasLower:  /[a-z]/.test(v),
+      hasNumber: /\d/.test(v),
+    };
+  }
+
   get passwordsMatch(): boolean {
     return !this.form.hasError('passwordsMismatch');
   }
