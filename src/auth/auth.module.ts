@@ -13,7 +13,6 @@ import {
 } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../users/entities/user.entity';
-import { RegisterDto, LoginDto } from './dto/auth.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
@@ -28,11 +27,12 @@ import { Request, Response } from 'express';
 import { Throttle } from '@nestjs/throttler';
 import { WebAuthnService } from './webauthn.service';
 import { FaceService } from './face.service';
+import { SupabaseService } from '../supabase/supabase.service';
 import {
-  WebAuthnVerifyRegistrationDto,
-  WebAuthnVerifyAuthDto,
-  FaceDescriptorDto,
-  FaceLoginDto,
+  RegisterDto, LoginDto, UpdateRoleDto,
+  WebAuthnVerifyRegistrationDto, WebAuthnVerifyAuthDto,
+  FaceDescriptorDto, FaceLoginDto, FaceOnlyLoginDto,
+  VerifyEmailDto, ForgotPasswordDto, ResetPasswordDto, ResendVerificationDto,
 } from './dto/auth.dto';
 import type {
   RegistrationResponseJSON,
@@ -78,27 +78,56 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly httpService: HttpService,
+    private readonly supabase: SupabaseService,
   ) {}
 
-  async register(registerDto: RegisterDto) {
+  async register(registerDto: RegisterDto): Promise<{ message: string }> {
+    // 1. Validar reCAPTCHA
+    if (registerDto.recaptchaToken) {
+      await this.verifyRecaptcha(registerDto.recaptchaToken);
+    }
+
+    // 2. Verificar si el email ya existe
     const existingUser = await this.userRepository.findOne({
       where: { email: registerDto.email },
     });
+
     if (existingUser) {
-      throw new BadRequestException('El usuario ya existe');
+      // Usuario existe pero nunca confirmó su correo → reenviar verificación
+      if (!existingUser.isEmailVerified) {
+        try {
+          await this.supabase.resendConfirmation(existingUser.email);
+        } catch {
+          // Ignorar error de Supabase — respuesta genérica al usuario
+        }
+        return { message: 'Ya existe un registro pendiente de verificación. Te hemos reenviado el correo de confirmación.' };
+      }
+      throw new BadRequestException('El correo ya está registrado');
     }
 
+    // 3. Crear usuario en MySQL (inactivo, sin verificar)
     const salt = await bcrypt.genSalt(12);
     const hashedPassword = await bcrypt.hash(registerDto.password, salt);
 
+    const { recaptchaToken: _, ...userData } = registerDto;
     const newUser = this.userRepository.create({
-      ...registerDto,
-      password: hashedPassword,
+      ...userData,
+      password:        hashedPassword,
+      isActive:        false,
+      isEmailVerified: false,
     });
-
     const savedUser = await this.userRepository.save(newUser);
-    const { password, ...result } = savedUser;
-    return result;
+
+    // 4. Crear shadow-user en Supabase y disparar email de confirmación
+    //    Si Supabase falla, eliminar el usuario de MySQL para evitar huérfanos
+    try {
+      await this.supabase.createAuthUser(registerDto.email);
+    } catch (err) {
+      await this.userRepository.delete(savedUser.id);
+      throw new BadRequestException('No se pudo enviar el correo de confirmación. Inténtalo de nuevo.');
+    }
+
+    return { message: 'Registro exitoso. Revisa tu correo para confirmar tu cuenta.' };
   }
 
   async login(
@@ -214,9 +243,8 @@ export class AuthService {
 
   async verifyRecaptcha(token: string): Promise<void> {
     const secret = this.configService.get<string>('RECAPTCHA_SECRET_KEY');
-    if (!secret || secret === 'YOUR_RECAPTCHA_SECRET_KEY') {
-      // Skip verification in dev if key not configured
-      console.warn('[Auth] reCAPTCHA secret not configured — skipping verification');
+    // Skip in dev, skip for biometric logins (they have their own second factor)
+    if (!secret || secret === 'YOUR_RECAPTCHA_SECRET_KEY' || token === 'face-auth') {
       return;
     }
 
@@ -244,6 +272,7 @@ export class AuthController {
     private readonly faceService: FaceService,
   ) {}
 
+  @Throttle({ global: { limit: 5, ttl: 60000 } })
   @Post('register')
   register(@Body() registerDto: RegisterDto) {
     return this.authService.register(registerDto);
@@ -318,13 +347,13 @@ export class AuthController {
     );
   }
 
-  // Returns { options, userId } — client must send userId back in /login/verify
+  // email is optional: if omitted, uses discoverable credentials (browser shows passkey picker)
   @Post('webauthn/login/options')
-  webauthnLoginOptions(@Body('email') email: string) {
+  webauthnLoginOptions(@Body('email') email?: string) {
     return this.webAuthnService.generateAuthOptions(email);
   }
 
-  // userId comes from client (returned by /login/options) — never regenerate challenge here
+  // userId is optional for discoverable credentials — backend resolves user from credential ID
   @Throttle({ global: { limit: 5, ttl: 60000 } })
   @Post('webauthn/login/verify')
   async webauthnLoginVerify(
@@ -332,7 +361,7 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
   ) {
     const user = await this.webAuthnService.verifyAuthentication(
-      body.userId,
+      body.userId ?? null,
       body.authenticationResponse as unknown as AuthenticationResponseJSON,
     );
     const { password: _p, ...userResult } = user;
@@ -373,6 +402,18 @@ export class AuthController {
       }
     }
 
+    this.setCookies(res, this.authService.issueTokenPair(user));
+    return { user };
+  }
+
+  // Face-only login: no email/password needed — backend scans all stored face descriptors.
+  @Throttle({ global: { limit: 5, ttl: 60000 } })
+  @Post('login/face-only')
+  async loginFaceOnly(
+    @Body() body: FaceOnlyLoginDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const user = await this.faceService.findUserByFace(body.faceDescriptor);
     this.setCookies(res, this.authService.issueTokenPair(user));
     return { user };
   }
