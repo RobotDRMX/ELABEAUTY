@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   apiBaseUrl: 'https://elabeauty.onrender.com/api',
-  recaptchaSiteKey: '6Lc7XpYsAAAALTmfaxywUA1kjhwQmuBueOKeO-0',
+  recaptchaSiteKey: '6LfxfpYsAAAAAN-7vsSudZLMdEu-1AsQn4IyToS6',
 };
