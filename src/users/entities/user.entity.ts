@@ -15,13 +15,19 @@ export class User {
     firstName!: string;
 
     @Column()
-    lastName!: string;
+    apellidoPaterno!: string;
+
+    @Column()
+    apellidoMaterno!: string;
 
     @Column({ default: 'user' })
     role!: string;
 
     @Column({ default: true })
     isActive!: boolean;
+
+    @Column({ default: false })
+    isEmailVerified!: boolean;
 
     @Column({ type: 'text', nullable: true })
     webauthnCredential!: string | null;  // JSON: { credentialID, publicKey, counter, rpID }
