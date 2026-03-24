@@ -17,7 +17,6 @@ export class AuthService {
   }
 
   private checkSession() {
-    // Verificar sesión activa consultando al backend (usa cookie automáticamente)
     this.http
       .get(`${this.apiUrl}/profile`, { withCredentials: true })
       .subscribe({
@@ -26,7 +25,11 @@ export class AuthService {
           this.isAuthenticated.set(true);
           sessionStorage.setItem('user', JSON.stringify(user));
         },
-        error: () => {
+        error: (err) => {
+          // ERR_CONNECTION_REFUSED is expected in dev when backend is restarting — suppress it
+          if (err?.status !== 0) {
+            console.warn('[Auth] checkSession failed:', err?.status);
+          }
           this.currentUser.set(null);
           this.isAuthenticated.set(false);
           sessionStorage.removeItem('user');
@@ -80,5 +83,21 @@ export class AuthService {
 
   updateProfile(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/profile/update`, data);
+  }
+
+  verifyEmail(token_hash: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/verificar-correo`, { token_hash, type: 'email' });
+  }
+
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/olvide-contrasena`, { email });
+  }
+
+  resetPassword(token_hash: string, newPassword: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/nueva-contrasena`, { token_hash, newPassword });
+  }
+
+  resendVerification(email: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/reenviar-verificacion`, { email });
   }
 }
