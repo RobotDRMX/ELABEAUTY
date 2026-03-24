@@ -16,7 +16,14 @@ export class RegisterDto {
   firstName!: string;
 
   @IsString()
-  lastName!: string;
+  apellidoPaterno!: string;
+
+  @IsString()
+  apellidoMaterno!: string;
+
+  @IsOptional()
+  @IsString()
+  recaptchaToken?: string;
 }
 
 export class LoginDto {
@@ -43,12 +50,15 @@ export class WebAuthnVerifyRegistrationDto {
 }
 
 export class WebAuthnVerifyAuthDto {
+  @IsOptional()
   @IsEmail({}, { message: 'Email inválido' })
-  email!: string;
+  email?: string;
 
-  // userId returned by /webauthn/login/options to avoid regenerating the challenge
+  // Optional: returned by /webauthn/login/options when email is provided.
+  // If absent, backend resolves user from credential ID (discoverable credentials flow).
+  @IsOptional()
   @IsNumber()
-  userId!: number;
+  userId?: number;
 
   @IsObject()
   authenticationResponse!: Record<string, unknown>;
@@ -61,11 +71,52 @@ export class FaceDescriptorDto {
 }
 
 // Face login = second factor: password required + face descriptor optional.
-// If user has a saved face and sends descriptor, it must match.
-// If user has no saved face, login proceeds with password only.
 export class FaceLoginDto extends LoginDto {
   @IsOptional()
   @IsArray()
   @IsNumber({}, { each: true })
   faceDescriptor?: number[];
+}
+
+// Face-only login: no email/password needed — backend scans all stored descriptors.
+export class FaceOnlyLoginDto {
+  @IsArray()
+  @IsNumber({}, { each: true })
+  faceDescriptor!: number[];
+}
+
+// ── Email Verification + Password Reset DTOs ──────────────────────────────
+
+/**
+ * Solo acepta type: 'email' — el tipo correcto para confirmación de cuenta
+ * via token_hash. Impide que un token de recovery active una cuenta.
+ */
+export class VerifyEmailDto {
+  @IsString()
+  token_hash!: string;
+
+  @IsIn(['email'])
+  type!: 'email';
+}
+
+export class ForgotPasswordDto {
+  @IsEmail({}, { message: 'Email inválido' })
+  email!: string;
+}
+
+export class ResetPasswordDto {
+  @IsString()
+  token_hash!: string;
+
+  @IsString()
+  @MinLength(8, { message: 'La contraseña debe tener al menos 8 caracteres' })
+  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, {
+    message: 'La contraseña debe contener al menos una mayúscula, una minúscula y un número',
+  })
+  newPassword!: string;
+}
+
+export class ResendVerificationDto {
+  @IsEmail({}, { message: 'Email inválido' })
+  email!: string;
 }
