@@ -2,7 +2,7 @@ import { Controller, Sse, MessageEvent, Header } from '@nestjs/common';
 import { Observable, map } from 'rxjs';
 import { EventsService } from './events.service';
 
-@Controller('api/events')
+@Controller('events')
 export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
 
