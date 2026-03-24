@@ -18,8 +18,36 @@ export const routes: Routes = [
   {
     path: 'auth',
     children: [
-      { path: 'login', loadComponent: () => import('./pages/auth/login/login.component').then(m => m.LoginComponent), title: 'ELA Beauty - Iniciar Sesión' },
-      { path: 'register', loadComponent: () => import('./pages/auth/register/register.component').then(m => m.RegisterComponent), title: 'ELA Beauty - Registro' }
+      {
+        path: 'login',
+        loadComponent: () => import('./pages/auth/login/login.component').then(m => m.LoginComponent),
+        title: 'ELA Beauty - Iniciar Sesión'
+      },
+      {
+        path: 'register',
+        loadComponent: () => import('./pages/auth/register/register.component').then(m => m.RegisterComponent),
+        title: 'ELA Beauty - Registro'
+      },
+      {
+        path: 'verificar-correo',
+        loadComponent: () => import('./pages/auth/verify-email/verify-email.component').then(m => m.VerifyEmailComponent),
+        title: 'ELA Beauty - Verificar Correo'
+      },
+      {
+        path: 'olvide-contrasena',
+        loadComponent: () => import('./pages/auth/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent),
+        title: 'ELA Beauty - Recuperar Contraseña'
+      },
+      {
+        path: 'recuperar-contrasena',
+        loadComponent: () => import('./pages/auth/reset-password/reset-password.component').then(m => m.ResetPasswordComponent),
+        title: 'ELA Beauty - Nueva Contraseña'
+      },
+      {
+        path: 'reenviar-verificacion',
+        loadComponent: () => import('./pages/auth/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent),
+        title: 'ELA Beauty - Reenviar Verificación'
+      },
     ]
   },
   {

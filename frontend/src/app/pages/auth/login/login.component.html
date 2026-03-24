@@ -24,9 +24,21 @@
         </div>
       </div>
 
-      <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+      <div *ngIf="error && countdown === 0" class="alert alert-danger">{{ error }}</div>
 
-      <button type="submit" class="btn-maybelline" [disabled]="loginForm.invalid || loading">
+      <!-- Rate-limit countdown -->
+      <div *ngIf="countdown > 0" class="alert alert-warning countdown-alert">
+        <span class="countdown-icon">⏳</span>
+        <span>
+          Por seguridad, espera <strong>{{ countdown }}s</strong> antes de volver a intentarlo.
+        </span>
+        <div class="countdown-bar-wrap">
+          <div class="countdown-bar" [style.width.%]="(countdown / 60) * 100"></div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-maybelline"
+        [disabled]="loginForm.invalid || loading || isBlocked">
         {{ loading ? 'Verificando...' : 'Entrar' }}
       </button>
     </form>
@@ -38,14 +50,14 @@
         *ngIf="biometric.webAuthnSupported()"
         class="btn-biometric"
         type="button"
-        [disabled]="loading"
+        [disabled]="loading || isBlocked"
         (click)="loginPasskey()">
         🔑 Passkey
       </button>
       <button
         class="btn-biometric"
         type="button"
-        [disabled]="loading || biometricMode === 'face'"
+        [disabled]="loading || isBlocked || biometricMode === 'face'"
         (click)="activateFaceLogin()">
         📷 Reconocimiento facial
       </button>
@@ -54,14 +66,14 @@
     <div *ngIf="biometricMode === 'face'" class="face-panel">
       <p class="face-hint">
         Mira de frente a la cámara y pulsa <strong>Verificar</strong>.<br>
-        <small>Requiere email y contraseña correctos + tu rostro registrado.</small>
+        <small>Asegúrate de tener buena iluminación y que tu rostro esté registrado en tu perfil.</small>
       </p>
       <video #videoRef autoplay muted playsinline class="face-video"></video>
       <div class="face-actions">
         <button
           class="btn-maybelline"
           type="button"
-          [disabled]="!biometric.cameraActive() || loading"
+          [disabled]="!biometric.cameraActive() || loading || isBlocked"
           (click)="loginWithFace()">
           {{ loading ? 'Verificando...' : 'Verificar rostro' }}
         </button>
@@ -70,6 +82,7 @@
     </div>
 
     <div class="auth-footer">
+      <p><a routerLink="/auth/olvide-contrasena">¿Olvidaste tu contraseña?</a></p>
       <p>¿No tienes una cuenta? <a routerLink="/auth/register">Regístrate aquí</a></p>
     </div>
 
