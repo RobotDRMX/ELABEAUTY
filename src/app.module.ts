@@ -41,18 +41,20 @@ import { EventsModule } from './events/events.module';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        type: 'mysql',
+        type: 'postgres',
         host: configService.get<string>('DB_HOST', 'localhost'),
-        port: configService.get<number>('DB_PORT', 3306),
-        username: configService.get<string>('DB_USERNAME', 'root'),
+        port: configService.get<number>('DB_PORT', 5432),
+        username: configService.get<string>('DB_USERNAME', 'postgres'),
         password: configService.get<string>('DB_PASSWORD', ''),
-        database: configService.get<string>('DB_NAME', 'ela_beauty'),
+        database: configService.get<string>('DB_NAME', 'postgres'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         // IMPORTANTE: false por defecto — usar DB_SYNCHRONIZE=true solo en desarrollo
         synchronize: configService.get<string>('DB_SYNCHRONIZE') === 'true',
         logging: configService.get<boolean>('DB_LOGGING', false),
         autoLoadEntities: true,
-        charset: 'utf8mb4',
+        ssl: configService.get<string>('DB_SSL') === 'true'
+          ? { rejectUnauthorized: false }
+          : false,
       }),
       inject: [ConfigService],
     }),
