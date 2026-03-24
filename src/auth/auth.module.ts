@@ -338,10 +338,12 @@ export class AuthService {
     const params = new URLSearchParams({ secret, response: token });
 
     const { data } = await firstValueFrom(
-      this.httpService.post<{ success: boolean; score: number; action: string }>(
+      this.httpService.post<{ success: boolean; score: number; action: string; 'error-codes'?: string[] }>(
         `${url}?${params.toString()}`,
       ),
     );
+
+    console.log('[reCAPTCHA]', JSON.stringify({ success: data.success, score: data.score, action: data.action, errors: data['error-codes'] }));
 
     if (!data.success || data.score < 0.3) {
       throw new UnauthorizedException('Verificación de seguridad fallida. Inténtalo de nuevo.');
