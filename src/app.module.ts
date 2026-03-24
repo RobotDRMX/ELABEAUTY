@@ -5,6 +5,7 @@ import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { SupabaseModule } from './supabase/supabase.module';
 import { AuthModule } from './auth/auth.module';
 import { ServicesModule } from './services/services.module';
 import { ProductsModule } from './products/products.module';
@@ -19,6 +20,7 @@ import { HairstylesModule } from './hairstyles/hairstyles.module';
 import { NailDesignsModule } from './nail-designs/nail-designs.module';
 import { UsersModule } from './users/users.module';
 import { AdminModule } from './admin/admin.module';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
@@ -55,6 +57,7 @@ import { AdminModule } from './admin/admin.module';
       inject: [ConfigService],
     }),
 
+    SupabaseModule,
     AuthModule,
     UsersModule,
     ServicesModule,
@@ -69,6 +72,7 @@ import { AdminModule } from './admin/admin.module';
     HairstylesModule,
     NailDesignsModule,
     AdminModule,
+    EventsModule,
   ],
   controllers: [AppController],
   providers: [
