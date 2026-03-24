@@ -38,7 +38,7 @@ async function bootstrap() {
         'http://localhost:4300',
       ];
       // Allow all Vercel preview deployments
-      if (!origin || allowed.includes(origin) || /\.vercel\.app$/.test(origin)) {
+      if (!origin || allowed.includes(origin) || /\.vercel\.app$/.test(origin) || /\.koyeb\.app$/.test(origin)) {
         callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'));
