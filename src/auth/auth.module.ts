@@ -427,7 +427,7 @@ export class AuthController {
     res.cookie('access_token', result.access_token, {
       httpOnly: true,
       secure: isProd,
-      sameSite: 'strict',
+      sameSite: isProd ? 'none' : 'lax',
       maxAge: 15 * 60 * 1000,
     });
 
@@ -437,8 +437,8 @@ export class AuthController {
   @Post('logout')
   logout(@Res({ passthrough: true }) res: Response) {
     const isProduction = process.env['NODE_ENV'] === 'production';
-    res.clearCookie('access_token', { httpOnly: true, secure: isProduction, sameSite: 'strict' });
-    res.clearCookie('refresh_token', { httpOnly: true, secure: isProduction, sameSite: 'strict' });
+    res.clearCookie('access_token', { httpOnly: true, secure: isProduction, sameSite: isProduction ? 'none' : 'lax' });
+    res.clearCookie('refresh_token', { httpOnly: true, secure: isProduction, sameSite: isProduction ? 'none' : 'lax' });
     return { message: 'Sesión cerrada' };
   }
 
@@ -552,7 +552,8 @@ export class AuthController {
     tokens: { access_token: string; refresh_token: string },
   ): void {
     const isProd = process.env['NODE_ENV'] === 'production';
-    const cookieOpts = { httpOnly: true, secure: isProd, sameSite: 'strict' as const };
+    // SameSite=None required for cross-domain (Vercel frontend <-> Koyeb backend)
+    const cookieOpts = { httpOnly: true, secure: isProd, sameSite: (isProd ? 'none' : 'lax') as 'none' | 'lax' };
     res.cookie('access_token',  tokens.access_token,  { ...cookieOpts, maxAge: 15 * 60 * 1000 });
     res.cookie('refresh_token', tokens.refresh_token, { ...cookieOpts, maxAge: 7 * 24 * 60 * 60 * 1000 });
   }
