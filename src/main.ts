@@ -29,11 +29,21 @@ async function bootstrap() {
   app.useGlobalFilters(new GlobalExceptionFilter());
 
   // CORS
+  const frontendUrl = configService.get('FRONTEND_URL', 'http://localhost:4200');
   app.enableCors({
-    origin: [
-      configService.get('FRONTEND_URL', 'http://localhost:4200'),
-      'http://localhost:4300',
-    ],
+    origin: (origin, callback) => {
+      const allowed = [
+        frontendUrl,
+        'http://localhost:4200',
+        'http://localhost:4300',
+      ];
+      // Allow all Vercel preview deployments
+      if (!origin || allowed.includes(origin) || /\.vercel\.app$/.test(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type, Accept, Authorization, X-Requested-With',
