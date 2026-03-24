@@ -2,8 +2,9 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PagedResult } from './admin-products.service';
+import { environment } from '../../../../environments/environment';
 
-const API = 'http://localhost:3000/api/admin/services';
+const API = environment.apiBaseUrl + '/admin/services';
 
 @Injectable({ providedIn: 'root' })
 export class AdminServicesService {

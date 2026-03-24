@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 export interface PagedResult<T> {
   data: T[];
@@ -10,7 +11,7 @@ export interface PagedResult<T> {
   totalPages: number;
 }
 
-const API = 'http://localhost:3000/api/admin/products';
+const API = environment.apiBaseUrl + '/admin/products';
 
 @Injectable({ providedIn: 'root' })
 export class AdminProductsService {

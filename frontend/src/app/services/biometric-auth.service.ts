@@ -7,10 +7,11 @@ import {
   startAuthentication,
   browserSupportsWebAuthn,
 } from '@simplewebauthn/browser';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class BiometricAuthService {
-  private readonly API        = 'http://localhost:3000/auth';
+  private readonly API = environment.apiBaseUrl + '/auth';
   private readonly MODELS_URL = '/assets/models';
 
   readonly webAuthnSupported = signal(browserSupportsWebAuthn());
@@ -38,21 +39,20 @@ export class BiometricAuthService {
     );
   }
 
-  async loginWithPasskey(email: string): Promise<any> {
-    // Step 1: get options + userId from server
-    const { options, userId } = await firstValueFrom(
-      this.http.post<{ options: any; userId: number }>(
+  // email is optional: if omitted, browser shows a passkey picker (discoverable credentials).
+  async loginWithPasskey(email?: string): Promise<any> {
+    const body = email ? { email } : {};
+    const result = await firstValueFrom(
+      this.http.post<{ options: any; userId?: number }>(
         `${this.API}/webauthn/login/options`,
-        { email },
+        body,
       ),
     );
-    // Step 2: browser/OS authenticates with saved Passkey
-    const authenticationResponse = await startAuthentication({ optionsJSON: options });
-    // Step 3: send userId + response to server (userId avoids regenerating challenge)
+    const authenticationResponse = await startAuthentication({ optionsJSON: result.options });
     return firstValueFrom(
       this.http.post(
         `${this.API}/webauthn/login/verify`,
-        { email, userId, authenticationResponse },
+        { email, userId: result.userId, authenticationResponse },
         { withCredentials: true },
       ),
     );
@@ -76,7 +76,13 @@ export class BiometricAuthService {
       video: { facingMode: 'user', width: 320, height: 240 },
     });
     videoElement.srcObject = this.stream;
-    await videoElement.play();
+    // autoplay + muted + playsinline attributes handle playback automatically.
+    // Calling play() explicitly can cause AbortError when Angular re-renders mid-cycle.
+    await new Promise<void>(resolve => {
+      videoElement.onloadedmetadata = () => resolve();
+      // Fallback in case the event already fired
+      setTimeout(resolve, 500);
+    });
     this.cameraActive.set(true);
   }
 
@@ -106,8 +112,22 @@ export class BiometricAuthService {
     );
   }
 
-  // Face login = second factor: sends email + password + face descriptor together.
-  // Throws if face not detected — component handles fallback to standard login.
+  // Face-only login: no credentials needed — backend searches all stored descriptors.
+  async loginWithFaceOnly(): Promise<any> {
+    const faceDescriptor = await this.captureDescriptor();
+    if (!faceDescriptor) {
+      throw new Error('No se detectó tu rostro. Mejora la iluminación e inténtalo de nuevo.');
+    }
+    return firstValueFrom(
+      this.http.post(
+        `${this.API}/login/face-only`,
+        { faceDescriptor },
+        { withCredentials: true },
+      ),
+    );
+  }
+
+  // Face second-factor: sends email + password + face descriptor together.
   async loginWithFace(email: string, password: string): Promise<any> {
     const faceDescriptor = await this.captureDescriptor();
     if (!faceDescriptor) {
