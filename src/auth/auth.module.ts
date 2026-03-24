@@ -343,7 +343,7 @@ export class AuthService {
       ),
     );
 
-    if (!data.success || data.score < 0.5) {
+    if (!data.success || data.score < 0.3) {
       throw new UnauthorizedException('Verificación de seguridad fallida. Inténtalo de nuevo.');
     }
   }
