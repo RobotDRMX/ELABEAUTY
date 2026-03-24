@@ -1,0 +1,31 @@
+<div class="auth-container fade-in">
+  <div class="auth-card">
+
+    <div class="auth-header">
+      <h2>Verificación de Correo</h2>
+    </div>
+
+    <div *ngIf="status === 'loading'" class="auth-form" style="text-align:center; padding: 2rem 0;">
+      <p>Verificando tu correo...</p>
+    </div>
+
+    <div *ngIf="status === 'success'" class="auth-form">
+      <div class="alert alert-success">{{ message }}</div>
+      <a routerLink="/auth/login" class="btn-maybelline" style="display:block; text-align:center; margin-top:1rem;">
+        Ir al inicio de sesión
+      </a>
+    </div>
+
+    <div *ngIf="status === 'error'" class="auth-form">
+      <div class="alert alert-danger">{{ message }}</div>
+      <p style="margin-top:1rem; text-align:center; font-size:0.9rem;">
+        ¿El enlace expiró?
+        <a routerLink="/auth/reenviar-verificacion">Solicitar un nuevo enlace</a>
+      </p>
+      <a routerLink="/auth/login" class="btn-outline" style="display:block; text-align:center; margin-top:0.5rem;">
+        Volver al login
+      </a>
+    </div>
+
+  </div>
+</div>
