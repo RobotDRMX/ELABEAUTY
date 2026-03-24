@@ -343,10 +343,15 @@ export class AuthService {
       ),
     );
 
-    console.log('[reCAPTCHA]', JSON.stringify({ success: data.success, score: data.score, action: data.action, errors: data['error-codes'] }));
-
-    if (!data.success || data.score < 0.3) {
-      throw new UnauthorizedException('Verificación de seguridad fallida. Inténtalo de nuevo.');
+    // Log for monitoring — non-blocking: don't reject users if reCAPTCHA fails
+    // (Firefox ETP and some browsers generate invalid tokens; score threshold would block legit users)
+    if (!data.success) {
+      console.warn('[reCAPTCHA] verification failed:', data['error-codes']);
+      return;
+    }
+    console.log('[reCAPTCHA]', JSON.stringify({ success: data.success, score: data.score, action: data.action }));
+    if (data.score < 0.1) {
+      console.warn('[reCAPTCHA] very low score, possible bot:', data.score);
     }
   }
 }
