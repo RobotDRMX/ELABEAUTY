@@ -6,7 +6,7 @@ export class WebAuthnChallenge {
   id!: number;
 
   // NULL for discoverable credentials flow
-  @Column({ nullable: true })
+  @Column({ type: 'int', nullable: true })
   userId!: number | null;
 
   @Column()
