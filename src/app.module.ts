@@ -52,9 +52,7 @@ import { EventsModule } from './events/events.module';
         database: configService.get<string>('DB_NAME', 'postgres'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         // IMPORTANTE: false por defecto — usar DB_SYNCHRONIZE=true solo en desarrollo
-        synchronize:
-          configService.get<string>('NODE_ENV') !== 'production' &&
-          configService.get<string>('DB_SYNCHRONIZE') === 'true',
+        synchronize: configService.get<string>('DB_SYNCHRONIZE') === 'true',
         logging: configService.get<boolean>('DB_LOGGING', false),
         autoLoadEntities: true,
         ssl: configService.get<string>('DB_SSL') === 'true'
