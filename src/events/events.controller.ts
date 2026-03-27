@@ -1,12 +1,15 @@
 import { Controller, Sse, MessageEvent, Header, Res } from '@nestjs/common';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { Observable, map, finalize } from 'rxjs';
 import { Response } from 'express';
 import { EventsService } from './events.service';
 
+@ApiTags('Eventos SSE')
 @Controller('events')
 export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
 
+  @ApiOperation({ summary: 'Stream de eventos en tiempo real (SSE)' })
   @Sse('stream')
   @Header('Cache-Control', 'no-cache')
   @Header('X-Accel-Buffering', 'no')

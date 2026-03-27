@@ -2,6 +2,7 @@ import {
   Controller, Get, Post, Patch, Delete,
   Body, Param, Query, ParseIntPipe, UseGuards, HttpCode, HttpStatus,
 } from '@nestjs/common';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { AdminProductsService } from './admin-products.service';
 import { CreateProductDto } from '../../products/dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -10,6 +11,8 @@ import { JwtAuthGuard } from '../../auth/auth.module';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';
 
+@ApiTags('Admin — Productos')
+@ApiBearerAuth()
 @Controller('admin/products')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles('admin')

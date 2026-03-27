@@ -2,6 +2,7 @@ import {
   Controller, Get, Post, Patch, Delete,
   Body, Param, Query, UseGuards, HttpCode, HttpStatus,
 } from '@nestjs/common';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { AdminServicesService } from './admin-services.service';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
@@ -10,6 +11,8 @@ import { JwtAuthGuard } from '../../auth/auth.module';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';
 
+@ApiTags('Admin — Servicios')
+@ApiBearerAuth()
 @Controller('admin/services')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles('admin')

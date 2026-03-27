@@ -1,4 +1,5 @@
 import { Module, Injectable, Controller, Post, Get, Delete, Body, UseGuards, Req, Param, Patch, ParseIntPipe } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Cart } from './entities/cart.entity';
 import { CartItem } from './entities/cart-item.entity';
@@ -73,21 +74,26 @@ export class CartService {
     }
 }
 
+@ApiTags('Carrito')
+@ApiBearerAuth()
 @Controller('cart')
 @UseGuards(JwtAuthGuard)
 export class CartController {
     constructor(private readonly cartService: CartService) { }
 
+    @ApiOperation({ summary: 'Obtener carrito del usuario' })
     @Get()
     getCart(@Req() req: any) {
         return this.cartService.findOrCreateCart(req.user.userId);
     }
 
+    @ApiOperation({ summary: 'Agregar producto al carrito' })
     @Post('items')
     addItem(@Req() req: any, @Body() dto: AddToCartDto) {
         return this.cartService.addItem(req.user.userId, dto.productId, dto.quantity || 1);
     }
 
+    @ApiOperation({ summary: 'Actualizar cantidad de producto en carrito' })
     @Patch('items/:productId')
     updateQuantity(
         @Req() req: any,
@@ -97,11 +103,13 @@ export class CartController {
         return this.cartService.updateQuantity(req.user.userId, productId, dto.quantity);
     }
 
+    @ApiOperation({ summary: 'Eliminar producto del carrito' })
     @Delete('items/:productId')
     removeItem(@Req() req: any, @Param('productId', ParseIntPipe) productId: number) {
         return this.cartService.removeItem(req.user.userId, productId);
     }
 
+    @ApiOperation({ summary: 'Vaciar carrito completo' })
     @Delete()
     clearCart(@Req() req: any) {
         return this.cartService.clearCart(req.user.userId);

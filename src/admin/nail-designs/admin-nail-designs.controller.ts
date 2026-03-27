@@ -2,6 +2,7 @@ import {
   Controller, Get, Post, Patch, Delete,
   Body, Param, Query, ParseIntPipe, UseGuards, HttpCode, HttpStatus,
 } from '@nestjs/common';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { AdminNailDesignsService } from './admin-nail-designs.service';
 import { CreateNailDesignDto } from './dto/create-nail-design.dto';
 import { UpdateNailDesignDto } from './dto/update-nail-design.dto';
@@ -10,6 +11,8 @@ import { JwtAuthGuard } from '../../auth/auth.module';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';
 
+@ApiTags('Admin — Diseños de Uñas')
+@ApiBearerAuth()
 @Controller('admin/nail-designs')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles('admin')

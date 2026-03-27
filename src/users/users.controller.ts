@@ -1,13 +1,17 @@
 import { Controller, Patch, Param, Body, UseGuards } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthService, JwtAuthGuard } from '../auth/auth.module';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { UpdateRoleDto } from '../auth/dto/auth.dto';
 
+@ApiTags('Usuarios')
+@ApiBearerAuth()
 @Controller('users')
 export class UsersController {
   constructor(private readonly authService: AuthService) {}
 
+  @ApiOperation({ summary: 'Cambiar rol de usuario (admin)' })
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')
   @Patch(':id/role')

@@ -26,6 +26,7 @@ import { HttpModule, HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { Request, Response } from 'express';
 import { Throttle } from '@nestjs/throttler';
+import { ApiTags, ApiOperation, ApiBearerAuth, ApiCookieAuth } from '@nestjs/swagger';
 import { WebAuthnService } from './webauthn.service';
 import { FaceService } from './face.service';
 import { WebAuthnChallenge } from './entities/webauthn-challenge.entity';
@@ -372,6 +373,7 @@ export class AuthService {
 }
 
 // --- CONTROLADOR DE AUTENTICACIÓN ---
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -380,35 +382,40 @@ export class AuthController {
     private readonly faceService: FaceService,
   ) {}
 
+  @ApiOperation({ summary: 'Registrar nuevo usuario' })
   @Throttle({ global: { limit: 5, ttl: 60000 } })
   @Post('register')
   register(@Body() registerDto: RegisterDto) {
     return this.authService.register(registerDto);
   }
 
+  @ApiOperation({ summary: 'Verificar correo electrónico' })
   @Post('verificar-correo')
   verifyEmail(@Body() body: VerifyEmailDto) {
     return this.authService.verifyEmail(body.token_hash);
   }
 
+  @ApiOperation({ summary: 'Reenviar correo de verificación' })
   @Throttle({ global: { limit: 5, ttl: 60000 } })
   @Post('reenviar-verificacion')
   resendVerification(@Body() body: ResendVerificationDto) {
     return this.authService.resendVerification(body.email);
   }
 
+  @ApiOperation({ summary: 'Solicitar recuperación de contraseña' })
   @Throttle({ global: { limit: 5, ttl: 60000 } })
   @Post('olvide-contrasena')
   forgotPassword(@Body() body: ForgotPasswordDto) {
     return this.authService.forgotPassword(body.email);
   }
 
+  @ApiOperation({ summary: 'Restablecer contraseña con token' })
   @Post('nueva-contrasena')
   resetPassword(@Body() body: ResetPasswordDto) {
     return this.authService.resetPassword(body.token_hash, body.newPassword);
   }
 
-  // Rate limit estricto: 5 intentos por minuto por IP
+  @ApiOperation({ summary: 'Iniciar sesión con email y contraseña' })
   @Throttle({ global: { limit: 5, ttl: 60000 } })
   @Post('login')
   async login(
@@ -424,6 +431,8 @@ export class AuthController {
     return { user: result.user, access_token: result.access_token };
   }
 
+  @ApiOperation({ summary: 'Refrescar access token con refresh cookie' })
+  @ApiCookieAuth('refresh_token')
   @Post('refresh')
   async refresh(
     @Req() req: Request,
@@ -440,6 +449,7 @@ export class AuthController {
     return { access_token: result.access_token };
   }
 
+  @ApiOperation({ summary: 'Cerrar sesión (limpiar refresh cookie)' })
   @Post('logout')
   logout(@Res({ passthrough: true }) res: Response) {
     const isProduction = process.env['NODE_ENV'] === 'production';
@@ -449,12 +459,16 @@ export class AuthController {
 
   // ── WebAuthn ──────────────────────────────────────────────────────────────
 
+  @ApiOperation({ summary: 'Obtener opciones de registro WebAuthn' })
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Get('webauthn/register/options')
   webauthnRegisterOptions(@Req() req: any) {
     return this.webAuthnService.generateRegistrationOptions(req.user.userId);
   }
 
+  @ApiOperation({ summary: 'Verificar registro de passkey WebAuthn' })
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Post('webauthn/register/verify')
   webauthnRegisterVerify(
@@ -467,13 +481,13 @@ export class AuthController {
     );
   }
 
-  // email is optional: if omitted, uses discoverable credentials (browser shows passkey picker)
+  @ApiOperation({ summary: 'Obtener opciones de login WebAuthn' })
   @Post('webauthn/login/options')
   webauthnLoginOptions(@Body('email') email?: string) {
     return this.webAuthnService.generateAuthOptions(email);
   }
 
-  // userId is optional for discoverable credentials — backend resolves user from credential ID
+  @ApiOperation({ summary: 'Verificar login con passkey WebAuthn' })
   @Throttle({ global: { limit: 5, ttl: 60000 } })
   @Post('webauthn/login/verify')
   async webauthnLoginVerify(
@@ -492,15 +506,15 @@ export class AuthController {
 
   // ── Face (second factor) ──────────────────────────────────────────────────
 
+  @ApiOperation({ summary: 'Guardar descriptor facial del usuario' })
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Post('face/save')
   saveFaceDescriptor(@Req() req: any, @Body() body: FaceDescriptorDto) {
     return this.faceService.saveDescriptor(req.user.userId, body.descriptor);
   }
 
-  // Same as /login but adds face verification if descriptor is sent.
-  // If user has no saved face, login proceeds with password only.
-  // If user has saved face and descriptor doesn't match, reject.
+  @ApiOperation({ summary: 'Login con contraseña + verificación facial opcional' })
   @Throttle({ global: { limit: 5, ttl: 60000 } })
   @Post('login/face')
   async loginWithFace(
@@ -527,7 +541,7 @@ export class AuthController {
     return { user, access_token: tokens.access_token };
   }
 
-  // Face-only login: no email/password needed — backend scans all stored face descriptors.
+  @ApiOperation({ summary: 'Login solo con rostro (requiere email)' })
   @Throttle({ global: { limit: 5, ttl: 60000 } })
   @Post('login/face-only')
   async loginFaceOnly(
@@ -540,12 +554,16 @@ export class AuthController {
     return { user, access_token: tokens.access_token };
   }
 
+  @ApiOperation({ summary: 'Obtener perfil del usuario autenticado' })
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Req() req: any) {
     return this.authService.findOne(req.user.userId);
   }
 
+  @ApiOperation({ summary: 'Actualizar perfil del usuario autenticado' })
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Post('profile/update')
   updateProfile(@Req() req: any, @Body() updateData: any) {

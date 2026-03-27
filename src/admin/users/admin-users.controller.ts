@@ -2,6 +2,7 @@ import {
   Controller, Get, Patch, Delete,
   Body, Param, Query, ParseIntPipe, UseGuards, HttpCode, HttpStatus,
 } from '@nestjs/common';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { AdminUsersService } from './admin-users.service';
 import { AdminListDto } from '../dto/admin-list.dto';
 import { UpdateRoleDto } from '../../auth/dto/auth.dto';
@@ -9,6 +10,8 @@ import { JwtAuthGuard } from '../../auth/auth.module';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';
 
+@ApiTags('Admin — Usuarios')
+@ApiBearerAuth()
 @Controller('admin/users')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles('admin')

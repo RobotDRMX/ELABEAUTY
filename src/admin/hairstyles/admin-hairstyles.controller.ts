@@ -2,6 +2,7 @@ import {
   Controller, Get, Post, Patch, Delete,
   Body, Param, Query, ParseIntPipe, UseGuards, HttpCode, HttpStatus,
 } from '@nestjs/common';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { AdminHairstylesService } from './admin-hairstyles.service';
 import { CreateHairstyleDto } from './dto/create-hairstyle.dto';
 import { UpdateHairstyleDto } from './dto/update-hairstyle.dto';
@@ -10,6 +11,8 @@ import { JwtAuthGuard } from '../../auth/auth.module';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';
 
+@ApiTags('Admin — Peinados')
+@ApiBearerAuth()
 @Controller('admin/hairstyles')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles('admin')

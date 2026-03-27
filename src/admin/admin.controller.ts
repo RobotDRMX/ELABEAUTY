@@ -1,8 +1,10 @@
 import { Controller, Post, Body, HttpCode, HttpStatus, ForbiddenException } from '@nestjs/common';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { Throttle } from '@nestjs/throttler';
 import { AdminService } from './admin.service';
 
+@ApiTags('Admin')
 @Controller('admin')
 export class AdminController {
   constructor(
@@ -10,6 +12,7 @@ export class AdminController {
     private readonly configService: ConfigService,
   ) {}
 
+  @ApiOperation({ summary: 'Crear usuario admin inicial (requiere secret)' })
   @Post('seed-admin')
   @HttpCode(HttpStatus.CREATED)
   @Throttle({ global: { limit: 1, ttl: 3600000 } })

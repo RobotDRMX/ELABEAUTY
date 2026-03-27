@@ -1,4 +1,5 @@
 import { Module, Injectable, Controller, Get, NotFoundException } from '@nestjs/common';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -22,10 +23,12 @@ export class ServicesService {
   }
 }
 
+@ApiTags('Servicios')
 @Controller('services')
 export class ServicesController {
   constructor(private readonly service: ServicesService) {}
 
+  @ApiOperation({ summary: 'Listar todos los servicios activos' })
   @Get()
   findAll() {
     return this.service.findAll();

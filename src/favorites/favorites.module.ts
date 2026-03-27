@@ -1,4 +1,5 @@
 import { Module, Injectable, Controller, Post, Get, Delete, UseGuards, Req, Param, ParseIntPipe } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Favorite } from './entities/favorite.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -40,21 +41,26 @@ export class FavoritesService {
     }
 }
 
+@ApiTags('Favoritos')
+@ApiBearerAuth()
 @Controller('favorites')
 @UseGuards(JwtAuthGuard)
 export class FavoritesController {
     constructor(private readonly favoritesService: FavoritesService) { }
 
+    @ApiOperation({ summary: 'Obtener favoritos del usuario' })
     @Get()
     getFavorites(@Req() req: any) {
         return this.favoritesService.findAll(req.user.userId);
     }
 
+    @ApiOperation({ summary: 'Agregar producto a favoritos' })
     @Post(':productId')
     addFavorite(@Req() req: any, @Param('productId', ParseIntPipe) productId: number) {
         return this.favoritesService.add(req.user.userId, productId);
     }
 
+    @ApiOperation({ summary: 'Eliminar producto de favoritos' })
     @Delete(':productId')
     removeFavorite(@Req() req: any, @Param('productId', ParseIntPipe) productId: number) {
         return this.favoritesService.remove(req.user.userId, productId);

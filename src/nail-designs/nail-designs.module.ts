@@ -1,4 +1,5 @@
 import { Module, Injectable, Controller, Get, Param, ParseIntPipe, NotFoundException } from '@nestjs/common';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -69,15 +70,18 @@ export class NailDesignsService {
 
 // ─── CONTROLADOR ─────────────────────────────────────────────────────────────
 
+@ApiTags('Diseños de Uñas')
 @Controller('nail-designs')
 export class NailDesignsController {
     constructor(private readonly service: NailDesignsService) { }
 
+    @ApiOperation({ summary: 'Listar todos los diseños de uñas disponibles' })
     @Get()
     findAll() {
         return this.service.findAll();
     }
 
+    @ApiOperation({ summary: 'Obtener detalle de un diseño de uñas' })
     @Get(':id')
     findOne(@Param('id', ParseIntPipe) id: number) {
         return this.service.findOne(id);
