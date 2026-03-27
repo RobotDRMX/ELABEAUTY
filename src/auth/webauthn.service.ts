@@ -1,7 +1,10 @@
 import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Not, IsNull } from 'typeorm';
+import { Repository, Not, IsNull, LessThan } from 'typeorm';
+import { ConfigService } from '@nestjs/config';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { User } from '../users/entities/user.entity';
+import { WebAuthnChallenge } from './entities/webauthn-challenge.entity';
 import {
   generateRegistrationOptions,
   verifyRegistrationResponse,
@@ -13,30 +16,61 @@ import type {
   AuthenticationResponseJSON,
 } from '@simplewebauthn/server';
 
-// Challenge store in memory by userId.
-// Key -1 is reserved for "discoverable credentials" flow (no email provided).
-// In production: replace with Redis with a 5-minute TTL.
-const challengeStore = new Map<number, string>();
-const DISCOVERABLE_KEY = -1;
-
-/** Shape persisted in users.webauthnCredential (JSON string) */
 interface StoredCredential {
-  id: string;          // Base64URLString — credential ID
-  publicKey: string;   // Base64URLString — raw COSE public key bytes
+  id: string;
+  publicKey: string;
   counter: number;
   rpID: string;
 }
 
 @Injectable()
 export class WebAuthnService {
-  private readonly rpName = 'ELA Beauty';
-  private readonly rpID   = 'localhost';
-  private readonly origin = 'http://localhost:4200';
+  private readonly rpName: string;
+  private readonly rpID: string;
+  private readonly origin: string;
+  private readonly CHALLENGE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 
   constructor(
     @InjectRepository(User)
     private readonly userRepo: Repository<User>,
-  ) {}
+    @InjectRepository(WebAuthnChallenge)
+    private readonly challengeRepo: Repository<WebAuthnChallenge>,
+    private readonly configService: ConfigService,
+  ) {
+    const frontendUrl = this.configService.get<string>('FRONTEND_URL', 'http://localhost:4200');
+    const url = new URL(frontendUrl);
+    this.rpID = url.hostname;
+    this.origin = url.origin;
+    this.rpName = 'ELA Beauty';
+  }
+
+  private async storeChallenge(userId: number | null, challenge: string): Promise<void> {
+    // Remove any existing challenge for this user
+    if (userId !== null) {
+      await this.challengeRepo.delete({ userId });
+    }
+    await this.challengeRepo.save({
+      userId,
+      challenge,
+      expiresAt: new Date(Date.now() + this.CHALLENGE_TTL_MS),
+    });
+  }
+
+  private async consumeChallenge(userId: number | null): Promise<string> {
+    const where = userId !== null ? { userId } : { userId: IsNull() as any };
+    const record = await this.challengeRepo.findOne({ where });
+    if (!record || record.expiresAt < new Date()) {
+      if (record) await this.challengeRepo.delete(record.id);
+      throw new BadRequestException('Challenge no encontrado o expirado');
+    }
+    await this.challengeRepo.delete(record.id);
+    return record.challenge;
+  }
+
+  @Cron(CronExpression.EVERY_HOUR)
+  async cleanupExpiredChallenges(): Promise<void> {
+    await this.challengeRepo.delete({ expiresAt: LessThan(new Date()) });
+  }
 
   async generateRegistrationOptions(userId: number) {
     const user = await this.userRepo.findOneOrFail({ where: { id: userId } });
@@ -54,13 +88,12 @@ export class WebAuthnService {
       },
     });
 
-    challengeStore.set(userId, options.challenge);
+    await this.storeChallenge(userId, options.challenge);
     return options;
   }
 
   async verifyRegistration(userId: number, response: RegistrationResponseJSON) {
-    const expectedChallenge = challengeStore.get(userId);
-    if (!expectedChallenge) throw new BadRequestException('Challenge no encontrado o expirado');
+    const expectedChallenge = await this.consumeChallenge(userId);
 
     const verification = await verifyRegistrationResponse({
       response,
@@ -86,21 +119,17 @@ export class WebAuthnService {
       webauthnCredential: JSON.stringify(stored),
     });
 
-    challengeStore.delete(userId);
     return { verified: true };
   }
 
-  // email is optional: if provided, returns user-specific allowCredentials.
-  // If absent, uses discoverable credentials (browser shows passkey picker).
   async generateAuthOptions(email?: string): Promise<{ options: any; userId?: number }> {
     if (!email) {
-      // Discoverable credentials: let the browser/OS pick the passkey
       const options = await generateAuthenticationOptions({
         rpID:             this.rpID,
         userVerification: 'preferred',
         allowCredentials: [],
       });
-      challengeStore.set(DISCOVERABLE_KEY, options.challenge);
+      await this.storeChallenge(null, options.challenge);
       return { options };
     }
 
@@ -117,29 +146,25 @@ export class WebAuthnService {
       allowCredentials: [{ id: stored.id }],
     });
 
-    challengeStore.set(user.id, options.challenge);
+    await this.storeChallenge(user.id, options.challenge);
     return { options, userId: user.id };
   }
 
-  // userId is optional for discoverable credentials: backend resolves user from credential ID.
   async verifyAuthentication(userId: number | null, response: AuthenticationResponseJSON): Promise<User> {
     let user: User;
-    let challengeKey: number;
+    let challengeUserId: number | null;
 
     if (userId != null) {
       user = await this.userRepo.findOneOrFail({ where: { id: userId } });
-      challengeKey = userId;
+      challengeUserId = userId;
     } else {
-      // Discoverable flow: find user by credential ID embedded in the response
       user = await this.findUserByCredentialId(response.id);
-      challengeKey = DISCOVERABLE_KEY;
+      challengeUserId = null;
     }
 
     if (!user.webauthnCredential) throw new BadRequestException('Sin Passkey registrado');
 
-    const expectedChallenge = challengeStore.get(challengeKey);
-    if (!expectedChallenge) throw new BadRequestException('Challenge no encontrado o expirado');
-
+    const expectedChallenge = await this.consumeChallenge(challengeUserId);
     const stored: StoredCredential = JSON.parse(user.webauthnCredential);
 
     const verification = await verifyAuthenticationResponse({
@@ -154,12 +179,11 @@ export class WebAuthnService {
       },
     });
 
-    if (!verification.verified) throw new UnauthorizedException('Passkey inválido');
+    if (!verification.verified) throw new UnauthorizedException('Passkey invalido');
 
     stored.counter = verification.authenticationInfo.newCounter;
     await this.userRepo.update(user.id, { webauthnCredential: JSON.stringify(stored) });
 
-    challengeStore.delete(challengeKey);
     return user;
   }
 

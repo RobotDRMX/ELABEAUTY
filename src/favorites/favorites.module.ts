@@ -1,4 +1,4 @@
-import { Module, Injectable, Controller, Post, Get, Delete, Body, UseGuards, Req, Param } from '@nestjs/common';
+import { Module, Injectable, Controller, Post, Get, Delete, UseGuards, Req, Param, ParseIntPipe } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Favorite } from './entities/favorite.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -51,12 +51,12 @@ export class FavoritesController {
     }
 
     @Post(':productId')
-    addFavorite(@Req() req: any, @Param('productId') productId: number) {
+    addFavorite(@Req() req: any, @Param('productId', ParseIntPipe) productId: number) {
         return this.favoritesService.add(req.user.userId, productId);
     }
 
     @Delete(':productId')
-    removeFavorite(@Req() req: any, @Param('productId') productId: number) {
+    removeFavorite(@Req() req: any, @Param('productId', ParseIntPipe) productId: number) {
         return this.favoritesService.remove(req.user.userId, productId);
     }
 }

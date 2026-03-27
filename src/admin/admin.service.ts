@@ -1,6 +1,7 @@
 import { Injectable, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { ConfigService } from '@nestjs/config';
 import { User } from '../users/entities/user.entity';
 import * as bcrypt from 'bcrypt';
 
@@ -9,6 +10,7 @@ export class AdminService {
   constructor(
     @InjectRepository(User)
     private readonly userRepo: Repository<User>,
+    private readonly configService: ConfigService,
   ) {}
 
   async seedAdmin(): Promise<{ message: string; email: string }> {
@@ -22,24 +24,28 @@ export class AdminService {
       );
     }
 
+    const adminPassword = this.configService.get<string>('ADMIN_SEED_PASSWORD', 'Admin@Ela2026');
+    const adminEmail = this.configService.get<string>('ADMIN_SEED_EMAIL', 'admin@elabeauty.com');
+
     const salt = await bcrypt.genSalt(12);
-    const hashedPassword = await bcrypt.hash('Admin@Ela2026', salt);
+    const hashedPassword = await bcrypt.hash(adminPassword, salt);
 
     const admin = this.userRepo.create({
-      email: 'admin@elabeauty.com',
+      email: adminEmail,
       password: hashedPassword,
       firstName: 'Admin',
       apellidoPaterno: 'ELA',
       apellidoMaterno: 'Beauty',
       role: 'admin',
       isActive: true,
+      isEmailVerified: true,
     });
 
     await this.userRepo.save(admin);
 
     return {
-      message: 'Administrador creado. Cambia la contraseña después del primer login.',
-      email: 'admin@elabeauty.com',
+      message: 'Administrador creado. Cambia la contrasena despues del primer login.',
+      email: adminEmail,
     };
   }
 }

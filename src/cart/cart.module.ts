@@ -1,10 +1,11 @@
-import { Module, Injectable, Controller, Post, Get, Delete, Body, UseGuards, Req, Param, Patch } from '@nestjs/common';
+import { Module, Injectable, Controller, Post, Get, Delete, Body, UseGuards, Req, Param, Patch, ParseIntPipe } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Cart } from './entities/cart.entity';
 import { CartItem } from './entities/cart-item.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { JwtAuthGuard } from '../auth/auth.module';
+import { AddToCartDto, UpdateCartQuantityDto } from './dto/cart.dto';
 
 @Injectable()
 export class CartService {
@@ -83,17 +84,21 @@ export class CartController {
     }
 
     @Post('items')
-    addItem(@Req() req: any, @Body() body: { productId: number, quantity?: number }) {
-        return this.cartService.addItem(req.user.userId, body.productId, body.quantity || 1);
+    addItem(@Req() req: any, @Body() dto: AddToCartDto) {
+        return this.cartService.addItem(req.user.userId, dto.productId, dto.quantity || 1);
     }
 
     @Patch('items/:productId')
-    updateQuantity(@Req() req: any, @Param('productId') productId: number, @Body() body: { quantity: number }) {
-        return this.cartService.updateQuantity(req.user.userId, productId, body.quantity);
+    updateQuantity(
+        @Req() req: any,
+        @Param('productId', ParseIntPipe) productId: number,
+        @Body() dto: UpdateCartQuantityDto,
+    ) {
+        return this.cartService.updateQuantity(req.user.userId, productId, dto.quantity);
     }
 
     @Delete('items/:productId')
-    removeItem(@Req() req: any, @Param('productId') productId: number) {
+    removeItem(@Req() req: any, @Param('productId', ParseIntPipe) productId: number) {
         return this.cartService.removeItem(req.user.userId, productId);
     }
 

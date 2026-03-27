@@ -13,32 +13,46 @@ export class AuthService {
   currentUser = signal<any>(null);
   isAuthenticated = signal<boolean>(false);
 
+  // In-memory token — never persisted to localStorage/sessionStorage
+  private _accessToken: string | null = null;
+
+  get accessToken(): string | null {
+    return this._accessToken;
+  }
+
   constructor(private http: HttpClient, private router: Router) {
     this.checkSession();
   }
 
   private checkSession() {
+    // Try refreshing the token on startup (refresh_token is in HttpOnly cookie)
     this.http
-      .get(`${this.apiUrl}/profile`, { withCredentials: true })
+      .post<{ access_token: string }>(`${this.apiUrl}/refresh`, {}, { withCredentials: true })
       .subscribe({
-        next: (user: any) => {
-          this.currentUser.set(user);
-          this.isAuthenticated.set(true);
-          sessionStorage.setItem('user', JSON.stringify(user));
+        next: (res) => {
+          this._accessToken = res.access_token;
+          // Now fetch profile with the new token
+          this.http
+            .get(`${this.apiUrl}/profile`)
+            .subscribe({
+              next: (user: any) => {
+                this.currentUser.set(user);
+                this.isAuthenticated.set(true);
+                sessionStorage.setItem('user', JSON.stringify(user));
+              },
+              error: () => this.clearState(),
+            });
         },
-        error: () => {
-          this.currentUser.set(null);
-          this.isAuthenticated.set(false);
-          sessionStorage.removeItem('user');
-        },
+        error: () => this.clearState(),
       });
   }
 
   login(credentials: any): Observable<any> {
     return this.http
-      .post(`${this.apiUrl}/login`, credentials, { withCredentials: true })
+      .post<{ user: any; access_token: string }>(`${this.apiUrl}/login`, credentials, { withCredentials: true })
       .pipe(
-        tap((res: any) => {
+        tap((res) => {
+          this._accessToken = res.access_token;
           this.currentUser.set(res.user);
           this.isAuthenticated.set(true);
           sessionStorage.setItem('user', JSON.stringify(res.user));
@@ -53,28 +67,20 @@ export class AuthService {
   }
 
   logout() {
-    // Limpiar cookies en el servidor, luego redirigir
     this.http
       .post(`${this.apiUrl}/logout`, {}, { withCredentials: true })
       .subscribe({
-        next: () => {
-          sessionStorage.removeItem('user');
-          this.currentUser.set(null);
-          this.isAuthenticated.set(false);
-          this.router.navigate(['/auth/login']);
-        },
-        error: () => {
-          // Limpiar estado local aunque el servidor falle
-          sessionStorage.removeItem('user');
-          this.currentUser.set(null);
-          this.isAuthenticated.set(false);
-          this.router.navigate(['/auth/login']);
-        },
+        next: () => this.clearStateAndRedirect(),
+        error: () => this.clearStateAndRedirect(),
       });
   }
 
+  /** Called by interceptor after a successful token refresh */
+  setAccessToken(token: string) {
+    this._accessToken = token;
+  }
+
   getProfile(): Observable<any> {
-    // withCredentials lo agrega el interceptor automáticamente
     return this.http.get(`${this.apiUrl}/profile`);
   }
 
@@ -96,5 +102,17 @@ export class AuthService {
 
   resendVerification(email: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/reenviar-verificacion`, { email });
+  }
+
+  private clearState() {
+    this._accessToken = null;
+    this.currentUser.set(null);
+    this.isAuthenticated.set(false);
+    sessionStorage.removeItem('user');
+  }
+
+  private clearStateAndRedirect() {
+    this.clearState();
+    this.router.navigate(['/auth/login']);
   }
 }

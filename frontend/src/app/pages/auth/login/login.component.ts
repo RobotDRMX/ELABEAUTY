@@ -126,10 +126,17 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   async loginWithFace(): Promise<void> {
     if (this.isBlocked) return;
+
+    const email = this.loginForm.get('email')?.value;
+    if (!email) {
+      this.error = 'Ingresa tu correo electrónico antes de verificar tu rostro.';
+      return;
+    }
+
     this.loading = true;
     this.error   = '';
     try {
-      const r = await this.biometric.loginWithFaceOnly();
+      const r = await this.biometric.loginWithFaceOnly(email);
       this.biometric.stopCamera();
       this.redirect(r);
     } catch (e: any) {

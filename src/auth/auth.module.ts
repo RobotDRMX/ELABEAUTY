@@ -16,6 +16,7 @@ import { User } from '../users/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { createHash } from 'crypto';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
@@ -27,6 +28,7 @@ import { Request, Response } from 'express';
 import { Throttle } from '@nestjs/throttler';
 import { WebAuthnService } from './webauthn.service';
 import { FaceService } from './face.service';
+import { WebAuthnChallenge } from './entities/webauthn-challenge.entity';
 import { SupabaseService } from '../supabase/supabase.service';
 import {
   RegisterDto, LoginDto, UpdateRoleDto,
@@ -51,6 +53,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
+        // 1. Prefer Authorization: Bearer header
+        ExtractJwt.fromAuthHeaderAsBearerToken(),
+        // 2. Fallback to cookie (for backwards compat)
         (request: Request) => {
           return (request?.cookies as Record<string, string>)?.['access_token'] ?? null;
         },
@@ -218,7 +223,6 @@ export class AuthService {
     access_token: string;
     refresh_token: string;
   }> {
-    // Verify reCAPTCHA before any DB query
     await this.verifyRecaptcha(loginDto.recaptchaToken);
 
     const user = await this.userRepository.findOne({
@@ -226,54 +230,54 @@ export class AuthService {
     });
 
     if (!user) {
-      console.warn(
-        `[Auth] Login fallido — email: ${loginDto.email} — IP: ${ip}`,
+      console.warn(`[Auth] Login fallido — email: ${loginDto.email} — IP: ${ip}`);
+      throw new UnauthorizedException('Credenciales invalidas');
+    }
+
+    // Check account lockout
+    if (user.lockedUntil && user.lockedUntil > new Date()) {
+      const minutesLeft = Math.ceil((user.lockedUntil.getTime() - Date.now()) / 60000);
+      throw new UnauthorizedException(
+        `Cuenta bloqueada temporalmente por intentos fallidos. Intenta de nuevo en ${minutesLeft} minutos.`
       );
-      throw new UnauthorizedException('Credenciales inválidas');
     }
 
     const isMatch = await bcrypt.compare(loginDto.password, user.password);
     if (!isMatch) {
-      console.warn(
-        `[Auth] Login fallido — email: ${loginDto.email} — IP: ${ip}`,
-      );
-      throw new UnauthorizedException('Credenciales inválidas');
+      console.warn(`[Auth] Login fallido — email: ${loginDto.email} — IP: ${ip}`);
+      const attempts = (user.failedLoginAttempts || 0) + 1;
+      const updateData: any = { failedLoginAttempts: attempts };
+      if (attempts >= 5) {
+        updateData.lockedUntil = new Date(Date.now() + 15 * 60 * 1000);
+        console.warn(`[Auth] Cuenta bloqueada — email: ${loginDto.email} — intentos: ${attempts}`);
+      }
+      await this.userRepository.update(user.id, updateData);
+      throw new UnauthorizedException('Credenciales invalidas');
     }
 
     if (!user.isEmailVerified) {
       throw new UnauthorizedException(
-        'Debes confirmar tu correo antes de iniciar sesión. Revisa tu bandeja de entrada.'
+        'Debes confirmar tu correo antes de iniciar sesion. Revisa tu bandeja de entrada.'
       );
     }
 
-    const secret = this.configService.get<string>('JWT_SECRET')!;
-    const payload = { email: user.email, sub: user.id, role: user.role };
-
-    const access_token = this.jwtService.sign(payload, {
-      secret,
-      expiresIn: '15m',
-    });
-
-    const refresh_token = this.jwtService.sign(
-      { sub: user.id },
-      { secret, expiresIn: '7d' },
-    );
+    // Reset failed attempts on successful login
+    if (user.failedLoginAttempts > 0 || user.lockedUntil) {
+      await this.userRepository.update(user.id, { failedLoginAttempts: 0, lockedUntil: null });
+    }
 
     const { password, ...userResult } = user;
-    return {
-      user: userResult as Omit<User, 'password'>,
-      access_token,
-      refresh_token,
-    };
+    const tokens = await this.issueTokenPair(userResult as Omit<User, 'password'>);
+    return { user: userResult as Omit<User, 'password'>, ...tokens };
   }
 
-  async refresh(refreshToken: string): Promise<{ access_token: string }> {
+  async refresh(refreshToken: string): Promise<{ access_token: string; refresh_token: string }> {
     const secret = this.configService.get<string>('JWT_SECRET')!;
     let payload: any;
     try {
       payload = this.jwtService.verify(refreshToken, { secret });
     } catch {
-      throw new UnauthorizedException('Refresh token inválido o expirado');
+      throw new UnauthorizedException('Refresh token invalido o expirado');
     }
 
     const user = await this.userRepository.findOne({
@@ -283,13 +287,18 @@ export class AuthService {
       throw new UnauthorizedException('Usuario no encontrado o inactivo');
     }
 
-    const newPayload = { email: user.email, sub: user.id, role: user.role };
-    const access_token = this.jwtService.sign(newPayload, {
-      secret,
-      expiresIn: '15m',
-    });
+    // Verify the refresh token matches what we stored
+    const incomingHash = this.hashToken(refreshToken);
+    if (user.refreshTokenHash !== incomingHash) {
+      // Possible token theft — invalidate all sessions
+      await this.userRepository.update(user.id, { refreshTokenHash: null });
+      console.warn(`[Auth] Posible robo de refresh token — userId: ${user.id}`);
+      throw new UnauthorizedException('Sesion invalida. Inicia sesion de nuevo.');
+    }
 
-    return { access_token };
+    // Rotate: issue new pair and invalidate old
+    const { password, ...userResult } = user;
+    return this.issueTokenPair(userResult as Omit<User, 'password'>);
   }
 
   async findOne(id: number) {
@@ -316,15 +325,21 @@ export class AuthService {
     return this.findOne(id);
   }
 
-  // Public method reusable by new biometric endpoints.
-  // Signs and returns the token pair; controller writes the cookies.
-  issueTokenPair(user: Omit<User, 'password'>): { access_token: string; refresh_token: string } {
+  private hashToken(token: string): string {
+    return createHash('sha256').update(token).digest('hex');
+  }
+
+  async issueTokenPair(user: Omit<User, 'password'>): Promise<{ access_token: string; refresh_token: string }> {
     const secret = this.configService.get<string>('JWT_SECRET')!;
     const payload = { email: user.email, sub: user.id, role: user.role };
-    return {
-      access_token: this.jwtService.sign(payload, { secret, expiresIn: '15m' }),
-      refresh_token: this.jwtService.sign({ sub: user.id }, { secret, expiresIn: '7d' }),
-    };
+    const access_token = this.jwtService.sign(payload, { secret, expiresIn: '15m' });
+    const refresh_token = this.jwtService.sign({ sub: user.id }, { secret, expiresIn: '7d' });
+
+    await this.userRepository.update(user.id, {
+      refreshTokenHash: this.hashToken(refresh_token),
+    });
+
+    return { access_token, refresh_token };
   }
 
   async verifyRecaptcha(token: string): Promise<void> {
@@ -405,11 +420,10 @@ export class AuthController {
       (req.headers['x-forwarded-for'] as string) || req.ip || 'unknown';
     const result = await this.authService.login(loginDto, ip);
 
-    this.setCookies(res, result);
-    return { user: result.user };
+    this.setRefreshCookie(res, result.refresh_token);
+    return { user: result.user, access_token: result.access_token };
   }
 
-  // Only refreshes access_token. Refresh token rotation is out of scope for this project.
   @Post('refresh')
   async refresh(
     @Req() req: Request,
@@ -422,24 +436,15 @@ export class AuthController {
     }
 
     const result = await this.authService.refresh(refreshToken);
-    const isProd = process.env['NODE_ENV'] === 'production';
-
-    res.cookie('access_token', result.access_token, {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: isProd ? 'none' : 'lax',
-      maxAge: 15 * 60 * 1000,
-    });
-
-    return { message: 'Token renovado' };
+    this.setRefreshCookie(res, result.refresh_token);
+    return { access_token: result.access_token };
   }
 
   @Post('logout')
   logout(@Res({ passthrough: true }) res: Response) {
     const isProduction = process.env['NODE_ENV'] === 'production';
-    res.clearCookie('access_token', { httpOnly: true, secure: isProduction, sameSite: isProduction ? 'none' : 'lax' });
     res.clearCookie('refresh_token', { httpOnly: true, secure: isProduction, sameSite: isProduction ? 'none' : 'lax' });
-    return { message: 'Sesión cerrada' };
+    return { message: 'Sesion cerrada' };
   }
 
   // ── WebAuthn ──────────────────────────────────────────────────────────────
@@ -480,8 +485,9 @@ export class AuthController {
       body.authenticationResponse as unknown as AuthenticationResponseJSON,
     );
     const { password: _p, ...userResult } = user;
-    this.setCookies(res, this.authService.issueTokenPair(userResult));
-    return { user: userResult };
+    const tokens = await this.authService.issueTokenPair(userResult);
+    this.setRefreshCookie(res, tokens.refresh_token);
+    return { user: userResult, access_token: tokens.access_token };
   }
 
   // ── Face (second factor) ──────────────────────────────────────────────────
@@ -511,14 +517,14 @@ export class AuthController {
         user.id,
         body.faceDescriptor,
       );
-      // Only block if user has a face registered AND it doesn't match
       if (hasDescriptor && !match) {
         throw new UnauthorizedException('Rostro no reconocido');
       }
     }
 
-    this.setCookies(res, this.authService.issueTokenPair(user));
-    return { user };
+    const tokens = await this.authService.issueTokenPair(user);
+    this.setRefreshCookie(res, tokens.refresh_token);
+    return { user, access_token: tokens.access_token };
   }
 
   // Face-only login: no email/password needed — backend scans all stored face descriptors.
@@ -528,9 +534,10 @@ export class AuthController {
     @Body() body: FaceOnlyLoginDto,
     @Res({ passthrough: true }) res: Response,
   ) {
-    const user = await this.faceService.findUserByFace(body.faceDescriptor);
-    this.setCookies(res, this.authService.issueTokenPair(user));
-    return { user };
+    const user = await this.faceService.findUserByFace(body.faceDescriptor, body.email);
+    const tokens = await this.authService.issueTokenPair(user);
+    this.setRefreshCookie(res, tokens.refresh_token);
+    return { user, access_token: tokens.access_token };
   }
 
   @UseGuards(JwtAuthGuard)
@@ -545,24 +552,21 @@ export class AuthController {
     return this.authService.update(req.user.userId, updateData);
   }
 
-  // Private helper: writes access_token and refresh_token as HttpOnly cookies.
-  // Used by all login endpoints (password, WebAuthn, face).
-  private setCookies(
-    res: Response,
-    tokens: { access_token: string; refresh_token: string },
-  ): void {
+  private setRefreshCookie(res: Response, refreshToken: string): void {
     const isProd = process.env['NODE_ENV'] === 'production';
-    // SameSite=None required for cross-domain (Vercel frontend <-> Koyeb backend)
-    const cookieOpts = { httpOnly: true, secure: isProd, sameSite: (isProd ? 'none' : 'lax') as 'none' | 'lax' };
-    res.cookie('access_token',  tokens.access_token,  { ...cookieOpts, maxAge: 15 * 60 * 1000 });
-    res.cookie('refresh_token', tokens.refresh_token, { ...cookieOpts, maxAge: 7 * 24 * 60 * 60 * 1000 });
+    res.cookie('refresh_token', refreshToken, {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: isProd ? 'none' : 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
   }
 }
 
 // --- MÓDULO DE AUTENTICACIÓN ---
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, WebAuthnChallenge]),
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],

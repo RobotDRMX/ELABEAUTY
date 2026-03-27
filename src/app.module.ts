@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
+import { ScheduleModule } from '@nestjs/schedule';
 import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -38,6 +39,8 @@ import { EventsModule } from './events/events.module';
       },
     ]),
 
+    ScheduleModule.forRoot(),
+
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
@@ -49,11 +52,13 @@ import { EventsModule } from './events/events.module';
         database: configService.get<string>('DB_NAME', 'postgres'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         // IMPORTANTE: false por defecto — usar DB_SYNCHRONIZE=true solo en desarrollo
-        synchronize: configService.get<string>('DB_SYNCHRONIZE') === 'true',
+        synchronize:
+          configService.get<string>('NODE_ENV') !== 'production' &&
+          configService.get<string>('DB_SYNCHRONIZE') === 'true',
         logging: configService.get<boolean>('DB_LOGGING', false),
         autoLoadEntities: true,
         ssl: configService.get<string>('DB_SSL') === 'true'
-          ? { rejectUnauthorized: false }
+          ? { rejectUnauthorized: configService.get<string>('NODE_ENV') === 'production' }
           : false,
       }),
       inject: [ConfigService],

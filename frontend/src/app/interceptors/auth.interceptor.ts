@@ -9,20 +9,29 @@ import { HttpClient } from '@angular/common/http';
 import { Subject, catchError, switchMap, take, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import { AuthService } from '../services/auth.service';
 
 let isRefreshing = false;
-let refreshSubject = new Subject<boolean>();
+let refreshSubject = new Subject<string>();
 
 export const authInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn,
 ) => {
-  // Agregar withCredentials a todas las peticiones
-  const reqWithCredentials = req.clone({ withCredentials: true });
+  const authService = inject(AuthService);
 
-  return next(reqWithCredentials).pipe(
+  // Clone with credentials (for refresh_token cookie) and Authorization header
+  let cloned = req.clone({ withCredentials: true });
+
+  const token = authService.accessToken;
+  if (token) {
+    cloned = cloned.clone({
+      setHeaders: { Authorization: `Bearer ${token}` },
+    });
+  }
+
+  return next(cloned).pipe(
     catchError((error: HttpErrorResponse) => {
-      // Solo intentar refresh si es 401 y no es un endpoint de auth
       if (
         error.status === 401 &&
         !req.url.includes('/auth/login') &&
@@ -30,30 +39,40 @@ export const authInterceptor: HttpInterceptorFn = (
         !req.url.includes('/auth/refresh')
       ) {
         if (isRefreshing) {
-          // Otro request ya está haciendo refresh — esperar y reintentar
           return refreshSubject.pipe(
             take(1),
-            switchMap(() => next(reqWithCredentials)),
+            switchMap((newToken) => {
+              const retried = req.clone({
+                withCredentials: true,
+                setHeaders: { Authorization: `Bearer ${newToken}` },
+              });
+              return next(retried);
+            }),
           );
         }
 
         isRefreshing = true;
-        refreshSubject = new Subject<boolean>();
+        refreshSubject = new Subject<string>();
         const http = inject(HttpClient);
         const router = inject(Router);
 
         return http
-          .post(
+          .post<{ access_token: string }>(
             `${environment.apiBaseUrl}/auth/refresh`,
             {},
             { withCredentials: true },
           )
           .pipe(
-            switchMap(() => {
+            switchMap((res) => {
               isRefreshing = false;
-              refreshSubject.next(true);
+              authService.setAccessToken(res.access_token);
+              refreshSubject.next(res.access_token);
               refreshSubject.complete();
-              return next(reqWithCredentials);
+              const retried = req.clone({
+                withCredentials: true,
+                setHeaders: { Authorization: `Bearer ${res.access_token}` },
+              });
+              return next(retried);
             }),
             catchError((refreshError) => {
               isRefreshing = false;

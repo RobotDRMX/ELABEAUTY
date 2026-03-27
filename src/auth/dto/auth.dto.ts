@@ -78,8 +78,11 @@ export class FaceLoginDto extends LoginDto {
   faceDescriptor?: number[];
 }
 
-// Face-only login: no email/password needed — backend scans all stored descriptors.
+// Face-only login: requires email to narrow search to single user.
 export class FaceOnlyLoginDto {
+  @IsEmail({}, { message: 'Email invalido' })
+  email!: string;
+
   @IsArray()
   @IsNumber({}, { each: true })
   faceDescriptor!: number[];

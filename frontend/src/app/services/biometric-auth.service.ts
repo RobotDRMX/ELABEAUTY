@@ -8,6 +8,7 @@ import {
   browserSupportsWebAuthn,
 } from '@simplewebauthn/browser';
 import { environment } from '../../environments/environment';
+import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class BiometricAuthService {
@@ -21,7 +22,7 @@ export class BiometricAuthService {
   private videoEl: HTMLVideoElement | null = null;
   private stream:  MediaStream | null      = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   // ── WebAuthn ─────────────────────────────────────────────────────────────
 
@@ -49,13 +50,15 @@ export class BiometricAuthService {
       ),
     );
     const authenticationResponse = await startAuthentication({ optionsJSON: result.options });
-    return firstValueFrom(
-      this.http.post(
+    const loginResult = await firstValueFrom(
+      this.http.post<{ user: any; access_token: string }>(
         `${this.API}/webauthn/login/verify`,
         { email, userId: result.userId, authenticationResponse },
         { withCredentials: true },
       ),
     );
+    this.authService.setAccessToken(loginResult.access_token);
+    return loginResult;
   }
 
   // ── face-api.js ──────────────────────────────────────────────────────────
@@ -112,19 +115,21 @@ export class BiometricAuthService {
     );
   }
 
-  // Face-only login: no credentials needed — backend searches all stored descriptors.
-  async loginWithFaceOnly(): Promise<any> {
+  // Face-only login: requires email to narrow search to single user.
+  async loginWithFaceOnly(email: string): Promise<any> {
     const faceDescriptor = await this.captureDescriptor();
     if (!faceDescriptor) {
       throw new Error('No se detectó tu rostro. Mejora la iluminación e inténtalo de nuevo.');
     }
-    return firstValueFrom(
-      this.http.post(
+    const result = await firstValueFrom(
+      this.http.post<{ user: any; access_token: string }>(
         `${this.API}/login/face-only`,
-        { faceDescriptor },
+        { email, faceDescriptor },
         { withCredentials: true },
       ),
     );
+    this.authService.setAccessToken(result.access_token);
+    return result;
   }
 
   // Face second-factor: sends email + password + face descriptor together.
@@ -133,12 +138,14 @@ export class BiometricAuthService {
     if (!faceDescriptor) {
       throw new Error('No se detectó tu rostro. Usa email/contraseña o mejora la iluminación.');
     }
-    return firstValueFrom(
-      this.http.post(
+    const result = await firstValueFrom(
+      this.http.post<{ user: any; access_token: string }>(
         `${this.API}/login/face`,
         { email, password, faceDescriptor, recaptchaToken: 'face-auth' },
         { withCredentials: true },
       ),
     );
+    this.authService.setAccessToken(result.access_token);
+    return result;
   }
 }

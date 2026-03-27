@@ -31,14 +31,15 @@ async function bootstrap() {
   // CORS
   const frontendUrl = configService.get('FRONTEND_URL', 'http://localhost:4200');
   app.enableCors({
-    origin: (origin, callback) => {
+    origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
       const allowed = [
         frontendUrl,
         'http://localhost:4200',
         'http://localhost:4300',
       ];
-      // Allow all Vercel preview deployments
-      if (!origin || allowed.includes(origin) || /\.vercel\.app$/.test(origin) || /\.koyeb\.app$/.test(origin)) {
+      // Allow only ela-beauty Vercel preview deployments (not arbitrary *.vercel.app)
+      const isAllowedPreview = origin && /^https:\/\/ela-beauty(-[a-z0-9]+)*\.vercel\.app$/.test(origin);
+      if (!origin || allowed.includes(origin) || isAllowedPreview) {
         callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'));

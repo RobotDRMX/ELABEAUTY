@@ -35,6 +35,15 @@ export class User {
     @Column({ type: 'text', nullable: true })
     faceDescriptor!: string | null;  // JSON: number[] de 128 valores — nunca almacenar la foto
 
+    @Column({ type: 'text', nullable: true })
+    refreshTokenHash!: string | null;
+
+    @Column({ default: 0 })
+    failedLoginAttempts!: number;
+
+    @Column({ type: 'timestamp', nullable: true })
+    lockedUntil!: Date | null;
+
     @CreateDateColumn()
     createdAt!: Date;
 
