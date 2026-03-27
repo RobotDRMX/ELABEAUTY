@@ -58,7 +58,7 @@ import { EventsModule } from './events/events.module';
         logging: configService.get<boolean>('DB_LOGGING', false),
         autoLoadEntities: true,
         ssl: configService.get<string>('DB_SSL') === 'true'
-          ? { rejectUnauthorized: configService.get<string>('NODE_ENV') === 'production' }
+          ? { rejectUnauthorized: !!configService.get<string>('DB_CA_CERT') }
           : false,
       }),
       inject: [ConfigService],
