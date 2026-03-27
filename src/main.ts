@@ -12,7 +12,13 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
 
   // Seguridad: headers HTTP
-  app.use(helmet());
+  // helmet() agrega headers de seguridad a TODAS las respuestas del servidor.
+  // Pero bloquea los scripts inline que Swagger UI necesita para funcionar.
+  // Por eso le decimos: "aplica seguridad a todo EXCEPTO a las rutas /api/docs"
+  app.use((req: any, res: any, next: any) => {
+    if (req.url.startsWith('/api/docs')) return next();
+    helmet()(req, res, next);
+  });
 
   // Cookies HttpOnly
   app.use(cookieParser());
