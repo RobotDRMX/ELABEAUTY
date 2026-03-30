@@ -17,7 +17,23 @@ async function bootstrap() {
   // Por eso le decimos: "aplica seguridad a todo EXCEPTO a las rutas /api/docs"
   app.use((req: any, res: any, next: any) => {
     if (req.url.startsWith('/api/docs')) return next();
-    helmet()(req, res, next);
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: ["'self'"],
+          scriptSrc: ["'self'"],
+          styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+          fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+          imgSrc: ["'self'", 'data:', 'https:'],
+          connectSrc: ["'self'"],
+          frameSrc: ["'none'"],
+          objectSrc: ["'none'"],
+          baseUri: ["'self'"],
+          formAction: ["'self'"],
+        },
+      },
+      referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
+    })(req, res, next);
   });
 
   // Cookies HttpOnly

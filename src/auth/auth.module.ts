@@ -390,6 +390,7 @@ export class AuthController {
   }
 
   @ApiOperation({ summary: 'Verificar correo electrónico' })
+  @Throttle({ global: { limit: 5, ttl: 60000 } })
   @Post('verificar-correo')
   verifyEmail(@Body() body: VerifyEmailDto) {
     return this.authService.verifyEmail(body.token_hash);
@@ -410,6 +411,7 @@ export class AuthController {
   }
 
   @ApiOperation({ summary: 'Restablecer contraseña con token' })
+  @Throttle({ global: { limit: 5, ttl: 60000 } })
   @Post('nueva-contrasena')
   resetPassword(@Body() body: ResetPasswordDto) {
     return this.authService.resetPassword(body.token_hash, body.newPassword);
@@ -432,6 +434,7 @@ export class AuthController {
   }
 
   @ApiOperation({ summary: 'Refrescar access token con refresh cookie' })
+  @Throttle({ global: { limit: 10, ttl: 60000 } })
   @ApiCookieAuth('refresh_token')
   @Post('refresh')
   async refresh(

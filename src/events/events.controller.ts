@@ -1,10 +1,13 @@
-import { Controller, Sse, MessageEvent, Header, Res } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { Controller, Sse, MessageEvent, Header, Res, UseGuards } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { Observable, map, finalize } from 'rxjs';
 import { Response } from 'express';
 import { EventsService } from './events.service';
+import { JwtAuthGuard } from '../auth/auth.module';
 
 @ApiTags('Eventos SSE')
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 @Controller('events')
 export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
