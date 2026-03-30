@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /api/docs
+Disallow: /api/docs-json
+Disallow: /assets/models/
