@@ -22,6 +22,8 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     const exceptionResponse =
       exception instanceof HttpException ? exception.getResponse() : null;
 
+    const isDev = process.env['NODE_ENV'] === 'development';
+
     let message: string;
     if (typeof exceptionResponse === 'string') {
       message = exceptionResponse;
@@ -31,7 +33,12 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       'message' in exceptionResponse
     ) {
       const msg = (exceptionResponse as any).message;
-      message = Array.isArray(msg) ? msg.join(', ') : msg;
+      // En producción, los errores de validación (400) no revelan campos internos
+      if (!isDev && status === HttpStatus.BAD_REQUEST && Array.isArray(msg)) {
+        message = 'Datos de entrada inválidos';
+      } else {
+        message = Array.isArray(msg) ? msg.join(', ') : msg;
+      }
     } else if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
       message = 'Error interno del servidor';
     } else {

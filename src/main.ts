@@ -11,29 +11,45 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
 
-  // Seguridad: headers HTTP
-  // helmet() agrega headers de seguridad a TODAS las respuestas del servidor.
-  // Pero bloquea los scripts inline que Swagger UI necesita para funcionar.
-  // Por eso le decimos: "aplica seguridad a todo EXCEPTO a las rutas /api/docs"
-  app.use((req: any, res: any, next: any) => {
-    if (req.url.startsWith('/api/docs')) return next();
-    helmet({
-      contentSecurityPolicy: {
-        directives: {
-          defaultSrc: ["'self'"],
-          scriptSrc: ["'self'"],
-          styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
-          fontSrc: ["'self'", 'https://fonts.gstatic.com'],
-          imgSrc: ["'self'", 'data:', 'https:'],
-          connectSrc: ["'self'"],
-          frameSrc: ["'none'"],
-          objectSrc: ["'none'"],
-          baseUri: ["'self'"],
-          formAction: ["'self'"],
-        },
+  // Seguridad: headers HTTP con helmet
+  // Swagger UI necesita scripts/estilos inline, así que usa una CSP más relajada.
+  // El resto de la API usa una CSP estricta.
+  const helmetStrict = helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+        imgSrc: ["'self'", 'data:', 'https:'],
+        connectSrc: ["'self'"],
+        frameSrc: ["'none'"],
+        objectSrc: ["'none'"],
+        baseUri: ["'self'"],
+        formAction: ["'self'"],
       },
-      referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
-    })(req, res, next);
+    },
+    referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
+  });
+  const helmetSwagger = helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'", 'data:', 'https://validator.swagger.io'],
+        connectSrc: ["'self'"],
+        frameSrc: ["'none'"],
+        objectSrc: ["'none'"],
+        baseUri: ["'self'"],
+        formAction: ["'self'"],
+      },
+    },
+    referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
+  });
+  app.use((req: any, res: any, next: any) => {
+    if (req.url.startsWith('/api/docs')) return helmetSwagger(req, res, next);
+    helmetStrict(req, res, next);
   });
 
   // Cookies HttpOnly
