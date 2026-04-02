@@ -95,19 +95,19 @@ export class AppModule implements NestModule {
     consumer
       .apply(CsrfMiddleware)
       .exclude(
-        'api/docs(.*)',
-        'api/auth/login',
-        'api/auth/register',
-        'api/auth/refresh',
-        'api/auth/verificar-correo',
-        'api/auth/reenviar-verificacion',
-        'api/auth/olvide-contrasena',
-        'api/auth/nueva-contrasena',
-        'api/auth/login/face',
-        'api/auth/login/face-only',
-        'api/auth/webauthn/login/options',
-        'api/auth/webauthn/login/verify',
-        'api/admin/seed-admin',
+        'docs/*path',
+        'auth/login',
+        'auth/register',
+        'auth/refresh',
+        'auth/verificar-correo',
+        'auth/reenviar-verificacion',
+        'auth/olvide-contrasena',
+        'auth/nueva-contrasena',
+        'auth/login/face',
+        'auth/login/face-only',
+        'auth/webauthn/login/options',
+        'auth/webauthn/login/verify',
+        'admin/seed-admin',
       )
       .forRoutes('*');
   }
