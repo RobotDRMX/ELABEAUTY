@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, BadRequestException, UnauthorizedException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Not, IsNull } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
@@ -7,8 +7,9 @@ import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class FaceService {
+  private readonly logger = new Logger(FaceService.name);
   private readonly THRESHOLD = 0.45;
-  private readonly encryptionKey: Buffer | null;
+  private readonly encryptionKey: Buffer;
 
   constructor(
     @InjectRepository(User)
@@ -16,14 +17,15 @@ export class FaceService {
     private readonly configService: ConfigService,
   ) {
     const keyHex = this.configService.get<string>('BIOMETRIC_ENCRYPTION_KEY');
-    this.encryptionKey = keyHex ? Buffer.from(keyHex, 'hex') : null;
+    if (!keyHex) {
+      throw new Error(
+        'BIOMETRIC_ENCRYPTION_KEY es obligatoria. Genera una con: node -e "console.log(require(\'crypto\').randomBytes(32).toString(\'hex\'))"',
+      );
+    }
+    this.encryptionKey = Buffer.from(keyHex, 'hex');
   }
 
   private encrypt(descriptor: number[]): string {
-    if (!this.encryptionKey) {
-      // Fallback: store as plain JSON if no key configured (dev only)
-      return JSON.stringify(descriptor);
-    }
     const iv = randomBytes(12);
     const cipher = createCipheriv('aes-256-gcm', this.encryptionKey, iv);
     const plaintext = JSON.stringify(descriptor);
@@ -34,16 +36,15 @@ export class FaceService {
   }
 
   private decrypt(stored: string): number[] {
-    // Try JSON parse first (legacy unencrypted data)
+    // Try JSON parse first (legacy unencrypted data — migrate on next save)
     try {
       const parsed = JSON.parse(stored);
-      if (Array.isArray(parsed)) return parsed;
+      if (Array.isArray(parsed)) {
+        this.logger.warn('Descriptor biometrico en texto plano detectado. Se cifrara en la proxima escritura.');
+        return parsed;
+      }
     } catch {
       // Not JSON — must be encrypted
-    }
-
-    if (!this.encryptionKey) {
-      throw new BadRequestException('Datos biometricos cifrados pero no hay clave de descifrado configurada');
     }
 
     const data = Buffer.from(stored, 'base64');

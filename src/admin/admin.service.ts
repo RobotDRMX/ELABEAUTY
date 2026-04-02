@@ -1,4 +1,4 @@
-import { Injectable, ConflictException } from '@nestjs/common';
+import { Injectable, ConflictException, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
@@ -24,8 +24,14 @@ export class AdminService {
       );
     }
 
-    const adminPassword = this.configService.get<string>('ADMIN_SEED_PASSWORD', 'Admin@Ela2026');
-    const adminEmail = this.configService.get<string>('ADMIN_SEED_EMAIL', 'admin@elabeauty.com');
+    const adminPassword = this.configService.get<string>('ADMIN_SEED_PASSWORD');
+    const adminEmail = this.configService.get<string>('ADMIN_SEED_EMAIL');
+
+    if (!adminPassword || !adminEmail) {
+      throw new InternalServerErrorException(
+        'ADMIN_SEED_PASSWORD y ADMIN_SEED_EMAIL deben estar configurados en las variables de entorno.',
+      );
+    }
 
     const salt = await bcrypt.genSalt(12);
     const hashedPassword = await bcrypt.hash(adminPassword, salt);

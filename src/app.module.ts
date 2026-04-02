@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
@@ -6,6 +6,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { CsrfMiddleware } from './common/middleware/csrf.middleware';
 import { SupabaseModule } from './supabase/supabase.module';
 import { AuthModule } from './auth/auth.module';
 import { ServicesModule } from './services/services.module';
@@ -89,4 +90,25 @@ import { EventsModule } from './events/events.module';
     },
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(CsrfMiddleware)
+      .exclude(
+        'api/docs(.*)',
+        'api/auth/login',
+        'api/auth/register',
+        'api/auth/refresh',
+        'api/auth/verificar-correo',
+        'api/auth/reenviar-verificacion',
+        'api/auth/olvide-contrasena',
+        'api/auth/nueva-contrasena',
+        'api/auth/login/face',
+        'api/auth/login/face-only',
+        'api/auth/webauthn/login/options',
+        'api/auth/webauthn/login/verify',
+        'api/admin/seed-admin',
+      )
+      .forRoutes('*');
+  }
+}

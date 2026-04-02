@@ -1,12 +1,10 @@
-import { Component, signal, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NotificationsComponent } from './components/ui/notifications.component';
 import { filter } from 'rxjs/operators';
-import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -21,28 +19,15 @@ import { environment } from '../environments/environment';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'ELA Beauty';
   isAdminRoute = signal(false);
 
-  constructor(
-    private router: Router,
-    @Inject(PLATFORM_ID) private platformId: object,
-  ) {
+  constructor(private router: Router) {
     this.router.events.pipe(
       filter(e => e instanceof NavigationEnd)
     ).subscribe((e: any) => {
       this.isAdminRoute.set(e.url.startsWith('/admin'));
     });
-  }
-
-  ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      const script = document.createElement('script');
-      script.src = `https://www.google.com/recaptcha/api.js?render=${environment.recaptchaSiteKey}`;
-      script.async = true;
-      script.defer = true;
-      document.head.appendChild(script);
-    }
   }
 }

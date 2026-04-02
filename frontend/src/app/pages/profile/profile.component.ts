@@ -67,7 +67,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.authService.updateProfile(this.profileForm.getRawValue()).subscribe({
             next: (res) => {
                 this.success = 'Perfil actualizado correctamente';
-                localStorage.setItem('user', JSON.stringify(res));
                 this.authService.currentUser.set(res);
                 this.loading = false;
             },

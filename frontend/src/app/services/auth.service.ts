@@ -38,7 +38,6 @@ export class AuthService {
               next: (user: any) => {
                 this.currentUser.set(user);
                 this.isAuthenticated.set(true);
-                sessionStorage.setItem('user', JSON.stringify(user));
               },
               error: () => this.clearState(),
             });
@@ -55,7 +54,6 @@ export class AuthService {
           this._accessToken = res.access_token;
           this.currentUser.set(res.user);
           this.isAuthenticated.set(true);
-          sessionStorage.setItem('user', JSON.stringify(res.user));
         }),
       );
   }
@@ -108,7 +106,6 @@ export class AuthService {
     this._accessToken = null;
     this.currentUser.set(null);
     this.isAuthenticated.set(false);
-    sessionStorage.removeItem('user');
   }
 
   private clearStateAndRedirect() {

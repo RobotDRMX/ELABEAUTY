@@ -8,12 +8,13 @@
 USE ela_beauty;
 
 -- ── 1. ADMIN USER ──────────────────────────────────────────
--- Password: Admin@Ela2026 (bcrypt 12 rounds)
+-- IMPORTANT: Replace the hash below with your own bcrypt-hashed password.
+-- Generate one with: node -e "require('bcrypt').hash('YourPassword', 12).then(console.log)"
 -- CHANGE THIS PASSWORD IMMEDIATELY AFTER FIRST LOGIN
 INSERT INTO users (email, password, firstName, lastName, role, isActive, createdAt, updatedAt)
 SELECT
   'admin@elabeauty.com',
-  '$2b$12$rMQWPD.UL9ctnOERnGvwjO3XnmdNRONgu7pKBz9iAB9ErrSb2nLOa',
+  '$2b$12$REPLACE_WITH_YOUR_OWN_BCRYPT_HASH_GENERATED_LOCALLY',
   'Admin',
   'ELA Beauty',
   'admin',
@@ -60,5 +61,5 @@ INSERT IGNORE INTO services (id, name, description, price, duration, category, i
 (UUID(), 'Tratamiento Corporal Reafirmante', 'Tratamiento corporal con fango y vendas reafirmantes para reducir medidas.', 680.00, 90, 'corporal', 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600', 1, NOW(), NOW())
 ON DUPLICATE KEY UPDATE updatedAt = NOW();
 
-SELECT 'Script ejecutado correctamente. Credenciales admin: admin@elabeauty.com / Admin@Ela2026' AS resultado;
+SELECT 'Script ejecutado correctamente. Admin: admin@elabeauty.com — usa la contraseña que configuraste en el hash.' AS resultado;
 SELECT 'IMPORTANTE: Cambia la contraseña del admin despues del primer login.' AS aviso;

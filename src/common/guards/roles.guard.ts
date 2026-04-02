@@ -12,9 +12,9 @@ export class RolesGuard implements CanActivate {
       context.getClass(),
     ]);
 
-    // Si el endpoint no tiene @Roles(), permite acceso
+    // Si el endpoint no tiene @Roles(), deniega acceso por defecto (deny-by-default)
     if (!requiredRoles || requiredRoles.length === 0) {
-      return true;
+      return false;
     }
 
     const request = context.switchToHttp().getRequest();
