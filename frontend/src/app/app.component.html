@@ -2,8 +2,8 @@
   <app-header></app-header>
 }
 
-<main>
-  <router-outlet />
+<main [@routeAnimations]="getRouteState(outlet)">
+  <router-outlet #outlet="outlet" />
 </main>
 
 @if (!isAdminRoute()) {

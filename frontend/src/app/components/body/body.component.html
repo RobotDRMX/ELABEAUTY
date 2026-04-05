@@ -94,12 +94,12 @@
 <!-- ===== CATEGORIES SECTION ===== -->
 <section class="categories-section">
   <div class="container">
-    <h2 class="section-title fade-in-up">{{ 'categories.title' | translate }}</h2>
+    <h2 class="section-title" scrollReveal srDirection="up">{{ 'categories.title' | translate }}</h2>
 
     <div class="categories-grid">
-      <a class="category-card fade-in-up"
+      <a class="category-card"
+         scrollReveal srDirection="up" [srDelay]="i * 80"
          *ngFor="let cat of categories; let i = index"
-         [class]="'delay-' + (i + 1)"
          routerLink="/busqueda"
          [queryParams]="{ category: cat.searchKey }">
         <div class="category-icon-wrap" [style.background]="cat.gradient">
@@ -120,12 +120,12 @@
 <!-- ===== FEATURED PRODUCTS SECTION ===== -->
 <section class="featured-section">
   <div class="container">
-    <h2 class="section-title fade-in-up">{{ 'featured.title' | translate }}</h2>
+    <h2 class="section-title" scrollReveal srDirection="up">{{ 'featured.title' | translate }}</h2>
 
     <div class="featured-grid">
-      <div class="featured-card fade-in-up"
-           *ngFor="let product of featuredProducts; let i = index"
-           [class]="'delay-' + (i + 1)">
+      <div class="featured-card"
+           scrollReveal srDirection="scale" [srDelay]="i * 100"
+           *ngFor="let product of featuredProducts; let i = index">
         <div class="featured-badge">{{ product.badgeKey | translate }}</div>
         <div class="featured-image" [style.background]="product.gradient">
           <lucide-icon [name]="product.icon" [size]="32" [color]="product.iconColor"></lucide-icon>
@@ -148,11 +148,11 @@
 <!-- ===== BRAND FEATURES SECTION ===== -->
 <section class="features-section">
   <div class="container">
-    <h2 class="section-title fade-in-up">{{ 'philosophy.title' | translate }}</h2>
+    <h2 class="section-title" scrollReveal srDirection="up">{{ 'philosophy.title' | translate }}</h2>
     <div class="features-grid">
-      <div class="feature-item fade-in-up"
-           *ngFor="let feat of brandFeatures; let i = index"
-           [class]="'delay-' + (i + 1)">
+      <div class="feature-item"
+           scrollReveal srDirection="up" [srDelay]="i * 120"
+           *ngFor="let feat of brandFeatures; let i = index">
         <div class="feature-icon-wrap">
           <lucide-icon [name]="feat.icon" [size]="24"></lucide-icon>
         </div>
@@ -166,13 +166,13 @@
 <!-- ===== TESTIMONIALS SECTION ===== -->
 <section class="testimonials-section">
   <div class="container">
-    <h2 class="section-title fade-in-up">{{ 'testimonials.title' | translate }}</h2>
+    <h2 class="section-title" scrollReveal srDirection="up">{{ 'testimonials.title' | translate }}</h2>
 
     <div class="testimonials-wrapper">
-      <div class="testimonial-card fade-in-up"
+      <div class="testimonial-card"
+           scrollReveal srDirection="up" [srDelay]="i * 100"
            *ngFor="let t of testimonials; let i = index"
-           [class.active]="i === activeTestimonial"
-           [class]="'delay-' + (i + 1)">
+           [class.active]="i === activeTestimonial">
         <div class="testimonial-avatar">{{ t.avatar }}</div>
         <div class="testimonial-stars">
           <lucide-icon name="star" [size]="14" *ngFor="let s of getStars(t.rating)"></lucide-icon>

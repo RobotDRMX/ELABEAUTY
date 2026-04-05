@@ -34,6 +34,14 @@
   --transition-fast: 0.2s ease;
   --transition-normal: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --transition-bounce: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* Glassmorphism */
+  --glass-bg-dark:   rgba(255, 255, 255, 0.06);
+  --glass-bg-light:  rgba(255, 255, 255, 0.72);
+  --glass-border-dark:  rgba(255, 255, 255, 0.14);
+  --glass-border-light: rgba(255, 255, 255, 0.90);
+  --glass-blur: blur(18px);
+  --glass-blur-heavy: blur(28px);
 }
 
 /* ===== DARK THEME ===== */
@@ -294,6 +302,25 @@ h1, h2, h3, h4, h5, h6 {
   to { transform: rotate(360deg); }
 }
 
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(230, 0, 126, 0.5); }
+  50%       { box-shadow: 0 0 20px 6px rgba(230, 0, 126, 0.2); }
+}
+
+@keyframes shinePass {
+  0%   { left: -80%; }
+  100% { left: 130%; }
+}
+
+@keyframes borderGlow {
+  0%, 100% { border-color: rgba(230, 0, 126, 0.2); }
+  50%       { border-color: rgba(230, 0, 126, 0.55); }
+}
+
+@keyframes ripple {
+  to { transform: scale(4); opacity: 0; }
+}
+
 /* ===== ANIMATION UTILITY CLASSES ===== */
 .fade-in      { animation: fadeIn 0.6s ease-out both; }
 .fade-in-up   { animation: fadeInUp 0.6s ease-out both; }
@@ -310,6 +337,55 @@ h1, h2, h3, h4, h5, h6 {
 .delay-6 { animation-delay: 0.6s; }
 .delay-7 { animation-delay: 0.7s; }
 .delay-8 { animation-delay: 0.8s; }
+
+/* ===== GLASSMORPHISM UTILITIES ===== */
+.glass {
+  background: var(--glass-bg-dark);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border-dark);
+}
+
+.glass-light {
+  background: var(--glass-bg-light);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border-light);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* Card with shine effect on hover */
+.card-shine {
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -80%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.14) 50%,
+      transparent 70%
+    );
+    transform: skewX(-15deg);
+    pointer-events: none;
+    transition: none;
+  }
+
+  &:hover::before {
+    animation: shinePass 0.6s ease forwards;
+  }
+}
+
+/* Glow badge animation */
+.badge-glow {
+  animation: glowPulse 2.5s ease-in-out infinite;
+}
 
 /* ===== SKELETON LOADING ===== */
 .skeleton {

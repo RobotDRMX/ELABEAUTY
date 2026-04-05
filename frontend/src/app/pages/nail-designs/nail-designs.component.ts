@@ -6,11 +6,12 @@ import { RealtimeService } from '../../services/realtime.service';
 import { SafeImagePipe } from '../../pipes/safe-image.pipe';
 import { LucideIcons } from '../../icons.provider';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
 
 @Component({
   selector: 'app-nail-designs',
   standalone: true,
-  imports: [CommonModule, SafeImagePipe, LucideIcons, TranslatePipe],
+  imports: [CommonModule, SafeImagePipe, LucideIcons, TranslatePipe, ScrollRevealDirective],
   templateUrl: './nail-designs.component.html',
   styleUrls: ['./nail-designs.component.scss']
 })

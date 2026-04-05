@@ -62,9 +62,9 @@
 
     <!-- Grid de servicios -->
     <div class="services-grid" *ngIf="!isLoading && filtered.length > 0">
-      <div class="service-card fade-in-up"
+      <div class="service-card"
+           scrollReveal srDirection="up" [srDelay]="(i % 6) * 80"
            *ngFor="let h of filtered; let i = index"
-           [class]="'delay-' + ((i % 6) + 1)"
            [class.expanded]="expandedId === h.id">
 
         <!-- Imagen -->

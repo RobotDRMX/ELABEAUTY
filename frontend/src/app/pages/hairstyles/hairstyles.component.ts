@@ -7,11 +7,12 @@ import { RealtimeService } from '../../services/realtime.service';
 import { SafeImagePipe } from '../../pipes/safe-image.pipe';
 import { LucideIcons } from '../../icons.provider';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
 
 @Component({
   selector: 'app-hairstyles',
   standalone: true,
-  imports: [CommonModule, FormsModule, SafeImagePipe, LucideIcons, TranslatePipe],
+  imports: [CommonModule, FormsModule, SafeImagePipe, LucideIcons, TranslatePipe, ScrollRevealDirective],
   templateUrl: './hairstyles.component.html',
   styleUrls: ['./hairstyles.component.scss']
 })

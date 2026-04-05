@@ -4,11 +4,12 @@ import { RouterModule } from '@angular/router';
 import { LucideIcons } from '../../icons.provider';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { I18nService } from '../../services/i18n.service';
+import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
 
 @Component({
   selector: 'app-body',
   standalone: true,
-  imports: [CommonModule, RouterModule, LucideIcons, TranslatePipe],
+  imports: [CommonModule, RouterModule, LucideIcons, TranslatePipe, ScrollRevealDirective],
   templateUrl: './body.component.html',
   styleUrls: ['./body.component.scss']
 })

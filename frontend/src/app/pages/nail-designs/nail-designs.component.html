@@ -63,9 +63,9 @@
 
     <!-- Grid de diseños -->
     <div class="designs-grid" *ngIf="!isLoading && filtered.length > 0">
-      <div class="design-card fade-in-up"
+      <div class="design-card"
+           scrollReveal srDirection="scale" [srDelay]="(i % 8) * 60"
            *ngFor="let d of filtered; let i = index"
-           [class]="'delay-' + ((i % 8) + 1)"
            [class.expanded]="expandedId === d.id">
 
         <!-- Imagen -->

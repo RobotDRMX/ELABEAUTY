@@ -207,8 +207,8 @@
 
 .hero-icon-card {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
   padding: 1.8rem 1rem;
   display: flex;
   flex-direction: column;
@@ -216,12 +216,28 @@
   gap: 0.8rem;
   cursor: default;
   transition: var(--transition-bounce);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   animation: scaleIn 0.5s ease-out both;
+  position: relative;
+  overflow: hidden;
 
-  i {
-    font-size: 2rem;
-    color: white;
+  /* shine overlay */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -80%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.18) 50%,
+      transparent 70%
+    );
+    transform: skewX(-15deg);
+    pointer-events: none;
   }
 
   span {
@@ -233,19 +249,22 @@
   }
 
   &:hover {
-    background: rgba(230, 0, 126, 0.15);
-    border-color: rgba(230, 0, 126, 0.4);
-    transform: translateY(-6px) scale(1.03);
+    background: rgba(230, 0, 126, 0.18);
+    border-color: rgba(230, 0, 126, 0.45);
+    transform: translateY(-8px) scale(1.04);
+    box-shadow: 0 16px 32px rgba(230, 0, 126, 0.25);
 
-    i { color: var(--primary-light); }
     span { color: white; }
+
+    &::before {
+      animation: shinePass 0.55s ease forwards;
+    }
   }
 
   &.highlight {
-    background: rgba(230, 0, 126, 0.2);
-    border-color: rgba(230, 0, 126, 0.5);
-
-    i { color: var(--primary-light); }
+    background: rgba(230, 0, 126, 0.22);
+    border-color: rgba(230, 0, 126, 0.55);
+    animation: borderGlow 3s ease-in-out infinite;
   }
 }
 
@@ -299,7 +318,7 @@
   align-items: center;
   gap: 1.2rem;
   background: var(--surface-1);
-  border-radius: 16px;
+  border-radius: 18px;
   padding: 1.5rem;
   text-decoration: none;
   color: var(--text-primary);
@@ -308,23 +327,43 @@
   position: relative;
   overflow: hidden;
 
+  /* gradient fill on hover */
   &::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(230, 0, 126, 0.04), transparent);
+    background: linear-gradient(135deg, rgba(230, 0, 126, 0.05), transparent);
     opacity: 0;
     transition: opacity 0.3s;
+  }
+
+  /* shine streak */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -80%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.22) 50%,
+      transparent 70%
+    );
+    transform: skewX(-15deg);
+    pointer-events: none;
   }
 
   &:hover {
     transform: translateY(-6px);
     box-shadow: var(--shadow-pink);
-    border-color: rgba(230, 0, 126, 0.2);
+    border-color: rgba(230, 0, 126, 0.25);
 
     &::before { opacity: 1; }
+    &::after   { animation: shinePass 0.55s ease forwards; }
 
-    .category-icon-wrap { transform: scale(1.1) rotate(-5deg); }
+    .category-icon-wrap { transform: scale(1.12) rotate(-6deg); }
     .category-arrow { opacity: 1; transform: translateX(0); }
     h3 { color: var(--primary-color); }
   }
@@ -393,13 +432,35 @@
   transition: var(--transition-normal);
   position: relative;
 
+  /* shine streak */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -80%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.22) 50%,
+      transparent 70%
+    );
+    transform: skewX(-15deg);
+    pointer-events: none;
+    z-index: 2;
+  }
+
   &:hover {
     transform: translateY(-10px);
     box-shadow: var(--shadow-lg);
-    border-color: transparent;
+    border-color: rgba(230, 0, 126, 0.15);
 
-    .featured-image i {
+    &::after { animation: shinePass 0.6s ease forwards; }
+
+    .featured-image lucide-icon {
       transform: scale(1.15) rotate(5deg);
+      filter: drop-shadow(0 8px 20px rgba(230, 0, 126, 0.3));
     }
   }
 }
@@ -416,7 +477,8 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  z-index: 2;
+  z-index: 3;
+  animation: glowPulse 3s ease-in-out infinite;
 }
 
 .featured-image {
@@ -425,8 +487,7 @@
   align-items: center;
   justify-content: center;
 
-  i {
-    font-size: 5rem;
+  lucide-icon {
     transition: var(--transition-bounce);
     filter: drop-shadow(0 8px 16px rgba(0,0,0,0.15));
   }

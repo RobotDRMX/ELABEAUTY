@@ -1,10 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
+import { RouterOutlet, Router, NavigationEnd, RouterModule } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NotificationsComponent } from './components/ui/notifications.component';
 import { filter } from 'rxjs/operators';
+import { routeAnimations } from './animations/route.animations';
 
 @Component({
   selector: 'app-root',
@@ -12,10 +13,12 @@ import { filter } from 'rxjs/operators';
   imports: [
     CommonModule,
     RouterOutlet,
+    RouterModule,
     HeaderComponent,
     FooterComponent,
     NotificationsComponent
   ],
+  animations: [routeAnimations],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
@@ -29,5 +32,9 @@ export class AppComponent {
     ).subscribe((e: any) => {
       this.isAdminRoute.set(e.url.startsWith('/admin'));
     });
+  }
+
+  getRouteState(outlet: RouterOutlet) {
+    return outlet.isActivated ? outlet.activatedRoute.snapshot.url.join('/') : '';
   }
 }
