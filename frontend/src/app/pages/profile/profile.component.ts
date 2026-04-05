@@ -17,6 +17,7 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
 export class ProfileComponent implements OnInit, OnDestroy {
     profileForm: FormGroup;
     loading: boolean = false;
+    isInitialLoading: boolean = true;
     success: string = '';
     error: string = '';
 
@@ -52,10 +53,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
             next: (user) => {
                 this.profileForm.patchValue(user);
                 this.loading = false;
+                this.isInitialLoading = false;
             },
             error: (err) => {
                 this.error = 'Error al cargar perfil';
                 this.loading = false;
+                this.isInitialLoading = false;
             }
         });
     }

@@ -15,6 +15,7 @@ export class FavoritesService {
     private notif = inject(NotificationService);
 
     favorites = signal<any[]>([]);
+    isLoading = signal(false);
     favoritesCount = computed(() => this.favorites().length);
 
     constructor() {
@@ -25,9 +26,10 @@ export class FavoritesService {
 
     loadFavorites() {
         if (!this.authService.isAuthenticated()) return;
+        this.isLoading.set(true);
         this.http.get<any[]>(this.apiUrl).subscribe({
-            next: (favs) => this.favorites.set(favs),
-            error: () => this.favorites.set([])
+            next: (favs) => { this.favorites.set(favs); this.isLoading.set(false); },
+            error: () => { this.favorites.set([]); this.isLoading.set(false); }
         });
     }
 

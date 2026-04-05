@@ -6,6 +6,7 @@ export interface ToastItem {
   id: number;
   message: string;
   type: ToastType;
+  duration: number;
 }
 
 export interface ConfirmState {
@@ -25,7 +26,7 @@ export class NotificationService {
   /** Muestra un toast auto-dismiss */
   toast(message: string, type: ToastType = 'info', duration = 4000) {
     const id = Date.now() + Math.random();
-    this.toasts.update(list => [...list, { id, message, type }]);
+    this.toasts.update(list => [...list, { id, message, type, duration }]);
     setTimeout(() => this.dismissToast(id), duration);
   }
 

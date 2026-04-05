@@ -8,7 +8,30 @@
             <p>{{ 'profile.subtitle' | translate }}</p>
         </div>
 
-        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-form">
+        <!-- Skeleton while loading initial profile data -->
+        <div *ngIf="isInitialLoading" class="profile-form">
+            <div class="row">
+                <div class="form-group col">
+                    <div class="skeleton" style="height:12px;width:50%;border-radius:4px;margin-bottom:8px;"></div>
+                    <div class="skeleton" style="height:44px;border-radius:10px;"></div>
+                </div>
+                <div class="form-group col">
+                    <div class="skeleton" style="height:12px;width:50%;border-radius:4px;margin-bottom:8px;"></div>
+                    <div class="skeleton" style="height:44px;border-radius:10px;"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="skeleton" style="height:12px;width:40%;border-radius:4px;margin-bottom:8px;"></div>
+                <div class="skeleton" style="height:44px;border-radius:10px;"></div>
+            </div>
+            <div class="form-group">
+                <div class="skeleton" style="height:12px;width:30%;border-radius:4px;margin-bottom:8px;"></div>
+                <div class="skeleton" style="height:44px;border-radius:10px;"></div>
+            </div>
+            <div class="skeleton" style="height:48px;width:100%;border-radius:25px;margin-top:8px;"></div>
+        </div>
+
+        <form *ngIf="!isInitialLoading" [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-form">
             <div class="row">
                 <div class="form-group col">
                     <label>{{ 'profile.first_name' | translate }}</label>

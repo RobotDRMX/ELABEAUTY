@@ -389,10 +389,27 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ===== SKELETON LOADING ===== */
 .skeleton {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(
+    90deg,
+    var(--gray-200) 25%,
+    var(--gray-300) 50%,
+    var(--gray-200) 75%
+  );
   background-size: 600px 100%;
-  animation: shimmer 1.4s infinite ease-in-out;
+  animation: shimmer 1.5s infinite ease-in-out;
   border-radius: 6px;
+}
+
+/* Dark mode skeleton auto-adjusts via CSS variables */
+[data-theme="dark"] .skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--gray-200) 25%,
+    var(--gray-300) 50%,
+    var(--gray-200) 75%
+  );
+  background-size: 600px 100%;
+  animation: shimmer 1.5s infinite ease-in-out;
 }
 
 /* ===== SPINNER ===== */

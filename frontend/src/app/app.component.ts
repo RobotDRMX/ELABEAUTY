@@ -4,6 +4,7 @@ import { RouterOutlet, Router, NavigationEnd, RouterModule } from '@angular/rout
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NotificationsComponent } from './components/ui/notifications.component';
+import { NavProgressComponent } from './components/ui/nav-progress.component';
 import { filter } from 'rxjs/operators';
 import { routeAnimations } from './animations/route.animations';
 
@@ -16,7 +17,8 @@ import { routeAnimations } from './animations/route.animations';
     RouterModule,
     HeaderComponent,
     FooterComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    NavProgressComponent
   ],
   animations: [routeAnimations],
   templateUrl: './app.component.html',

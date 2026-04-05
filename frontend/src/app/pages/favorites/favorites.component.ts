@@ -22,6 +22,10 @@ export class FavoritesComponent {
         return this.favoritesService.favorites();
     }
 
+    get isLoading() {
+        return this.favoritesService.isLoading();
+    }
+
     removeFavorite(productId: number) {
         this.favoritesService.toggleFavorite(productId);
     }
