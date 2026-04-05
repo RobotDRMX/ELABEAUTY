@@ -4,11 +4,12 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } 
 import { AdminProductsService } from '../services-api/admin-products.service';
 import { ToastService } from '../shared/toast.service';
 import { NotificationService } from '../../../services/notification.service';
+import { LucideIcons } from '../../../icons.provider';
 
 @Component({
   selector: 'app-admin-products',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, LucideIcons],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
 })

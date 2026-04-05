@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { LucideIcons } from '../../icons.provider';
 
 @Component({
   selector: 'app-body',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, LucideIcons],
   templateUrl: './body.component.html',
   styleUrls: ['./body.component.scss']
 })
@@ -15,42 +16,42 @@ export class BodyComponent {
     {
       name: 'Labiales',
       count: '45 productos',
-      faIcon: 'fas fa-kiss-wink-heart',
+      icon: 'heart',
       searchKey: 'Labiales',
       gradient: 'linear-gradient(135deg, #ff4da6, #e6007e)'
     },
     {
       name: 'Ojos',
       count: '84 productos',
-      faIcon: 'fas fa-eye',
+      icon: 'eye',
       searchKey: 'Ojos',
       gradient: 'linear-gradient(135deg, #a855f7, #7c3aed)'
     },
     {
       name: 'Rostro',
       count: '56 productos',
-      faIcon: 'fas fa-palette',
+      icon: 'palette',
       searchKey: 'Rostro',
       gradient: 'linear-gradient(135deg, #fb923c, #f97316)'
     },
     {
       name: 'Uñas',
       count: '64 productos',
-      faIcon: 'fas fa-hand-sparkles',
+      icon: 'sparkles',
       searchKey: 'Uñas',
       gradient: 'linear-gradient(135deg, #34d399, #059669)'
     },
     {
       name: 'Sombras',
       count: '52 productos',
-      faIcon: 'fas fa-moon',
+      icon: 'moon',
       searchKey: 'Sombras',
       gradient: 'linear-gradient(135deg, #60a5fa, #3b82f6)'
     },
     {
       name: 'Rubores',
       count: '36 productos',
-      faIcon: 'fas fa-circle',
+      icon: 'circle',
       searchKey: 'Rubores',
       gradient: 'linear-gradient(135deg, #f472b6, #ec4899)'
     }
@@ -62,7 +63,7 @@ export class BodyComponent {
       description: 'Fórmula ultra-pigmentada de larga duración. 24h sin retoques.',
       price: 249,
       badge: 'BEST SELLER',
-      faIcon: 'fas fa-kiss-wink-heart',
+      icon: 'heart',
       gradient: 'linear-gradient(135deg, #fff0f7, #ffe0ef)',
       iconColor: '#e6007e'
     },
@@ -71,7 +72,7 @@ export class BodyComponent {
       description: 'Pestañas hasta 10x más voluminosas. Fórmula enriquecida con keratina.',
       price: 199,
       badge: 'NUEVO',
-      faIcon: 'fas fa-eye',
+      icon: 'eye',
       gradient: 'linear-gradient(135deg, #f3f0ff, #ede9fe)',
       iconColor: '#7c3aed'
     },
@@ -80,7 +81,7 @@ export class BodyComponent {
       description: 'Cobertura total con acabado mate. SPF 15. 40 tonos disponibles.',
       price: 299,
       badge: 'TOP RATED',
-      faIcon: 'fas fa-palette',
+      icon: 'palette',
       gradient: 'linear-gradient(135deg, #fff7ed, #ffedd5)',
       iconColor: '#f97316'
     }
@@ -88,17 +89,17 @@ export class BodyComponent {
 
   brandFeatures = [
     {
-      faIcon: 'fas fa-award',
+      icon: 'award',
       title: 'Calidad Garantizada',
       description: 'Productos dermatológicamente probados y certificados para todo tipo de piel.'
     },
     {
-      faIcon: 'fas fa-leaf',
+      icon: 'leaf',
       title: 'Cruelty Free',
       description: 'Comprometidas con el bienestar animal. Sin pruebas en animales.'
     },
     {
-      faIcon: 'fas fa-shipping-fast',
+      icon: 'truck',
       title: 'Envío Express',
       description: 'Recibe tus productos en 24-48 horas con seguimiento en tiempo real.'
     }

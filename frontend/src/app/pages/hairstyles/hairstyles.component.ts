@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { HairstylesService, Hairstyle } from '../../services/hairstyles.service';
 import { RealtimeService } from '../../services/realtime.service';
+import { SafeImagePipe } from '../../pipes/safe-image.pipe';
+import { LucideIcons } from '../../icons.provider';
 
 @Component({
   selector: 'app-hairstyles',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SafeImagePipe, LucideIcons],
   templateUrl: './hairstyles.component.html',
   styleUrls: ['./hairstyles.component.scss']
 })
@@ -63,6 +65,11 @@ export class HairstylesComponent implements OnInit, OnDestroy {
 
   toggleExpand(id: number) {
     this.expandedId = this.expandedId === id ? null : id;
+  }
+
+  onImgError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.src = 'assets/images/hairstyle-placeholder.jpg';
   }
 
   formatProcess(process: string): string[] {

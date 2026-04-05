@@ -4,11 +4,12 @@ import { RouterModule } from '@angular/router';
 import { FavoritesService } from '../../services/favorites.service';
 import { CartService } from '../../services/cart.service';
 import { TruncatePipe } from '../../pipes/truncate.pipe';
+import { LucideIcons } from '../../icons.provider';
 
 @Component({
     selector: 'app-favorites',
     standalone: true,
-    imports: [CommonModule, RouterModule, TruncatePipe],
+    imports: [CommonModule, RouterModule, TruncatePipe, LucideIcons],
     templateUrl: './favorites.component.html',
     styleUrls: ['./favorites.component.scss']
 })

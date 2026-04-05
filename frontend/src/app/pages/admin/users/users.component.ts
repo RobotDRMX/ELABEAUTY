@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { AdminUsersService } from '../services-api/admin-users.service';
 import { ToastService } from '../shared/toast.service';
 import { NotificationService } from '../../../services/notification.service';
+import { LucideIcons } from '../../../icons.provider';
 
 @Component({
   selector: 'app-admin-users',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, LucideIcons],
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
 })

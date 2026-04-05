@@ -4,13 +4,15 @@ import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../interfaces/product.interface';
+import { SafeImagePipe } from '../../pipes/safe-image.pipe';
+import { LucideIcons } from '../../icons.provider';
 import { debounceTime, distinctUntilChanged, switchMap, catchError } from 'rxjs/operators';
 import { of, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, SafeImagePipe, LucideIcons],
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
@@ -125,6 +127,11 @@ export class SearchComponent implements OnInit {
     if (!this.elementRef.nativeElement.contains(event.target)) {
       this.showResults = false;
     }
+  }
+
+  onImgError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.src = 'assets/images/product-placeholder.jpg';
   }
 
   trackByProductId(index: number, product: Product): number {

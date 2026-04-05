@@ -9,7 +9,7 @@
     </div>
     <div class="container">
       <div class="page-hero-content fade-in-up">
-        <span class="page-eyebrow"><i class="fas fa-hand-sparkles"></i> Nail Art Studio</span>
+        <span class="page-eyebrow"><lucide-icon name="sparkles" [size]="18"></lucide-icon> Nail Art Studio</span>
         <h1>Diseños de Uñas</h1>
         <p>Arte en tus manos. Desde el clásico French hasta elaborados Nail Art, nuestras especialistas crean diseños únicos que reflejan tu personalidad.</p>
       </div>
@@ -21,7 +21,7 @@
     <div class="container">
       <div class="filter-bar-inner">
         <button class="filter-chip" [class.active]="activeStyle === ''" (click)="setStyle('')">
-          <i class="fas fa-th-large"></i> Todos
+          <lucide-icon name="grid-2x2" [size]="16"></lucide-icon> Todos
         </button>
         <button class="filter-chip" *ngFor="let s of styles"
                 [class.active]="activeStyle === s"
@@ -50,13 +50,13 @@
 
     <!-- Error -->
     <div class="error-box" *ngIf="error && !isLoading">
-      <i class="fas fa-exclamation-triangle"></i>
+      <lucide-icon name="triangle-alert" [size]="24"></lucide-icon>
       <p>{{ error }}</p>
     </div>
 
     <!-- Sin resultados -->
     <div class="empty-state" *ngIf="!isLoading && !error && filtered.length === 0">
-      <i class="fas fa-hand-sparkles"></i>
+      <lucide-icon name="sparkles" [size]="48"></lucide-icon>
       <h3>No hay diseños en este estilo</h3>
       <button (click)="setStyle('')">Ver todos</button>
     </div>
@@ -70,9 +70,9 @@
 
         <!-- Imagen -->
         <div class="design-img">
-          <img [src]="d.image_url || 'assets/images/nails-placeholder.jpg'"
+          <img [src]="(d.image_url | safeImage:'assets/images/nails-placeholder.jpg')"
                [alt]="d.name"
-               (error)="d.image_url = 'assets/images/nails-placeholder.jpg'">
+               (error)="onImgError($event)">
           <div class="design-style-tag" *ngIf="d.style">{{ d.style }}</div>
         </div>
 
@@ -83,29 +83,29 @@
 
           <div class="design-meta">
             <span class="meta-item" *ngIf="d.duration">
-              <i class="fas fa-clock"></i> {{ d.duration }}
+              <lucide-icon name="clock" [size]="14"></lucide-icon> {{ d.duration }}
             </span>
             <span class="meta-item price" *ngIf="d.price">
-              <i class="fas fa-tag"></i> ${{ d.price | number:'1.0-0' }} MXN
+              <lucide-icon name="tag" [size]="14"></lucide-icon> ${{ d.price | number:'1.0-0' }} MXN
             </span>
           </div>
 
           <!-- Botón ver proceso -->
           <button class="process-toggle" (click)="toggleExpand(d.id)">
             <span>{{ expandedId === d.id ? 'Ocultar proceso' : 'Ver proceso paso a paso' }}</span>
-            <i class="fas" [class.fa-chevron-down]="expandedId !== d.id" [class.fa-chevron-up]="expandedId === d.id"></i>
+            <lucide-icon [name]="expandedId === d.id ? 'chevron-up' : 'chevron-down'" [size]="16"></lucide-icon>
           </button>
 
           <!-- Panel de proceso -->
           <div class="process-panel" [class.open]="expandedId === d.id">
-            <h4><i class="fas fa-list-ol"></i> Proceso</h4>
+            <h4><lucide-icon name="list-ordered" [size]="16"></lucide-icon> Proceso</h4>
             <ol class="process-steps">
               <li *ngFor="let step of formatProcess(d.process)">{{ step }}</li>
             </ol>
           </div>
 
           <button class="btn-agenda">
-            <i class="fas fa-calendar-check"></i> Agendar cita
+            <lucide-icon name="calendar-check" [size]="16"></lucide-icon> Agendar cita
           </button>
         </div>
 

@@ -6,7 +6,7 @@
         <input type="checkbox" [checked]="showInactive()" (change)="toggleInactive()">
         Mostrar inactivos
       </label>
-      <button class="btn btn--primary" (click)="openCreate()"><i class="fas fa-plus"></i> Nuevo</button>
+      <button class="btn btn--primary" (click)="openCreate()"><lucide-icon name="plus" [size]="14"></lucide-icon> Nuevo</button>
     </div>
   </div>
 
@@ -29,12 +29,12 @@
               </span>
             </td>
             <td class="actions">
-              <button class="icon-btn" (click)="openEdit(item)"><i class="fas fa-edit"></i></button>
+              <button class="icon-btn" (click)="openEdit(item)"><lucide-icon name="pencil" [size]="14"></lucide-icon></button>
               @if (item.isActive) {
-                <button class="icon-btn icon-btn--warn" (click)="deactivate(item)"><i class="fas fa-toggle-on"></i></button>
+                <button class="icon-btn icon-btn--warn" (click)="deactivate(item)"><lucide-icon name="toggle-left" [size]="14"></lucide-icon></button>
               } @else {
-                <button class="icon-btn icon-btn--success" (click)="restore(item)"><i class="fas fa-toggle-off"></i></button>
-                <button class="icon-btn icon-btn--danger" (click)="remove(item)"><i class="fas fa-trash"></i></button>
+                <button class="icon-btn icon-btn--success" (click)="restore(item)"><lucide-icon name="toggle-right" [size]="14"></lucide-icon></button>
+                <button class="icon-btn icon-btn--danger" (click)="remove(item)"><lucide-icon name="trash-2" [size]="14"></lucide-icon></button>
               }
             </td>
           </tr>
@@ -55,7 +55,7 @@
     <div class="modal" (click)="$event.stopPropagation()">
       <div class="modal-header">
         <h3>{{ editingItem() ? 'Editar Servicio' : 'Nuevo Servicio' }}</h3>
-        <button class="modal-close" (click)="closeModal()"><i class="fas fa-times"></i></button>
+        <button class="modal-close" (click)="closeModal()"><lucide-icon name="x" [size]="14"></lucide-icon></button>
       </div>
       <form [formGroup]="form" (ngSubmit)="save()" class="modal-form">
         <div class="form-row">

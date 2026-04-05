@@ -1,16 +1,17 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { SearchComponent } from '../search/search.component';
 import { AuthService } from '../../services/auth.service';
 import { CartService } from '../../services/cart.service';
 import { FavoritesService } from '../../services/favorites.service';
-import { ThemeService, Theme } from '../../services/theme.service';
+import { ThemeService, Theme, THEME_OPTIONS } from '../../services/theme.service';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule, SearchComponent],
+  imports: [CommonModule, FormsModule, RouterModule, SearchComponent],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
@@ -21,11 +22,12 @@ export class HeaderComponent {
   router         = inject(Router);
   themeService   = inject(ThemeService);
 
-  readonly themeOptions: { value: Theme; label: string }[] = [
-    { value: 'light',      label: 'Claro' },
-    { value: 'dark',       label: 'Oscuro' },
-    { value: 'colorblind', label: 'Daltonismo' },
-  ];
+  readonly modeThemes = THEME_OPTIONS.filter(t => t.group === 'mode');
+  readonly a11yThemes = THEME_OPTIONS.filter(t => t.group === 'colorblind');
+
+  get isA11yTheme(): boolean {
+    return this.a11yThemes.some(t => t.value === this.themeService.theme());
+  }
 
   get isLoggedIn(): boolean {
     return this.authService.isAuthenticated();
@@ -52,14 +54,14 @@ export class HeaderComponent {
   }
 
   navItems = [
-    { label: 'Catálogo', link: '/busqueda', icon: 'fas fa-th-large' },
-    { label: 'Labiales', link: '/busqueda', queryParams: { category: 'Labiales' }, icon: 'fas fa-kiss-wink-heart' },
-    { label: 'Rostro', link: '/busqueda', queryParams: { category: 'Rostro' }, icon: 'fas fa-palette' },
-    { label: 'Ojos', link: '/busqueda', queryParams: { category: 'Ojos' }, icon: 'fas fa-eye' },
-    { label: 'Uñas', link: '/busqueda', queryParams: { category: 'Uñas' }, icon: 'fas fa-hand-sparkles' },
-    { label: 'Peinados', link: '/peinados', icon: 'fas fa-scissors' },
-    { label: 'Diseños de Uñas', link: '/disenos-unas', icon: 'fas fa-spa' },
-    { label: 'Ofertas', link: '/busqueda', queryParams: { sortBy: 'price', order: 'ASC' }, icon: 'fas fa-tag' }
+    { label: 'Catálogo', link: '/busqueda', icon: 'grid-2x2' },
+    { label: 'Labiales', link: '/busqueda', queryParams: { category: 'Labiales' }, icon: 'heart' },
+    { label: 'Rostro', link: '/busqueda', queryParams: { category: 'Rostro' }, icon: 'palette' },
+    { label: 'Ojos', link: '/busqueda', queryParams: { category: 'Ojos' }, icon: 'eye' },
+    { label: 'Uñas', link: '/busqueda', queryParams: { category: 'Uñas' }, icon: 'sparkles' },
+    { label: 'Peinados', link: '/peinados', icon: 'scissors' },
+    { label: 'Diseños de Uñas', link: '/disenos-unas', icon: 'flower-2' },
+    { label: 'Ofertas', link: '/busqueda', queryParams: { sortBy: 'price', order: 'ASC' }, icon: 'tag' }
   ];
 
   onSearch(searchTerm: string) {

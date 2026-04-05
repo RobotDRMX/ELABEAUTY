@@ -10,7 +10,7 @@
                 <div class="fav-image">
                     <img [src]="fav.product.image_url" [alt]="fav.product.name">
                     <button class="remove-btn" (click)="removeFavorite(fav.product.id)" title="Eliminar de favoritos">
-                        <i class="fas fa-times"></i>
+                        <lucide-icon name="x" [size]="16"></lucide-icon>
                     </button>
                 </div>
                 <div class="fav-info">
@@ -28,7 +28,7 @@
 
         <ng-template #emptyFavs>
             <div class="empty-state fade-in">
-                <i class="fas fa-heart"></i>
+                <lucide-icon name="heart" [size]="48"></lucide-icon>
                 <h2>Aún no tienes favoritos</h2>
                 <p>Guarda los productos que más te gustan para verlos después.</p>
                 <button class="btn-maybelline" routerLink="/busqueda">Explorar Catálogo</button>

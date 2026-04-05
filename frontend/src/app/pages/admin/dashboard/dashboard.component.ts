@@ -6,11 +6,12 @@ import { AdminHairstylesService } from '../services-api/admin-hairstyles.service
 import { AdminNailDesignsService } from '../services-api/admin-nail-designs.service';
 import { AdminServicesService } from '../services-api/admin-services.service';
 import { AdminUsersService } from '../services-api/admin-users.service';
+import { LucideIcons } from '../../../icons.provider';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LucideIcons],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })

@@ -10,11 +10,13 @@ import { FavoritesService } from '../../services/favorites.service';
 import { RealtimeService } from '../../services/realtime.service';
 import { SearchComponent } from '../../components/search/search.component';
 import { TruncatePipe } from '../../pipes/truncate.pipe';
+import { SafeImagePipe } from '../../pipes/safe-image.pipe';
+import { LucideIcons } from '../../icons.provider';
 
 @Component({
   selector: 'app-search-results',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, SearchComponent, TruncatePipe],
+  imports: [CommonModule, RouterModule, FormsModule, SearchComponent, TruncatePipe, SafeImagePipe, LucideIcons],
   templateUrl: './search-results.component.html',
   styleUrls: ['./search-results.component.scss']
 })
@@ -54,16 +56,16 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     });
 
     this.route.queryParams.subscribe(params => {
-      this.query = params['q'] || '';
-      this.category = params['category'] || '';
-      this.page = parseInt(params['page']) || 1;
+      this.query = this.sanitizeString(params['q']);
+      this.category = this.sanitizeString(params['category']);
+      this.page = Math.max(1, parseInt(params['page']) || 1);
 
-      this.filters.minPrice = params['minPrice'] || '';
-      this.filters.maxPrice = params['maxPrice'] || '';
+      this.filters.minPrice = this.sanitizeNumeric(params['minPrice']);
+      this.filters.maxPrice = this.sanitizeNumeric(params['maxPrice']);
       this.filters.onlyInStock = params['onlyInStock'] === 'true';
-      this.filters.targetAge = params['targetAge'] || '';
-      this.filters.sortBy = params['sortBy'] || 'created_at';
-      this.filters.order = params['order'] || 'DESC';
+      this.filters.targetAge = this.ageOptions.includes(params['targetAge']) ? params['targetAge'] : '';
+      this.filters.sortBy = ['created_at', 'price', 'name', 'rating'].includes(params['sortBy']) ? params['sortBy'] : 'created_at';
+      this.filters.order = params['order'] === 'ASC' ? 'ASC' : 'DESC';
 
       this.loadProducts();
     });
@@ -166,6 +168,23 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.realtimeSub?.unsubscribe();
+  }
+
+  onImgError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.src = 'assets/images/product-placeholder.jpg';
+  }
+
+  private sanitizeString(value: string | undefined): string {
+    if (!value) return '';
+    // Strip HTML tags and limit length
+    return value.replace(/<[^>]*>/g, '').substring(0, 200);
+  }
+
+  private sanitizeNumeric(value: string | undefined): string {
+    if (!value) return '';
+    const num = parseFloat(value);
+    return isNaN(num) || num < 0 ? '' : num.toString();
   }
 
   getPageNumbers(): number[] {

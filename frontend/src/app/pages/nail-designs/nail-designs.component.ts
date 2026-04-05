@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { NailDesignsService, NailDesign } from '../../services/nail-designs.service';
 import { RealtimeService } from '../../services/realtime.service';
+import { SafeImagePipe } from '../../pipes/safe-image.pipe';
+import { LucideIcons } from '../../icons.provider';
 
 @Component({
   selector: 'app-nail-designs',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SafeImagePipe, LucideIcons],
   templateUrl: './nail-designs.component.html',
   styleUrls: ['./nail-designs.component.scss']
 })
@@ -62,6 +64,11 @@ export class NailDesignsComponent implements OnInit, OnDestroy {
 
   toggleExpand(id: number) {
     this.expandedId = this.expandedId === id ? null : id;
+  }
+
+  onImgError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.src = 'assets/images/nails-placeholder.jpg';
   }
 
   formatProcess(process: string): string[] {

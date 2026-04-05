@@ -4,11 +4,12 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } 
 import { AdminNailDesignsService } from '../services-api/admin-nail-designs.service';
 import { ToastService } from '../shared/toast.service';
 import { NotificationService } from '../../../services/notification.service';
+import { LucideIcons } from '../../../icons.provider';
 
 @Component({
   selector: 'app-admin-nail-designs',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, LucideIcons],
   templateUrl: './nail-designs.component.html',
   styleUrls: ['./nail-designs.component.scss'],
 })

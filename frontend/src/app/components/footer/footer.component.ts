@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NotificationService } from '../../services/notification.service';
+import { LucideIcons } from '../../icons.provider';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, LucideIcons],
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })
@@ -17,60 +18,40 @@ export class FooterComponent {
 
   // Enlaces de atención al cliente
   customerServiceLinks = [
-    { label: 'Contáctanos', link: '/contacto', icon: 'fas fa-phone-alt' },
-    { label: 'Preguntas Frecuentes', link: '/faq', icon: 'fas fa-question-circle' },
-    { label: 'Envíos y Devoluciones', link: '/envios', icon: 'fas fa-truck' },
-    { label: 'Política de Cambios', link: '/cambios', icon: 'fas fa-exchange-alt' },
-    { label: 'Garantía de Productos', link: '/garantia', icon: 'fas fa-award' },
-    { label: 'Guía de Tallas', link: '/tallas', icon: 'fas fa-ruler' }
+    { label: 'Contáctanos', link: '/contacto', icon: 'phone' },
+    { label: 'Preguntas Frecuentes', link: '/faq', icon: 'help-circle' },
+    { label: 'Envíos y Devoluciones', link: '/envios', icon: 'truck' },
+    { label: 'Política de Cambios', link: '/cambios', icon: 'arrow-left-right' },
+    { label: 'Garantía de Productos', link: '/garantia', icon: 'award' },
+    { label: 'Guía de Tallas', link: '/tallas', icon: 'ruler' }
   ];
 
   // Enlaces de información
   infoLinks = [
-    { label: 'Sobre Nosotros', link: '/sobre-nosotros', icon: 'fas fa-info-circle' },
-    { label: 'Nuestras Tiendas', link: '/tiendas', icon: 'fas fa-store' },
-    { label: 'Blog de Belleza', link: '/blog', icon: 'fas fa-blog' },
-    { label: 'Programa de Lealtad', link: '/lealtad', icon: 'fas fa-crown' },
-    { label: 'Términos de Uso', link: '/terminos-de-uso', icon: 'fas fa-file-contract' },
-    { label: 'Política de Privacidad', link: '/privacidad', icon: 'fas fa-shield-alt' }
+    { label: 'Sobre Nosotros', link: '/sobre-nosotros', icon: 'info' },
+    { label: 'Nuestras Tiendas', link: '/tiendas', icon: 'store' },
+    { label: 'Blog de Belleza', link: '/blog', icon: 'book-open' },
+    { label: 'Programa de Lealtad', link: '/lealtad', icon: 'crown' },
+    { label: 'Términos de Uso', link: '/terminos-de-uso', icon: 'file-text' },
+    { label: 'Política de Privacidad', link: '/privacidad', icon: 'shield' }
   ];
 
-  // Redes sociales
+  // Redes sociales (inline SVG paths — Lucide has no brand icons)
   socialLinks = [
-    {
-      name: 'Facebook',
-      url: 'https://facebook.com/maybelline',
-      icon: 'fab fa-facebook-f'
-    },
-    {
-      name: 'Instagram',
-      url: 'https://instagram.com/maybelline',
-      icon: 'fab fa-instagram'
-    },
-    {
-      name: 'TikTok',
-      url: 'https://tiktok.com/@maybelline',
-      icon: 'fab fa-tiktok'
-    },
-    {
-      name: 'YouTube',
-      url: 'https://youtube.com/maybelline',
-      icon: 'fab fa-youtube'
-    },
-    {
-      name: 'Twitter',
-      url: 'https://twitter.com/maybelline',
-      icon: 'fab fa-twitter'
-    }
+    { name: 'Facebook',  url: 'https://facebook.com/maybelline',  svgPath: 'M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z' },
+    { name: 'Instagram', url: 'https://instagram.com/maybelline',  svgPath: 'M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 0 2.5 1.25 1.25 0 0 1 0-2.5M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z' },
+    { name: 'TikTok',   url: 'https://tiktok.com/@maybelline',    svgPath: 'M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1 0-5.78c.27 0 .54.04.8.1v-3.5a6.37 6.37 0 0 0-.8-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 10.86 4.48V12.9A8.28 8.28 0 0 0 19.59 15V11.5a4.83 4.83 0 0 1-4.42-1.64' },
+    { name: 'YouTube',  url: 'https://youtube.com/maybelline',    svgPath: 'M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33zM9.75 15.02V8.48l5.75 3.27-5.75 3.27z' },
+    { name: 'Twitter',  url: 'https://twitter.com/maybelline',    svgPath: 'M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z' },
   ];
 
-  // Métodos de pago
+  // Métodos de pago (text labels only — brand SVGs not needed)
   paymentMethods = [
-    { name: 'Visa', icon: 'fab fa-cc-visa' },
-    { name: 'Mastercard', icon: 'fab fa-cc-mastercard' },
-    { name: 'American Express', icon: 'fab fa-cc-amex' },
-    { name: 'PayPal', icon: 'fab fa-cc-paypal' },
-    { name: 'Apple Pay', icon: 'fab fa-cc-apple-pay' }
+    { name: 'Visa' },
+    { name: 'Mastercard' },
+    { name: 'AMEX' },
+    { name: 'PayPal' },
+    { name: 'Apple Pay' },
   ];
 
   // Año actual para copyright

@@ -13,11 +13,16 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
+  private static readonly ALLOWED_SEARCH_KEYS: ReadonlySet<string> = new Set([
+    'query', 'category', 'page', 'limit', 'sortBy', 'order',
+    'minPrice', 'maxPrice', 'onlyInStock', 'targetAge',
+  ]);
+
   searchProducts(params: SearchParams): Observable<SearchResponse> {
     let httpParams = new HttpParams();
-    
+
     Object.entries(params).forEach(([key, value]) => {
-      if (value !== undefined && value !== null && value !== '') {
+      if (ProductService.ALLOWED_SEARCH_KEYS.has(key) && value !== undefined && value !== null && value !== '') {
         httpParams = httpParams.set(key, value.toString());
       }
     });

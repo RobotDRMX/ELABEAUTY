@@ -4,11 +4,12 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } 
 import { AdminHairstylesService } from '../services-api/admin-hairstyles.service';
 import { ToastService } from '../shared/toast.service';
 import { NotificationService } from '../../../services/notification.service';
+import { LucideIcons } from '../../../icons.provider';
 
 @Component({
   selector: 'app-admin-hairstyles',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, LucideIcons],
   templateUrl: './hairstyles.component.html',
   styleUrls: ['./hairstyles.component.scss'],
 })

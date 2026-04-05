@@ -32,19 +32,19 @@
             <td>{{ user.createdAt | date:'dd/MM/yyyy' }}</td>
             <td class="actions">
               <button class="icon-btn" title="Cambiar rol" (click)="openRoleModal(user)">
-                <i class="fas fa-user-tag"></i>
+                <lucide-icon name="user-cog" [size]="14"></lucide-icon>
               </button>
               @if (user.isActive) {
                 <button class="icon-btn icon-btn--warn" title="Desactivar" (click)="deactivate(user)">
-                  <i class="fas fa-toggle-on"></i>
+                  <lucide-icon name="toggle-left" [size]="14"></lucide-icon>
                 </button>
               } @else {
                 <button class="icon-btn icon-btn--success" title="Restaurar" (click)="restore(user)">
-                  <i class="fas fa-toggle-off"></i>
+                  <lucide-icon name="toggle-right" [size]="14"></lucide-icon>
                 </button>
                 @if (canDelete(user)) {
                   <button class="icon-btn icon-btn--danger" title="Eliminar" (click)="remove(user)">
-                    <i class="fas fa-trash"></i>
+                    <lucide-icon name="trash-2" [size]="14"></lucide-icon>
                   </button>
                 }
               }
@@ -68,7 +68,7 @@
     <div class="modal" style="max-width: 360px" (click)="$event.stopPropagation()">
       <div class="modal-header">
         <h3>Cambiar Rol</h3>
-        <button class="modal-close" (click)="closeRoleModal()"><i class="fas fa-times"></i></button>
+        <button class="modal-close" (click)="closeRoleModal()"><lucide-icon name="x" [size]="14"></lucide-icon></button>
       </div>
       <div class="modal-form">
         <p style="font-size:14px; margin-bottom:12px; color:#555">

@@ -20,10 +20,10 @@
         </p>
         <div class="hero-actions">
           <a routerLink="/busqueda" class="btn-hero-primary">
-            <i class="fas fa-th-large"></i> Explorar Catálogo
+            <lucide-icon name="grid-2x2" [size]="18"></lucide-icon> Explorar Catálogo
           </a>
           <a routerLink="/busqueda" [queryParams]="{ sortBy: 'price', order: 'ASC' }" class="btn-hero-secondary">
-            Ver Ofertas <i class="fas fa-arrow-right"></i>
+            Ver Ofertas <lucide-icon name="arrow-right" [size]="18"></lucide-icon>
           </a>
         </div>
         <div class="hero-stats">
@@ -47,27 +47,27 @@
       <div class="hero-visual fade-in-right">
         <div class="hero-icon-grid">
           <div class="hero-icon-card delay-1">
-            <i class="fas fa-kiss-wink-heart"></i>
+            <lucide-icon name="heart" [size]="24"></lucide-icon>
             <span>Labiales</span>
           </div>
           <div class="hero-icon-card delay-2">
-            <i class="fas fa-eye"></i>
+            <lucide-icon name="eye" [size]="24"></lucide-icon>
             <span>Ojos</span>
           </div>
           <div class="hero-icon-card highlight delay-3">
-            <i class="fas fa-palette"></i>
+            <lucide-icon name="palette" [size]="24"></lucide-icon>
             <span>Rostro</span>
           </div>
           <div class="hero-icon-card delay-4">
-            <i class="fas fa-hand-sparkles"></i>
+            <lucide-icon name="sparkles" [size]="24"></lucide-icon>
             <span>Uñas</span>
           </div>
           <div class="hero-icon-card delay-5">
-            <i class="fas fa-moon"></i>
+            <lucide-icon name="moon" [size]="24"></lucide-icon>
             <span>Sombras</span>
           </div>
           <div class="hero-icon-card delay-6">
-            <i class="fas fa-circle"></i>
+            <lucide-icon name="circle" [size]="24"></lucide-icon>
             <span>Rubores</span>
           </div>
         </div>
@@ -80,14 +80,14 @@
 <!-- ===== PROMO TICKER ===== -->
 <div class="promo-ticker">
   <div class="ticker-track">
-    <span><i class="fas fa-shipping-fast"></i> Envío gratis en compras mayores a $500 MXN</span>
-    <span><i class="fas fa-star"></i> Productos cruelty-free certificados</span>
-    <span><i class="fas fa-tag"></i> Hasta 30% de descuento en ofertas semanales</span>
-    <span><i class="fas fa-shield-alt"></i> Devoluciones gratis en 30 días</span>
-    <span><i class="fas fa-shipping-fast"></i> Envío gratis en compras mayores a $500 MXN</span>
-    <span><i class="fas fa-star"></i> Productos cruelty-free certificados</span>
-    <span><i class="fas fa-tag"></i> Hasta 30% de descuento en ofertas semanales</span>
-    <span><i class="fas fa-shield-alt"></i> Devoluciones gratis en 30 días</span>
+    <span><lucide-icon name="truck" [size]="16"></lucide-icon> Envío gratis en compras mayores a $500 MXN</span>
+    <span><lucide-icon name="star" [size]="16"></lucide-icon> Productos cruelty-free certificados</span>
+    <span><lucide-icon name="tag" [size]="16"></lucide-icon> Hasta 30% de descuento en ofertas semanales</span>
+    <span><lucide-icon name="shield" [size]="16"></lucide-icon> Devoluciones gratis en 30 días</span>
+    <span><lucide-icon name="truck" [size]="16"></lucide-icon> Envío gratis en compras mayores a $500 MXN</span>
+    <span><lucide-icon name="star" [size]="16"></lucide-icon> Productos cruelty-free certificados</span>
+    <span><lucide-icon name="tag" [size]="16"></lucide-icon> Hasta 30% de descuento en ofertas semanales</span>
+    <span><lucide-icon name="shield" [size]="16"></lucide-icon> Devoluciones gratis en 30 días</span>
   </div>
 </div>
 
@@ -103,14 +103,14 @@
          routerLink="/busqueda"
          [queryParams]="{ category: cat.searchKey }">
         <div class="category-icon-wrap" [style.background]="cat.gradient">
-          <i [class]="cat.faIcon"></i>
+          <lucide-icon [name]="cat.icon" [size]="20"></lucide-icon>
         </div>
         <div class="category-info">
           <h3>{{ cat.name }}</h3>
           <p>{{ cat.count }}</p>
         </div>
         <div class="category-arrow">
-          <i class="fas fa-arrow-right"></i>
+          <lucide-icon name="arrow-right" [size]="16"></lucide-icon>
         </div>
       </a>
     </div>
@@ -128,7 +128,7 @@
            [class]="'delay-' + (i + 1)">
         <div class="featured-badge">{{ product.badge }}</div>
         <div class="featured-image" [style.background]="product.gradient">
-          <i [class]="product.faIcon" [style.color]="product.iconColor"></i>
+          <lucide-icon [name]="product.icon" [size]="32" [color]="product.iconColor"></lucide-icon>
         </div>
         <div class="featured-info">
           <h3>{{ product.name }}</h3>
@@ -136,7 +136,7 @@
           <div class="featured-footer">
             <span class="featured-price">${{ product.price }} MXN</span>
             <a routerLink="/busqueda" class="featured-btn">
-              Ver más <i class="fas fa-arrow-right"></i>
+              Ver más <lucide-icon name="arrow-right" [size]="14"></lucide-icon>
             </a>
           </div>
         </div>
@@ -154,7 +154,7 @@
            *ngFor="let feat of brandFeatures; let i = index"
            [class]="'delay-' + (i + 1)">
         <div class="feature-icon-wrap">
-          <i [class]="feat.faIcon"></i>
+          <lucide-icon [name]="feat.icon" [size]="24"></lucide-icon>
         </div>
         <h3>{{ feat.title }}</h3>
         <p>{{ feat.description }}</p>
@@ -175,7 +175,7 @@
            [class]="'delay-' + (i + 1)">
         <div class="testimonial-avatar">{{ t.avatar }}</div>
         <div class="testimonial-stars">
-          <i class="fas fa-star" *ngFor="let s of getStars(t.rating)"></i>
+          <lucide-icon name="star" [size]="14" *ngFor="let s of getStars(t.rating)"></lucide-icon>
         </div>
         <p class="testimonial-text">"{{ t.text }}"</p>
         <p class="testimonial-author">— {{ t.author }}</p>

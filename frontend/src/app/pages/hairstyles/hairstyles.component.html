@@ -8,7 +8,7 @@
     </div>
     <div class="container">
       <div class="page-hero-content fade-in-up">
-        <span class="page-eyebrow"><i class="fas fa-scissors"></i> Servicios del Salón</span>
+        <span class="page-eyebrow"><lucide-icon name="scissors" [size]="18"></lucide-icon> Servicios del Salón</span>
         <h1>Peinados &amp; Cortes</h1>
         <p>Transforma tu look con nuestros expertos estilistas. Desde cortes modernos hasta coloraciones de fantasía, cada servicio está diseñado para resaltar tu belleza única.</p>
       </div>
@@ -20,7 +20,7 @@
     <div class="container">
       <div class="filter-bar-inner">
         <button class="filter-chip" [class.active]="activeCategory === ''" (click)="setCategory('')">
-          <i class="fas fa-th-large"></i> Todos
+          <lucide-icon name="grid-2x2" [size]="16"></lucide-icon> Todos
         </button>
         <button class="filter-chip" *ngFor="let cat of categories"
                 [class.active]="activeCategory === cat"
@@ -49,13 +49,13 @@
 
     <!-- Error -->
     <div class="error-box" *ngIf="error && !isLoading">
-      <i class="fas fa-exclamation-triangle"></i>
+      <lucide-icon name="triangle-alert" [size]="24"></lucide-icon>
       <p>{{ error }}</p>
     </div>
 
     <!-- Sin resultados -->
     <div class="empty-state" *ngIf="!isLoading && !error && filtered.length === 0">
-      <i class="fas fa-scissors"></i>
+      <lucide-icon name="scissors" [size]="18"></lucide-icon>
       <h3>No hay peinados en esta categoría</h3>
       <button (click)="setCategory('')">Ver todos</button>
     </div>
@@ -69,9 +69,9 @@
 
         <!-- Imagen -->
         <div class="service-img">
-          <img [src]="h.image_url || 'assets/images/hairstyle-placeholder.jpg'"
+          <img [src]="(h.image_url | safeImage:'assets/images/hairstyle-placeholder.jpg')"
                [alt]="h.name"
-               (error)="h.image_url = 'assets/images/hairstyle-placeholder.jpg'">
+               (error)="onImgError($event)">
           <div class="service-category-tag" *ngIf="h.category">{{ h.category }}</div>
         </div>
 
@@ -82,29 +82,29 @@
 
           <div class="service-meta">
             <span class="meta-item" *ngIf="h.duration">
-              <i class="fas fa-clock"></i> {{ h.duration }}
+              <lucide-icon name="clock" [size]="14"></lucide-icon> {{ h.duration }}
             </span>
             <span class="meta-item price" *ngIf="h.price">
-              <i class="fas fa-tag"></i> ${{ h.price | number:'1.0-0' }} MXN
+              <lucide-icon name="tag" [size]="14"></lucide-icon> ${{ h.price | number:'1.0-0' }} MXN
             </span>
           </div>
 
           <!-- Botón ver proceso -->
           <button class="process-toggle" (click)="toggleExpand(h.id)">
             <span>{{ expandedId === h.id ? 'Ocultar proceso' : 'Ver proceso paso a paso' }}</span>
-            <i class="fas" [class.fa-chevron-down]="expandedId !== h.id" [class.fa-chevron-up]="expandedId === h.id"></i>
+            <lucide-icon [name]="expandedId === h.id ? 'chevron-up' : 'chevron-down'" [size]="16"></lucide-icon>
           </button>
 
           <!-- Panel de proceso (expandible) -->
           <div class="process-panel" [class.open]="expandedId === h.id">
-            <h4><i class="fas fa-list-ol"></i> Proceso</h4>
+            <h4><lucide-icon name="list-ordered" [size]="16"></lucide-icon> Proceso</h4>
             <ol class="process-steps">
               <li *ngFor="let step of formatProcess(h.process)">{{ step }}</li>
             </ol>
           </div>
 
           <button class="btn-agenda">
-            <i class="fas fa-calendar-check"></i> Agendar cita
+            <lucide-icon name="calendar-check" [size]="16"></lucide-icon> Agendar cita
           </button>
         </div>
 

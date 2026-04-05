@@ -89,13 +89,13 @@
         </div>
 
         <div class="error-message" *ngIf="error">
-          <i class="fas fa-exclamation-circle"></i> {{ error }}
+          <lucide-icon name="circle-alert" [size]="18"></lucide-icon> {{ error }}
         </div>
 
         <!-- Sin resultados -->
         <div class="no-results" *ngIf="!isLoading && products.length === 0">
           <div class="no-results-content">
-            <i class="fas fa-search"></i>
+            <lucide-icon name="search" [size]="48"></lucide-icon>
             <h3>No encontramos productos con estos filtros</h3>
             <p>Prueba ajustando el rango de precio o cambiando la edad elegida.</p>
             <button class="suggestion-btn" (click)="clearFilters()">Ver todo el catálogo</button>
@@ -106,12 +106,12 @@
         <div class="products-grid" *ngIf="products.length > 0">
           <div class="product-card" [class.out-of-stock]="product.stock === 0" *ngFor="let product of products">
             <div class="product-image">
-              <img [src]="product.image_url" [alt]="product.name"
-                (error)="product.image_url = 'assets/images/product-placeholder.jpg'">
+              <img [src]="product.image_url | safeImage" [alt]="product.name"
+                (error)="onImgError($event)">
 
               <button class="favorite-overlay-btn" [class.active]="isFavorite(product.id)"
                 (click)="toggleFavorite(product); $event.stopPropagation()">
-                <i class="fas fa-heart"></i>
+                <lucide-icon name="heart" [size]="18"></lucide-icon>
               </button>
 
               <div class="stock-badge" *ngIf="product.stock === 0">Agotado</div>
@@ -124,14 +124,14 @@
               <p class="product-description">{{ product.description | truncate:60 }}</p>
 
               <div class="product-rating">
-                <i class="fas fa-star" *ngFor="let s of [1,2,3,4,5]" [class.filled]="s <= product.rating"></i>
+                <lucide-icon name="star" [size]="14" *ngFor="let s of [1,2,3,4,5]" [class.filled]="s <= product.rating"></lucide-icon>
                 <span class="reviews">({{ product.review_count }})</span>
               </div>
 
               <div class="product-footer">
                 <span class="product-price">{{ product.price | currency:'MXN':'symbol':'1.0-0' }}</span>
                 <button class="add-to-cart-btn" [disabled]="product.stock === 0" (click)="addToCart(product)">
-                  <i class="fas fa-shopping-bag"></i>
+                  <lucide-icon name="shopping-bag" [size]="18"></lucide-icon>
                 </button>
               </div>
             </div>
@@ -141,7 +141,7 @@
         <!-- Paginación -->
         <div class="pagination" *ngIf="totalPages > 1">
           <button class="page-btn" [disabled]="page === 1" (click)="changePage(page - 1)">
-            <i class="fas fa-chevron-left"></i>
+            <lucide-icon name="chevron-left" [size]="18"></lucide-icon>
           </button>
 
           <div class="page-numbers">
@@ -151,7 +151,7 @@
           </div>
 
           <button class="page-btn" [disabled]="page === totalPages" (click)="changePage(page + 1)">
-            <i class="fas fa-chevron-right"></i>
+            <lucide-icon name="chevron-right" [size]="18"></lucide-icon>
           </button>
         </div>
       </main>

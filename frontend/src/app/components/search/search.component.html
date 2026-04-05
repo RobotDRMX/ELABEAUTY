@@ -19,7 +19,7 @@
         (click)="onClear()"
         aria-label="Limpiar búsqueda"
       >
-        <i class="fas fa-times"></i>
+        <lucide-icon name="x" [size]="16"></lucide-icon>
       </button>
       
       <button 
@@ -29,7 +29,7 @@
         [disabled]="!searchControl.value || searchControl.value.length < 2"
         aria-label="Buscar"
       >
-        <i class="fas fa-search"></i>
+        <lucide-icon name="search" [size]="18"></lucide-icon>
       </button>
     </div>
 
@@ -45,7 +45,7 @@
         <!-- Sin resultados -->
         <div class="search-no-results" *ngIf="noResults && !isLoading">
           <div class="no-results-icon">
-            <i class="fas fa-search"></i>
+            <lucide-icon name="search" [size]="18"></lucide-icon>
           </div>
           <div class="no-results-text">
             <p>No encontramos "<strong>{{ searchControl.value }}</strong>"</p>
@@ -66,10 +66,10 @@
               (click)="onSelectProduct(product)"
             >
               <div class="product-image">
-                <img 
-                  [src]="product.image_url" 
+                <img
+                  [src]="product.image_url | safeImage"
                   [alt]="product.name"
-                  (error)="product.image_url = 'assets/images/product-placeholder.jpg'"
+                  (error)="onImgError($event)"
                 >
               </div>
               <div class="product-info">
@@ -78,7 +78,7 @@
                 <div class="product-price-rating">
                   <span class="product-price">{{ product.price | currency:'MXN':'symbol':'1.2-2' }}</span>
                   <span class="product-rating" *ngIf="product.rating > 0">
-                    <i class="fas fa-star"></i> {{ product.rating | number:'1.1-1' }}
+                    <lucide-icon name="star" [size]="14"></lucide-icon> {{ product.rating | number:'1.1-1' }}
                   </span>
                 </div>
               </div>
@@ -88,7 +88,7 @@
           <div class="results-footer" *ngIf="searchResults.length > 0">
             <button class="view-all-btn" (click)="onSearch()">
               Ver todos los resultados
-              <i class="fas fa-arrow-right"></i>
+              <lucide-icon name="arrow-right" [size]="16"></lucide-icon>
             </button>
           </div>
         </div>
