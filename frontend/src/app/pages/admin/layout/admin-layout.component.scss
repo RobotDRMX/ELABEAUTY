@@ -166,6 +166,35 @@
   }
 }
 
+.theme-a11y-select {
+  width: 100%;
+  margin-top: 6px;
+  padding: 6px 8px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  color: #888;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+
+  &:hover {
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+  }
+
+  &.active {
+    background: rgba(230, 0, 126, 0.2);
+    border-color: #e6007e;
+    color: #e6007e;
+  }
+
+  option {
+    background: #1a1a1a;
+    color: #ccc;
+  }
+}
+
 /* ── CONTENT ── */
 .admin-content {
   flex: 1;
