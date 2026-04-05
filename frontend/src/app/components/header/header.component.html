@@ -11,7 +11,7 @@
           <rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
           <circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
         </svg>
-        Envío gratis en compras mayores a $500 MXN
+        {{ 'header.free_shipping' | translate }}
       </span>
 
       <div class="header-top-right">
@@ -19,19 +19,19 @@
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
           </svg>
-          Seguir pedido
+          {{ 'header.track_order' | translate }}
         </a>
         <a href="#">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
           </svg>
-          Ayuda
+          {{ 'header.help' | translate }}
         </a>
         <a href="#">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
           </svg>
-          Contacto
+          {{ 'header.contact' | translate }}
         </a>
 
         <span class="top-sep"></span>
@@ -78,6 +78,18 @@
             }
           </select>
         </div>
+
+        <span class="top-sep"></span>
+
+        <!-- Language selector -->
+        <select class="lang-select"
+          [ngModel]="i18n.lang()"
+          (ngModelChange)="i18n.setLang($event)"
+          aria-label="Idioma">
+          @for (l of languages; track l.code) {
+            <option [value]="l.code">{{ l.flag }} {{ l.label }}</option>
+          }
+        </select>
       </div>
     </div>
   </div>
@@ -119,9 +131,9 @@
 
         <!-- No autenticado -->
         <div class="auth-links" *ngIf="!isLoggedIn">
-          <a routerLink="/auth/login" class="auth-link">Entrar</a>
+          <a routerLink="/auth/login" class="auth-link">{{ 'header.login' | translate }}</a>
           <span class="auth-sep">·</span>
-          <a routerLink="/auth/register" class="auth-link">Registro</a>
+          <a routerLink="/auth/register" class="auth-link">{{ 'header.register' | translate }}</a>
         </div>
 
         <!-- Autenticado -->
@@ -143,7 +155,7 @@
           </button>
 
           <!-- Cerrar sesión -->
-          <button class="icon-btn logout-btn" (click)="logout()" title="Cerrar sesión" aria-label="Cerrar sesión">
+          <button class="icon-btn logout-btn" (click)="logout()" [title]="'header.logout' | translate" [attr.aria-label]="'header.logout' | translate">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
               <polyline points="16 17 21 12 16 7"/>

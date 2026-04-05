@@ -4,16 +4,19 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NotificationService } from '../../services/notification.service';
 import { LucideIcons } from '../../icons.provider';
+import { TranslatePipe } from '../../pipes/translate.pipe';
+import { I18nService } from '../../services/i18n.service';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, LucideIcons],
+  imports: [CommonModule, FormsModule, RouterModule, LucideIcons, TranslatePipe],
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent {
   private notif = inject(NotificationService);
+  private i18n = inject(I18nService);
   newsletterEmail: string = '';
 
   // Enlaces de atención al cliente
@@ -60,7 +63,7 @@ export class FooterComponent {
   // Método para suscribir al newsletter
   subscribeNewsletter() {
     if (this.newsletterEmail) {
-      this.notif.toast('¡Suscripción exitosa! Pronto recibirás nuestras ofertas exclusivas.', 'success');
+      this.notif.toast(this.i18n.t('footer.newsletter_success'), 'success');
       this.newsletterEmail = '';
     }
   }

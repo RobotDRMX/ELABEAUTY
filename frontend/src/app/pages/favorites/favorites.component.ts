@@ -5,11 +5,12 @@ import { FavoritesService } from '../../services/favorites.service';
 import { CartService } from '../../services/cart.service';
 import { TruncatePipe } from '../../pipes/truncate.pipe';
 import { LucideIcons } from '../../icons.provider';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
     selector: 'app-favorites',
     standalone: true,
-    imports: [CommonModule, RouterModule, TruncatePipe, LucideIcons],
+    imports: [CommonModule, RouterModule, TruncatePipe, LucideIcons, TranslatePipe],
     templateUrl: './favorites.component.html',
     styleUrls: ['./favorites.component.scss']
 })

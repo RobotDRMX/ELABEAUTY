@@ -1,15 +1,15 @@
 <div class="favorites-page">
     <div class="container">
         <div class="favorites-header">
-            <h1>Mis Favoritos</h1>
-            <p *ngIf="favorites.length > 0">Tienes {{ favorites.length }} productos guardados</p>
+            <h1>{{ 'favorites.title' | translate }}</h1>
+            <p *ngIf="favorites.length > 0">{{ 'favorites.count' | translate:{ count: favorites.length } }}</p>
         </div>
 
         <div class="favorites-grid" *ngIf="favorites.length > 0; else emptyFavs">
             <div class="fav-card" *ngFor="let fav of favorites">
                 <div class="fav-image">
                     <img [src]="fav.product.image_url" [alt]="fav.product.name">
-                    <button class="remove-btn" (click)="removeFavorite(fav.product.id)" title="Eliminar de favoritos">
+                    <button class="remove-btn" (click)="removeFavorite(fav.product.id)" [title]="'favorites.remove' | translate">
                         <lucide-icon name="x" [size]="16"></lucide-icon>
                     </button>
                 </div>
@@ -20,7 +20,7 @@
 
                     <button class="btn-maybelline" [disabled]="fav.product.stock === 0"
                         (click)="addToCart(fav.product)">
-                        {{ fav.product.stock > 0 ? 'Añadir al carrito' : 'Agotado' }}
+                        {{ fav.product.stock > 0 ? ('favorites.add_to_cart' | translate) : ('favorites.sold_out' | translate) }}
                     </button>
                 </div>
             </div>
@@ -29,9 +29,9 @@
         <ng-template #emptyFavs>
             <div class="empty-state fade-in">
                 <lucide-icon name="heart" [size]="48"></lucide-icon>
-                <h2>Aún no tienes favoritos</h2>
-                <p>Guarda los productos que más te gustan para verlos después.</p>
-                <button class="btn-maybelline" routerLink="/busqueda">Explorar Catálogo</button>
+                <h2>{{ 'favorites.empty' | translate }}</h2>
+                <p>{{ 'favorites.empty_hint' | translate }}</p>
+                <button class="btn-maybelline" routerLink="/busqueda">{{ 'favorites.explore' | translate }}</button>
             </div>
         </ng-template>
     </div>

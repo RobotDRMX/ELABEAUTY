@@ -5,11 +5,12 @@ import { NailDesignsService, NailDesign } from '../../services/nail-designs.serv
 import { RealtimeService } from '../../services/realtime.service';
 import { SafeImagePipe } from '../../pipes/safe-image.pipe';
 import { LucideIcons } from '../../icons.provider';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-nail-designs',
   standalone: true,
-  imports: [CommonModule, SafeImagePipe, LucideIcons],
+  imports: [CommonModule, SafeImagePipe, LucideIcons, TranslatePipe],
   templateUrl: './nail-designs.component.html',
   styleUrls: ['./nail-designs.component.scss']
 })

@@ -7,11 +7,13 @@ import { AuthService } from '../../services/auth.service';
 import { CartService } from '../../services/cart.service';
 import { FavoritesService } from '../../services/favorites.service';
 import { ThemeService, Theme, THEME_OPTIONS } from '../../services/theme.service';
+import { I18nService, LANGUAGES } from '../../services/i18n.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, SearchComponent],
+  imports: [CommonModule, FormsModule, RouterModule, SearchComponent, TranslatePipe],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
@@ -21,6 +23,8 @@ export class HeaderComponent {
   favoritesService = inject(FavoritesService);
   router         = inject(Router);
   themeService   = inject(ThemeService);
+  i18n           = inject(I18nService);
+  readonly languages = LANGUAGES;
 
   readonly modeThemes = THEME_OPTIONS.filter(t => t.group === 'mode');
   readonly a11yThemes = THEME_OPTIONS.filter(t => t.group === 'colorblind');

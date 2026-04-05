@@ -10,36 +10,36 @@
     <div class="hero-content">
 
       <div class="hero-text fade-in-left">
-        <span class="hero-eyebrow">Nueva Colección 2025</span>
+        <span class="hero-eyebrow">{{ 'hero.eyebrow' | translate }}</span>
         <h1 class="hero-title">
-          Tu belleza,<br>
-          <span class="hero-title-accent">nuestra pasión</span>
+          {{ 'hero.title_1' | translate }}<br>
+          <span class="hero-title-accent">{{ 'hero.title_2' | translate }}</span>
         </h1>
         <p class="hero-subtitle">
-          Descubre productos de maquillaje de alta calidad diseñados para realzar tu belleza única. Fórmulas innovadoras, colores vibrantes.
+          {{ 'hero.subtitle' | translate }}
         </p>
         <div class="hero-actions">
           <a routerLink="/busqueda" class="btn-hero-primary">
-            <lucide-icon name="grid-2x2" [size]="18"></lucide-icon> Explorar Catálogo
+            <lucide-icon name="grid-2x2" [size]="18"></lucide-icon> {{ 'hero.explore' | translate }}
           </a>
           <a routerLink="/busqueda" [queryParams]="{ sortBy: 'price', order: 'ASC' }" class="btn-hero-secondary">
-            Ver Ofertas <lucide-icon name="arrow-right" [size]="18"></lucide-icon>
+            {{ 'hero.offers' | translate }} <lucide-icon name="arrow-right" [size]="18"></lucide-icon>
           </a>
         </div>
         <div class="hero-stats">
           <div class="stat">
             <strong>+200</strong>
-            <span>Productos</span>
+            <span>{{ 'hero.products' | translate }}</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat">
             <strong>4.9</strong>
-            <span>Valoración</span>
+            <span>{{ 'hero.rating' | translate }}</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat">
             <strong>+5k</strong>
-            <span>Clientas</span>
+            <span>{{ 'hero.clients' | translate }}</span>
           </div>
         </div>
       </div>
@@ -48,27 +48,27 @@
         <div class="hero-icon-grid">
           <div class="hero-icon-card delay-1">
             <lucide-icon name="heart" [size]="24"></lucide-icon>
-            <span>Labiales</span>
+            <span>{{ 'hero.lips' | translate }}</span>
           </div>
           <div class="hero-icon-card delay-2">
             <lucide-icon name="eye" [size]="24"></lucide-icon>
-            <span>Ojos</span>
+            <span>{{ 'hero.eyes' | translate }}</span>
           </div>
           <div class="hero-icon-card highlight delay-3">
             <lucide-icon name="palette" [size]="24"></lucide-icon>
-            <span>Rostro</span>
+            <span>{{ 'hero.face' | translate }}</span>
           </div>
           <div class="hero-icon-card delay-4">
             <lucide-icon name="sparkles" [size]="24"></lucide-icon>
-            <span>Uñas</span>
+            <span>{{ 'hero.nails' | translate }}</span>
           </div>
           <div class="hero-icon-card delay-5">
             <lucide-icon name="moon" [size]="24"></lucide-icon>
-            <span>Sombras</span>
+            <span>{{ 'hero.shadows' | translate }}</span>
           </div>
           <div class="hero-icon-card delay-6">
             <lucide-icon name="circle" [size]="24"></lucide-icon>
-            <span>Rubores</span>
+            <span>{{ 'hero.blush' | translate }}</span>
           </div>
         </div>
       </div>
@@ -80,21 +80,21 @@
 <!-- ===== PROMO TICKER ===== -->
 <div class="promo-ticker">
   <div class="ticker-track">
-    <span><lucide-icon name="truck" [size]="16"></lucide-icon> Envío gratis en compras mayores a $500 MXN</span>
-    <span><lucide-icon name="star" [size]="16"></lucide-icon> Productos cruelty-free certificados</span>
-    <span><lucide-icon name="tag" [size]="16"></lucide-icon> Hasta 30% de descuento en ofertas semanales</span>
-    <span><lucide-icon name="shield" [size]="16"></lucide-icon> Devoluciones gratis en 30 días</span>
-    <span><lucide-icon name="truck" [size]="16"></lucide-icon> Envío gratis en compras mayores a $500 MXN</span>
-    <span><lucide-icon name="star" [size]="16"></lucide-icon> Productos cruelty-free certificados</span>
-    <span><lucide-icon name="tag" [size]="16"></lucide-icon> Hasta 30% de descuento en ofertas semanales</span>
-    <span><lucide-icon name="shield" [size]="16"></lucide-icon> Devoluciones gratis en 30 días</span>
+    <span><lucide-icon name="truck" [size]="16"></lucide-icon> {{ 'ticker.free_shipping' | translate }}</span>
+    <span><lucide-icon name="star" [size]="16"></lucide-icon> {{ 'ticker.cruelty_free' | translate }}</span>
+    <span><lucide-icon name="tag" [size]="16"></lucide-icon> {{ 'ticker.discount' | translate }}</span>
+    <span><lucide-icon name="shield" [size]="16"></lucide-icon> {{ 'ticker.returns' | translate }}</span>
+    <span><lucide-icon name="truck" [size]="16"></lucide-icon> {{ 'ticker.free_shipping' | translate }}</span>
+    <span><lucide-icon name="star" [size]="16"></lucide-icon> {{ 'ticker.cruelty_free' | translate }}</span>
+    <span><lucide-icon name="tag" [size]="16"></lucide-icon> {{ 'ticker.discount' | translate }}</span>
+    <span><lucide-icon name="shield" [size]="16"></lucide-icon> {{ 'ticker.returns' | translate }}</span>
   </div>
 </div>
 
 <!-- ===== CATEGORIES SECTION ===== -->
 <section class="categories-section">
   <div class="container">
-    <h2 class="section-title fade-in-up">Categorías Destacadas</h2>
+    <h2 class="section-title fade-in-up">{{ 'categories.title' | translate }}</h2>
 
     <div class="categories-grid">
       <a class="category-card fade-in-up"
@@ -106,8 +106,8 @@
           <lucide-icon [name]="cat.icon" [size]="20"></lucide-icon>
         </div>
         <div class="category-info">
-          <h3>{{ cat.name }}</h3>
-          <p>{{ cat.count }}</p>
+          <h3>{{ cat.nameKey | translate }}</h3>
+          <p>{{ cat.count }} {{ 'hero.products' | translate | lowercase }}</p>
         </div>
         <div class="category-arrow">
           <lucide-icon name="arrow-right" [size]="16"></lucide-icon>
@@ -120,23 +120,23 @@
 <!-- ===== FEATURED PRODUCTS SECTION ===== -->
 <section class="featured-section">
   <div class="container">
-    <h2 class="section-title fade-in-up">Productos Destacados</h2>
+    <h2 class="section-title fade-in-up">{{ 'featured.title' | translate }}</h2>
 
     <div class="featured-grid">
       <div class="featured-card fade-in-up"
            *ngFor="let product of featuredProducts; let i = index"
            [class]="'delay-' + (i + 1)">
-        <div class="featured-badge">{{ product.badge }}</div>
+        <div class="featured-badge">{{ product.badgeKey | translate }}</div>
         <div class="featured-image" [style.background]="product.gradient">
           <lucide-icon [name]="product.icon" [size]="32" [color]="product.iconColor"></lucide-icon>
         </div>
         <div class="featured-info">
-          <h3>{{ product.name }}</h3>
-          <p>{{ product.description }}</p>
+          <h3>{{ product.nameKey | translate }}</h3>
+          <p>{{ product.descKey | translate }}</p>
           <div class="featured-footer">
             <span class="featured-price">${{ product.price }} MXN</span>
             <a routerLink="/busqueda" class="featured-btn">
-              Ver más <lucide-icon name="arrow-right" [size]="14"></lucide-icon>
+              {{ 'featured.see_more' | translate }} <lucide-icon name="arrow-right" [size]="14"></lucide-icon>
             </a>
           </div>
         </div>
@@ -148,7 +148,7 @@
 <!-- ===== BRAND FEATURES SECTION ===== -->
 <section class="features-section">
   <div class="container">
-    <h2 class="section-title fade-in-up">Nuestra Filosofía</h2>
+    <h2 class="section-title fade-in-up">{{ 'philosophy.title' | translate }}</h2>
     <div class="features-grid">
       <div class="feature-item fade-in-up"
            *ngFor="let feat of brandFeatures; let i = index"
@@ -156,8 +156,8 @@
         <div class="feature-icon-wrap">
           <lucide-icon [name]="feat.icon" [size]="24"></lucide-icon>
         </div>
-        <h3>{{ feat.title }}</h3>
-        <p>{{ feat.description }}</p>
+        <h3>{{ feat.titleKey | translate }}</h3>
+        <p>{{ feat.descKey | translate }}</p>
       </div>
     </div>
   </div>
@@ -166,7 +166,7 @@
 <!-- ===== TESTIMONIALS SECTION ===== -->
 <section class="testimonials-section">
   <div class="container">
-    <h2 class="section-title fade-in-up">Lo que Dicen Nuestras Clientas</h2>
+    <h2 class="section-title fade-in-up">{{ 'testimonials.title' | translate }}</h2>
 
     <div class="testimonials-wrapper">
       <div class="testimonial-card fade-in-up"
@@ -177,8 +177,8 @@
         <div class="testimonial-stars">
           <lucide-icon name="star" [size]="14" *ngFor="let s of getStars(t.rating)"></lucide-icon>
         </div>
-        <p class="testimonial-text">"{{ t.text }}"</p>
-        <p class="testimonial-author">— {{ t.author }}</p>
+        <p class="testimonial-text">"{{ t.textKey | translate }}"</p>
+        <p class="testimonial-author">— {{ t.authorKey | translate }}</p>
       </div>
     </div>
 

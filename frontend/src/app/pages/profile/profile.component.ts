@@ -1,14 +1,16 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { BiometricAuthService } from '../../services/biometric-auth.service';
 import { LucideIcons } from '../../icons.provider';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
     selector: 'app-profile',
     standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, LucideIcons],
+    imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, LucideIcons, TranslatePipe],
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss']
 })

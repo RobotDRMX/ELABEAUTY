@@ -1,8 +1,8 @@
 <div class="cart-page">
     <div class="container">
         <div class="cart-header">
-            <h1>Tu Carrito de Compras</h1>
-            <p *ngIf="cart?.items?.length > 0">Tienes {{ cartService.itemCount() }} productos en tu bolsa</p>
+            <h1>{{ 'cart.title' | translate }}</h1>
+            <p *ngIf="cart?.items?.length > 0">{{ 'cart.items_count' | translate:{ count: cartService.itemCount() } }}</p>
         </div>
 
         <div class="cart-container" *ngIf="cart?.items?.length > 0; else emptyCart">
@@ -25,7 +25,7 @@
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
                                 </svg>
-                                Eliminar
+                                {{ 'cart.remove' | translate }}
                             </button>
                         </div>
                     </div>
@@ -35,42 +35,42 @@
                     </div>
                 </div>
 
-                <button class="clear-btn" (click)="clearCart()">Vaciar Carrito</button>
+                <button class="clear-btn" (click)="clearCart()">{{ 'cart.clear' | translate }}</button>
             </div>
 
             <!-- Resumen de Compra -->
             <aside class="cart-summary">
                 <div class="summary-card">
-                    <h2>Resumen del pedido</h2>
+                    <h2>{{ 'cart.summary' | translate }}</h2>
                     <div class="summary-row">
-                        <span>Subtotal</span>
+                        <span>{{ 'cart.subtotal' | translate }}</span>
                         <span>{{ total | currency:'MXN' }}</span>
                     </div>
                     <div class="summary-row">
-                        <span>Envío</span>
-                        <span class="free-shipping" *ngIf="total >= 500">GRATIS</span>
+                        <span>{{ 'cart.shipping' | translate }}</span>
+                        <span class="free-shipping" *ngIf="total >= 500">{{ 'cart.free' | translate }}</span>
                         <span *ngIf="total < 500">{{ 50 | currency:'MXN' }}</span>
                     </div>
                     <div class="summary-total">
-                        <span>Total</span>
+                        <span>{{ 'cart.total' | translate }}</span>
                         <span>{{ finalTotal | currency:'MXN' }}</span>
                     </div>
 
                     <button class="btn-maybelline checkout-btn" (click)="checkout()">
-                        Proceder al Pago
+                        {{ 'cart.checkout' | translate }}
                     </button>
 
                     <div class="shipping-info" *ngIf="total < 500">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
                         </svg>
-                        <p>¡Agrega <strong>{{ (500 - total) | currency:'MXN' }}</strong> más para obtener <strong>envío gratis</strong>!</p>
+                        <p>{{ 'cart.free_shipping_hint' | translate:{ amount: ((500 - total) | currency:'MXN') || '' } }}</p>
                     </div>
                     <div class="shipping-info-success" *ngIf="total >= 500">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
                         </svg>
-                        <p>¡Tienes <strong>envío gratis</strong>! ✨</p>
+                        <p>{{ 'cart.free_shipping_achieved' | translate }}</p>
                     </div>
                 </div>
             </aside>
@@ -82,9 +82,9 @@
                 <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
                 </svg>
-                <h2>Tu carrito está vacío</h2>
-                <p>¿Aún no te has decidido? ¡Explora nuestro catálogo y encuentra lo que amas!</p>
-                <button class="btn-maybelline" routerLink="/busqueda">Ver Productos</button>
+                <h2>{{ 'cart.empty' | translate }}</h2>
+                <p>{{ 'cart.empty_hint' | translate }}</p>
+                <button class="btn-maybelline" routerLink="/busqueda">{{ 'cart.see_products' | translate }}</button>
             </div>
         </ng-template>
     </div>
@@ -354,9 +354,9 @@
                     }
                 </div>
                 <div class="review-total">
-                    <div class="review-row"><span>Subtotal</span><span>{{ total | currency:'MXN' }}</span></div>
-                    <div class="review-row"><span>Envío</span><span>{{ shipping === 0 ? 'GRATIS' : (shipping | currency:'MXN') }}</span></div>
-                    <div class="review-row grand-total"><strong>Total</strong><strong>{{ finalTotal | currency:'MXN' }}</strong></div>
+                    <div class="review-row"><span>{{ 'cart.subtotal' | translate }}</span><span>{{ total | currency:'MXN' }}</span></div>
+                    <div class="review-row"><span>{{ 'cart.shipping' | translate }}</span><span>{{ shipping === 0 ? ('cart.free' | translate) : (shipping | currency:'MXN') }}</span></div>
+                    <div class="review-row grand-total"><strong>{{ 'cart.total' | translate }}</strong><strong>{{ finalTotal | currency:'MXN' }}</strong></div>
                 </div>
             </div>
             }

@@ -1,129 +1,57 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { LucideIcons } from '../../icons.provider';
+import { TranslatePipe } from '../../pipes/translate.pipe';
+import { I18nService } from '../../services/i18n.service';
 
 @Component({
   selector: 'app-body',
   standalone: true,
-  imports: [CommonModule, RouterModule, LucideIcons],
+  imports: [CommonModule, RouterModule, LucideIcons, TranslatePipe],
   templateUrl: './body.component.html',
   styleUrls: ['./body.component.scss']
 })
 export class BodyComponent {
+  private i18n = inject(I18nService);
 
   categories = [
-    {
-      name: 'Labiales',
-      count: '45 productos',
-      icon: 'heart',
-      searchKey: 'Labiales',
-      gradient: 'linear-gradient(135deg, #ff4da6, #e6007e)'
-    },
-    {
-      name: 'Ojos',
-      count: '84 productos',
-      icon: 'eye',
-      searchKey: 'Ojos',
-      gradient: 'linear-gradient(135deg, #a855f7, #7c3aed)'
-    },
-    {
-      name: 'Rostro',
-      count: '56 productos',
-      icon: 'palette',
-      searchKey: 'Rostro',
-      gradient: 'linear-gradient(135deg, #fb923c, #f97316)'
-    },
-    {
-      name: 'Uñas',
-      count: '64 productos',
-      icon: 'sparkles',
-      searchKey: 'Uñas',
-      gradient: 'linear-gradient(135deg, #34d399, #059669)'
-    },
-    {
-      name: 'Sombras',
-      count: '52 productos',
-      icon: 'moon',
-      searchKey: 'Sombras',
-      gradient: 'linear-gradient(135deg, #60a5fa, #3b82f6)'
-    },
-    {
-      name: 'Rubores',
-      count: '36 productos',
-      icon: 'circle',
-      searchKey: 'Rubores',
-      gradient: 'linear-gradient(135deg, #f472b6, #ec4899)'
-    }
+    { nameKey: 'hero.lips', count: 45, icon: 'heart', searchKey: 'Labiales', gradient: 'linear-gradient(135deg, #ff4da6, #e6007e)' },
+    { nameKey: 'hero.eyes', count: 84, icon: 'eye', searchKey: 'Ojos', gradient: 'linear-gradient(135deg, #a855f7, #7c3aed)' },
+    { nameKey: 'hero.face', count: 56, icon: 'palette', searchKey: 'Rostro', gradient: 'linear-gradient(135deg, #fb923c, #f97316)' },
+    { nameKey: 'hero.nails', count: 64, icon: 'sparkles', searchKey: 'Uñas', gradient: 'linear-gradient(135deg, #34d399, #059669)' },
+    { nameKey: 'hero.shadows', count: 52, icon: 'moon', searchKey: 'Sombras', gradient: 'linear-gradient(135deg, #60a5fa, #3b82f6)' },
+    { nameKey: 'hero.blush', count: 36, icon: 'circle', searchKey: 'Rubores', gradient: 'linear-gradient(135deg, #f472b6, #ec4899)' }
   ];
 
   featuredProducts = [
     {
-      name: 'Labial Líquido Mate',
-      description: 'Fórmula ultra-pigmentada de larga duración. 24h sin retoques.',
-      price: 249,
-      badge: 'BEST SELLER',
-      icon: 'heart',
-      gradient: 'linear-gradient(135deg, #fff0f7, #ffe0ef)',
-      iconColor: '#e6007e'
+      nameKey: 'featured.product1_name', descKey: 'featured.product1_desc',
+      price: 249, badgeKey: 'featured.badge_bestseller', icon: 'heart',
+      gradient: 'linear-gradient(135deg, #fff0f7, #ffe0ef)', iconColor: '#e6007e'
     },
     {
-      name: 'Máscara Volumen Extremo',
-      description: 'Pestañas hasta 10x más voluminosas. Fórmula enriquecida con keratina.',
-      price: 199,
-      badge: 'NUEVO',
-      icon: 'eye',
-      gradient: 'linear-gradient(135deg, #f3f0ff, #ede9fe)',
-      iconColor: '#7c3aed'
+      nameKey: 'featured.product2_name', descKey: 'featured.product2_desc',
+      price: 199, badgeKey: 'featured.badge_new', icon: 'eye',
+      gradient: 'linear-gradient(135deg, #f3f0ff, #ede9fe)', iconColor: '#7c3aed'
     },
     {
-      name: 'Base Mate Natural',
-      description: 'Cobertura total con acabado mate. SPF 15. 40 tonos disponibles.',
-      price: 299,
-      badge: 'TOP RATED',
-      icon: 'palette',
-      gradient: 'linear-gradient(135deg, #fff7ed, #ffedd5)',
-      iconColor: '#f97316'
+      nameKey: 'featured.product3_name', descKey: 'featured.product3_desc',
+      price: 299, badgeKey: 'featured.badge_top', icon: 'palette',
+      gradient: 'linear-gradient(135deg, #fff7ed, #ffedd5)', iconColor: '#f97316'
     }
   ];
 
   brandFeatures = [
-    {
-      icon: 'award',
-      title: 'Calidad Garantizada',
-      description: 'Productos dermatológicamente probados y certificados para todo tipo de piel.'
-    },
-    {
-      icon: 'leaf',
-      title: 'Cruelty Free',
-      description: 'Comprometidas con el bienestar animal. Sin pruebas en animales.'
-    },
-    {
-      icon: 'truck',
-      title: 'Envío Express',
-      description: 'Recibe tus productos en 24-48 horas con seguimiento en tiempo real.'
-    }
+    { icon: 'award', titleKey: 'philosophy.quality_title', descKey: 'philosophy.quality_desc' },
+    { icon: 'leaf', titleKey: 'philosophy.cruelty_free_title', descKey: 'philosophy.cruelty_free_desc' },
+    { icon: 'truck', titleKey: 'philosophy.shipping_title', descKey: 'philosophy.shipping_desc' }
   ];
 
   testimonials = [
-    {
-      text: 'Los labiales de ELA Beauty son increíbles. No se mueven en todo el día y los colores son espectaculares.',
-      author: 'Ana G.',
-      rating: 5,
-      avatar: 'A'
-    },
-    {
-      text: 'La base mate es perfecta para mi piel grasa. Me da cobertura natural sin que se sienta pesada.',
-      author: 'Sofía M.',
-      rating: 5,
-      avatar: 'S'
-    },
-    {
-      text: 'La máscara de pestañas es lo mejor que he probado. Las deja definidas y con volumen todo el día.',
-      author: 'Valentina R.',
-      rating: 5,
-      avatar: 'V'
-    }
+    { textKey: 'testimonials.t1', authorKey: 'testimonials.a1', rating: 5, avatar: 'A' },
+    { textKey: 'testimonials.t2', authorKey: 'testimonials.a2', rating: 5, avatar: 'S' },
+    { textKey: 'testimonials.t3', authorKey: 'testimonials.a3', rating: 5, avatar: 'V' }
   ];
 
   activeTestimonial = 0;

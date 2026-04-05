@@ -1,41 +1,41 @@
 <div class="search-results-page">
   <div class="container">
     <div class="search-header">
-      <h1>Catálogo de Productos</h1>
-      <p class="subtitle" *ngIf="query">Resultados para: <strong>"{{ query }}"</strong></p>
-      <p class="subtitle" *ngIf="category && !query">Categoría: <strong>"{{ category }}"</strong></p>
+      <h1>{{ 'search.title' | translate }}</h1>
+      <p class="subtitle" *ngIf="query">{{ 'search.results_for' | translate }} <strong>"{{ query }}"</strong></p>
+      <p class="subtitle" *ngIf="category && !query">{{ 'search.category_label' | translate }} <strong>"{{ category }}"</strong></p>
     </div>
 
     <div class="catalog-layout">
       <!-- Sidebar de Filtros -->
       <aside class="filters-sidebar">
         <div class="filter-section">
-          <h3>Filtros</h3>
-          <button class="clear-filters-btn" (click)="clearFilters()">Limpiar todos</button>
+          <h3>{{ 'filters.title' | translate }}</h3>
+          <button class="clear-filters-btn" (click)="clearFilters()">{{ 'filters.clear' | translate }}</button>
         </div>
 
         <!-- Filtro de Disponibilidad -->
         <div class="filter-section">
-          <h4>Existencia</h4>
+          <h4>{{ 'filters.stock' | translate }}</h4>
           <label class="checkbox-container">
             <input type="checkbox" [(ngModel)]="filters.onlyInStock" (change)="applyFilters()">
             <span class="checkmark"></span>
-            Solo en stock
+            {{ 'filters.in_stock_only' | translate }}
           </label>
         </div>
 
         <!-- Filtro de Edad -->
         <div class="filter-section">
-          <h4>Edad Dirigida</h4>
+          <h4>{{ 'filters.age' | translate }}</h4>
           <select class="filter-select" [(ngModel)]="filters.targetAge" (change)="applyFilters()">
-            <option value="">Todas las edades</option>
+            <option value="">{{ 'filters.all_ages' | translate }}</option>
             <option *ngFor="let age of ageOptions" [value]="age">{{ age }}</option>
           </select>
         </div>
 
         <!-- Filtro de Precio -->
         <div class="filter-section">
-          <h4>Rango de Precio</h4>
+          <h4>{{ 'filters.price_range' | translate }}</h4>
           <div class="price-inputs">
             <div class="input-group">
               <span>$</span>
@@ -46,21 +46,21 @@
               <input type="number" placeholder="Max" [(ngModel)]="filters.maxPrice" (keyup.enter)="applyFilters()">
             </div>
           </div>
-          <button class="apply-price-btn" (click)="applyFilters()">Aplicar</button>
+          <button class="apply-price-btn" (click)="applyFilters()">{{ 'filters.apply' | translate }}</button>
         </div>
 
         <!-- Ordenamiento -->
         <div class="filter-section">
-          <h4>Ordenar por</h4>
+          <h4>{{ 'filters.sort_by' | translate }}</h4>
           <select class="filter-select" [(ngModel)]="filters.sortBy" (change)="applyFilters()">
-            <option value="created_at">Novedad</option>
-            <option value="price">Precio</option>
-            <option value="name">Nombre</option>
-            <option value="rating">Calificación</option>
+            <option value="created_at">{{ 'filters.novelty' | translate }}</option>
+            <option value="price">{{ 'filters.price' | translate }}</option>
+            <option value="name">{{ 'filters.name' | translate }}</option>
+            <option value="rating">{{ 'filters.rating' | translate }}</option>
           </select>
           <select class="filter-select mt-2" [(ngModel)]="filters.order" (change)="applyFilters()">
-            <option value="DESC">Descendente</option>
-            <option value="ASC">Ascendente</option>
+            <option value="DESC">{{ 'filters.descending' | translate }}</option>
+            <option value="ASC">{{ 'filters.ascending' | translate }}</option>
           </select>
         </div>
       </aside>
@@ -68,7 +68,7 @@
       <!-- Grid de Productos -->
       <main class="products-main">
         <div class="results-bar">
-          <p>{{ total }} productos encontrados</p>
+          <p>{{ 'search.products_found' | translate:{ count: total } }}</p>
         </div>
 
         <!-- Skeleton loading -->
@@ -96,9 +96,9 @@
         <div class="no-results" *ngIf="!isLoading && products.length === 0">
           <div class="no-results-content">
             <lucide-icon name="search" [size]="48"></lucide-icon>
-            <h3>No encontramos productos con estos filtros</h3>
-            <p>Prueba ajustando el rango de precio o cambiando la edad elegida.</p>
-            <button class="suggestion-btn" (click)="clearFilters()">Ver todo el catálogo</button>
+            <h3>{{ 'search.no_results' | translate }}</h3>
+            <p>{{ 'search.no_results_hint' | translate }}</p>
+            <button class="suggestion-btn" (click)="clearFilters()">{{ 'search.see_all' | translate }}</button>
           </div>
         </div>
 
@@ -114,7 +114,7 @@
                 <lucide-icon name="heart" [size]="18"></lucide-icon>
               </button>
 
-              <div class="stock-badge" *ngIf="product.stock === 0">Agotado</div>
+              <div class="stock-badge" *ngIf="product.stock === 0">{{ 'search.sold_out' | translate }}</div>
               <div class="age-badge">{{ product.target_age }}</div>
             </div>
 

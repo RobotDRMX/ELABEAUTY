@@ -8,9 +8,9 @@
     </div>
     <div class="container">
       <div class="page-hero-content fade-in-up">
-        <span class="page-eyebrow"><lucide-icon name="scissors" [size]="18"></lucide-icon> Servicios del Salón</span>
-        <h1>Peinados &amp; Cortes</h1>
-        <p>Transforma tu look con nuestros expertos estilistas. Desde cortes modernos hasta coloraciones de fantasía, cada servicio está diseñado para resaltar tu belleza única.</p>
+        <span class="page-eyebrow"><lucide-icon name="scissors" [size]="18"></lucide-icon> {{ 'hairstyles.eyebrow' | translate }}</span>
+        <h1>{{ 'hairstyles.title' | translate }}</h1>
+        <p>{{ 'hairstyles.subtitle' | translate }}</p>
       </div>
     </div>
   </div>
@@ -20,7 +20,7 @@
     <div class="container">
       <div class="filter-bar-inner">
         <button class="filter-chip" [class.active]="activeCategory === ''" (click)="setCategory('')">
-          <lucide-icon name="grid-2x2" [size]="16"></lucide-icon> Todos
+          <lucide-icon name="grid-2x2" [size]="16"></lucide-icon> {{ 'hairstyles.all' | translate }}
         </button>
         <button class="filter-chip" *ngFor="let cat of categories"
                 [class.active]="activeCategory === cat"
@@ -50,14 +50,14 @@
     <!-- Error -->
     <div class="error-box" *ngIf="error && !isLoading">
       <lucide-icon name="triangle-alert" [size]="24"></lucide-icon>
-      <p>{{ error }}</p>
+      <p>{{ 'hairstyles.error' | translate }}</p>
     </div>
 
     <!-- Sin resultados -->
     <div class="empty-state" *ngIf="!isLoading && !error && filtered.length === 0">
       <lucide-icon name="scissors" [size]="18"></lucide-icon>
-      <h3>No hay peinados en esta categoría</h3>
-      <button (click)="setCategory('')">Ver todos</button>
+      <h3>{{ 'hairstyles.no_results' | translate }}</h3>
+      <button (click)="setCategory('')">{{ 'hairstyles.see_all' | translate }}</button>
     </div>
 
     <!-- Grid de servicios -->
@@ -91,20 +91,20 @@
 
           <!-- Botón ver proceso -->
           <button class="process-toggle" (click)="toggleExpand(h.id)">
-            <span>{{ expandedId === h.id ? 'Ocultar proceso' : 'Ver proceso paso a paso' }}</span>
+            <span>{{ expandedId === h.id ? ('hairstyles.hide_process' | translate) : ('hairstyles.show_process' | translate) }}</span>
             <lucide-icon [name]="expandedId === h.id ? 'chevron-up' : 'chevron-down'" [size]="16"></lucide-icon>
           </button>
 
           <!-- Panel de proceso (expandible) -->
           <div class="process-panel" [class.open]="expandedId === h.id">
-            <h4><lucide-icon name="list-ordered" [size]="16"></lucide-icon> Proceso</h4>
+            <h4><lucide-icon name="list-ordered" [size]="16"></lucide-icon> {{ 'hairstyles.process' | translate }}</h4>
             <ol class="process-steps">
               <li *ngFor="let step of formatProcess(h.process)">{{ step }}</li>
             </ol>
           </div>
 
           <button class="btn-agenda">
-            <lucide-icon name="calendar-check" [size]="16"></lucide-icon> Agendar cita
+            <lucide-icon name="calendar-check" [size]="16"></lucide-icon> {{ 'hairstyles.book' | translate }}
           </button>
         </div>
 
