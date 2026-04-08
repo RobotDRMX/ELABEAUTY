@@ -162,32 +162,3 @@
     </div>
   </div>
 </section>
-
-<!-- ===== TESTIMONIALS SECTION ===== -->
-<section class="testimonials-section">
-  <div class="container">
-    <h2 class="section-title" scrollReveal srDirection="up">{{ 'testimonials.title' | translate }}</h2>
-
-    <div class="testimonials-wrapper">
-      <div class="testimonial-card"
-           scrollReveal srDirection="up" [srDelay]="i * 100"
-           *ngFor="let t of testimonials; let i = index"
-           [class.active]="i === activeTestimonial">
-        <div class="testimonial-avatar">{{ t.avatar }}</div>
-        <div class="testimonial-stars">
-          <lucide-icon name="star" [size]="14" *ngFor="let s of getStars(t.rating)"></lucide-icon>
-        </div>
-        <p class="testimonial-text">"{{ t.textKey | translate }}"</p>
-        <p class="testimonial-author">— {{ t.authorKey | translate }}</p>
-      </div>
-    </div>
-
-    <div class="testimonial-dots">
-      <button class="dot"
-              *ngFor="let t of testimonials; let i = index"
-              [class.active]="i === activeTestimonial"
-              (click)="setTestimonial(i)">
-      </button>
-    </div>
-  </div>
-</section>
