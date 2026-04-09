@@ -181,5 +181,25 @@
   "auth.register_link": "Зарегистрируйтесь здесь",
   "auth.show_password": "Показать пароль",
   "auth.hide_password": "Скрыть пароль",
-  "auth.rate_limit": "В целях безопасности подождите <strong>{{seconds}}с</strong> перед повторной попыткой."
+  "auth.rate_limit": "В целях безопасности подождите <strong>{{seconds}}с</strong> перед повторной попыткой.",
+
+  "auth.register_title": "Создать аккаунт",
+  "auth.register_subtitle": "Присоединяйтесь к сообществу ELA Beauty",
+  "auth.first_name_label": "Имя",
+  "auth.first_name_placeholder": "Ваше имя",
+  "auth.paternal_label": "Отцовская фамилия",
+  "auth.paternal_placeholder": "Отцовская фамилия",
+  "auth.maternal_label": "Материнская фамилия",
+  "auth.maternal_placeholder": "Материнская фамилия",
+  "auth.confirm_password_label": "Подтвердить пароль",
+  "auth.confirm_password_placeholder": "Повторите пароль",
+  "auth.passwords_no_match": "Пароли не совпадают",
+  "auth.submit_register": "Зарегистрироваться",
+  "auth.loading_register": "Регистрация...",
+  "auth.already_account": "Уже есть аккаунт?",
+  "auth.login_link": "Войти",
+  "auth.rule_min_length": "Минимум 8 символов",
+  "auth.rule_upper": "Одна заглавная буква",
+  "auth.rule_lower": "Одна строчная буква",
+  "auth.rule_number": "Одна цифра"
 }

@@ -181,5 +181,25 @@
   "auth.register_link": "こちらで登録",
   "auth.show_password": "パスワードを表示",
   "auth.hide_password": "パスワードを非表示",
-  "auth.rate_limit": "セキュリティのため、<strong>{{seconds}}秒</strong>待ってから再試行してください。"
+  "auth.rate_limit": "セキュリティのため、<strong>{{seconds}}秒</strong>待ってから再試行してください。",
+
+  "auth.register_title": "アカウント作成",
+  "auth.register_subtitle": "ELA Beautyコミュニティに参加する",
+  "auth.first_name_label": "名前",
+  "auth.first_name_placeholder": "お名前",
+  "auth.paternal_label": "姓（父方）",
+  "auth.paternal_placeholder": "父方の姓",
+  "auth.maternal_label": "姓（母方）",
+  "auth.maternal_placeholder": "母方の姓",
+  "auth.confirm_password_label": "パスワード確認",
+  "auth.confirm_password_placeholder": "パスワードを繰り返す",
+  "auth.passwords_no_match": "パスワードが一致しません",
+  "auth.submit_register": "登録",
+  "auth.loading_register": "登録中...",
+  "auth.already_account": "すでにアカウントをお持ちですか？",
+  "auth.login_link": "ログイン",
+  "auth.rule_min_length": "最低8文字",
+  "auth.rule_upper": "大文字1文字",
+  "auth.rule_lower": "小文字1文字",
+  "auth.rule_number": "数字1文字"
 }

@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormsModule, ReactiveFormsModule, FormBuilder,
   FormGroup, Validators, AbstractControl, ValidationErrors
 } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { LucideAngularModule } from 'lucide-angular';
+import { TranslatePipe } from '../../../pipes/translate.pipe';
 import { AuthService } from '../../../services/auth.service';
 import { environment } from '../../../../environments/environment';
 
@@ -25,7 +27,7 @@ function passwordsMatchValidator(group: AbstractControl): ValidationErrors | nul
 @Component({
     selector: 'app-register',
     standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, LucideAngularModule, TranslatePipe],
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.scss']
 })
@@ -34,6 +36,8 @@ export class RegisterComponent implements OnInit {
     error: string = '';
     loading: boolean = false;
     successMsg: string = '';
+    showPassword = signal(false);
+    showConfirm = signal(false);
 
     get passwordValue(): string {
         return this.registerForm.get('password')?.value ?? '';

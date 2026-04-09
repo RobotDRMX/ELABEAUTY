@@ -208,5 +208,25 @@
   "auth.register_link": "Register here",
   "auth.show_password": "Show password",
   "auth.hide_password": "Hide password",
-  "auth.rate_limit": "For security, wait <strong>{{seconds}}s</strong> before trying again."
+  "auth.rate_limit": "For security, wait <strong>{{seconds}}s</strong> before trying again.",
+
+  "auth.register_title": "Create Account",
+  "auth.register_subtitle": "Join the ELA Beauty community",
+  "auth.first_name_label": "First Name",
+  "auth.first_name_placeholder": "Your name",
+  "auth.paternal_label": "Paternal Surname",
+  "auth.paternal_placeholder": "Paternal surname",
+  "auth.maternal_label": "Maternal Surname",
+  "auth.maternal_placeholder": "Maternal surname",
+  "auth.confirm_password_label": "Confirm Password",
+  "auth.confirm_password_placeholder": "Repeat your password",
+  "auth.passwords_no_match": "Passwords do not match",
+  "auth.submit_register": "Register",
+  "auth.loading_register": "Registering...",
+  "auth.already_account": "Already have an account?",
+  "auth.login_link": "Sign in",
+  "auth.rule_min_length": "Minimum 8 characters",
+  "auth.rule_upper": "One uppercase letter",
+  "auth.rule_lower": "One lowercase letter",
+  "auth.rule_number": "One number"
 }
