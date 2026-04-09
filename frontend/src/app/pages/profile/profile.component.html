@@ -62,12 +62,11 @@
         </form>
 
         <div class="orders-preview mt-4">
-            <h3>{{ 'profile.recent_orders' | translate }}</h3>
-            <div class="no-orders">
-                <lucide-icon name="shopping-bag" [size]="36"></lucide-icon>
-                <p>{{ 'profile.no_orders' | translate }}</p>
-                <button class="btn-outline" routerLink="/">{{ 'profile.go_shop' | translate }}</button>
-            </div>
+          <h3>{{ 'profile.order_history' | translate }}</h3>
+          <div class="no-orders">
+            <lucide-icon name="clock" [size]="36"></lucide-icon>
+            <p>{{ 'profile.order_history_soon' | translate }}</p>
+          </div>
         </div>
 
         <!-- ── Acceso Biométrico ── -->
@@ -78,7 +77,9 @@
             <div class="biometric-options">
                 <div class="biometric-option" *ngIf="biometric.webAuthnSupported()">
                     <div class="option-info">
-                        <span class="option-icon">🔑</span>
+                        <span class="option-icon">
+                          <lucide-icon name="key-round" [size]="22"></lucide-icon>
+                        </span>
                         <div>
                             <strong>Passkey</strong>
                             <small>Huella dactilar o Face ID del sistema</small>
@@ -91,7 +92,9 @@
 
                 <div class="biometric-option">
                     <div class="option-info">
-                        <span class="option-icon">📷</span>
+                        <span class="option-icon">
+                          <lucide-icon name="camera" [size]="22"></lucide-icon>
+                        </span>
                         <div>
                             <strong>Reconocimiento Facial</strong>
                             <small>Tu cámara como segundo factor de login</small>

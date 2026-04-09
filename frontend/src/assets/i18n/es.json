@@ -153,6 +153,8 @@
   "profile.recent_orders": "Mis Pedidos Recientes",
   "profile.no_orders": "Aún no has realizado pedidos.",
   "profile.go_shop": "Ir a comprar",
+  "profile.order_history": "Historial de Compras",
+  "profile.order_history_soon": "Próximamente podrás ver el historial de tus pedidos aquí",
   "profile.biometric": "Acceso Biométrico",
   "profile.biometric_desc": "Configura métodos de inicio de sesión adicionales.",
 

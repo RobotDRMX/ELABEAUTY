@@ -153,6 +153,8 @@
   "profile.recent_orders": "My Recent Orders",
   "profile.no_orders": "You haven't placed any orders yet.",
   "profile.go_shop": "Go shopping",
+  "profile.order_history": "Purchase History",
+  "profile.order_history_soon": "Your order history will be available here soon",
   "profile.biometric": "Biometric Access",
   "profile.biometric_desc": "Set up additional login methods.",
 

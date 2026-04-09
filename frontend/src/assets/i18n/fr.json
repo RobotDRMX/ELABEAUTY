@@ -144,6 +144,8 @@
   "profile.recent_orders": "Mes Commandes Récentes",
   "profile.no_orders": "Vous n'avez pas encore passé de commande.",
   "profile.go_shop": "Aller acheter",
+  "profile.order_history": "Historique des achats",
+  "profile.order_history_soon": "Votre historique d'achats sera bientôt disponible ici",
 
   "footer.about": "Votre destination de confiance pour des produits de beauté authentiques et de haute qualité.",
   "footer.since": "Embellir des vies depuis 2024",
