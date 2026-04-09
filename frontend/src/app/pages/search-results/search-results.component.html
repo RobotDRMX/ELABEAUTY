@@ -6,9 +6,41 @@
       <p class="subtitle" *ngIf="category && !query">{{ 'search.category_label' | translate }} <strong>"{{ category }}"</strong></p>
     </div>
 
+    <!-- Mobile filter trigger -->
+    <div class="mobile-filter-bar">
+      <button class="btn-secondary mobile-filter-btn" (click)="drawerOpen.set(true)">
+        <lucide-icon name="sliders-horizontal" [size]="16"></lucide-icon>
+        {{ activeFilterCount > 0
+            ? ('filters.active_count' | translate:{ count: activeFilterCount })
+            : ('filters.open' | translate) }}
+      </button>
+    </div>
+
     <div class="catalog-layout">
-      <!-- Sidebar de Filtros -->
+      <!-- Sidebar (desktop) -->
       <aside class="filters-sidebar">
+        <ng-container *ngTemplateOutlet="filterContent"></ng-container>
+      </aside>
+
+      <!-- Mobile drawer -->
+      @if (drawerOpen()) {
+        <div class="filter-overlay" (click)="drawerOpen.set(false)"></div>
+        <div class="filter-drawer">
+          <div class="filter-drawer-header">
+            <h3>{{ 'filters.title' | translate }}</h3>
+            <button (click)="drawerOpen.set(false)" [attr.aria-label]="'filters.close' | translate">
+              <lucide-icon name="x" [size]="20"></lucide-icon>
+            </button>
+          </div>
+          <ng-container *ngTemplateOutlet="filterContent"></ng-container>
+          <button class="btn-primary" (click)="applyFilters(); drawerOpen.set(false)">
+            {{ 'filters.apply' | translate }}
+          </button>
+        </div>
+      }
+
+      <!-- Filter content template -->
+      <ng-template #filterContent>
         <div class="filter-section">
           <h3>{{ 'filters.title' | translate }}</h3>
           <button class="clear-filters-btn" (click)="clearFilters()">{{ 'filters.clear' | translate }}</button>
@@ -63,7 +95,7 @@
             <option value="ASC">{{ 'filters.ascending' | translate }}</option>
           </select>
         </div>
-      </aside>
+      </ng-template>
 
       <!-- Grid de Productos -->
       <main class="products-main">
@@ -92,12 +124,42 @@
           <lucide-icon name="circle-alert" [size]="18"></lucide-icon> {{ error }}
         </div>
 
-        <!-- Sin resultados -->
+        <!-- Sin resultados — contextual -->
         <div class="no-results" *ngIf="!isLoading && products.length === 0">
           <div class="no-results-content">
             <lucide-icon name="search" [size]="48"></lucide-icon>
-            <h3>{{ 'search.no_results' | translate }}</h3>
-            <p>{{ 'search.no_results_hint' | translate }}</p>
+
+            @switch (emptyReason) {
+              @case ('text') {
+                <h3>{{ 'search.empty_text' | translate:{ query: query } }}</h3>
+                <button class="btn-secondary" (click)="query = ''; applyFilters()">
+                  {{ 'search.reset_text' | translate }}
+                </button>
+              }
+              @case ('price') {
+                <h3>{{ 'search.empty_price' | translate }}</h3>
+                <button class="btn-secondary" (click)="filters.minPrice = ''; filters.maxPrice = ''; applyFilters()">
+                  {{ 'search.reset_price' | translate }}
+                </button>
+              }
+              @case ('category+text') {
+                <h3>{{ 'search.empty_category_text' | translate:{ category: category } }}</h3>
+                <button class="btn-secondary" (click)="query = ''; applyFilters()">
+                  {{ 'search.reset_text' | translate }}
+                </button>
+              }
+              @case ('stock') {
+                <h3>{{ 'search.empty_stock' | translate }}</h3>
+                <button class="btn-secondary" (click)="filters.onlyInStock = false; applyFilters()">
+                  {{ 'search.empty_stock_action' | translate }}
+                </button>
+              }
+              @default {
+                <h3>{{ 'search.no_results' | translate }}</h3>
+                <p>{{ 'search.no_results_hint' | translate }}</p>
+              }
+            }
+
             <button class="suggestion-btn" (click)="clearFilters()">{{ 'search.see_all' | translate }}</button>
           </div>
         </div>
@@ -110,8 +172,13 @@
                 (error)="onImgError($event)">
 
               <button class="favorite-overlay-btn" [class.active]="isFavorite(product.id)"
+                [disabled]="togglingFavorite().has(product.id)"
                 (click)="toggleFavorite(product); $event.stopPropagation()">
-                <lucide-icon name="heart" [size]="18"></lucide-icon>
+                @if (togglingFavorite().has(product.id)) {
+                  <lucide-icon name="loader-circle" [size]="18" class="spin"></lucide-icon>
+                } @else {
+                  <lucide-icon name="heart" [size]="18"></lucide-icon>
+                }
               </button>
 
               <div class="stock-badge" *ngIf="product.stock === 0">{{ 'search.sold_out' | translate }}</div>
@@ -130,8 +197,16 @@
 
               <div class="product-footer">
                 <span class="product-price">{{ product.price | currency:'MXN':'symbol':'1.0-0' }}</span>
-                <button class="add-to-cart-btn" [disabled]="product.stock === 0" (click)="addToCart(product)">
-                  <lucide-icon name="shopping-bag" [size]="18"></lucide-icon>
+                <button class="add-to-cart-btn"
+                  [disabled]="product.stock === 0 || addingToCart().has(product.id)"
+                  (click)="addToCart(product)">
+                  @if (addingToCart().has(product.id)) {
+                    <lucide-icon name="loader-circle" [size]="18" class="spin"></lucide-icon>
+                  } @else if (justAdded().has(product.id)) {
+                    <lucide-icon name="check" [size]="18"></lucide-icon>
+                  } @else {
+                    <lucide-icon name="shopping-bag" [size]="18"></lucide-icon>
+                  }
                 </button>
               </div>
             </div>

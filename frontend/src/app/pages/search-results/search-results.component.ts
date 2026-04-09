@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -40,6 +40,11 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   isLoading: boolean = true;
   error: string = '';
 
+  drawerOpen = signal(false);
+  addingToCart = signal<Set<number>>(new Set());
+  togglingFavorite = signal<Set<number>>(new Set());
+  justAdded = signal<Set<number>>(new Set());
+
   ageOptions: string[] = ['Adolescentes', 'Jóvenes', 'Adultos', 'Todas'];
 
   filters = {
@@ -50,6 +55,28 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     sortBy: 'created_at',
     order: 'DESC'
   };
+
+  get activeFilterCount(): number {
+    let count = 0;
+    if (this.filters.onlyInStock) count++;
+    if (this.filters.targetAge) count++;
+    if (this.filters.minPrice) count++;
+    if (this.filters.maxPrice) count++;
+    return count;
+  }
+
+  get emptyReason(): 'text' | 'price' | 'category+text' | 'stock' | 'generic' {
+    const hasText = !!this.query;
+    const hasCategory = !!this.category;
+    const hasPrice = !!(this.filters.minPrice || this.filters.maxPrice);
+    const hasStock = !!this.filters.onlyInStock;
+
+    if (hasCategory && hasText) return 'category+text';
+    if (hasText) return 'text';
+    if (hasPrice) return 'price';
+    if (hasStock) return 'stock';
+    return 'generic';
+  }
 
   ngOnInit() {
     this.realtimeSub = this.realtime.on('products:updated').subscribe(() => {
@@ -111,7 +138,12 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   }
 
   toggleFavorite(product: Product) {
+    if (this.togglingFavorite().has(product.id)) return;
+    this.togglingFavorite.update(s => new Set([...s, product.id]));
     this.favoritesService.toggleFavorite(product.id);
+    setTimeout(() => {
+      this.togglingFavorite.update(s => { const n = new Set(s); n.delete(product.id); return n; });
+    }, 800);
   }
 
   isFavorite(productId: number): boolean {
@@ -119,7 +151,16 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   }
 
   addToCart(product: Product) {
+    if (this.addingToCart().has(product.id)) return;
+    this.addingToCart.update(s => new Set([...s, product.id]));
     this.cartService.addToCart(product.id);
+    setTimeout(() => {
+      this.addingToCart.update(s => { const n = new Set(s); n.delete(product.id); return n; });
+      this.justAdded.update(s => new Set([...s, product.id]));
+      setTimeout(() => {
+        this.justAdded.update(s => { const n = new Set(s); n.delete(product.id); return n; });
+      }, 1500);
+    }, 700);
   }
 
   applyFilters() {
