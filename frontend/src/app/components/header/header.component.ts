@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
@@ -9,11 +9,12 @@ import { FavoritesService } from '../../services/favorites.service';
 import { ThemeService, Theme, THEME_OPTIONS } from '../../services/theme.service';
 import { I18nService, LANGUAGES } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, SearchComponent, TranslatePipe],
+  imports: [CommonModule, FormsModule, RouterModule, SearchComponent, TranslatePipe, LucideAngularModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
@@ -55,6 +56,16 @@ export class HeaderComponent {
 
   get favoritesCount(): number {
     return this.favoritesService.favoritesCount();
+  }
+
+  mobileMenuOpen = signal(false);
+
+  toggleMobileMenu() {
+    this.mobileMenuOpen.set(!this.mobileMenuOpen());
+  }
+
+  closeMobileMenu() {
+    this.mobileMenuOpen.set(false);
   }
 
   navItems = [

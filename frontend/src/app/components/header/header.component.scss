@@ -466,3 +466,114 @@ header {
   .admin-badge span { display: none; }
   .admin-badge { padding: 6px 8px; }
 }
+
+/* ── TOP BAR DISABLED BUTTONS ────────────────────────────────── */
+.top-link-btn {
+  background: none;
+  border: none;
+  cursor: not-allowed;
+  opacity: 0.5;
+  color: rgba(255,255,255,0.85);
+  font-size: 0.72rem;
+  font-family: inherit;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  white-space: nowrap;
+}
+
+/* ── HAMBURGER BUTTON ────────────────────────────────────────── */
+.hamburger-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(255,255,255,0.85);
+  padding: 4px;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+  flex-shrink: 0;
+
+  &:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.08);
+  }
+}
+
+/* ── MOBILE OVERLAY & DRAWER (hidden by default) ─────────────── */
+.mobile-overlay {
+  display: none;
+}
+
+.mobile-drawer {
+  display: none;
+}
+
+/* ── MOBILE RESPONSIVE ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hamburger-btn { display: flex; align-items: center; }
+  .main-nav { display: none; }
+  .header-top { display: none; }
+
+  .mobile-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 900;
+  }
+
+  .mobile-drawer {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 80%;
+    max-width: 320px;
+    height: 100vh;
+    background: var(--surface-1);
+    z-index: 901;
+    padding: 1.5rem;
+    overflow-y: auto;
+    box-shadow: -4px 0 20px rgba(0,0,0,0.2);
+    gap: 0.25rem;
+  }
+
+  .mobile-nav-link {
+    padding: 0.75rem 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border-color);
+    &:hover { color: var(--primary-color); }
+  }
+
+  .mobile-drawer-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 0.75rem 0;
+  }
+
+  .mobile-drawer-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .mobile-auth {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: auto;
+  }
+
+  .mobile-username {
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+}
