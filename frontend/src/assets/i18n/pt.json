@@ -281,5 +281,10 @@
   "notfound.title": "Página não encontrada",
   "notfound.subtitle": "A página que você procura não existe ou foi movida.",
   "notfound.back_home": "Voltar ao início",
-  "auth.unauthorized": "Você não tem permissão para acessar essa seção"
+  "auth.unauthorized": "Você não tem permissão para acessar essa seção",
+
+  "inactivity.warning_title": "Ainda está aí?",
+  "inactivity.warning_msg": "Sua sessão será encerrada por inatividade. Deseja continuar?",
+  "inactivity.keep_session": "Continuar conectado",
+  "inactivity.logged_out": "Sessão encerrada por inatividade"
 }

@@ -281,5 +281,10 @@
   "notfound.title": "Page non trouvée",
   "notfound.subtitle": "La page que vous cherchez n'existe pas ou a été déplacée.",
   "notfound.back_home": "Retour à l'accueil",
-  "auth.unauthorized": "Vous n'avez pas accès à cette section"
+  "auth.unauthorized": "Vous n'avez pas accès à cette section",
+
+  "inactivity.warning_title": "Êtes-vous encore là ?",
+  "inactivity.warning_msg": "Votre session va se fermer pour inactivité. Voulez-vous continuer ?",
+  "inactivity.keep_session": "Rester connecté",
+  "inactivity.logged_out": "Session fermée pour inactivité"
 }

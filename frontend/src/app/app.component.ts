@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, Router, NavigationEnd, RouterModule } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
@@ -10,6 +10,8 @@ import { filter } from 'rxjs/operators';
 import { routeAnimations } from './animations/route.animations';
 import { NotificationService } from './services/notification.service';
 import { I18nService } from './services/i18n.service';
+import { AuthService } from './services/auth.service';
+import { InactivityService } from './services/inactivity.service';
 
 @Component({
   selector: 'app-root',
@@ -32,11 +34,25 @@ export class AppComponent {
   title = 'ELA Beauty';
   isAdminRoute = signal(false);
 
+  private auth = inject(AuthService);
+
   constructor(
     private router: Router,
     private notif: NotificationService,
     private i18n: I18nService
   ) {
+    const inactivity = inject(InactivityService);
+
+    effect(() => {
+      const authenticated = this.auth.isAuthenticated();
+      if (authenticated) {
+        const isAdmin = this.router.url.startsWith('/admin');
+        inactivity.start(isAdmin);
+      } else {
+        inactivity.stop();
+      }
+    });
+
     this.router.events.pipe(
       filter(e => e instanceof NavigationEnd)
     ).subscribe((e: any) => {
@@ -44,6 +60,10 @@ export class AppComponent {
       const state = this.router.lastSuccessfulNavigation?.extras?.state;
       if (state?.['unauthorized']) {
         this.notif.toast(this.i18n.t('auth.unauthorized'), 'error');
+      }
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('reason') === 'inactivity') {
+        this.notif.toast(this.i18n.t('inactivity.logged_out'), 'info');
       }
     });
   }

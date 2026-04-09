@@ -271,5 +271,10 @@
   "notfound.title": "ページが見つかりません",
   "notfound.subtitle": "お探しのページは存在しないか、移動しました。",
   "notfound.back_home": "ホームに戻る",
-  "auth.unauthorized": "このセクションへのアクセス権限がありません"
+  "auth.unauthorized": "このセクションへのアクセス権限がありません",
+
+  "inactivity.warning_title": "まだいますか？",
+  "inactivity.warning_msg": "非アクティブのためセッションが終了します。続けますか？",
+  "inactivity.keep_session": "接続を維持する",
+  "inactivity.logged_out": "非アクティブのためセッションが終了しました"
 }

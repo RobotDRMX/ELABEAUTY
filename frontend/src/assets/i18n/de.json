@@ -271,5 +271,10 @@
   "notfound.title": "Seite nicht gefunden",
   "notfound.subtitle": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
   "notfound.back_home": "Zurück zur Startseite",
-  "auth.unauthorized": "Sie haben keine Berechtigung, auf diesen Bereich zuzugreifen"
+  "auth.unauthorized": "Sie haben keine Berechtigung, auf diesen Bereich zuzugreifen",
+
+  "inactivity.warning_title": "Noch da?",
+  "inactivity.warning_msg": "Ihre Sitzung wird wegen Inaktivität geschlossen. Möchten Sie fortfahren?",
+  "inactivity.keep_session": "Verbunden bleiben",
+  "inactivity.logged_out": "Sitzung wegen Inaktivität beendet"
 }

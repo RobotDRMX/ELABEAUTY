@@ -298,5 +298,10 @@
   "notfound.title": "Page not found",
   "notfound.subtitle": "The page you're looking for doesn't exist or was moved.",
   "notfound.back_home": "Back to home",
-  "auth.unauthorized": "You don't have permission to access that section"
+  "auth.unauthorized": "You don't have permission to access that section",
+
+  "inactivity.warning_title": "Still there?",
+  "inactivity.warning_msg": "Your session will close due to inactivity. Do you want to continue?",
+  "inactivity.keep_session": "Stay connected",
+  "inactivity.logged_out": "Session closed due to inactivity"
 }

@@ -271,5 +271,10 @@
   "notfound.title": "페이지를 찾을 수 없습니다",
   "notfound.subtitle": "찾고 계신 페이지가 존재하지 않거나 이동되었습니다.",
   "notfound.back_home": "홈으로 돌아가기",
-  "auth.unauthorized": "해당 섹션에 접근할 권한이 없습니다"
+  "auth.unauthorized": "해당 섹션에 접근할 권한이 없습니다",
+
+  "inactivity.warning_title": "아직 계신가요?",
+  "inactivity.warning_msg": "비활성으로 인해 세션이 종료됩니다. 계속하시겠습니까?",
+  "inactivity.keep_session": "연결 유지",
+  "inactivity.logged_out": "비활성으로 인해 세션이 종료되었습니다"
 }
