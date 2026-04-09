@@ -119,7 +119,7 @@
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
                         } @else { 1 }
                     </div>
-                    <span>Envío</span>
+                    <span>{{ 'checkout.step_shipping' | translate }}</span>
                 </div>
                 <div class="step-line" [class.done]="stepIndex() > 0"></div>
                 <div class="step" [class.active]="stepIndex() >= 1" [class.done]="stepIndex() > 1">
@@ -128,12 +128,12 @@
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
                         } @else { 2 }
                     </div>
-                    <span>Pago</span>
+                    <span>{{ 'checkout.step_payment' | translate }}</span>
                 </div>
                 <div class="step-line" [class.done]="stepIndex() > 1"></div>
                 <div class="step" [class.active]="stepIndex() >= 2">
                     <div class="step-dot">3</div>
-                    <span>Confirmar</span>
+                    <span>{{ 'checkout.step_confirm' | translate }}</span>
                 </div>
             </div>
             <button class="checkout-close" (click)="closeCheckout()">
@@ -147,32 +147,48 @@
         <!-- STEP 1: Dirección -->
         @if (currentStep() === 'address') {
         <div class="checkout-body">
-            <h2 class="step-title">Dirección de envío</h2>
+            <h2 class="step-title">{{ 'checkout.address_title' | translate }}</h2>
             <div class="form-grid">
                 <div class="form-group">
-                    <label>Nombre *</label>
-                    <input type="text" [(ngModel)]="address.firstName" placeholder="Nombre">
+                    <label>{{ 'checkout.first_name' | translate }} *</label>
+                    <input type="text" [(ngModel)]="address.firstName" autocomplete="given-name"
+                        [placeholder]="'checkout.first_name' | translate"
+                        [class.field-error]="addressSubmitted && !address.firstName">
+                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.firstName">{{ 'checkout.required_field' | translate }}</span>
                 </div>
                 <div class="form-group">
-                    <label>Apellido *</label>
-                    <input type="text" [(ngModel)]="address.lastName" placeholder="Apellido">
+                    <label>{{ 'checkout.last_name' | translate }} *</label>
+                    <input type="text" [(ngModel)]="address.lastName" autocomplete="family-name"
+                        [placeholder]="'checkout.last_name' | translate"
+                        [class.field-error]="addressSubmitted && !address.lastName">
+                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.lastName">{{ 'checkout.required_field' | translate }}</span>
                 </div>
                 <div class="form-group full-width">
-                    <label>Calle y número *</label>
-                    <input type="text" [(ngModel)]="address.street" placeholder="Ej: Av. Insurgentes 123, Int. 4">
+                    <label>{{ 'checkout.street' | translate }} *</label>
+                    <input type="text" [(ngModel)]="address.street" autocomplete="street-address"
+                        [placeholder]="'checkout.street_placeholder' | translate"
+                        [class.field-error]="addressSubmitted && !address.street">
+                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.street">{{ 'checkout.required_field' | translate }}</span>
                 </div>
                 <div class="form-group">
-                    <label>Colonia *</label>
-                    <input type="text" [(ngModel)]="address.colonia" placeholder="Colonia">
+                    <label>{{ 'checkout.colonia' | translate }} *</label>
+                    <input type="text" [(ngModel)]="address.colonia" autocomplete="address-level3"
+                        [placeholder]="'checkout.colonia' | translate"
+                        [class.field-error]="addressSubmitted && !address.colonia">
+                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.colonia">{{ 'checkout.required_field' | translate }}</span>
                 </div>
                 <div class="form-group">
-                    <label>Ciudad *</label>
-                    <input type="text" [(ngModel)]="address.city" placeholder="Ciudad">
+                    <label>{{ 'checkout.city' | translate }} *</label>
+                    <input type="text" [(ngModel)]="address.city" autocomplete="address-level2"
+                        [placeholder]="'checkout.city' | translate"
+                        [class.field-error]="addressSubmitted && !address.city">
+                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.city">{{ 'checkout.required_field' | translate }}</span>
                 </div>
                 <div class="form-group">
-                    <label>Estado *</label>
-                    <select [(ngModel)]="address.state">
-                        <option value="">Selecciona un estado</option>
+                    <label>{{ 'checkout.state' | translate }} *</label>
+                    <select [(ngModel)]="address.state" autocomplete="address-level1"
+                        [class.field-error]="addressSubmitted && !address.state">
+                        <option value="">{{ 'checkout.state_placeholder' | translate }}</option>
                         <option>Aguascalientes</option><option>Baja California</option>
                         <option>CDMX</option><option>Chihuahua</option>
                         <option>Coahuila</option><option>Colima</option>
@@ -189,21 +205,30 @@
                         <option>Veracruz</option><option>Yucatán</option>
                         <option>Zacatecas</option>
                     </select>
+                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.state">{{ 'checkout.required_field' | translate }}</span>
                 </div>
                 <div class="form-group">
-                    <label>Código postal *</label>
-                    <input type="text" [(ngModel)]="address.zip" placeholder="00000" maxlength="5">
+                    <label>{{ 'checkout.zip' | translate }} *</label>
+                    <input type="text" [(ngModel)]="address.zip" autocomplete="postal-code"
+                        placeholder="00000" maxlength="5"
+                        [class.field-error]="addressSubmitted && (!address.zip || address.zip.length !== 5)">
+                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.zip">{{ 'checkout.required_field' | translate }}</span>
+                    <span class="field-error-msg" *ngIf="addressSubmitted && address.zip && address.zip.length !== 5">{{ 'checkout.zip_invalid' | translate }}</span>
                 </div>
                 <div class="form-group">
-                    <label>Teléfono *</label>
-                    <input type="tel" [(ngModel)]="address.phone" placeholder="10 dígitos">
+                    <label>{{ 'checkout.phone' | translate }} *</label>
+                    <input type="tel" [(ngModel)]="address.phone" autocomplete="tel"
+                        [placeholder]="'checkout.phone_placeholder' | translate"
+                        [class.field-error]="addressSubmitted && !isPhoneValid()">
+                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.phone">{{ 'checkout.required_field' | translate }}</span>
+                    <span class="field-error-msg" *ngIf="addressSubmitted && address.phone && !isPhoneValid()">{{ 'checkout.phone_invalid' | translate }}</span>
                 </div>
             </div>
         </div>
         <div class="checkout-footer">
             <span></span>
-            <button class="btn-maybelline" [disabled]="!isAddressValid()" (click)="goToStep('payment')">
-                Continuar al Pago →
+            <button class="btn-maybelline" (click)="goToStep('payment')">
+                {{ 'checkout.continue_payment' | translate }}
             </button>
         </div>
         }
@@ -211,7 +236,7 @@
         <!-- STEP 2: Método de pago -->
         @if (currentStep() === 'payment') {
         <div class="checkout-body">
-            <h2 class="step-title">Método de pago</h2>
+            <h2 class="step-title">{{ 'checkout.payment_title' | translate }}</h2>
 
             <div class="payment-options">
                 <label class="payment-option" [class.selected]="paymentMethod() === 'card'">
@@ -220,8 +245,8 @@
                         <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
                     </svg>
                     <div>
-                        <strong>Tarjeta de crédito / débito</strong>
-                        <span>Visa, Mastercard, AMEX</span>
+                        <strong>{{ 'checkout.card_option' | translate }}</strong>
+                        <span>{{ 'checkout.card_brands' | translate }}</span>
                     </div>
                 </label>
                 <label class="payment-option" [class.selected]="paymentMethod() === 'cash'">
@@ -231,8 +256,8 @@
                         <path d="M6 12h.01M18 12h.01"/>
                     </svg>
                     <div>
-                        <strong>Efectivo en tienda</strong>
-                        <span>Recoge y paga en sucursal</span>
+                        <strong>{{ 'checkout.cash_option' | translate }}</strong>
+                        <span>{{ 'checkout.cash_desc' | translate }}</span>
                     </div>
                 </label>
                 <label class="payment-option" [class.selected]="paymentMethod() === 'oxxo'">
@@ -241,8 +266,8 @@
                         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
                     </svg>
                     <div>
-                        <strong>Pago en OXXO</strong>
-                        <span>Genera tu referencia y paga en cualquier OXXO</span>
+                        <strong>{{ 'checkout.oxxo_option' | translate }}</strong>
+                        <span>{{ 'checkout.oxxo_desc' | translate }}</span>
                     </div>
                 </label>
             </div>
@@ -264,20 +289,24 @@
                 </div>
                 <div class="form-grid">
                     <div class="form-group full-width">
-                        <label>Número de tarjeta *</label>
-                        <input type="text" [value]="card.number" (input)="formatCardNumber($event)" placeholder="0000 0000 0000 0000" maxlength="19">
+                        <label>{{ 'checkout.card_number' | translate }} *</label>
+                        <input type="text" [value]="card.number" (input)="formatCardNumber($event)"
+                            placeholder="0000 0000 0000 0000" maxlength="19" autocomplete="cc-number">
                     </div>
                     <div class="form-group full-width">
-                        <label>Nombre en la tarjeta *</label>
-                        <input type="text" [(ngModel)]="card.name" placeholder="Como aparece en la tarjeta" style="text-transform:uppercase">
+                        <label>{{ 'checkout.card_name' | translate }} *</label>
+                        <input type="text" [(ngModel)]="card.name"
+                            [placeholder]="'checkout.card_name_placeholder' | translate"
+                            style="text-transform:uppercase" autocomplete="cc-name">
                     </div>
                     <div class="form-group">
-                        <label>Fecha de vencimiento *</label>
-                        <input type="text" [value]="card.expiry" (input)="formatExpiry($event)" placeholder="MM/AA" maxlength="5">
+                        <label>{{ 'checkout.card_expiry' | translate }} *</label>
+                        <input type="text" [value]="card.expiry" (input)="formatExpiry($event)"
+                            placeholder="MM/AA" maxlength="5" autocomplete="cc-exp">
                     </div>
                     <div class="form-group">
-                        <label>CVV *</label>
-                        <input type="password" [(ngModel)]="card.cvv" placeholder="•••" maxlength="4">
+                        <label>{{ 'checkout.card_cvv' | translate }} *</label>
+                        <input type="password" [(ngModel)]="card.cvv" placeholder="•••" maxlength="4" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -288,7 +317,7 @@
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary-color)" stroke-width="1.5">
                     <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
                 </svg>
-                <p>Después de confirmar, recibirás una <strong>referencia de pago</strong>. Tienes <strong>48 horas</strong> para pagar en cualquier tienda OXXO del país.</p>
+                <p>{{ 'checkout.oxxo_info' | translate }}</p>
             </div>
             }
 
@@ -297,14 +326,14 @@
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary-color)" stroke-width="1.5">
                     <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
                 </svg>
-                <p>Tu pedido quedará reservado por <strong>24 horas</strong>. Preséntate en sucursal con tu número de orden para pagar y recoger.</p>
+                <p>{{ 'checkout.cash_info' | translate }}</p>
             </div>
             }
         </div>
         <div class="checkout-footer">
-            <button class="btn-outline" (click)="goToStep('address')">← Volver</button>
+            <button class="btn-outline" (click)="goToStep('address')">{{ 'checkout.back' | translate }}</button>
             <button class="btn-maybelline" [disabled]="!isPaymentValid()" (click)="goToStep('review')">
-                Revisar pedido →
+                {{ 'checkout.review_order' | translate }}
             </button>
         </div>
         }
@@ -315,29 +344,29 @@
             @if (processingPayment()) {
             <div class="processing-state">
                 <div class="processing-spinner"></div>
-                <h2>Procesando tu pago...</h2>
-                <p>No cierres esta ventana. Estamos verificando tu información de manera segura.</p>
+                <h2>{{ 'checkout.processing' | translate }}</h2>
+                <p>{{ 'checkout.processing_msg' | translate }}</p>
                 <div class="processing-steps">
                     <div class="proc-step active">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                        Verificando datos
+                        {{ 'checkout.proc_verifying' | translate }}
                     </div>
                     <div class="proc-step active">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                        Procesando pago
+                        {{ 'checkout.proc_processing' | translate }}
                     </div>
                     <div class="proc-step loading">
                         <div class="mini-spinner"></div>
-                        Confirmando orden
+                        {{ 'checkout.proc_confirming' | translate }}
                     </div>
                 </div>
             </div>
             } @else {
-            <h2 class="step-title">Revisa tu pedido</h2>
+            <h2 class="step-title">{{ 'checkout.review_title' | translate }}</h2>
             <div class="review-section">
                 <h3>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                    Dirección de envío
+                    {{ 'checkout.shipping_address' | translate }}
                 </h3>
                 <p>{{ address.firstName }} {{ address.lastName }}</p>
                 <p>{{ address.street }}, {{ address.colonia }}</p>
@@ -347,7 +376,7 @@
             <div class="review-section">
                 <h3>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-                    Método de pago
+                    {{ 'checkout.payment_method' | translate }}
                 </h3>
                 <p>{{ paymentLabel() }}</p>
                 @if (paymentMethod() === 'card') {
@@ -357,7 +386,7 @@
             <div class="review-section">
                 <h3>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
-                    Productos ({{ cartService.itemCount() }})
+                    {{ 'checkout.products_count' | translate:{ count: cartService.itemCount() } }}
                 </h3>
                 <div class="review-items">
                     @for (item of cart?.items; track item.product.id) {
@@ -377,12 +406,12 @@
         </div>
         @if (!processingPayment()) {
         <div class="checkout-footer">
-            <button class="btn-outline" (click)="goToStep('payment')">← Volver</button>
+            <button class="btn-outline" (click)="goToStep('payment')">{{ 'checkout.back' | translate }}</button>
             <button class="btn-maybelline confirm-btn" (click)="confirmOrder()">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                 </svg>
-                Confirmar y Pagar
+                {{ 'checkout.confirm_pay' | translate }}
             </button>
         </div>
         }
@@ -396,25 +425,25 @@
                     <polyline points="20 6 9 17 4 12"/>
                 </svg>
             </div>
-            <h2>¡Pedido confirmado!</h2>
-            <p class="success-subtitle">Tu orden ha sido procesada con éxito</p>
+            <h2>{{ 'checkout.success_title' | translate }}</h2>
+            <p class="success-subtitle">{{ 'checkout.success_subtitle' | translate }}</p>
             <div class="order-number">
-                <span class="order-label">Número de orden</span>
+                <span class="order-label">{{ 'checkout.order_label' | translate }}</span>
                 <span class="order-code">{{ orderNumber() }}</span>
             </div>
             <p class="success-msg">
                 @if (paymentMethod() === 'card') {
-                    Recibirás un correo de confirmación con los detalles de tu pedido. El tiempo de entrega estimado es de <strong>3–5 días hábiles</strong>.
+                    {{ 'checkout.success_card_msg' | translate }}
                 }
                 @if (paymentMethod() === 'oxxo') {
-                    Tu referencia de pago será enviada a tu correo. Tienes <strong>48 horas</strong> para realizar el pago en OXXO.
+                    {{ 'checkout.success_oxxo_msg' | translate }}
                 }
                 @if (paymentMethod() === 'cash') {
-                    Tu pedido está reservado por <strong>24 horas</strong>. Visita cualquier sucursal con tu número de orden para pagar y recoger.
+                    {{ 'checkout.success_cash_msg' | translate }}
                 }
             </p>
             <div class="success-actions">
-                <button class="btn-maybelline" (click)="closeCheckout()" routerLink="/">Seguir comprando</button>
+                <button class="btn-maybelline" (click)="closeCheckout()" routerLink="/">{{ 'checkout.keep_shopping' | translate }}</button>
             </div>
         </div>
         }

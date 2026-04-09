@@ -31,6 +31,8 @@ export class CartComponent {
     processingPayment = signal(false);
     orderNumber = signal('');
 
+    addressSubmitted = false;
+
     // Form data
     address = {
         firstName: '',
@@ -101,9 +103,14 @@ export class CartComponent {
         this.showCheckout.set(false);
     }
 
+    isPhoneValid(): boolean {
+        return this.address.phone.replace(/\D/g, '').length === 10;
+    }
+
     isAddressValid(): boolean {
         const a = this.address;
-        return !!(a.firstName && a.lastName && a.street && a.colonia && a.city && a.state && a.zip && a.phone);
+        return !!(a.firstName && a.lastName && a.street && a.colonia && a.city && a.state
+            && a.zip && a.zip.length === 5 && a.phone && this.isPhoneValid());
     }
 
     isPaymentValid(): boolean {
@@ -114,6 +121,10 @@ export class CartComponent {
     }
 
     goToStep(step: CheckoutStep) {
+        if (step === 'payment' && !this.isAddressValid()) {
+            this.addressSubmitted = true;
+            return;
+        }
         this.currentStep.set(step);
     }
 
