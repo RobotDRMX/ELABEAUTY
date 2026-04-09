@@ -266,5 +266,10 @@
   "checkout.success_card_msg": "確認メールが届きます。配送予定は3〜5営業日です。",
   "checkout.success_oxxo_msg": "支払い参照番号がメールに送信されます。OXXOでの支払い期限は48時間です。",
   "checkout.success_cash_msg": "注文は24時間予約されています。注文番号を持って店舗にお越しください。",
-  "checkout.keep_shopping": "ショッピングを続ける"
+  "checkout.keep_shopping": "ショッピングを続ける",
+
+  "notfound.title": "ページが見つかりません",
+  "notfound.subtitle": "お探しのページは存在しないか、移動しました。",
+  "notfound.back_home": "ホームに戻る",
+  "auth.unauthorized": "このセクションへのアクセス権限がありません"
 }

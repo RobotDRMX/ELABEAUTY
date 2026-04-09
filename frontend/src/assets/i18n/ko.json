@@ -266,5 +266,10 @@
   "checkout.success_card_msg": "확인 이메일을 받게 됩니다. 예상 배송 기간은 3~5 영업일입니다.",
   "checkout.success_oxxo_msg": "결제 참조번호가 이메일로 전송됩니다. OXXO에서 48시간 이내에 결제하세요.",
   "checkout.success_cash_msg": "주문은 24시간 예약되어 있습니다. 주문 번호를 갖고 지점을 방문하세요.",
-  "checkout.keep_shopping": "계속 쇼핑"
+  "checkout.keep_shopping": "계속 쇼핑",
+
+  "notfound.title": "페이지를 찾을 수 없습니다",
+  "notfound.subtitle": "찾고 계신 페이지가 존재하지 않거나 이동되었습니다.",
+  "notfound.back_home": "홈으로 돌아가기",
+  "auth.unauthorized": "해당 섹션에 접근할 권한이 없습니다"
 }

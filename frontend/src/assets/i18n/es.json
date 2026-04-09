@@ -293,5 +293,10 @@
   "checkout.success_card_msg": "Recibirás un correo de confirmación. El tiempo de entrega estimado es de 3–5 días hábiles.",
   "checkout.success_oxxo_msg": "Tu referencia de pago será enviada a tu correo. Tienes 48 horas para realizar el pago en OXXO.",
   "checkout.success_cash_msg": "Tu pedido está reservado por 24 horas. Visita cualquier sucursal con tu número de orden.",
-  "checkout.keep_shopping": "Seguir comprando"
+  "checkout.keep_shopping": "Seguir comprando",
+
+  "notfound.title": "Página no encontrada",
+  "notfound.subtitle": "La página que buscas no existe o fue movida.",
+  "notfound.back_home": "Volver al inicio",
+  "auth.unauthorized": "No tienes permisos para acceder a esa sección"
 }

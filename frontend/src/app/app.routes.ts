@@ -84,5 +84,9 @@ export const routes: Routes = [
     loadChildren: () => import('./pages/admin/admin.routes').then(m => m.adminRoutes),
     title: 'ELA Beauty - Admin',
   },
-  { path: '**', redirectTo: '', pathMatch: 'full' }
+  {
+    path: '**',
+    loadComponent: () => import('./pages/not-found/not-found.component').then(m => m.NotFoundComponent),
+    title: 'ELA Beauty — 404'
+  }
 ];

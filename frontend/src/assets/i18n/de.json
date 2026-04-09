@@ -266,5 +266,10 @@
   "checkout.success_card_msg": "Sie erhalten eine Bestätigungs-E-Mail. Die geschätzte Lieferzeit beträgt 3–5 Werktage.",
   "checkout.success_oxxo_msg": "Ihre Zahlungsreferenz wird an Ihre E-Mail gesendet. Sie haben 48 Stunden, um bei OXXO zu bezahlen.",
   "checkout.success_cash_msg": "Ihre Bestellung ist 24 Stunden reserviert. Besuchen Sie eine Filiale mit Ihrer Bestellnummer.",
-  "checkout.keep_shopping": "Weiter einkaufen"
+  "checkout.keep_shopping": "Weiter einkaufen",
+
+  "notfound.title": "Seite nicht gefunden",
+  "notfound.subtitle": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
+  "notfound.back_home": "Zurück zur Startseite",
+  "auth.unauthorized": "Sie haben keine Berechtigung, auf diesen Bereich zuzugreifen"
 }

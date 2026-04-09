@@ -293,5 +293,10 @@
   "checkout.success_card_msg": "You will receive a confirmation email. Estimated delivery time is 3–5 business days.",
   "checkout.success_oxxo_msg": "Your payment reference will be sent to your email. You have 48 hours to pay at OXXO.",
   "checkout.success_cash_msg": "Your order is reserved for 24 hours. Visit any branch with your order number.",
-  "checkout.keep_shopping": "Keep shopping"
+  "checkout.keep_shopping": "Keep shopping",
+
+  "notfound.title": "Page not found",
+  "notfound.subtitle": "The page you're looking for doesn't exist or was moved.",
+  "notfound.back_home": "Back to home",
+  "auth.unauthorized": "You don't have permission to access that section"
 }

@@ -8,6 +8,8 @@ import { NavProgressComponent } from './components/ui/nav-progress.component';
 import { BackToTopComponent } from './components/ui/back-to-top.component';
 import { filter } from 'rxjs/operators';
 import { routeAnimations } from './animations/route.animations';
+import { NotificationService } from './services/notification.service';
+import { I18nService } from './services/i18n.service';
 
 @Component({
   selector: 'app-root',
@@ -30,11 +32,19 @@ export class AppComponent {
   title = 'ELA Beauty';
   isAdminRoute = signal(false);
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private notif: NotificationService,
+    private i18n: I18nService
+  ) {
     this.router.events.pipe(
       filter(e => e instanceof NavigationEnd)
     ).subscribe((e: any) => {
       this.isAdminRoute.set(e.url.startsWith('/admin'));
+      const state = this.router.lastSuccessfulNavigation?.extras?.state;
+      if (state?.['unauthorized']) {
+        this.notif.toast(this.i18n.t('auth.unauthorized'), 'error');
+      }
     });
   }
 
