@@ -128,6 +128,9 @@
   "cart.empty": "Dein Warenkorb ist leer",
   "cart.empty_hint": "Entdecke unseren Katalog und finde, was du liebst!",
   "cart.see_products": "Produkte ansehen",
+  "cart.max_stock": "Kein weiterer Vorrat verfügbar",
+  "cart.remove_confirm_title": "Produkt entfernen?",
+  "cart.remove_confirm_msg": "Möchten Sie dieses Produkt aus dem Warenkorb entfernen?",
 
   "profile.title": "Mein Profil",
   "profile.subtitle": "Verwalte deine persönlichen Daten",

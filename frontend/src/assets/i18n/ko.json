@@ -128,6 +128,9 @@
   "cart.empty": "장바구니가 비어있습니다",
   "cart.empty_hint": "카탈로그를 탐색하고 좋아하는 것을 찾아보세요!",
   "cart.see_products": "제품 보기",
+  "cart.max_stock": "재고가 더 이상 없습니다",
+  "cart.remove_confirm_title": "상품을 제거하시겠습니까?",
+  "cart.remove_confirm_msg": "이 상품을 장바구니에서 제거하시겠습니까?",
 
   "profile.title": "내 프로필",
   "profile.subtitle": "개인 정보 관리",

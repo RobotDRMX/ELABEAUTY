@@ -128,6 +128,9 @@
   "cart.empty": "カートは空です",
   "cart.empty_hint": "カタログを探索してお気に入りを見つけましょう！",
   "cart.see_products": "製品を見る",
+  "cart.max_stock": "これ以上在庫がありません",
+  "cart.remove_confirm_title": "商品を削除しますか？",
+  "cart.remove_confirm_msg": "この商品をカートから削除しますか？",
 
   "profile.title": "マイプロフィール",
   "profile.subtitle": "個人情報を管理",

@@ -129,6 +129,9 @@
   "cart.empty": "Votre panier est vide",
   "cart.empty_hint": "Explorez notre catalogue et trouvez ce que vous aimez !",
   "cart.see_products": "Voir les Produits",
+  "cart.max_stock": "Plus de stock disponible",
+  "cart.remove_confirm_title": "Supprimer le produit ?",
+  "cart.remove_confirm_msg": "Voulez-vous supprimer ce produit du panier ?",
 
   "profile.title": "Mon Profil",
   "profile.subtitle": "Gérez vos informations personnelles",

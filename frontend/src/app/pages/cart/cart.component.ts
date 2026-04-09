@@ -2,8 +2,10 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { LucideAngularModule } from 'lucide-angular';
 import { CartService } from '../../services/cart.service';
 import { NotificationService } from '../../services/notification.service';
+import { I18nService } from '../../services/i18n.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 
 export type CheckoutStep = 'address' | 'payment' | 'review' | 'success';
@@ -12,13 +14,16 @@ export type PaymentMethod = 'card' | 'cash' | 'oxxo';
 @Component({
     selector: 'app-cart',
     standalone: true,
-    imports: [CommonModule, RouterModule, FormsModule, TranslatePipe],
+    imports: [CommonModule, RouterModule, FormsModule, LucideAngularModule, TranslatePipe],
     templateUrl: './cart.component.html',
     styleUrls: ['./cart.component.scss']
 })
 export class CartComponent {
     cartService = inject(CartService);
     private notif = inject(NotificationService);
+    private i18n = inject(I18nService);
+
+    updatingId = signal<number | null>(null);
 
     // Checkout modal state
     showCheckout = signal(false);
@@ -52,8 +57,22 @@ export class CartComponent {
     get finalTotal() { return this.total >= 500 ? this.total : this.total + 50; }
     get shipping() { return this.total >= 500 ? 0 : 50; }
 
-    updateQuantity(productId: number, quantity: number) {
+    async updateQuantity(productId: number, quantity: number) {
+        if (quantity === 0) {
+            const confirmed = await this.notif.confirm(
+                this.i18n.t('cart.remove_confirm_title'),
+                this.i18n.t('cart.remove_confirm_msg'),
+                { confirmText: this.i18n.t('common.delete'), cancelText: this.i18n.t('common.cancel'), danger: true }
+            );
+            if (!confirmed) return;
+            this.updatingId.set(productId);
+            this.cartService.removeItem(productId);
+            this.updatingId.set(null);
+            return;
+        }
+        this.updatingId.set(productId);
         this.cartService.updateQuantity(productId, quantity);
+        this.updatingId.set(null);
     }
 
     removeItem(productId: number) {

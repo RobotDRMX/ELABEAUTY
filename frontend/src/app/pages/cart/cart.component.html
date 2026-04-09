@@ -17,14 +17,32 @@
                         <p class="item-category">{{ item.product.category }}</p>
                         <div class="item-actions">
                             <div class="quantity-control">
-                                <button (click)="updateQuantity(item.product.id, item.quantity - 1)">−</button>
-                                <span>{{ item.quantity }}</span>
-                                <button (click)="updateQuantity(item.product.id, item.quantity + 1)">+</button>
+                                <button
+                                  [disabled]="updatingId() === item.product.id"
+                                  (click)="updateQuantity(item.product.id, item.quantity - 1)"
+                                  [title]="item.quantity === 1 ? ('cart.remove_confirm_title' | translate) : ''">
+                                  @if (item.quantity === 1) {
+                                    <lucide-icon name="trash-2" [size]="16"></lucide-icon>
+                                  } @else {
+                                    <lucide-icon name="minus" [size]="16"></lucide-icon>
+                                  }
+                                </button>
+                                <span>
+                                  @if (updatingId() === item.product.id) {
+                                    <lucide-icon name="loader-circle" [size]="16" class="spin"></lucide-icon>
+                                  } @else {
+                                    {{ item.quantity }}
+                                  }
+                                </span>
+                                <button
+                                  [disabled]="updatingId() === item.product.id || item.quantity >= item.product.stock"
+                                  [title]="item.quantity >= item.product.stock ? ('cart.max_stock' | translate) : ''"
+                                  (click)="updateQuantity(item.product.id, item.quantity + 1)">
+                                  <lucide-icon name="plus" [size]="16"></lucide-icon>
+                                </button>
                             </div>
                             <button class="remove-btn" (click)="removeItem(item.product.id)">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
-                                </svg>
+                                <lucide-icon name="trash-2" [size]="14"></lucide-icon>
                                 {{ 'cart.remove' | translate }}
                             </button>
                         </div>
@@ -61,15 +79,11 @@
                     </button>
 
                     <div class="shipping-info" *ngIf="total < 500">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
+                        <lucide-icon name="info" [size]="16"></lucide-icon>
                         <p>{{ 'cart.free_shipping_hint' | translate:{ amount: ((500 - total) | currency:'MXN') || '' } }}</p>
                     </div>
                     <div class="shipping-info-success" *ngIf="total >= 500">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
-                        </svg>
+                        <lucide-icon name="circle-check" [size]="16"></lucide-icon>
                         <p>{{ 'cart.free_shipping_achieved' | translate }}</p>
                     </div>
                 </div>

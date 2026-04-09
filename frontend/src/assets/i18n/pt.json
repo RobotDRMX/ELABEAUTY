@@ -129,6 +129,9 @@
   "cart.empty": "Seu carrinho está vazio",
   "cart.empty_hint": "Explore nosso catálogo e encontre o que você ama!",
   "cart.see_products": "Ver Produtos",
+  "cart.max_stock": "Sem mais estoque disponível",
+  "cart.remove_confirm_title": "Remover produto?",
+  "cart.remove_confirm_msg": "Deseja remover este produto do carrinho?",
 
   "profile.title": "Meu Perfil",
   "profile.subtitle": "Gerencie suas informações pessoais",

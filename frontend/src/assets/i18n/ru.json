@@ -128,6 +128,9 @@
   "cart.empty": "Корзина пуста",
   "cart.empty_hint": "Исследуйте каталог и найдите то, что вам нравится!",
   "cart.see_products": "Смотреть товары",
+  "cart.max_stock": "Больше нет в наличии",
+  "cart.remove_confirm_title": "Удалить товар?",
+  "cart.remove_confirm_msg": "Вы хотите удалить этот товар из корзины?",
 
   "profile.title": "Мой профиль",
   "profile.subtitle": "Управляйте личной информацией",

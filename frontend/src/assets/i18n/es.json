@@ -138,6 +138,9 @@
   "cart.empty": "Tu carrito está vacío",
   "cart.empty_hint": "¿Aún no te has decidido? ¡Explora nuestro catálogo y encuentra lo que amas!",
   "cart.see_products": "Ver Productos",
+  "cart.max_stock": "Sin más stock disponible",
+  "cart.remove_confirm_title": "¿Eliminar producto?",
+  "cart.remove_confirm_msg": "¿Quieres eliminar este producto del carrito?",
 
   "profile.title": "Mi Perfil",
   "profile.subtitle": "Gestiona tu información personal",
