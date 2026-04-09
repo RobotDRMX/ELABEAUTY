@@ -291,5 +291,18 @@
   "inactivity.warning_title": "まだいますか？",
   "inactivity.warning_msg": "非アクティブのためセッションが終了します。続けますか？",
   "inactivity.keep_session": "接続を維持する",
-  "inactivity.logged_out": "非アクティブのためセッションが終了しました"
+  "inactivity.logged_out": "非アクティブのためセッションが終了しました",
+
+  "page.title.home": "ホーム",
+  "page.title.search": "カタログ",
+  "page.title.cart": "マイカート",
+  "page.title.favorites": "お気に入り",
+  "page.title.profile": "マイプロフィール",
+  "page.title.login": "ログイン",
+  "page.title.register": "アカウント作成",
+  "page.title.hairstyles": "ヘアスタイル＆カット",
+  "page.title.nail_designs": "ネイルデザイン",
+  "page.title.admin": "管理パネル",
+  "page.title.404": "ページが見つかりません",
+  "page.title.terms": "利用規約"
 }

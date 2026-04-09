@@ -291,5 +291,18 @@
   "inactivity.warning_title": "Noch da?",
   "inactivity.warning_msg": "Ihre Sitzung wird wegen Inaktivität geschlossen. Möchten Sie fortfahren?",
   "inactivity.keep_session": "Verbunden bleiben",
-  "inactivity.logged_out": "Sitzung wegen Inaktivität beendet"
+  "inactivity.logged_out": "Sitzung wegen Inaktivität beendet",
+
+  "page.title.home": "Startseite",
+  "page.title.search": "Katalog",
+  "page.title.cart": "Mein Warenkorb",
+  "page.title.favorites": "Meine Favoriten",
+  "page.title.profile": "Mein Profil",
+  "page.title.login": "Anmelden",
+  "page.title.register": "Konto erstellen",
+  "page.title.hairstyles": "Frisuren und Schnitte",
+  "page.title.nail_designs": "Nageldesigns",
+  "page.title.admin": "Admin-Panel",
+  "page.title.404": "Seite nicht gefunden",
+  "page.title.terms": "Nutzungsbedingungen"
 }

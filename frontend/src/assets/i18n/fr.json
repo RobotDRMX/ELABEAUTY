@@ -301,5 +301,18 @@
   "inactivity.warning_title": "Êtes-vous encore là ?",
   "inactivity.warning_msg": "Votre session va se fermer pour inactivité. Voulez-vous continuer ?",
   "inactivity.keep_session": "Rester connecté",
-  "inactivity.logged_out": "Session fermée pour inactivité"
+  "inactivity.logged_out": "Session fermée pour inactivité",
+
+  "page.title.home": "Accueil",
+  "page.title.search": "Catalogue",
+  "page.title.cart": "Mon Panier",
+  "page.title.favorites": "Mes Favoris",
+  "page.title.profile": "Mon Profil",
+  "page.title.login": "Se connecter",
+  "page.title.register": "Créer un compte",
+  "page.title.hairstyles": "Coiffures et Coupes",
+  "page.title.nail_designs": "Designs d'Ongles",
+  "page.title.admin": "Panneau Admin",
+  "page.title.404": "Page non trouvée",
+  "page.title.terms": "Conditions d'Utilisation"
 }

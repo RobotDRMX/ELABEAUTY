@@ -291,5 +291,18 @@
   "inactivity.warning_title": "아직 계신가요?",
   "inactivity.warning_msg": "비활성으로 인해 세션이 종료됩니다. 계속하시겠습니까?",
   "inactivity.keep_session": "연결 유지",
-  "inactivity.logged_out": "비활성으로 인해 세션이 종료되었습니다"
+  "inactivity.logged_out": "비활성으로 인해 세션이 종료되었습니다",
+
+  "page.title.home": "홈",
+  "page.title.search": "카탈로그",
+  "page.title.cart": "장바구니",
+  "page.title.favorites": "내 즐겨찾기",
+  "page.title.profile": "내 프로필",
+  "page.title.login": "로그인",
+  "page.title.register": "계정 만들기",
+  "page.title.hairstyles": "헤어스타일 & 커트",
+  "page.title.nail_designs": "네일 디자인",
+  "page.title.admin": "관리자 패널",
+  "page.title.404": "페이지를 찾을 수 없습니다",
+  "page.title.terms": "이용약관"
 }

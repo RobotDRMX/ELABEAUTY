@@ -318,5 +318,18 @@
   "inactivity.warning_title": "Still there?",
   "inactivity.warning_msg": "Your session will close due to inactivity. Do you want to continue?",
   "inactivity.keep_session": "Stay connected",
-  "inactivity.logged_out": "Session closed due to inactivity"
+  "inactivity.logged_out": "Session closed due to inactivity",
+
+  "page.title.home": "Home",
+  "page.title.search": "Catalog",
+  "page.title.cart": "My Cart",
+  "page.title.favorites": "My Favorites",
+  "page.title.profile": "My Profile",
+  "page.title.login": "Sign In",
+  "page.title.register": "Create Account",
+  "page.title.hairstyles": "Hairstyles",
+  "page.title.nail_designs": "Nail Designs",
+  "page.title.admin": "Admin Panel",
+  "page.title.404": "Page not found",
+  "page.title.terms": "Terms of Use"
 }

@@ -291,5 +291,18 @@
   "inactivity.warning_title": "Вы ещё здесь?",
   "inactivity.warning_msg": "Сессия будет завершена из-за неактивности. Хотите продолжить?",
   "inactivity.keep_session": "Оставаться в сети",
-  "inactivity.logged_out": "Сессия завершена из-за неактивности"
+  "inactivity.logged_out": "Сессия завершена из-за неактивности",
+
+  "page.title.home": "Главная",
+  "page.title.search": "Каталог",
+  "page.title.cart": "Моя корзина",
+  "page.title.favorites": "Избранное",
+  "page.title.profile": "Мой профиль",
+  "page.title.login": "Войти",
+  "page.title.register": "Создать аккаунт",
+  "page.title.hairstyles": "Причёски и стрижки",
+  "page.title.nail_designs": "Дизайн ногтей",
+  "page.title.admin": "Панель администратора",
+  "page.title.404": "Страница не найдена",
+  "page.title.terms": "Условия использования"
 }
