@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FavoritesService } from '../../services/favorites.service';
@@ -18,6 +18,9 @@ export class FavoritesComponent {
     favoritesService = inject(FavoritesService);
     cartService = inject(CartService);
 
+    removingId = signal<number | null>(null);
+    addingToCartId = signal<number | null>(null);
+
     get favorites() {
         return this.favoritesService.favorites();
     }
@@ -27,10 +30,16 @@ export class FavoritesComponent {
     }
 
     removeFavorite(productId: number) {
+        if (this.removingId() === productId) return;
+        this.removingId.set(productId);
         this.favoritesService.toggleFavorite(productId);
+        setTimeout(() => this.removingId.set(null), 800);
     }
 
     addToCart(product: any) {
+        if (this.addingToCartId() === product.id) return;
+        this.addingToCartId.set(product.id);
         this.cartService.addToCart(product.id);
+        setTimeout(() => this.addingToCartId.set(null), 800);
     }
 }

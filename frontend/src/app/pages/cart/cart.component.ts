@@ -58,6 +58,7 @@ export class CartComponent {
     get total() { return this.cartService.totalPrice(); }
     get finalTotal() { return this.total >= 500 ? this.total : this.total + 50; }
     get shipping() { return this.total >= 500 ? 0 : 50; }
+    get shippingProgress(): number { return Math.min((this.total / 500) * 100, 100); }
 
     async updateQuantity(productId: number, quantity: number) {
         if (quantity === 0) {

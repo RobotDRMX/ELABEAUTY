@@ -78,13 +78,24 @@
                         {{ 'cart.checkout' | translate }}
                     </button>
 
-                    <div class="shipping-info" *ngIf="total < 500">
-                        <lucide-icon name="info" [size]="16"></lucide-icon>
-                        <p>{{ 'cart.free_shipping_hint' | translate:{ amount: ((500 - total) | currency:'MXN') || '' } }}</p>
-                    </div>
-                    <div class="shipping-info-success" *ngIf="total >= 500">
-                        <lucide-icon name="circle-check" [size]="16"></lucide-icon>
-                        <p>{{ 'cart.free_shipping_achieved' | translate }}</p>
+                    <div class="shipping-progress">
+                        <div class="shipping-progress-bar-wrap">
+                            <div class="shipping-progress-bar"
+                                [style.width.%]="shippingProgress"
+                                [class.full]="total >= 500">
+                            </div>
+                        </div>
+                        @if (total < 500) {
+                            <p class="shipping-progress-msg">
+                                <lucide-icon name="truck" [size]="14"></lucide-icon>
+                                {{ 'cart.shipping_progress_hint' | translate:{ amount: ((500 - total) | currency:'MXN':'symbol':'1.0-0') ?? '' } }}
+                            </p>
+                        } @else {
+                            <p class="shipping-progress-msg success">
+                                <lucide-icon name="circle-check" [size]="14"></lucide-icon>
+                                {{ 'cart.shipping_achieved' | translate }}
+                            </p>
+                        }
                     </div>
                 </div>
             </aside>
@@ -99,6 +110,18 @@
                 <h2>{{ 'cart.empty' | translate }}</h2>
                 <p>{{ 'cart.empty_hint' | translate }}</p>
                 <button class="btn-maybelline" routerLink="/busqueda">{{ 'cart.see_products' | translate }}</button>
+                <p class="empty-categories-label">{{ 'cart.empty_categories_hint' | translate }}</p>
+                <div class="empty-category-chips">
+                    <a routerLink="/busqueda" [queryParams]="{ category: 'Labiales' }" class="category-chip">
+                        <lucide-icon name="heart" [size]="14"></lucide-icon> {{ 'categories.lips' | translate }}
+                    </a>
+                    <a routerLink="/busqueda" [queryParams]="{ category: 'Ojos' }" class="category-chip">
+                        <lucide-icon name="eye" [size]="14"></lucide-icon> {{ 'categories.eyes' | translate }}
+                    </a>
+                    <a routerLink="/busqueda" [queryParams]="{ category: 'Rostro' }" class="category-chip">
+                        <lucide-icon name="palette" [size]="14"></lucide-icon> {{ 'categories.face' | translate }}
+                    </a>
+                </div>
             </div>
         </ng-template>
     </div>
