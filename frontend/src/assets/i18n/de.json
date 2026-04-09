@@ -201,5 +201,8 @@
   "auth.rule_min_length": "Mindestens 8 Zeichen",
   "auth.rule_upper": "Ein Großbuchstabe",
   "auth.rule_lower": "Ein Kleinbuchstabe",
-  "auth.rule_number": "Eine Zahl"
+  "auth.rule_number": "Eine Zahl",
+
+  "auth.new_password_label": "Neues Passwort",
+  "auth.new_password_placeholder": "Mindestens 8 Zeichen"
 }

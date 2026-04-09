@@ -201,5 +201,8 @@
   "auth.rule_min_length": "Минимум 8 символов",
   "auth.rule_upper": "Одна заглавная буква",
   "auth.rule_lower": "Одна строчная буква",
-  "auth.rule_number": "Одна цифра"
+  "auth.rule_number": "Одна цифра",
+
+  "auth.new_password_label": "Новый пароль",
+  "auth.new_password_placeholder": "Минимум 8 символов"
 }

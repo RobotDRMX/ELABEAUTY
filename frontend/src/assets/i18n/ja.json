@@ -201,5 +201,8 @@
   "auth.rule_min_length": "最低8文字",
   "auth.rule_upper": "大文字1文字",
   "auth.rule_lower": "小文字1文字",
-  "auth.rule_number": "数字1文字"
+  "auth.rule_number": "数字1文字",
+
+  "auth.new_password_label": "新しいパスワード",
+  "auth.new_password_placeholder": "最低8文字"
 }

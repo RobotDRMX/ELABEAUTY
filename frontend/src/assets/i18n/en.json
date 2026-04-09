@@ -228,5 +228,8 @@
   "auth.rule_min_length": "Minimum 8 characters",
   "auth.rule_upper": "One uppercase letter",
   "auth.rule_lower": "One lowercase letter",
-  "auth.rule_number": "One number"
+  "auth.rule_number": "One number",
+
+  "auth.new_password_label": "New Password",
+  "auth.new_password_placeholder": "Minimum 8 characters"
 }
