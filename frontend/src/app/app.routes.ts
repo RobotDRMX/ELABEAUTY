@@ -6,47 +6,47 @@ import { authGuard } from './guards/auth.guard';
 import { adminGuard } from './pages/admin/guards/admin.guard';
 
 export const routes: Routes = [
-  { path: '', component: BodyComponent, title: 'ELA Beauty - Inicio' },
-  { path: 'labiales', component: BodyComponent, title: 'ELA Beauty - Labiales' },
-  { path: 'rostro', component: BodyComponent, title: 'ELA Beauty - Rostro' },
-  { path: 'ojos', component: BodyComponent, title: 'ELA Beauty - Ojos' },
-  { path: 'unas', component: BodyComponent, title: 'ELA Beauty - Uñas' },
-  { path: 'ofertas', component: BodyComponent, title: 'ELA Beauty - Ofertas' },
-  { path: 'nuevo', component: BodyComponent, title: 'ELA Beauty - Nuevo' },
-  { path: 'busqueda', component: SearchResultsComponent, title: 'ELA Beauty - Catálogo' },
-  { path: 'terminos-de-uso', component: TermsOfUseComponent, title: 'ELA Beauty - Términos de Uso' },
+  { path: '', component: BodyComponent, title: 'page.title.home' },
+  { path: 'labiales', component: BodyComponent, title: 'page.title.home' },
+  { path: 'rostro', component: BodyComponent, title: 'page.title.home' },
+  { path: 'ojos', component: BodyComponent, title: 'page.title.home' },
+  { path: 'unas', component: BodyComponent, title: 'page.title.home' },
+  { path: 'ofertas', component: BodyComponent, title: 'page.title.home' },
+  { path: 'nuevo', component: BodyComponent, title: 'page.title.home' },
+  { path: 'busqueda', component: SearchResultsComponent, title: 'page.title.search' },
+  { path: 'terminos-de-uso', component: TermsOfUseComponent, title: 'page.title.terms' },
   {
     path: 'auth',
     children: [
       {
         path: 'login',
         loadComponent: () => import('./pages/auth/login/login.component').then(m => m.LoginComponent),
-        title: 'ELA Beauty - Iniciar Sesión'
+        title: 'page.title.login'
       },
       {
         path: 'register',
         loadComponent: () => import('./pages/auth/register/register.component').then(m => m.RegisterComponent),
-        title: 'ELA Beauty - Registro'
+        title: 'page.title.register'
       },
       {
         path: 'verificar-correo',
         loadComponent: () => import('./pages/auth/verify-email/verify-email.component').then(m => m.VerifyEmailComponent),
-        title: 'ELA Beauty - Verificar Correo'
+        title: 'page.title.login'
       },
       {
         path: 'olvide-contrasena',
         loadComponent: () => import('./pages/auth/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent),
-        title: 'ELA Beauty - Recuperar Contraseña'
+        title: 'page.title.login'
       },
       {
         path: 'recuperar-contrasena',
         loadComponent: () => import('./pages/auth/reset-password/reset-password.component').then(m => m.ResetPasswordComponent),
-        title: 'ELA Beauty - Nueva Contraseña'
+        title: 'page.title.login'
       },
       {
         path: 'reenviar-verificacion',
         loadComponent: () => import('./pages/auth/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent),
-        title: 'ELA Beauty - Reenviar Verificación'
+        title: 'page.title.login'
       },
     ]
   },
@@ -54,35 +54,39 @@ export const routes: Routes = [
     path: 'perfil',
     loadComponent: () => import('./pages/profile/profile.component').then(m => m.ProfileComponent),
     canActivate: [authGuard],
-    title: 'ELA Beauty - Mi Perfil'
+    title: 'page.title.profile'
   },
   {
     path: 'carrito',
     loadComponent: () => import('./pages/cart/cart.component').then(m => m.CartComponent),
     canActivate: [authGuard],
-    title: 'ELA Beauty - Bolsa de Compras'
+    title: 'page.title.cart'
   },
   {
     path: 'favoritos',
     loadComponent: () => import('./pages/favorites/favorites.component').then(m => m.FavoritesComponent),
     canActivate: [authGuard],
-    title: 'ELA Beauty - Mis Favoritos ⭐'
+    title: 'page.title.favorites'
   },
   {
     path: 'peinados',
     loadComponent: () => import('./pages/hairstyles/hairstyles.component').then(m => m.HairstylesComponent),
-    title: 'ELA Beauty - Peinados & Cortes'
+    title: 'page.title.hairstyles'
   },
   {
     path: 'disenos-unas',
     loadComponent: () => import('./pages/nail-designs/nail-designs.component').then(m => m.NailDesignsComponent),
-    title: 'ELA Beauty - Diseños de Uñas'
+    title: 'page.title.nail_designs'
   },
   {
     path: 'admin',
     canMatch: [adminGuard],
     loadChildren: () => import('./pages/admin/admin.routes').then(m => m.adminRoutes),
-    title: 'ELA Beauty - Admin',
+    title: 'page.title.admin',
   },
-  { path: '**', redirectTo: '', pathMatch: 'full' }
+  {
+    path: '**',
+    loadComponent: () => import('./pages/not-found/not-found.component').then(m => m.NotFoundComponent),
+    title: 'page.title.404'
+  }
 ];

@@ -12,7 +12,8 @@ export const adminGuard: CanMatchFn = () => {
       authService.currentUser.set(user);
       authService.isAuthenticated.set(true);
       if (user?.role === 'admin') return true;
-      // Not admin — return false; wildcard route handles redirect to '/'
+      // Not admin — redirect to home with unauthorized state for toast notification
+      router.navigate(['/'], { state: { unauthorized: true } });
       return false;
     }),
     catchError(() => {

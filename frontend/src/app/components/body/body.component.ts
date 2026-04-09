@@ -48,20 +48,4 @@ export class BodyComponent {
     { icon: 'leaf', titleKey: 'philosophy.cruelty_free_title', descKey: 'philosophy.cruelty_free_desc' },
     { icon: 'truck', titleKey: 'philosophy.shipping_title', descKey: 'philosophy.shipping_desc' }
   ];
-
-  testimonials = [
-    { textKey: 'testimonials.t1', authorKey: 'testimonials.a1', rating: 5, avatar: 'A' },
-    { textKey: 'testimonials.t2', authorKey: 'testimonials.a2', rating: 5, avatar: 'S' },
-    { textKey: 'testimonials.t3', authorKey: 'testimonials.a3', rating: 5, avatar: 'V' }
-  ];
-
-  activeTestimonial = 0;
-
-  setTestimonial(index: number) {
-    this.activeTestimonial = index;
-  }
-
-  getStars(rating: number): number[] {
-    return Array(rating).fill(0);
-  }
 }

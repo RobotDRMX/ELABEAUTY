@@ -622,107 +622,6 @@
   }
 }
 
-/* ===== TESTIMONIALS ===== */
-.testimonials-section {
-  padding: 6rem 0;
-  background: var(--surface-2);
-}
-
-.testimonials-wrapper {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.testimonial-card {
-  background: var(--surface-1);
-  border-radius: 20px;
-  padding: 2.5rem 2rem;
-  border: 1px solid var(--gray-200);
-  transition: var(--transition-normal);
-  position: relative;
-
-  &::before {
-    content: '\201C';
-    position: absolute;
-    top: 1.2rem;
-    left: 1.8rem;
-    font-size: 4rem;
-    color: var(--primary-color);
-    opacity: 0.12;
-    font-family: Georgia, serif;
-    line-height: 1;
-  }
-
-  &:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-md);
-    border-color: rgba(230, 0, 126, 0.15);
-  }
-}
-
-.testimonial-avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-  color: white;
-  font-size: 1.3rem;
-  font-weight: 900;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1rem;
-}
-
-.testimonial-stars {
-  display: flex;
-  gap: 3px;
-  margin-bottom: 1rem;
-
-  i {
-    color: #fbbf24;
-    font-size: 0.85rem;
-  }
-}
-
-.testimonial-text {
-  font-size: 0.95rem;
-  line-height: 1.7;
-  color: var(--text-secondary);
-  font-style: italic;
-  margin-bottom: 1.2rem;
-}
-
-.testimonial-author {
-  font-weight: 800;
-  font-size: 0.9rem;
-  color: var(--text-primary);
-}
-
-.testimonial-dots {
-  display: flex;
-  justify-content: center;
-  gap: 0.6rem;
-}
-
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--gray-300);
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s;
-  padding: 0;
-
-  &.active,
-  &:hover {
-    background: var(--primary-color);
-    transform: scale(1.3);
-  }
-}
 
 /* ===== RESPONSIVE ===== */
 @media screen and (max-width: 1024px) {
@@ -738,8 +637,7 @@
   .hero-visual { display: none; }
 
   .categories-grid,
-  .features-grid,
-  .testimonials-wrapper {
+  .features-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -758,8 +656,7 @@
   }
 
   .featured-grid,
-  .features-grid,
-  .testimonials-wrapper {
+  .features-grid {
     grid-template-columns: 1fr;
   }
 }

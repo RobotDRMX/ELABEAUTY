@@ -1,7 +1,9 @@
-import { Component, ChangeDetectorRef, ElementRef, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, ChangeDetectorRef, ElementRef, OnInit, OnDestroy, ViewChild, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { LucideAngularModule } from 'lucide-angular';
+import { TranslatePipe } from '../../../pipes/translate.pipe';
 import { AuthService } from '../../../services/auth.service';
 import { BiometricAuthService } from '../../../services/biometric-auth.service';
 import { environment } from '../../../../environments/environment';
@@ -18,7 +20,7 @@ type BiometricMode = 'none' | 'face';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, LucideAngularModule, TranslatePipe],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
@@ -30,6 +32,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   loading      = false;
   biometricMode: BiometricMode = 'none';
   countdown    = 0; // seconds remaining before next attempt is allowed
+  showPassword = signal(false);
 
   private countdownInterval: ReturnType<typeof setInterval> | null = null;
 

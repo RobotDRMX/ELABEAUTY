@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ReactiveFormsModule, FormBuilder, FormGroup,
   Validators, AbstractControl, ValidationErrors
 } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { LucideAngularModule } from 'lucide-angular';
 import { AuthService } from '../../../services/auth.service';
+import { TranslatePipe } from '../../../pipes/translate.pipe';
 
 function passwordsMatchValidator(group: AbstractControl): ValidationErrors | null {
   const password = group.get('newPassword')?.value;
@@ -17,16 +19,17 @@ function passwordsMatchValidator(group: AbstractControl): ValidationErrors | nul
 @Component({
   selector: 'app-reset-password',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, LucideAngularModule, TranslatePipe],
   templateUrl: './reset-password.component.html',
-  styleUrls: ['../login/login.component.scss']
+  styleUrls: ['../login/login.component.scss', './reset-password.component.scss']
 })
 export class ResetPasswordComponent implements OnInit {
   form: FormGroup;
-  token_hash = '';
-  loading    = false;
-  done       = false;
-  error      = '';
+  token_hash   = '';
+  loading      = false;
+  done         = false;
+  error        = '';
+  showPassword = signal(false);
 
   constructor(
     private fb:          FormBuilder,
