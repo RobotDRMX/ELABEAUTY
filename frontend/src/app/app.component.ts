@@ -12,6 +12,7 @@ import { NotificationService } from './services/notification.service';
 import { I18nService } from './services/i18n.service';
 import { AuthService } from './services/auth.service';
 import { InactivityService } from './services/inactivity.service';
+import { ThemeService } from './services/theme.service'; // Import ThemeService
 
 @Component({
   selector: 'app-root',
@@ -35,6 +36,8 @@ export class AppComponent {
   isAdminRoute = signal(false);
 
   private auth = inject(AuthService);
+  // Inject ThemeService here
+  private themeService = inject(ThemeService); // Inject ThemeService
 
   constructor(
     private router: Router,

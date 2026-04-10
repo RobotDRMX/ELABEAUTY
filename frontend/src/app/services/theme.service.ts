@@ -1,54 +1,70 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, effect, Renderer2, inject, RendererFactory2 } from '@angular/core';
 
-export type Theme =
-  | 'light'
-  | 'dark'
-  | 'protanopia'
-  | 'deuteranopia'
-  | 'tritanopia'
-  | 'protanomaly'
-  | 'deuteranomaly'
-  | 'tritanomaly'
-  | 'achromatopsia';
+export type ThemeType = 'light' | 'dark' | 'protanopia' | 'deuteranopia' | 'tritanopia' | 'protanomaly' | 'deuteranomaly' | 'tritanomaly' | 'achromatopsia';
+export type ThemeGroup = 'mode' | 'colorblind';
 
 export interface ThemeOption {
-  value: Theme;
+  value: ThemeType;
   label: string;
-  group: 'mode' | 'colorblind';
+  group: ThemeGroup;
 }
 
 export const THEME_OPTIONS: ThemeOption[] = [
-  { value: 'light',          label: 'Claro',          group: 'mode' },
-  { value: 'dark',           label: 'Oscuro',         group: 'mode' },
-  { value: 'protanopia',     label: 'Protanopia',     group: 'colorblind' },
-  { value: 'deuteranopia',   label: 'Deuteranopia',   group: 'colorblind' },
-  { value: 'tritanopia',     label: 'Tritanopia',     group: 'colorblind' },
-  { value: 'protanomaly',    label: 'Protanomaly',    group: 'colorblind' },
-  { value: 'deuteranomaly',  label: 'Deuteranomaly',  group: 'colorblind' },
-  { value: 'tritanomaly',    label: 'Tritanomaly',    group: 'colorblind' },
-  { value: 'achromatopsia',  label: 'Achromatopsia',  group: 'colorblind' },
+  { value: 'light', label: 'Claro', group: 'mode' },
+  { value: 'dark', label: 'Oscuro', group: 'mode' },
+  { value: 'protanopia', label: 'Protanopia', group: 'colorblind' },
+  { value: 'deuteranopia', label: 'Deuteranopia', group: 'colorblind' },
+  { value: 'tritanopia', label: 'Tritanopia', group: 'colorblind' },
+  { value: 'protanomaly', label: 'Protanomalia', group: 'colorblind' },
+  { value: 'deuteranomaly', label: 'Deuteranomalia', group: 'colorblind' },
+  { value: 'tritanomaly', label: 'Tritanomalia', group: 'colorblind' },
+  { value: 'achromatopsia', label: 'Acromatopsia', group: 'colorblind' },
 ];
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class ThemeService {
-  theme = signal<Theme>(this.getSavedTheme());
+  readonly theme = signal<ThemeType>(this.getInitialTheme()); // Renamed from currentTheme
+  private renderer: Renderer2;
 
-  constructor() {
-    this.apply(this.theme());
+  constructor(private rendererFactory: RendererFactory2) {
+    this.renderer = this.rendererFactory.createRenderer(null, null);
+
+    effect(() => {
+      const currentTheme = this.theme(); // Use this.theme()
+      if (currentTheme === 'dark') {
+        this.renderer.setAttribute(document.documentElement, 'data-theme', 'dark');
+      } else if (THEME_OPTIONS.some(opt => opt.value === currentTheme && opt.group === 'colorblind')) {
+        this.renderer.setAttribute(document.documentElement, 'data-theme', currentTheme);
+      }
+      else {
+        this.renderer.removeAttribute(document.documentElement, 'data-theme');
+      }
+      localStorage.setItem('ela-theme', currentTheme);
+    });
   }
 
-  private getSavedTheme(): Theme {
-    const saved = localStorage.getItem('ela-theme') as Theme | null;
-    return saved && THEME_OPTIONS.some(t => t.value === saved) ? saved : 'light';
+  private getInitialTheme(): ThemeType {
+    if (typeof localStorage !== 'undefined') {
+      const savedTheme = localStorage.getItem('ela-theme') as ThemeType;
+      if (savedTheme && THEME_OPTIONS.some(l => l.value === savedTheme)) {
+        return savedTheme;
+      }
+      // Check for user's system preference for dark mode
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
+    }
+    return 'light'; // Default theme
   }
 
-  setTheme(theme: Theme) {
+  toggleTheme(): void {
+    // This is for light/dark toggle only, colorblind modes should be set specifically
+    this.theme.update(current => (current === 'light' ? 'dark' : 'light'));
+  }
+
+  setTheme(theme: ThemeType): void {
     this.theme.set(theme);
-    localStorage.setItem('ela-theme', theme);
-    this.apply(theme);
-  }
-
-  private apply(theme: Theme) {
-    document.documentElement.setAttribute('data-theme', theme);
   }
 }
