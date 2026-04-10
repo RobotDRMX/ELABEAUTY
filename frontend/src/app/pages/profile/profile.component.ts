@@ -1,16 +1,22 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { BiometricAuthService } from '../../services/biometric-auth.service';
 import { LucideIcons } from '../../icons.provider';
-import { TranslatePipe } from '../../pipes/translate.pipe';
+
+function passwordsMatchValidator(group: AbstractControl): ValidationErrors | null {
+  const password = group.get('newPassword')?.value;
+  const confirm  = group.get('confirmPassword')?.value;
+  if (!confirm) return null;
+  return password === confirm ? null : { passwordsMismatch: true };
+}
 
 @Component({
     selector: 'app-profile',
     standalone: true,
-    imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, LucideIcons, TranslatePipe],
+    imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, LucideIcons],
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss']
 })
@@ -25,6 +31,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     enrollMode: 'none' | 'face' = 'none';
     enrollMsg    = '';
     enrollLoading = false;
+
+    private countdownInterval: ReturnType<typeof setInterval> | null = null;
 
     constructor(
         private fb: FormBuilder,
@@ -55,7 +63,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
                 this.loading = false;
                 this.isInitialLoading = false;
             },
-            error: (err) => {
+            error: () => {
                 this.error = 'Error al cargar perfil';
                 this.loading = false;
                 this.isInitialLoading = false;
