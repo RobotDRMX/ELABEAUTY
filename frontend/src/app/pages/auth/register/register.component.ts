@@ -6,7 +6,6 @@ import {
 } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
-import { TranslatePipe } from '../../../pipes/translate.pipe';
 import { AuthService } from '../../../services/auth.service';
 import { environment } from '../../../../environments/environment';
 
@@ -27,7 +26,7 @@ function passwordsMatchValidator(group: AbstractControl): ValidationErrors | nul
 @Component({
     selector: 'app-register',
     standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, LucideAngularModule, TranslatePipe],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, LucideAngularModule],
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.scss']
 })
@@ -99,7 +98,7 @@ export class RegisterComponent implements OnInit {
         try {
             recaptchaToken = await grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'register' });
         } catch {
-            this.error = 'Error al verificar seguridad. Recarga la página e inténtalo de nuevo.';
+            this        .error   = 'Error al verificar seguridad. Recarga la página e inténtalo de nuevo.';
             this.loading = false;
             return;
         }

@@ -5,13 +5,12 @@ import { NailDesignsService, NailDesign } from '../../services/nail-designs.serv
 import { RealtimeService } from '../../services/realtime.service';
 import { SafeImagePipe } from '../../pipes/safe-image.pipe';
 import { LucideIcons } from '../../icons.provider';
-import { TranslatePipe } from '../../pipes/translate.pipe';
 import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
 
 @Component({
   selector: 'app-nail-designs',
   standalone: true,
-  imports: [CommonModule, SafeImagePipe, LucideIcons, TranslatePipe, ScrollRevealDirective],
+  imports: [CommonModule, SafeImagePipe, LucideIcons, ScrollRevealDirective],
   templateUrl: './nail-designs.component.html',
   styleUrls: ['./nail-designs.component.scss']
 })
@@ -74,6 +73,7 @@ export class NailDesignsComponent implements OnInit, OnDestroy {
   }
 
   formatProcess(process: string): string[] {
-    return process.split('\n').filter(s => s.trim().length > 0);
+    return process.split('
+').filter(s => s.trim().length > 0);
   }
 }

@@ -6,20 +6,19 @@ import { HairstylesService, Hairstyle } from '../../services/hairstyles.service'
 import { RealtimeService } from '../../services/realtime.service';
 import { SafeImagePipe } from '../../pipes/safe-image.pipe';
 import { LucideIcons } from '../../icons.provider';
-import { TranslatePipe } from '../../pipes/translate.pipe';
 import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
 
 @Component({
   selector: 'app-hairstyles',
   standalone: true,
-  imports: [CommonModule, FormsModule, SafeImagePipe, LucideIcons, TranslatePipe, ScrollRevealDirective],
+  imports: [CommonModule, FormsModule, SafeImagePipe, LucideIcons, ScrollRevealDirective],
   templateUrl: './hairstyles.component.html',
   styleUrls: ['./hairstyles.component.scss']
 })
 export class HairstylesComponent implements OnInit, OnDestroy {
   private service = inject(HairstylesService);
   private realtime = inject(RealtimeService);
-  private realtimeSub?: Subscription;
+  realtimeSub?: Subscription;
 
   hairstyles: Hairstyle[] = [];
   filtered: Hairstyle[] = [];
@@ -75,6 +74,7 @@ export class HairstylesComponent implements OnInit, OnDestroy {
   }
 
   formatProcess(process: string): string[] {
-    return process.split('\n').filter(s => s.trim().length > 0);
+    return process.split('
+').filter(s => s.trim().length > 0);
   }
 }

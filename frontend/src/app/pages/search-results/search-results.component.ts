@@ -12,12 +12,11 @@ import { SearchComponent } from '../../components/search/search.component';
 import { TruncatePipe } from '../../pipes/truncate.pipe';
 import { SafeImagePipe } from '../../pipes/safe-image.pipe';
 import { LucideIcons } from '../../icons.provider';
-import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-search-results',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, SearchComponent, TruncatePipe, SafeImagePipe, LucideIcons, TranslatePipe],
+  imports: [CommonModule, RouterModule, FormsModule, SearchComponent, TruncatePipe, SafeImagePipe, LucideIcons],
   templateUrl: './search-results.component.html',
   styleUrls: ['./search-results.component.scss']
 })

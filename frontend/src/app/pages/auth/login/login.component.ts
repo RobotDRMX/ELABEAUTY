@@ -1,9 +1,8 @@
 import { Component, ChangeDetectorRef, ElementRef, OnInit, OnDestroy, ViewChild, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
-import { TranslatePipe } from '../../../pipes/translate.pipe';
 import { AuthService } from '../../../services/auth.service';
 import { BiometricAuthService } from '../../../services/biometric-auth.service';
 import { environment } from '../../../../environments/environment';
@@ -20,7 +19,7 @@ type BiometricMode = 'none' | 'face';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, LucideAngularModule, TranslatePipe],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, LucideAngularModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })

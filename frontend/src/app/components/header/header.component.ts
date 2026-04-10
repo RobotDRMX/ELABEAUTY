@@ -7,14 +7,12 @@ import { AuthService } from '../../services/auth.service';
 import { CartService } from '../../services/cart.service';
 import { FavoritesService } from '../../services/favorites.service';
 import { ThemeService, Theme, THEME_OPTIONS } from '../../services/theme.service';
-import { I18nService, LANGUAGES } from '../../services/i18n.service';
-import { TranslatePipe } from '../../pipes/translate.pipe';
 import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, SearchComponent, TranslatePipe, LucideAngularModule],
+  imports: [CommonModule, FormsModule, RouterModule, SearchComponent, LucideAngularModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
@@ -24,8 +22,6 @@ export class HeaderComponent {
   favoritesService = inject(FavoritesService);
   router         = inject(Router);
   themeService   = inject(ThemeService);
-  i18n           = inject(I18nService);
-  readonly languages = LANGUAGES;
 
   readonly modeThemes = THEME_OPTIONS.filter(t => t.group === 'mode');
   readonly a11yThemes = THEME_OPTIONS.filter(t => t.group === 'colorblind');
@@ -69,14 +65,14 @@ export class HeaderComponent {
   }
 
   navItems = [
-    { label: 'Catálogo', link: '/busqueda', icon: 'grid-2x2' },
-    { label: 'Labiales', link: '/busqueda', queryParams: { category: 'Labiales' }, icon: 'heart' },
-    { label: 'Rostro', link: '/busqueda', queryParams: { category: 'Rostro' }, icon: 'palette' },
-    { label: 'Ojos', link: '/busqueda', queryParams: { category: 'Ojos' }, icon: 'eye' },
-    { label: 'Uñas', link: '/busqueda', queryParams: { category: 'Uñas' }, icon: 'sparkles' },
-    { label: 'Peinados', link: '/peinados', icon: 'scissors' },
-    { label: 'Diseños de Uñas', link: '/disenos-unas', icon: 'flower-2' },
-    { label: 'Ofertas', link: '/busqueda', queryParams: { sortBy: 'price', order: 'ASC' }, icon: 'tag' }
+    { label: 'Catalog', link: '/busqueda', icon: 'grid-2x2' }, // Static string
+    { label: 'Lipsticks', link: '/busqueda', queryParams: { category: 'Labiales' }, icon: 'heart' }, // Static string
+    { label: 'Face', link: '/busqueda', queryParams: { category: 'Rostro' }, icon: 'palette' }, // Static string
+    { label: 'Eyes', link: '/busqueda', queryParams: { category: 'Ojos' }, icon: 'eye' }, // Static string
+    { label: 'Nails', link: '/busqueda', queryParams: { category: 'Uñas' }, icon: 'sparkles' }, // Static string
+    { label: 'Hairstyles', link: '/peinados', icon: 'scissors' }, // Static string
+    { label: 'Nail Designs', link: '/disenos-unas', icon: 'flower-2' }, // Static string
+    { label: 'Offers', link: '/busqueda', queryParams: { sortBy: 'price', order: 'ASC' }, icon: 'tag' } // Static string
   ];
 
   onSearch(searchTerm: string) {

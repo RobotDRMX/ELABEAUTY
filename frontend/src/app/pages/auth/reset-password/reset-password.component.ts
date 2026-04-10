@@ -7,7 +7,6 @@ import {
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
 import { AuthService } from '../../../services/auth.service';
-import { TranslatePipe } from '../../../pipes/translate.pipe';
 
 function passwordsMatchValidator(group: AbstractControl): ValidationErrors | null {
   const password = group.get('newPassword')?.value;
@@ -19,7 +18,7 @@ function passwordsMatchValidator(group: AbstractControl): ValidationErrors | nul
 @Component({
   selector: 'app-reset-password',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, LucideAngularModule, TranslatePipe],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, LucideAngularModule],
   templateUrl: './reset-password.component.html',
   styleUrls: ['../login/login.component.scss', './reset-password.component.scss']
 })
@@ -32,7 +31,7 @@ export class ResetPasswordComponent implements OnInit {
   showPassword = signal(false);
 
   constructor(
-    private fb:          FormBuilder,
+    private fb: FormBuilder,
     private route:       ActivatedRoute,
     private authService: AuthService,
   ) {
@@ -49,7 +48,7 @@ export class ResetPasswordComponent implements OnInit {
   ngOnInit(): void {
     this.token_hash = this.route.snapshot.queryParamMap.get('token_hash') ?? '';
     if (!this.token_hash) {
-      this.error = 'Enlace inválido. Solicita un nuevo enlace de recuperación.';
+      this.error = 'Invalid link. Please request a new recovery link.';
     }
   }
 
@@ -80,13 +79,21 @@ export class ResetPasswordComponent implements OnInit {
     this.loading = true;
     this.error   = '';
 
-    this.authService.resetPassword(this.token_hash, this.form.value.newPassword).subscribe({
+    let recaptchaToken: string;
+    try {
+      recaptchaToken = grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'auth_page_view' }).catch(() => ''); // Use a default empty string if grecaptcha fails
+    } catch {
+      // script still loading — will execute on submit
+      recaptchaToken = ''; // Provide a fallback value
+    }
+
+    this.authService.resetPassword(this.token_hash, this.form.value.newPassword, recaptchaToken).subscribe({
       next: () => {
         this.done    = true;
         this.loading = false;
       },
       error: (err: any) => {
-        this.error   = err.error?.message || 'El enlace es inválido o ya expiró.';
+        this.error   = err.error?.message || 'The link is invalid or has expired.';
         this.loading = false;
       },
     });

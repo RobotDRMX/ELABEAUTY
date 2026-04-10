@@ -1,18 +1,17 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
-import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-not-found',
   standalone: true,
-  imports: [RouterLink, LucideAngularModule, TranslatePipe],
+  imports: [RouterLink, LucideAngularModule],
   template: `
     <div class="not-found-page">
       <lucide-icon name="file-question" [size]="80"></lucide-icon>
-      <h1>{{ 'notfound.title' | translate }}</h1>
-      <p>{{ 'notfound.subtitle' | translate }}</p>
-      <a routerLink="/" class="btn-primary">{{ 'notfound.back_home' | translate }}</a>
+      <h1>Page Not Found</h1>
+      <p>The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
+      <a routerLink="/" class="btn-primary">Go to Homepage</a>
     </div>
   `,
   styles: [`
