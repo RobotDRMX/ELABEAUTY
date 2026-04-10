@@ -9,12 +9,12 @@ import {
   Users, Plus, Pencil, ToggleLeft, ToggleRight, Trash2, CircleUser,
   UserCog, Sparkle, LogOut, Sun, Flower2, ArrowUp, FileQuestion,
   SlidersHorizontal, LoaderCircle, Check, Minus, CircleCheck,
-  MapPin, Menu,
+  MapPin, Menu, Camera, KeyRound, EyeOff
 } from 'lucide-angular';
 
 /**
- * ModuleWithProviders — register once in app.config.ts via importProvidersFrom().
- * This sets up the icon registry globally so all components can use <lucide-icon>.
+ * Global Icon Provider for ELA Beauty.
+ * All icons used in the application MUST be registered here.
  */
 export const LucideIconsModule = LucideAngularModule.pick({
   Heart, Star, Search, X, ArrowRight, ChevronLeft, ChevronRight,
@@ -26,16 +26,10 @@ export const LucideIconsModule = LucideAngularModule.pick({
   Users, Plus, Pencil, ToggleLeft, ToggleRight, Trash2, CircleUser,
   UserCog, Sparkle, LogOut, Sun, Flower2, ArrowUp, FileQuestion,
   SlidersHorizontal, LoaderCircle, Check, Minus, CircleCheck,
-  MapPin, Menu,
+  MapPin, Menu, Camera, KeyRound, EyeOff
 });
 
 /**
  * Bare module class for standalone component imports.
- * Icons are already registered globally — this just makes <lucide-icon> available in templates.
- *
- *   imports: [LucideIcons]
- *
- * Template usage:
- *   <lucide-icon name="heart" [size]="18"></lucide-icon>
  */
 export const LucideIcons = LucideAngularModule;

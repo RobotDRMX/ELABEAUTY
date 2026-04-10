@@ -1,8 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@100..900&display=swap');
 
-/* ===== GLOBAL STYLES & VARIABLES ===== */
+/* 
+  ELA Beauty Master Design System 
+  Refactored for Professionalism, Accessibility and Robustness
+*/
+
 :root {
-  /* ELA Beauty Ethereal Pastel Palette */
+  /* --- Palette: Ethereal Pastel --- */
   --primary-color: #d4a5a5;    
   --primary-light: #e6c2c2;
   --primary-dark: #b88a8a;
@@ -15,31 +19,34 @@
   --gray-200: #e8e1e1;
   --gray-300: #dcd1d1;
 
-  /* Surface tokens */
+  /* --- Surface & UI --- */
   --surface-1: #ffffff;
   --surface-2: #f9f5f3;
   --border-color: #e8e1e1;
   --header-bg: #ffffff;
   --heading-color: #2d2a2a;
 
-  /* Typography */
+  /* --- Typography --- */
   --font-heading: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
 
-  /* Shadows */
-  --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
-  --shadow-md: 0 12px 30px rgba(45, 42, 42, 0.08);
+  /* --- Shadows (Silk soft) --- */
+  --shadow-sm: 0 4px 12px rgba(0,0,0,0.04);
+  --shadow-md: 0 12px 30px rgba(45, 42, 42, 0.06);
   --shadow-lg: 0 20px 50px rgba(0,0,0,0.08);
-  --shadow-pink: 0 10px 30px rgba(212, 165, 165, 0.25);
+  --shadow-pink: 0 10px 30px rgba(212, 165, 165, 0.2);
 
-  /* Transitions */
+  /* --- Motion --- */
   --transition-fast: 0.25s ease;
   --transition-normal: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-bounce: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-silk: 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* ── THEMES ── */
+/* ═══════════════════════════════════════════════════
+   THEME DEFINITIONS (Robust Override System)
+   ═══════════════════════════════════════════════════ */
 
+/* --- DARK THEME --- */
 [data-theme="dark"] {
   --background: #1a1818 !important;
   --surface-1: #252222 !important;
@@ -51,14 +58,16 @@
   --text-secondary: #b0a5a5 !important;
   --primary-color: #e6bcbc !important;
   --gray-100: #2d2a2a !important;
+  --shadow-md: 0 12px 30px rgba(0,0,0,0.4) !important;
 }
 
-[data-theme="protanopia"] { --primary-color: #5d8aa8 !important; }
-[data-theme="deuteranopia"] { --primary-color: #708090 !important; }
-[data-theme="tritanopia"] { --primary-color: #cd5c5c !important; }
-[data-theme="protanomaly"] { --primary-color: #7b96a8 !important; }
-[data-theme="deuteranomaly"] { --primary-color: #8a9a5b !important; }
-[data-theme="tritanomaly"] { --primary-color: #d2691e !important; }
+/* --- COLORBLIND THEMES --- */
+[data-theme="protanopia"]    { --primary-color: #5d8aa8 !important; --accent-color: #5d8aa8 !important; }
+[data-theme="deuteranopia"]  { --primary-color: #708090 !important; --accent-color: #708090 !important; }
+[data-theme="tritanopia"]    { --primary-color: #cd5c5c !important; --accent-color: #cd5c5c !important; }
+[data-theme="protanomaly"]   { --primary-color: #7b96a8 !important; --accent-color: #7b96a8 !important; }
+[data-theme="deuteranomaly"] { --primary-color: #8a9a5b !important; --accent-color: #8a9a5b !important; }
+[data-theme="tritanomaly"]   { --primary-color: #d2691e !important; --accent-color: #d2691e !important; }
 [data-theme="achromatopsia"] {
   --primary-color: #666666 !important;
   --background: #f5f5f5 !important;
@@ -66,9 +75,14 @@
   --heading-color: #000000 !important;
 }
 
-/* ── BASE RESETS ── */
+/* ═══════════════════════════════════════════════════
+   BASE ELEMENTS
+   ═══════════════════════════════════════════════════ */
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
 html { scroll-behavior: smooth; }
+
 body {
   font-family: var(--font-body);
   background-color: var(--background);
@@ -84,41 +98,39 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--heading-color); 
 }
 
-/* ── LAYOUT ── */
+/* ── LAYOUT & CENTERING ── */
 .container {
   max-width: 1280px;
-  margin: 0 auto; /* Standard centering */
+  margin: 0 auto; /* Standard safe centering */
   padding: 0 2rem;
   width: 100%;
 }
 
-.center-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
+/* Grid & Flex Utils for Centering */
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.text-center { text-align: center; }
 
 /* ── BUTTON SYSTEM ── */
 .btn-primary, .btn-maybelline {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 0.85rem 2.2rem;
+  gap: 0.6rem;
+  padding: 1rem 2.5rem;
   background: var(--primary-color);
   color: #fff;
   border: none;
-  border-radius: 30px;
+  border-radius: 50px;
   font-family: var(--font-body);
   font-size: 0.85rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: 2px;
   cursor: pointer;
   transition: all var(--transition-normal);
   text-decoration: none;
   box-shadow: var(--shadow-sm);
+
   &:hover:not(:disabled) {
     background: var(--primary-dark);
     transform: translateY(-3px);
@@ -131,20 +143,21 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 0.85rem 2.2rem;
+  gap: 0.6rem;
+  padding: 1rem 2.5rem;
   background: transparent;
   color: var(--text-primary);
   border: 1.5px solid var(--primary-color);
-  border-radius: 30px;
+  border-radius: 50px;
   font-family: var(--font-body);
   font-size: 0.85rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: 2px;
   cursor: pointer;
   transition: all var(--transition-normal);
   text-decoration: none;
+
   &:hover:not(:disabled) {
     background: var(--primary-color);
     color: #fff;
@@ -153,38 +166,42 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* ── UTILITIES ── */
+/* ── UI COMPONENTS ── */
 .section-title {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
-  margin-bottom: 4rem;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  margin-bottom: 5rem;
   text-align: center;
   position: relative;
-  padding-bottom: 1.5rem;
+  padding-bottom: 2rem;
   &::after {
-    content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-    width: 60px; height: 1px; background: var(--primary-color);
+    content: ''; 
+    position: absolute; 
+    bottom: 0; 
+    left: 50%; 
+    transform: translateX(-50%);
+    width: 80px; 
+    height: 1px; 
+    background: var(--primary-color);
   }
 }
 
+/* Utilities */
+.mt-5 { margin-top: 5rem; }
+.mb-5 { margin-bottom: 5rem; }
 .text-primary { color: var(--primary-color) !important; }
-.text-center  { text-align: center; }
-.mt-5 { margin-top: 4rem; }
-.mb-5 { margin-bottom: 4rem; }
 
-/* ── ANIMATIONS ── */
-@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+/* Animations */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in { animation: fadeIn var(--transition-silk) both; }
+
 @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.spin { animation: spin 1s linear infinite; }
 
-.fade-in { animation: fadeIn 0.8s ease-out both; }
-.scale-in { animation: scaleIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) both; }
-
-/* ── COMPONENTS ── */
-.glass { background: var(--glass-bg-dark); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border-dark); }
-.glass-light { background: var(--glass-bg-light); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border-light); box-shadow: var(--shadow-md); }
-
+/* Skeleton */
 .skeleton {
   background: linear-gradient(90deg, var(--gray-100) 25%, var(--gray-200) 50%, var(--gray-100) 75%);
-  background-size: 600px 100%; animation: shimmer 1.5s infinite linear; border-radius: 8px;
+  background-size: 600px 100%; 
+  animation: shimmer 2s infinite linear; 
+  border-radius: 12px;
 }
 @keyframes shimmer { 0% { background-position: -600px 0; } 100% { background-position: 600px 0; } }

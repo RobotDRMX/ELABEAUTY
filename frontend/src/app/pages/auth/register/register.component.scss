@@ -1,35 +1,46 @@
 @import '../login/login.component.scss';
 
+/* 
+  ELA Beauty — Professional Register Refactor
+*/
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
 .password-rules {
   list-style: none;
-  padding: 12px 0 0;
+  padding: 1rem 0 0;
   margin: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: 0.8rem;
 
   li {
     font-size: 0.72rem;
-    font-weight: 400;
+    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     display: flex;
     align-items: center;
-    gap: 4px;
-    transition: color var(--transition-fast);
+    gap: 6px;
+    transition: all 0.3s;
   }
 }
 
-.rule-ok   { color: #2e7d32; }
-.rule-fail { color: var(--text-secondary); opacity: 0.7; }
+.rule-ok   { color: #2f855a; }
+.rule-fail { color: var(--text-secondary); opacity: 0.6; }
 
-.row {
-  display: flex;
-  gap: 16px;
-
-  .col { flex: 1; }
+.error-msg {
+  font-size: 0.75rem;
+  color: #c53030;
+  margin-top: 0.5rem;
+  font-weight: 500;
 }
 
-@media (max-width: 480px) {
-  .row { flex-direction: column; gap: 20px; }
+@media (max-width: 640px) {
+  .row { grid-template-columns: 1fr; gap: 1.8rem; }
+  .password-rules { grid-template-columns: 1fr; }
 }
