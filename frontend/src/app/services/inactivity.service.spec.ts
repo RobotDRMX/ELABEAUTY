@@ -3,7 +3,7 @@ import { InactivityService } from './inactivity.service';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { NotificationService } from './notification.service';
-import { I18nService } from './i18n.service';
+
 import { signal } from '@angular/core';
 
 describe('InactivityService', () => {
@@ -19,7 +19,6 @@ describe('InactivityService', () => {
     });
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
     mockNotif = jasmine.createSpyObj('NotificationService', ['toast', 'confirm']);
-    mockI18n = jasmine.createSpyObj('I18nService', ['t']);
     mockNotif.confirm.and.returnValue(Promise.resolve(false));
 
     TestBed.configureTestingModule({
@@ -28,7 +27,6 @@ describe('InactivityService', () => {
         { provide: AuthService, useValue: mockAuth },
         { provide: Router, useValue: mockRouter },
         { provide: NotificationService, useValue: mockNotif },
-        { provide: I18nService, useValue: mockI18n },
       ]
     });
     service = TestBed.inject(InactivityService);
