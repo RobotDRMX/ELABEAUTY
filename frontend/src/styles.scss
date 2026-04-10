@@ -1,84 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* 
   ============================================================
-  ELA BEAUTY — MASTER DESIGN SYSTEM 2.0 (Zero Legacy)
-  Engineered by Gemini CLI [Senior Refactor]
+  ELA BEAUTY — DESIGN SYSTEM 3.0 (Absolute Zero)
+  Senior Frontend Architecture | HSL Based
   ============================================================
 */
 
-:root {
-  /* --- HSL BASE TOKENS (Light / Default) --- */
-  --h: 0;      /* Base Hue: Neutral Brown/Rose */
-  --s: 30%;    /* Base Saturation */
-  --l: 98%;    /* Base Lightness (Background) */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@100..900&display=swap');
 
-  /* --- BRAND COLORS --- */
-  --primary-h: 0; 
-  --primary-s: 35%; 
-  --primary-l: 74%; /* #d4a5a5 Dusty Rose */
+:root {
+  /* --- HSL Color Matrix --- */
+  --h: 0;      /* Global Hue (Neutral) */
+  --s: 30%;    /* Global Saturation */
   
-  --primary: hsl(var(--primary-h), var(--primary-s), var(--primary-l));
-  --primary-light: hsl(var(--primary-h), var(--primary-s), calc(var(--primary-l) + 8%));
-  --primary-dark: hsl(var(--primary-h), var(--primary-s), calc(var(--primary-l) - 15%));
-  
-  /* --- NEUTRALS & SURFACES --- */
-  --bg: hsl(var(--h), 20%, 98%); /* Soft Cream #fcf9f7 */
+  /* --- Theme Tokens (Default: Light) --- */
+  --bg: hsl(var(--h), 20%, 98%);
   --surface: hsl(0, 0%, 100%);
-  --surface-dim: hsl(var(--h), 15%, 96%);
+  --surface-low: hsl(var(--h), 15%, 96%);
   --border: hsl(var(--h), 10%, 90%);
   
-  /* --- TEXT & CONTRAST (WCAG AA Compliant) --- */
-  --text-main: hsl(var(--h), 10%, 15%); /* Near Anthracite #262424 */
-  --text-muted: hsl(var(--h), 10%, 40%);
+  /* --- Brand Tokens --- */
+  --primary-h: 0;
+  --primary-s: 35%;
+  --primary-l: 74%; /* Dusty Rose Base */
+  
+  --primary: hsl(var(--primary-h), var(--primary-s), var(--primary-l));
+  --primary-dark: hsl(var(--primary-h), var(--primary-s), calc(var(--primary-l) - 15%));
+  --primary-faded: hsla(var(--primary-h), var(--primary-s), var(--primary-l), 0.15);
+  
+  /* --- Typography & Contrast --- */
+  --text-main: hsl(var(--h), 10%, 15%);
+  --text-muted: hsl(var(--h), 10%, 45%);
   --heading: var(--text-main);
-
-  /* --- ACCENTS --- */
-  --accent: var(--primary);
+  
+  /* --- Functional --- */
   --success: hsl(150, 40%, 35%);
   --error: hsl(0, 60%, 45%);
+  --z-header: 1000;
+  --z-overlay: 2000;
 
-  /* --- TYPOGRAPHY --- */
-  --font-serif: 'Playfair Display', serif;
-  --font-sans: 'Inter', sans-serif;
-  
-  /* --- MOTION --- */
+  /* --- Motion --- */
   --ease-silk: cubic-bezier(0.25, 1, 0.5, 1);
+  --trans-silk: 0.8s var(--ease-silk);
   --trans-fast: 0.3s var(--ease-silk);
-  --trans-slow: 0.8s var(--ease-silk);
 
-  /* --- SHADOWS (Layered Elite System) --- */
-  --shadow-sm: 0 2px 4px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.02);
-  --shadow-md: 0 10px 20px -5px rgba(0,0,0,0.04), 0 4px 6px -2px rgba(0,0,0,0.02);
-  --shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.08);
-  --shadow-brand: 0 15px 35px -5px hsla(var(--primary-h), var(--primary-s), var(--primary-l), 0.25);
+  /* --- Scale: Spacing & Shadows --- */
+  --shadow-silk: 0 20px 40px -10px rgba(0,0,0,0.05);
+  --shadow-intense: 0 30px 60px -12px rgba(0,0,0,0.1);
+  
+  /* --- Fluid Typography (Senior Technique) --- */
+  --fs-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.8rem);
+  --fs-sm: clamp(0.85rem, 0.8rem + 0.3vw, 0.95rem);
+  --fs-base: clamp(1rem, 0.95rem + 0.4vw, 1.15rem);
+  --fs-lg: clamp(1.2rem, 1.1rem + 0.6vw, 1.5rem);
+  --fs-xl: clamp(2rem, 1.8rem + 1.5vw, 3.5rem);
+  --fs-display: clamp(3rem, 2.5rem + 4vw, 6rem);
 }
 
 /* ═══════════════════════════════════════════════════
-   THEME ENGINE (HSL Shift System)
+   THEME ENGINE (HSL Master Control)
    ═══════════════════════════════════════════════════ */
 
-/* --- DARK MODE --- */
 [data-theme="dark"] {
-  --l: 10%;
   --bg: hsl(var(--h), 5%, 8%);
   --surface: hsl(var(--h), 5%, 12%);
-  --surface-dim: hsl(var(--h), 5%, 15%);
+  --surface-low: hsl(var(--h), 5%, 15%);
   --border: hsl(var(--h), 5%, 20%);
   --text-main: hsl(var(--h), 5%, 90%);
   --text-muted: hsl(var(--h), 5%, 65%);
-  --primary-l: 85%; /* Lighter for dark contrast */
+  --primary-l: 85%;
 }
 
-/* --- COLORBLIND MODES (Mathematical Hue Shifts) --- */
-[data-theme="protanopia"]    { --primary-h: 210; --primary-s: 50%; --primary-l: 60%; } /* Blue-based */
-[data-theme="deuteranopia"]  { --primary-h: 200; --primary-s: 40%; --primary-l: 55%; }
-[data-theme="tritanopia"]    { --primary-h: 340; --primary-s: 60%; --primary-l: 65%; } /* Red-based */
+/* Colorblind: Shift Hue mathematically */
+[data-theme="protanopia"]    { --primary-h: 210; }
+[data-theme="deuteranopia"]  { --primary-h: 200; }
+[data-theme="tritanopia"]    { --primary-h: 340; }
 [data-theme="protanomaly"]   { --primary-h: 205; }
 [data-theme="deuteranomaly"] { --primary-h: 195; }
 [data-theme="tritanomaly"]   { --primary-h: 350; }
-[data-theme="achromatopsia"] { --primary-s: 0%; --primary-l: 40%; --text-main: #000; --bg: #fff; }
+[data-theme="achromatopsia"] { --primary-s: 0%; --text-main: #000; --bg: #fff; }
 
 /* ═══════════════════════════════════════════════════
-   CORE RESET & LAYOUT
+   BASE LAYER (Reset & Sanitize)
    ═══════════════════════════════════════════════════ */
 
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
@@ -86,88 +92,61 @@
 html { scroll-behavior: smooth; font-size: 16px; }
 
 body {
-  font-family: var(--font-sans);
+  font-family: 'Inter', sans-serif;
   background-color: var(--bg);
   color: var(--text-main);
   line-height: 1.7;
   overflow-x: hidden;
-  transition: background-color 0.5s ease, color 0.5s ease;
+  transition: background-color 0.5s var(--ease-silk), color 0.5s var(--ease-silk);
 }
 
-h1, h2, h3, h4 { font-family: var(--font-serif); font-weight: 400; line-height: 1.2; color: var(--heading); }
+/* Typography Editorial */
+h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 400; color: var(--heading); }
 
-/* --- Absolute Centering Engine --- */
+/* Centering Engine */
 .container {
-  max-width: 1400px;
+  max-width: 1440px;
   margin: 0 auto;
   padding: 0 2.5rem;
   width: 100%;
 }
 
-.section { padding: 10rem 0; }
-
 /* ═══════════════════════════════════════════════════
-   ELITE UI PRIMITIVES
+   MASTER COMPONENTS (Primitives)
    ═══════════════════════════════════════════════════ */
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.2rem 3.5rem;
-  border-radius: 60px;
-  font-family: var(--font-sans);
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  cursor: pointer;
-  transition: all var(--trans-fast);
-  text-decoration: none;
+/* Elite Button */
+.btn-elite {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 1.2rem 3.5rem; border-radius: 60px;
+  font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.3em;
+  cursor: pointer; transition: all var(--trans-fast); text-decoration: none;
   border: 1px solid transparent;
 }
 
 .btn-primary {
-  background: var(--primary);
-  color: #fff;
-  box-shadow: var(--shadow-brand);
-  &:hover { transform: translateY(-4px); background: var(--primary-dark); box-shadow: 0 20px 40px -10px hsla(var(--primary-h), var(--primary-s), var(--primary-l), 0.4); }
+  background: var(--primary); color: #fff;
+  box-shadow: 0 15px 30px -10px hsla(var(--primary-h), var(--primary-s), var(--primary-l), 0.4);
+  &:hover { transform: translateY(-5px); background: var(--primary-dark); box-shadow: 0 25px 50px -15px hsla(var(--primary-h), var(--primary-s), var(--primary-l), 0.6); }
 }
 
 .btn-outline {
-  background: transparent;
-  color: var(--text-main);
-  border-color: var(--border);
-  &:hover { background: var(--surface-dim); border-color: var(--primary); transform: translateY(-2px); }
+  background: transparent; color: var(--text-main); border-color: var(--border);
+  &:hover { border-color: var(--primary); background: var(--surface-low); transform: translateY(-2px); }
 }
 
-/* --- Typography Utilities --- */
-.text-serif { font-family: var(--font-serif); }
-.italic { font-style: italic; }
+/* Section Header */
+.section-header {
+  margin-bottom: 6rem; text-align: center;
+  .eyebrow { display: block; font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.4em; text-transform: uppercase; color: var(--primary); margin-bottom: 1.5rem; }
+  .title { font-size: var(--fs-xl); }
+}
+
+/* Animation Hooks */
+.reveal { opacity: 0; transform: translateY(30px); transition: all var(--trans-silk); }
+.reveal.active { opacity: 1; transform: translateY(0); }
+
+/* Global Utilities */
 .text-center { text-align: center; }
-.text-spaced { letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.75rem; font-weight: 600; }
-
-/* ═══════════════════════════════════════════════════
-   ANIMATION ORCHESTRATION
-   ═══════════════════════════════════════════════════ */
-
-@keyframes revealUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.reveal { animation: revealUp var(--trans-slow) forwards; opacity: 0; }
-.delay-1 { animation-delay: 0.2s; }
-.delay-2 { animation-delay: 0.4s; }
-.delay-3 { animation-delay: 0.6s; }
-
-/* ═══════════════════════════════════════════════════
-   SCROLLBAR & SELECTION
-   ═══════════════════════════════════════════════════ */
-
-::selection { background: var(--primary-light); color: #fff; }
-
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: var(--primary-l); }
+.italic { font-style: italic; }
+.mt-section { margin-top: 10rem; }
