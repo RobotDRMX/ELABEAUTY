@@ -29,7 +29,4 @@ export const LucideIconsModule = LucideAngularModule.pick({
   MapPin, Menu, Camera, KeyRound, EyeOff
 });
 
-/**
- * Bare module class for standalone component imports.
- */
 export const LucideIcons = LucideAngularModule;

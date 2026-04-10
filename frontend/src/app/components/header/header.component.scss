@@ -1,177 +1,199 @@
 /* 
-  ELA Beauty — Professional Header Refactor
-  Minimalist Luxury Aesthetic
+  ELA Beauty — Elite Header Architecture
+  Senior Design Pattern
 */
 
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: transform 0.4s var(--ease-silk), background 0.4s ease;
 }
 
-/* ── HEADER TOP BAR ── */
-.header-top {
-  background: var(--surface-2);
-  color: var(--text-secondary);
-  border-bottom: 1px solid var(--border-color);
+/* --- Level 1: Utility Bar --- */
+.header-utility {
+  background: var(--surface-dim);
+  border-bottom: 1px solid var(--border);
+  height: 40px;
   font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  
+  .container {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.utility-left { display: flex; align-items: center; gap: 1rem; }
+.utility-right { display: flex; align-items: center; gap: 2rem; }
+
+/* --- Level 2: Branding & Nav --- */
+.header-main {
+  height: 100px;
+  
+  .container {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+  }
+}
+
+.main-nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.nav-link {
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 1rem 1.2rem;
+  transition: all 0.3s var(--ease-silk);
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 1px;
+    background: var(--primary);
+    transition: width 0.4s var(--ease-silk);
+  }
+  
+  &:hover {
+    color: var(--primary-dark);
+    &::after { width: 40%; }
+  }
+  
+  &.active {
+    color: var(--primary);
+    &::after { width: 40%; }
+  }
+}
+
+/* Absolute Center Logo */
+.logo-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  gap: 0.2rem;
+  transition: transform 0.3s var(--ease-silk);
+  
+  &:hover { transform: scale(1.02); }
+}
+
+.logo-text-top {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--primary-dark);
+  letter-spacing: 6px;
+}
+
+.logo-line {
+  width: 50px;
+  height: 1px;
+  background: var(--primary-light);
+}
+
+.logo-text-bottom {
+  font-size: 0.6rem;
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 8px;
+  color: var(--text-muted);
 }
 
-.header-top-content {
+/* --- Level 3: User Actions --- */
+.header-actions {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 40px;
-  width: 100%;
-}
-
-.promo-text {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  opacity: 0.8;
-  svg { stroke: var(--primary-color); }
-}
-
-.header-top-right {
-  display: flex;
+  justify-content: flex-end;
   align-items: center;
   gap: 1.5rem;
 }
 
-.top-link-btn {
-  background: none; border: none;
-  color: inherit; font: inherit; text-transform: inherit;
-  display: flex; align-items: center; gap: 6px;
-  cursor: pointer; opacity: 0.7; transition: opacity 0.3s;
-  &:hover { opacity: 1; }
-  &:disabled { cursor: default; }
-}
-
-.top-sep { width: 1px; height: 12px; background: var(--border-color); }
-
-/* --- Theme Toggle & Lang --- */
-.theme-toggle-group {
-  display: flex; gap: 4px; background: var(--gray-100); padding: 2px; border-radius: 20px;
-}
-.theme-toggle-btn {
-  background: none; border: none; padding: 4px 8px; border-radius: 15px; cursor: pointer; color: var(--text-secondary);
-  &.active { background: white; color: var(--primary-color); box-shadow: var(--shadow-sm); }
-}
-.lang-select, .theme-a11y-select {
-  background: none; border: none; font-size: 0.7rem; color: var(--text-secondary); cursor: pointer; outline: none;
-  &:hover { color: var(--primary-color); }
-  option { background: var(--surface-1); color: var(--text-primary); }
-}
-
-/* ── MAIN HEADER ── */
-header {
-  background: var(--header-bg);
-  position: sticky; top: 0; z-index: 1000;
-  border-bottom: 1px solid var(--border-color);
-  box-shadow: var(--shadow-sm);
-  transition: all 0.4s var(--transition-normal);
-}
-
-.header-content {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr; /* Absolute centering for logo */
-  align-items: center;
-  height: 90px;
-  width: 100%;
-}
-
-/* --- Navigation (Left) --- */
-.main-nav {
-  display: flex; gap: 0.5rem; justify-content: flex-start;
-}
-.nav-link {
-  color: var(--text-primary);
-  text-decoration: none;
-  font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px;
-  padding: 0.8rem 1rem; border-radius: 4px; transition: all 0.3s;
+.action-item {
+  background: none;
+  border: none;
+  color: var(--text-main);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s var(--ease-silk);
   position: relative;
-  &::after {
-    content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-    width: 0; height: 1px; background: var(--primary-color); transition: width 0.3s;
+  
+  &:hover {
+    background: var(--surface-dim);
+    color: var(--primary);
   }
-  &:hover { color: var(--primary-color); &::after { width: 40%; } }
-  &.active { color: var(--primary-color); font-weight: 700; &::after { width: 40%; } }
-}
-
-/* --- Logo (Center) --- */
-.logo-wordmark {
-  display: flex; flex-direction: column; align-items: center; text-decoration: none; gap: 2px;
-  &:hover { opacity: 0.8; }
-}
-.logo-ela { font-family: var(--font-heading); font-size: 2.2rem; color: var(--primary-dark); line-height: 1; letter-spacing: 4px; }
-.logo-line { width: 40px; height: 1px; background: var(--primary-light); margin: 2px 0; }
-.logo-beauty { font-size: 0.55rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 6px; }
-
-/* --- Actions (Right) --- */
-.header-actions {
-  display: flex; align-items: center; justify-content: flex-end; gap: 1rem;
-}
-.search-wrapper { width: 220px; }
-
-.icon-btn {
-  background: none; border: none; cursor: pointer; color: var(--text-primary);
-  display: flex; align-items: center; gap: 6px; padding: 8px; border-radius: 50%;
-  position: relative; transition: all 0.3s;
-  &:hover { background: var(--surface-2); color: var(--primary-color); }
-  svg { display: block; }
 }
 
 .badge {
-  position: absolute; top: 2px; right: 2px; background: var(--primary-color); color: white;
-  font-size: 0.6rem; font-weight: 700; width: 16px; height: 16px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--surface);
 }
 
-.user-profile { display: flex; align-items: center; gap: 0.5rem; }
-.user-label { font-size: 0.75rem; font-weight: 600; max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.admin-badge {
-  display: flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 20px;
-  background: var(--primary-light); color: white; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; text-decoration: none;
+/* --- Selects & Buttons --- */
+.header-select {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: inherit;
+  text-transform: uppercase;
+  cursor: pointer;
+  outline: none;
+  
+  option { background: var(--surface); color: var(--text-main); }
 }
 
-/* ── MOBILE ── */
-.hamburger-btn {
-  display: none; background: none; border: none; cursor: pointer; color: var(--text-primary); padding: 8px;
+.theme-toggle-btn {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+  
+  &:hover, &.active { opacity: 1; color: var(--primary); }
 }
 
-@media (max-width: 1024px) {
-  .header-content { grid-template-columns: auto 1fr auto; gap: 1rem; }
+/* --- Mobile Adaptations --- */
+.hamburger { display: none; }
+
+@media (max-width: 1100px) {
+  .header-main .container { grid-template-columns: auto 1fr auto; gap: 2rem; }
   .main-nav { display: none; }
-  .hamburger-btn { display: block; }
-  .search-wrapper { width: 160px; }
-  .logo-ela { font-size: 1.8rem; }
+  .hamburger { display: block; }
+  .header-utility { display: none; }
+  .header-main { height: 80px; }
+  .logo-text-top { font-size: 2rem; }
 }
-
-@media (max-width: 640px) {
-  .header-top { display: none; }
-  .search-wrapper { display: none; }
-  .user-label { display: none; }
-}
-
-/* ── DRAWER ── */
-.mobile-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 2000; backdrop-filter: blur(4px); }
-.mobile-drawer {
-  position: fixed; top: 0; right: 0; width: 85%; max-width: 320px; height: 100vh;
-  background: var(--surface-1); z-index: 2001; padding: 2.5rem; display: flex; flex-direction: column; gap: 1rem;
-  box-shadow: var(--shadow-lg); animation: slideIn 0.4s var(--transition-normal);
-}
-.mobile-nav-link {
-  font-size: 1.1rem; font-weight: 500; color: var(--text-primary); text-decoration: none; padding: 0.8rem 0; border-bottom: 1px solid var(--border-color);
-}
-.mobile-drawer-divider { height: 1px; background: var(--border-color); margin: 1rem 0; }
-.mobile-drawer-controls { display: flex; justify-content: space-between; align-items: center; }
-.mobile-auth { margin-top: auto; display: flex; flex-direction: column; gap: 1rem; }
-
-@keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }

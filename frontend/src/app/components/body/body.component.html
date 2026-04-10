@@ -1,164 +1,118 @@
-<!-- ===== HERO SECTION ===== -->
-<section class="hero-section">
-  <div class="hero-bg-shapes">
-    <span class="shape shape-1"></span>
-    <span class="shape shape-2"></span>
-    <span class="shape shape-3"></span>
-  </div>
+<!-- 
+  ELA Beauty — Elite Editorial Landing
+  Senior UX Architecture
+-->
 
-  <div class="container">
-    <div class="hero-content center-content">
+<main class="editorial-layout">
 
-      <div class="hero-text fade-in">
-        <span class="hero-eyebrow">{{ 'hero.eyebrow' | translate }}</span>
-        <h1 class="hero-title">
-          {{ 'hero.title_1' | translate }}<br>
-          <span class="hero-title-accent">{{ 'hero.title_2' | translate }}</span>
-        </h1>
-        <p class="hero-subtitle">
-          {{ 'hero.subtitle' | translate }}
-        </p>
-        <div class="hero-actions">
-          <a routerLink="/busqueda" class="btn-hero-primary">
-            <lucide-icon name="grid-2x2" [size]="18"></lucide-icon> {{ 'hero.explore' | translate }}
-          </a>
-          <a routerLink="/busqueda" [queryParams]="{ sortBy: 'price', order: 'ASC' }" class="btn-hero-secondary">
-            {{ 'hero.offers' | translate }} <lucide-icon name="arrow-right" [size]="18"></lucide-icon>
-          </a>
-        </div>
-        <div class="hero-stats">
-          <div class="stat">
-            <strong>+200</strong>
-            <span>{{ 'hero.products' | translate }}</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat">
-            <strong>4.9</strong>
-            <span>{{ 'hero.rating' | translate }}</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat">
-            <strong>+5k</strong>
-            <span>{{ 'hero.clients' | translate }}</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-visual">
-        <div class="hero-icon-grid">
-          <div class="hero-icon-card delay-1">
-            <lucide-icon name="heart" [size]="24"></lucide-icon>
-            <span>{{ 'hero.lips' | translate }}</span>
-          </div>
-          <div class="hero-icon-card delay-2">
-            <lucide-icon name="eye" [size]="24"></lucide-icon>
-            <span>{{ 'hero.eyes' | translate }}</span>
-          </div>
-          <div class="hero-icon-card highlight delay-3">
-            <lucide-icon name="palette" [size]="24"></lucide-icon>
-            <span>{{ 'hero.face' | translate }}</span>
-          </div>
-          <div class="hero-icon-card delay-4">
-            <lucide-icon name="sparkles" [size]="24"></lucide-icon>
-            <span>{{ 'hero.nails' | translate }}</span>
-          </div>
-          <div class="hero-icon-card delay-5">
-            <lucide-icon name="moon" [size]="24"></lucide-icon>
-            <span>{{ 'hero.shadows' | translate }}</span>
-          </div>
-          <div class="hero-icon-card delay-6">
-            <lucide-icon name="circle" [size]="24"></lucide-icon>
-            <span>{{ 'hero.blush' | translate }}</span>
-          </div>
-        </div>
-      </div>
-
+  <!-- ===== SECTION 1: HERO (THE STATEMENT) ===== -->
+  <section class="hero-elite">
+    <div class="hero-bg-canvas">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
     </div>
-  </div>
-</section>
 
-<!-- ===== PROMO TICKER ===== -->
-<div class="promo-ticker">
-  <div class="ticker-track">
-    <span><lucide-icon name="truck" [size]="16"></lucide-icon> {{ 'ticker.free_shipping' | translate }}</span>
-    <span><lucide-icon name="star" [size]="16"></lucide-icon> {{ 'ticker.cruelty_free' | translate }}</span>
-    <span><lucide-icon name="tag" [size]="16"></lucide-icon> {{ 'ticker.discount' | translate }}</span>
-    <span><lucide-icon name="shield" [size]="16"></lucide-icon> {{ 'ticker.returns' | translate }}</span>
-    <span><lucide-icon name="truck" [size]="16"></lucide-icon> {{ 'ticker.free_shipping' | translate }}</span>
-    <span><lucide-icon name="star" [size]="16"></lucide-icon> {{ 'ticker.cruelty_free' | translate }}</span>
-    <span><lucide-icon name="tag" [size]="16"></lucide-icon> {{ 'ticker.discount' | translate }}</span>
-    <span><lucide-icon name="shield" [size]="16"></lucide-icon> {{ 'ticker.returns' | translate }}</span>
-  </div>
-</div>
-
-<!-- ===== CATEGORIES SECTION ===== -->
-<section class="categories-section">
-  <div class="container">
-    <h2 class="section-title" scrollReveal srDirection="up">{{ 'categories.title' | translate }}</h2>
-
-    <div class="categories-grid">
-      <a class="category-card"
-         scrollReveal srDirection="up" [srDelay]="i * 80"
-         *ngFor="let cat of categories; let i = index"
-         routerLink="/busqueda"
-         [queryParams]="{ category: cat.searchKey }">
-        <div class="category-icon-wrap" [style.background]="cat.gradient">
-          <lucide-icon [name]="cat.icon" [size]="20"></lucide-icon>
-        </div>
-        <div class="category-info">
-          <h3>{{ cat.nameKey | translate }}</h3>
-          <p>{{ cat.count }} {{ 'hero.products' | translate | lowercase }}</p>
-        </div>
-        <div class="category-arrow">
-          <lucide-icon name="arrow-right" [size]="16"></lucide-icon>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ===== FEATURED PRODUCTS SECTION ===== -->
-<section class="featured-section">
-  <div class="container">
-    <h2 class="section-title" scrollReveal srDirection="up">{{ 'featured.title' | translate }}</h2>
-
-    <div class="featured-grid">
-      <div class="featured-card"
-           scrollReveal srDirection="scale" [srDelay]="i * 100"
-           *ngFor="let product of featuredProducts; let i = index">
-        <div class="featured-badge">{{ product.badgeKey | translate }}</div>
-        <div class="featured-image" [style.background]="product.gradient">
-          <lucide-icon [name]="product.icon" [size]="32" [color]="product.iconColor"></lucide-icon>
-        </div>
-        <div class="featured-info">
-          <h3>{{ product.nameKey | translate }}</h3>
-          <p>{{ product.descKey | translate }}</p>
-          <div class="featured-footer">
-            <span class="featured-price">${{ product.price }} MXN</span>
-            <a routerLink="/busqueda" class="featured-btn">
-              {{ 'featured.see_more' | translate }} <lucide-icon name="arrow-right" [size]="14"></lucide-icon>
+    <div class="container">
+      <div class="hero-reveal-grid">
+        
+        <div class="hero-content-box reveal">
+          <span class="eyebrow delay-1">{{ 'hero.eyebrow' | translate }}</span>
+          <h1 class="display-title delay-2">
+            {{ 'hero.title_1' | translate }} <br>
+            <span class="italic-serif text-primary">{{ 'hero.title_2' | translate }}</span>
+          </h1>
+          <p class="hero-description delay-3">
+            {{ 'hero.subtitle' | translate }}
+          </p>
+          
+          <div class="hero-cta-group delay-4">
+            <a routerLink="/busqueda" class="btn btn-primary">{{ 'hero.explore' | translate }}</a>
+            <a routerLink="/busqueda" [queryParams]="{ sortBy: 'price', order: 'ASC' }" class="btn btn-outline">
+              {{ 'hero.offers' | translate }}
             </a>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ===== BRAND FEATURES SECTION ===== -->
-<section class="features-section">
-  <div class="container">
-    <h2 class="section-title" scrollReveal srDirection="up">{{ 'philosophy.title' | translate }}</h2>
-    <div class="features-grid">
-      <div class="feature-item"
-           scrollReveal srDirection="up" [srDelay]="i * 120"
-           *ngFor="let feat of brandFeatures; let i = index">
-        <div class="feature-icon-wrap">
-          <lucide-icon [name]="feat.icon" [size]="24"></lucide-icon>
+          <div class="hero-metrics delay-5">
+            <div class="metric">
+              <span class="m-val">+200</span>
+              <span class="m-label">{{ 'hero.products' | translate }}</span>
+            </div>
+            <div class="m-sep"></div>
+            <div class="metric">
+              <span class="m-val">4.9</span>
+              <span class="m-label">{{ 'hero.rating' | translate }}</span>
+            </div>
+            <div class="m-sep"></div>
+            <div class="metric">
+              <span class="m-val">+5k</span>
+              <span class="m-label">{{ 'hero.clients' | translate }}</span>
+            </div>
+          </div>
         </div>
-        <h3>{{ feat.titleKey | translate }}</h3>
-        <p>{{ feat.descKey | translate }}</p>
+
       </div>
     </div>
+  </section>
+
+  <!-- ===== PROMO BAR (THE SILK) ===== -->
+  <div class="promo-ticker-elite">
+    <div class="ticker-track">
+      <span *ngFor="let i of [1,2,3,4]"><lucide-icon name="truck" [size]="16"></lucide-icon> {{ 'ticker.free_shipping' | translate }}</span>
+      <span *ngFor="let i of [1,2,3,4]"><lucide-icon name="star" [size]="16"></lucide-icon> {{ 'ticker.cruelty_free' | translate }}</span>
+      <span *ngFor="let i of [1,2,3,4]"><lucide-icon name="tag" [size]="16"></lucide-icon> {{ 'ticker.discount' | translate }}</span>
+    </div>
   </div>
-</section>
+
+  <!-- ===== SECTION 2: CATEGORIES (THE CURATION) ===== -->
+  <section class="section categories-elite">
+    <div class="container">
+      <header class="section-header text-center">
+        <h2 class="section-title reveal">{{ 'categories.title' | translate }}</h2>
+      </header>
+
+      <div class="category-grid-elite">
+        <a *ngFor="let cat of categories; let i = index" 
+           class="cat-card reveal" 
+           [style.animation-delay]="(i * 0.1) + 's'"
+           routerLink="/busqueda" [queryParams]="{ category: cat.searchKey }">
+          <div class="cat-visual" [style.background]="cat.gradient">
+            <lucide-icon [name]="cat.icon" [size]="32"></lucide-icon>
+          </div>
+          <div class="cat-meta">
+            <h3>{{ cat.nameKey | translate }}</h3>
+            <span class="cat-count">{{ cat.count }} ITEMS</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 3: FEATURED (THE SHOWCASE) ===== -->
+  <section class="section featured-elite">
+    <div class="container">
+      <header class="section-header text-center">
+        <h2 class="section-title reveal">{{ 'featured.title' | translate }}</h2>
+      </header>
+
+      <div class="product-showcase-grid">
+        <div *ngFor="let p of featuredProducts; let i = index" class="product-card-elite reveal" [style.animation-delay]="(i * 0.15) + 's'">
+          <div class="p-image-box" [style.background]="p.gradient">
+            <span class="p-badge">{{ p.badgeKey | translate }}</span>
+            <lucide-icon [name]="p.icon" [size]="48" [color]="p.iconColor"></lucide-icon>
+          </div>
+          <div class="p-info">
+            <h3 class="p-name">{{ p.nameKey | translate }}</h3>
+            <p class="p-desc">{{ p.descKey | translate }}</p>
+            <div class="p-footer">
+              <span class="p-price">${{ p.price }} MXN</span>
+              <a routerLink="/busqueda" class="btn-text">
+                {{ 'featured.see_more' | translate }} <lucide-icon name="arrow-right" [size]="14"></lucide-icon>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
