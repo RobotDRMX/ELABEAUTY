@@ -65,8 +65,23 @@
   display: flex; gap: 2rem; margin-bottom: 5rem;
 }
 
-.btn-hero-primary { @extend .btn-primary; padding: 1.2rem 3rem; }
-.btn-hero-secondary { @extend .btn-secondary; padding: 1.2rem 3rem; }
+.btn-hero-primary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+  padding: 1.2rem 3rem; background: var(--primary-color); color: #fff; border: none;
+  border-radius: 50px; font-family: var(--font-body); font-size: 0.85rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: all var(--transition-normal);
+  text-decoration: none; box-shadow: var(--shadow-sm);
+  &:hover { background: var(--primary-dark); transform: translateY(-3px); box-shadow: var(--shadow-pink); }
+}
+
+.btn-hero-secondary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+  padding: 1.2rem 3rem; background: transparent; color: var(--text-primary);
+  border: 1.5px solid var(--primary-color); border-radius: 50px; font-family: var(--font-body);
+  font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;
+  cursor: pointer; transition: all var(--transition-normal); text-decoration: none;
+  &:hover { background: var(--primary-color); color: #fff; transform: translateY(-3px); box-shadow: var(--shadow-sm); }
+}
 
 .hero-stats {
   display: flex; align-items: center; gap: 4rem;
@@ -141,7 +156,14 @@
 }
 .featured-footer { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
 .featured-price { font-size: 1.4rem; font-weight: 600; color: var(--text-primary); }
-.featured-btn { @extend .btn-ghost; border-radius: 50px; width: 100%; }
+.featured-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.8rem 1.8rem; background: transparent; color: var(--text-secondary);
+  border: 1px solid var(--border-color); border-radius: 50px; font-family: var(--font-body);
+  font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: all var(--transition-fast);
+  text-decoration: none; width: 100%;
+  &:hover { background: var(--gray-100); color: var(--text-primary); border-color: var(--primary-color); }
+}
 
 /* ── BRAND FEATURES ── */
 .features-section { padding: 12rem 0; background: white; }
