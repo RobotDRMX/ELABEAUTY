@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { NotificationService } from '../../services/notification.service';
 import { LucideIcons } from '../../icons.provider';
 import { TranslatePipe } from '../../pipes/translate.pipe';
-import { I18nService } from '../../services/i18n.service';
 
 @Component({
   selector: 'app-footer',
@@ -16,27 +15,27 @@ import { I18nService } from '../../services/i18n.service';
 })
 export class FooterComponent {
   private notif = inject(NotificationService);
-  private i18n = inject(I18nService);
+
   newsletterEmail: string = '';
 
   // Enlaces de atención al cliente
   customerServiceLinks = [
-    { label: 'Contáctanos', link: '/contacto', icon: 'phone' },
-    { label: 'Preguntas Frecuentes', link: '/faq', icon: 'help-circle' },
-    { label: 'Envíos y Devoluciones', link: '/envios', icon: 'truck' },
-    { label: 'Política de Cambios', link: '/cambios', icon: 'arrow-left-right' },
-    { label: 'Garantía de Productos', link: '/garantia', icon: 'award' },
-    { label: 'Guía de Tallas', link: '/tallas', icon: 'ruler' }
+    { label: 'Contact Us', link: '/contacto', icon: 'phone' }, // Static string
+    { label: 'FAQ', link: '/faq', icon: 'help-circle' }, // Static string
+    { label: 'Shipping & Returns', link: '/envios', icon: 'truck' }, // Static string
+    { label: 'Exchange Policy', link: '/cambios', icon: 'arrow-left-right' }, // Static string
+    { label: 'Product Warranty', link: '/garantia', icon: 'award' }, // Static string
+    { label: 'Size Guide', link: '/tallas', icon: 'ruler' } // Static string
   ];
 
   // Enlaces de información
   infoLinks = [
-    { label: 'Sobre Nosotros', link: '/sobre-nosotros', icon: 'info' },
-    { label: 'Nuestras Tiendas', link: '/tiendas', icon: 'store' },
-    { label: 'Blog de Belleza', link: '/blog', icon: 'book-open' },
-    { label: 'Programa de Lealtad', link: '/lealtad', icon: 'crown' },
-    { label: 'Términos de Uso', link: '/terminos-de-uso', icon: 'file-text' },
-    { label: 'Política de Privacidad', link: '/privacidad', icon: 'shield' }
+    { label: 'About Us', link: '/sobre-nosotros', icon: 'info' }, // Static string
+    { label: 'Our Stores', link: '/tiendas', icon: 'store' }, // Static string
+    { label: 'Beauty Blog', link: '/blog', icon: 'book-open' }, // Static string
+    { label: 'Loyalty Program', link: '/lealtad', icon: 'crown' }, // Static string
+    { label: 'Terms of Use', link: '/terminos-de-uso', icon: 'file-text' }, // Static string
+    { label: 'Privacy Policy', link: '/privacidad', icon: 'shield' } // Static string
   ];
 
   // Redes sociales (inline SVG paths — Lucide has no brand icons)
@@ -63,7 +62,7 @@ export class FooterComponent {
   // Método para suscribir al newsletter
   subscribeNewsletter() {
     if (this.newsletterEmail) {
-      this.notif.toast(this.i18n.t('footer.newsletter_success'), 'success');
+      this.notif.toast('Newsletter subscribed successfully!', 'success'); // Static string
       this.newsletterEmail = '';
     }
   }
