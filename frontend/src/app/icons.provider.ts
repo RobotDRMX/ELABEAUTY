@@ -9,6 +9,7 @@ import {
   Users, Plus, Pencil, ToggleLeft, ToggleRight, Trash2, CircleUser,
   UserCog, Sparkle, LogOut, Sun, Flower2, ArrowUp, FileQuestion,
   SlidersHorizontal, LoaderCircle, Check, Minus, CircleCheck,
+  MapPin, Menu,
 } from 'lucide-angular';
 
 /**
@@ -25,6 +26,7 @@ export const LucideIconsModule = LucideAngularModule.pick({
   Users, Plus, Pencil, ToggleLeft, ToggleRight, Trash2, CircleUser,
   UserCog, Sparkle, LogOut, Sun, Flower2, ArrowUp, FileQuestion,
   SlidersHorizontal, LoaderCircle, Check, Minus, CircleCheck,
+  MapPin, Menu,
 });
 
 /**
