@@ -98,7 +98,7 @@ export class RegisterComponent implements OnInit {
         try {
             recaptchaToken = await grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'register' });
         } catch {
-            this        .error   = 'Error al verificar seguridad. Recarga la página e inténtalo de nuevo.';
+            this.error   = 'Error al verificar seguridad. Recarga la página e inténtalo de nuevo.';
             this.loading = false;
             return;
         }
