@@ -1,0 +1,19 @@
+Current Changes:
+1. Angular CLI and Core updated to v18.
+2. Zoneless execution enabled by removing zone.js from build polyfills.
+3. Nx integrated into the workspace.
+4. Tailwind CSS installed and configured.
+5. ThemeService created and integrated into app.component.ts.
+6. Custom I18nService removed, imports and usages replaced with static strings in inactivity.service.spec.ts, i18n-title.strategy.ts, cart.component.ts, and footer.component.ts.
+7. Most components confirmed as standalone.
+
+Pending Changes:
+1. Complete i18n migration to official Angular i18n (lazy loading, template updates, language switcher).
+2. Finalize component standalone conversion (if any remaining).
+3. Migrate state management to Angular signals.
+4. Implement animations for routes, lists, and micro-interactions.
+5. Implement advanced design elements (parallax, 3D hover cards, infinite scroll with CDK Virtual Scroll).
+6. Address accessibility improvements (WCAG AA, ARIA, keyboard navigation).
+7. Further performance optimizations (@defer blocks, build optimizations).
+8. Ensure responsive design using Tailwind CSS.
+9. Remove the custom TranslatePipe.
