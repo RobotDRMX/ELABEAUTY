@@ -26,6 +26,7 @@
     "install:all": "npm install && cd frontend && npm install"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@nestjs/axios": "^4.0.1",
     "@nestjs/cli": "^11.0.0",
     "@nestjs/common": "^11.0.1",
