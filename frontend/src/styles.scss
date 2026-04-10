@@ -1,39 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@100..900&display=swap');
+
 /* ===== GLOBAL STYLES ===== */
 :root {
-  /* ELA Beauty Color Palette */
-  --primary-color: #e6007e;
-  --primary-light: #ff4da6;
-  --primary-dark: #b3005e;
-  --secondary-color: #000000;
-  --accent-color: #e6007e;
-  --background: #ffffff;
-  --text-primary: #000000;
-  --text-secondary: #666666;
-  --gray-100: #f5f5f5;
-  --gray-200: #eeeeee;
-  --gray-300: #e0e0e0;
+  /* ELA Beauty Ethereal Pastel Palette */
+  --primary-color: #d4a5a5;    /* Dusty Rose */
+  --primary-light: #e6c2c2;
+  --primary-dark: #b88a8a;
+  --secondary-color: #3a3a3a;  /* Anthracite */
+  --accent-color: #d4a5a5;
+  --background: #fcf9f7;       /* Soft Cream */
+  --text-primary: #3a3a3a;
+  --text-secondary: #7a7a7a;
+  --gray-100: #f2eded;
+  --gray-200: #e8e1e1;
+  --gray-300: #dcd1d1;
 
-  /* Surface tokens — usar en lugar de 'white' y '#fafafa' hardcodeados */
-  --surface-1: #ffffff;    /* cards, inputs, paneles */
-  --surface-2: #fafafa;    /* fondos de sección */
-  --border-color: #e0e0e0; /* bordes generales */
-  --header-bg: #000000;    /* fondo del header — siempre oscuro */
-  --heading-color: #000000; /* color de títulos/headings */
+  /* Surface tokens */
+  --surface-1: #ffffff;
+  --surface-2: #f9f5f3;
+  --border-color: #e8e1e1;
+  --header-bg: #ffffff;
+  --heading-color: #3a3a3a;
 
   /* Typography */
-  --font-heading: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
-  --font-body: 'Open Sans', Arial, sans-serif;
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
 
-  /* Shadows */
-  --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
-  --shadow-md: 0 8px 25px rgba(0,0,0,0.10);
-  --shadow-lg: 0 15px 40px rgba(0,0,0,0.14);
-  --shadow-pink: 0 8px 25px rgba(230, 0, 126, 0.25);
+  /* Shadows - More subtle and soft */
+  --shadow-sm: 0 4px 12px rgba(0,0,0,0.03);
+  --shadow-md: 0 12px 30px rgba(212, 165, 165, 0.12);
+  --shadow-lg: 0 20px 50px rgba(0,0,0,0.06);
+  --shadow-pink: 0 10px 30px rgba(212, 165, 165, 0.2);
 
-  /* Transitions */
-  --transition-fast: 0.2s ease;
-  --transition-normal: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  --transition-bounce: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  /* Transitions - Smoother silk-like ease */
+  --transition-fast: 0.25s ease;
+  --transition-normal: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* Glassmorphism */
   --glass-bg-dark:   rgba(255, 255, 255, 0.06);
