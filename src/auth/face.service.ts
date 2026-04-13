@@ -47,15 +47,25 @@ export class FaceService {
       // Not JSON — must be encrypted
     }
 
-    const data = Buffer.from(stored, 'base64');
-    const iv = data.subarray(0, 12);
-    const tag = data.subarray(12, 28);
-    const ciphertext = data.subarray(28);
+    try {
+      const data = Buffer.from(stored, 'base64');
+      const iv = data.subarray(0, 12);
+      const tag = data.subarray(12, 28);
+      const ciphertext = data.subarray(28);
 
-    const decipher = createDecipheriv('aes-256-gcm', this.encryptionKey, iv);
-    decipher.setAuthTag(tag);
-    const decrypted = Buffer.concat([decipher.update(ciphertext), decipher.final()]);
-    return JSON.parse(decrypted.toString('utf8'));
+      const decipher = createDecipheriv('aes-256-gcm', this.encryptionKey, iv);
+      decipher.setAuthTag(tag);
+      const decrypted = Buffer.concat([decipher.update(ciphertext), decipher.final()]);
+      return JSON.parse(decrypted.toString('utf8'));
+    } catch (err) {
+      this.logger.error(
+        'Error al descifrar descriptor facial. Posible corrupcion de datos o clave de cifrado incorrecta.',
+        err,
+      );
+      throw new BadRequestException(
+        'No se pudo verificar el descriptor facial. El dato puede estar corrupto o la clave de cifrado cambio. Registra tu rostro de nuevo desde tu perfil.',
+      );
+    }
   }
 
   async saveDescriptor(userId: number, descriptor: number[]): Promise<{ saved: boolean }> {

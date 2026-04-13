@@ -17,24 +17,22 @@ export class FooterComponent {
 
   newsletterEmail: string = '';
 
-  // Enlaces de atención al cliente
   customerServiceLinks = [
-    { label: 'Contact Us', link: '/contacto', icon: 'phone' }, // Static string
-    { label: 'FAQ', link: '/faq', icon: 'help-circle' }, // Static string
-    { label: 'Shipping & Returns', link: '/envios', icon: 'truck' }, // Static string
-    { label: 'Exchange Policy', link: '/cambios', icon: 'arrow-left-right' }, // Static string
-    { label: 'Product Warranty', link: '/garantia', icon: 'award' }, // Static string
-    { label: 'Size Guide', link: '/tallas', icon: 'ruler' } // Static string
+    { label: $localize`:@@footerContactUs:Contact Us`,       link: '/contacto',      icon: 'phone' },
+    { label: $localize`:@@footerFaq:FAQ`,                    link: '/faq',           icon: 'help-circle' },
+    { label: $localize`:@@footerShipping:Shipping & Returns`, link: '/envios',       icon: 'truck' },
+    { label: $localize`:@@footerExchange:Exchange Policy`,   link: '/cambios',       icon: 'arrow-left-right' },
+    { label: $localize`:@@footerWarranty:Product Warranty`,  link: '/garantia',      icon: 'award' },
+    { label: $localize`:@@footerSizeGuide:Size Guide`,       link: '/tallas',        icon: 'ruler' },
   ];
 
-  // Enlaces de información
   infoLinks = [
-    { label: 'About Us', link: '/sobre-nosotros', icon: 'info' }, // Static string
-    { label: 'Our Stores', link: '/tiendas', icon: 'store' }, // Static string
-    { label: 'Beauty Blog', link: '/blog', icon: 'book-open' }, // Static string
-    { label: 'Loyalty Program', link: '/lealtad', icon: 'crown' }, // Static string
-    { label: 'Terms of Use', link: '/terminos-de-uso', icon: 'file-text' }, // Static string
-    { label: 'Privacy Policy', link: '/privacidad', icon: 'shield' } // Static string
+    { label: $localize`:@@footerAboutUs:About Us`,           link: '/sobre-nosotros', icon: 'info' },
+    { label: $localize`:@@footerStores:Our Stores`,          link: '/tiendas',        icon: 'store' },
+    { label: $localize`:@@footerBlog:Beauty Blog`,           link: '/blog',           icon: 'book-open' },
+    { label: $localize`:@@footerLoyalty:Loyalty Program`,    link: '/lealtad',        icon: 'crown' },
+    { label: $localize`:@@footerTerms:Terms of Use`,         link: '/terminos-de-uso', icon: 'file-text' },
+    { label: $localize`:@@footerPrivacy:Privacy Policy`,     link: '/privacidad',     icon: 'shield' },
   ];
 
   // Redes sociales (inline SVG paths — Lucide has no brand icons)
@@ -46,7 +44,6 @@ export class FooterComponent {
     { name: 'Twitter',  url: 'https://twitter.com/maybelline',    svgPath: 'M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z' },
   ];
 
-  // Métodos de pago (text labels only — brand SVGs not needed)
   paymentMethods = [
     { name: 'Visa' },
     { name: 'Mastercard' },
@@ -55,13 +52,11 @@ export class FooterComponent {
     { name: 'Apple Pay' },
   ];
 
-  // Año actual para copyright
   currentYear: number = new Date().getFullYear();
 
-  // Método para suscribir al newsletter
   subscribeNewsletter() {
     if (this.newsletterEmail) {
-      this.notif.toast('Newsletter subscribed successfully!', 'success'); // Static string
+      this.notif.toast($localize`:@@newsletterSuccess:Subscribed successfully!`, 'success');
       this.newsletterEmail = '';
     }
   }

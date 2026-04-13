@@ -58,7 +58,16 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   togglingFavorite = signal<Set<number>>(new Set());
   justAdded = signal<Set<number>>(new Set());
 
+  // DB values (must match what is stored in the database)
   ageOptions: string[] = ['Adolescentes', 'Jóvenes', 'Adultos', 'Todas'];
+
+  // Display labels for each DB value — translated via $localize
+  ageDisplayLabels: Record<string, string> = {
+    'Adolescentes': $localize`:@@ageTeens:Teens`,
+    'Jóvenes':      $localize`:@@ageYoungAdults:Young Adults`,
+    'Adultos':      $localize`:@@ageAdults:Adults`,
+    'Todas':        $localize`:@@ageAll:All Ages`,
+  };
 
   filters = {
     minPrice: '',

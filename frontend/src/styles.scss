@@ -51,6 +51,7 @@
   --primary-light: hsl(var(--primary-h), var(--primary-s), calc(var(--primary-l) + 12%));
   --surface-dim: hsl(var(--h), 15%, 95%);
   --font-serif: 'Playfair Display', serif;
+  --footer-bg: hsl(var(--h), 8%, 10%); /* Fixed dark footer — intentionally theme-independent */
 
   /* --- Scale: Spacing & Shadows --- */
   --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);

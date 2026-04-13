@@ -163,11 +163,16 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // WebAuthn / browser errors
-    const name    = e?.name ?? '';
-    const message = (e?.message ?? e?.error?.message ?? '').toLowerCase();
+    // JSON parse failure — server returned non-JSON (HTML error page, cold-start splash, etc.)
+    if (e?.error instanceof SyntaxError || e?.name === 'SyntaxError') {
+      this.error = 'El servidor no está disponible. Espera unos segundos e inténtalo de nuevo.';
+      return;
+    }
 
-    if (name === 'NotAllowedError' || message.includes('timed out') || message.includes('not allowed')) {
+    // WebAuthn / browser errors (these have e.name set by the browser, not HTTP status)
+    const name = e?.name ?? '';
+
+    if (name === 'NotAllowedError' || name === 'SecurityError') {
       this.error = 'Se agotó el tiempo o cancelaste la operación. Pulsa el botón de nuevo cuando estés listo.';
       return;
     }
@@ -177,13 +182,30 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
 
+    // For HttpErrorResponse, e.message is the HTTP framework string ("Http failure response for ...").
+    // The actual server error message lives in e.error.message (parsed JSON body).
+    const serverMsg = (typeof e?.error === 'object' && e.error !== null)
+      ? String(e.error?.message ?? '')
+      : '';
+    const message = (serverMsg || e?.message || '').toLowerCase();
+
     if (message.includes('no passkey') || message.includes('no credentials') || message.includes('sin passkey') || message.includes('no tiene passkey')) {
       this.error = 'No tienes un Passkey registrado. Inicia sesión con tu contraseña y regístralo desde tu perfil.';
       return;
     }
 
-    if (message.includes('rostro no reconocido') || message.includes('no se detectó')) {
+    if (message.includes('rostro no reconocido') || message.includes('no se detectó') || message.includes('no se reconocio')) {
       this.error = 'No se reconoció tu rostro. Asegúrate de tener buena iluminación y mira de frente a la cámara.';
+      return;
+    }
+
+    if (message.includes('descriptor facial') || message.includes('corrupto') || message.includes('cifrado')) {
+      this.error = 'Error en el descriptor facial. Por favor registra tu rostro de nuevo desde tu perfil.';
+      return;
+    }
+
+    if (message.includes('timed out') || message.includes('not allowed')) {
+      this.error = 'Se agotó el tiempo de la operación. Inténtalo de nuevo.';
       return;
     }
 
@@ -193,8 +215,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // Generic fallback
-    this.error = e?.error?.message || e?.message || 'Algo salió mal. Inténtalo de nuevo.';
+    // Generic fallback — prefer server message over the HTTP framework message
+    this.error = serverMsg || e?.message || 'Algo salió mal. Inténtalo de nuevo.';
   }
 
   private startCountdown(seconds: number): void {

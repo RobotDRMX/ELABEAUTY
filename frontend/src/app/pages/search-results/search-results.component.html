@@ -1,16 +1,21 @@
 <div class="search-results-page">
   <div class="container">
     <div class="search-header">
-      <h1>Products</h1>
-      <p class="subtitle" *ngIf="query">Results for <strong>"{{ query }}"</strong></p>
-      <p class="subtitle" *ngIf="category && !query">Category: <strong>"{{ category }}"</strong></p>
+      <h1 i18n="@@searchPageTitle">Products</h1>
+      <p class="subtitle" *ngIf="query">
+        <span i18n="@@searchResultsFor">Results for</span> <strong>"{{ query }}"</strong>
+      </p>
+      <p class="subtitle" *ngIf="category && !query">
+        <span i18n="@@searchCategory">Category:</span> <strong>"{{ category }}"</strong>
+      </p>
     </div>
 
     <!-- Mobile filter trigger -->
     <div class="mobile-filter-bar">
       <button class="btn-secondary mobile-filter-btn" (click)="drawerOpen.set(true)">
         <lucide-icon name="sliders-horizontal" [size]="16"></lucide-icon>
-        {{ activeFilterCount > 0 ? 'Active Filters (' + activeFilterCount + ')' : 'Filters' }}
+        <span *ngIf="activeFilterCount > 0" i18n="@@activeFiltersCount">Active Filters ({{ activeFilterCount }})</span>
+        <span *ngIf="activeFilterCount === 0" i18n="@@filtersBtn">Filters</span>
       </button>
     </div>
 
@@ -25,13 +30,13 @@
         <div class="filter-overlay" (click)="drawerOpen.set(false)"></div>
         <div class="filter-drawer">
           <div class="filter-drawer-header">
-            <h3>Filters</h3>
-            <button (click)="drawerOpen.set(false)" aria-label="Close filters">
+            <h3 i18n="@@filtersTitle">Filters</h3>
+            <button (click)="drawerOpen.set(false)" i18n-aria-label="@@closeFiltersAria" aria-label="Close filters">
               <lucide-icon name="x" [size]="20"></lucide-icon>
             </button>
           </div>
           <ng-container *ngTemplateOutlet="filterContent"></ng-container>
-          <button class="btn-primary" (click)="applyFilters(); drawerOpen.set(false)">
+          <button class="btn-primary" (click)="applyFilters(); drawerOpen.set(false)" i18n="@@applyFiltersBtn">
             Apply Filters
           </button>
         </div>
@@ -40,65 +45,76 @@
       <!-- Filter content template -->
       <ng-template #filterContent>
         <div class="filter-section header-section">
-          <h3>Filters</h3>
-          <button class="clear-filters-btn" (click)="clearFilters()">Clear all</button>
+          <h3 i18n="@@filtersTitle">Filters</h3>
+          <button class="clear-filters-btn" (click)="clearFilters()" i18n="@@clearAllBtn">Clear all</button>
         </div>
 
-        <!-- Filtro de Disponibilidad -->
+        <!-- Availability filter -->
         <div class="filter-section">
-          <h4>Availability</h4>
+          <h4 i18n="@@filterAvailability">Availability</h4>
           <label class="checkbox-container">
             <input type="checkbox" [(ngModel)]="filters.onlyInStock" (change)="applyFilters()">
             <span class="checkmark"></span>
-            In Stock Only
+            <span i18n="@@filterInStockOnly">In Stock Only</span>
           </label>
         </div>
 
-        <!-- Filtro de Edad -->
+        <!-- Target age filter -->
         <div class="filter-section">
-          <h4>Target Age</h4>
+          <h4 i18n="@@filterTargetAge">Target Age</h4>
           <select class="filter-select" [(ngModel)]="filters.targetAge" (change)="applyFilters()">
-            <option value="">All Ages</option>
-            <option *ngFor="let age of ageOptions" [value]="age">{{ age }}</option>
+            <option value="" i18n="@@filterAllAges">All Ages</option>
+            <option *ngFor="let age of ageOptions" [value]="age">{{ ageDisplayLabels[age] }}</option>
           </select>
         </div>
 
-        <!-- Filtro de Precio -->
+        <!-- Price range filter -->
         <div class="filter-section">
-          <h4>Price Range</h4>
+          <h4 i18n="@@filterPriceRange">Price Range</h4>
           <div class="price-inputs">
             <div class="input-group">
               <span>$</span>
-              <input type="number" placeholder="Min" [(ngModel)]="filters.minPrice" (keyup.enter)="applyFilters()">
+              <input type="number"
+                placeholder="Min"
+                i18n-placeholder="@@priceMinPlaceholder"
+                [(ngModel)]="filters.minPrice"
+                (keyup.enter)="applyFilters()">
             </div>
             <div class="input-group">
               <span>$</span>
-              <input type="number" placeholder="Max" [(ngModel)]="filters.maxPrice" (keyup.enter)="applyFilters()">
+              <input type="number"
+                placeholder="Max"
+                i18n-placeholder="@@priceMaxPlaceholder"
+                [(ngModel)]="filters.maxPrice"
+                (keyup.enter)="applyFilters()">
             </div>
           </div>
-          <button class="apply-price-btn" (click)="applyFilters()">Apply</button>
+          <button class="apply-price-btn" (click)="applyFilters()" i18n="@@applyPriceBtn">Apply</button>
         </div>
 
-        <!-- Ordenamiento -->
+        <!-- Sort filter -->
         <div class="filter-section">
-          <h4>Sort By</h4>
+          <h4 i18n="@@filterSortBy">Sort By</h4>
           <select class="filter-select" [(ngModel)]="filters.sortBy" (change)="applyFilters()">
-            <option value="created_at">Newest First</option>
-            <option value="price">Price</option>
-            <option value="name">Name</option>
-            <option value="rating">Rating</option>
+            <option value="created_at" i18n="@@sortNewest">Newest First</option>
+            <option value="price" i18n="@@sortPrice">Price</option>
+            <option value="name" i18n="@@sortName">Name</option>
+            <option value="rating" i18n="@@sortRating">Rating</option>
           </select>
           <select class="filter-select mt-2" [(ngModel)]="filters.order" (change)="applyFilters()">
-            <option value="DESC">Descending</option>
-            <option value="ASC">Ascending</option>
+            <option value="DESC" i18n="@@sortDescending">Descending</option>
+            <option value="ASC" i18n="@@sortAscending">Ascending</option>
           </select>
         </div>
       </ng-template>
 
-      <!-- Grid de Productos -->
+      <!-- Products grid -->
       <main class="products-main">
         <div class="results-bar" *ngIf="!isLoading()">
-          <p>{{ total }} products found</p>
+          <p>
+            <strong>{{ total }}</strong>
+            <span i18n="@@productsFound"> products found</span>
+          </p>
         </div>
 
         <!-- Skeleton loading -->
@@ -122,57 +138,57 @@
           <lucide-icon name="circle-alert" [size]="18"></lucide-icon> {{ error }}
         </div>
 
-        <!-- Sin resultados — contextual -->
+        <!-- No results — contextual -->
         <div class="no-results" *ngIf="!isLoading() && products().length === 0">
           <div class="no-results-content">
             <lucide-icon name="search" [size]="48"></lucide-icon>
 
             @switch (emptyReason) {
               @case ('text') {
-                <h3>No results found for your search</h3>
-                <button class="btn-secondary" (click)="query = ''; applyFilters()">
+                <h3 i18n="@@noResultsText">No results found for your search</h3>
+                <button class="btn-secondary" (click)="query = ''; applyFilters()" i18n="@@resetSearch">
                   Reset Search
                 </button>
               }
               @case ('price') {
-                <h3>No products in this price range</h3>
-                <button class="btn-secondary" (click)="filters.minPrice = ''; filters.maxPrice = ''; applyFilters()">
+                <h3 i18n="@@noResultsPrice">No products in this price range</h3>
+                <button class="btn-secondary" (click)="filters.minPrice = ''; filters.maxPrice = ''; applyFilters()" i18n="@@resetPrice">
                   Reset Price
                 </button>
               }
               @case ('category+text') {
-                <h3>No results in this category</h3>
-                <button class="btn-secondary" (click)="query = ''; applyFilters()">
+                <h3 i18n="@@noResultsCategory">No results in this category</h3>
+                <button class="btn-secondary" (click)="query = ''; applyFilters()" i18n="@@resetSearch">
                   Reset Search
                 </button>
               }
               @case ('stock') {
-                <h3>Currently out of stock</h3>
-                <button class="btn-secondary" (click)="filters.onlyInStock = false; applyFilters()">
+                <h3 i18n="@@noResultsStock">Currently out of stock</h3>
+                <button class="btn-secondary" (click)="filters.onlyInStock = false; applyFilters()" i18n="@@showAllProducts">
                   Show all products
                 </button>
               }
               @default {
-                <h3>No results found</h3>
-                <p>Try adjusting your filters or search terms.</p>
+                <h3 i18n="@@noResultsDefault">No results found</h3>
+                <p i18n="@@noResultsHint">Try adjusting your filters or search terms.</p>
               }
             }
 
-            <button class="suggestion-btn" (click)="clearFilters()">See All Products</button>
+            <button class="suggestion-btn" (click)="clearFilters()" i18n="@@seeAllProducts">See All Products</button>
           </div>
         </div>
 
-        <!-- Grid with Stagger Animation -->
+        <!-- Products grid with stagger animation -->
         <div class="products-grid" *ngIf="products().length > 0" [@listAnimation]="products().length">
-          <div class="product-card" 
-               [class.out-of-stock]="product.stock === 0" 
+          <div class="product-card"
+               [class.out-of-stock]="product.stock === 0"
                *ngFor="let product of products()"
                appTilt [tiltMax]="10">
             <div class="product-image">
               <img [src]="product.image_url | safeImage" [alt]="product.name"
                 (error)="onImgError($event)">
 
-              <button class="favorite-overlay-btn" 
+              <button class="favorite-overlay-btn"
                 [class.active]="isFavorite(product.id)"
                 [disabled]="togglingFavorite().has(product.id)"
                 (click)="toggleFavorite(product); $event.stopPropagation()"
@@ -184,8 +200,8 @@
                 }
               </button>
 
-              <div class="stock-badge" *ngIf="product.stock === 0">Sold Out</div>
-              <div class="age-badge">{{ product.target_age }}</div>
+              <div class="stock-badge" *ngIf="product.stock === 0" i18n="@@soldOut">Sold Out</div>
+              <div class="age-badge">{{ ageDisplayLabels[product.target_age] || product.target_age }}</div>
             </div>
 
             <div class="product-info">
@@ -217,9 +233,9 @@
           </div>
         </div>
 
-        <!-- Paginación -->
+        <!-- Pagination -->
         <div class="pagination" *ngIf="totalPages > 1 && !isLoading()">
-          <button class="page-btn" [disabled]="page === 1" (click)="changePage(page - 1)" aria-label="Previous page">
+          <button class="page-btn" [disabled]="page === 1" (click)="changePage(page - 1)" i18n-aria-label="@@prevPageAria" aria-label="Previous page">
             <lucide-icon name="chevron-left" [size]="18"></lucide-icon>
           </button>
 
@@ -229,7 +245,7 @@
             </button>
           </div>
 
-          <button class="page-btn" [disabled]="page === totalPages" (click)="changePage(page + 1)" aria-label="Next page">
+          <button class="page-btn" [disabled]="page === totalPages" (click)="changePage(page + 1)" i18n-aria-label="@@nextPageAria" aria-label="Next page">
             <lucide-icon name="chevron-right" [size]="18"></lucide-icon>
           </button>
         </div>

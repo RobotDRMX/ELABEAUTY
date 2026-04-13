@@ -526,6 +526,232 @@
         <source>Sign In</source>
         <target>Iniciar Sesión</target>
       </trans-unit>
+
+      <!-- Search results page -->
+      <trans-unit id="searchPageTitle" datatype="html">
+        <source>Products</source>
+        <target>Productos</target>
+      </trans-unit>
+      <trans-unit id="searchResultsFor" datatype="html">
+        <source>Results for</source>
+        <target>Resultados para</target>
+      </trans-unit>
+      <trans-unit id="searchCategory" datatype="html">
+        <source>Category:</source>
+        <target>Categoría:</target>
+      </trans-unit>
+      <trans-unit id="activeFiltersCount" datatype="html">
+        <source>Active Filters (<x id="INTERPOLATION" equiv-text="{{ activeFilterCount }}"/>)</source>
+        <target>Filtros activos (<x id="INTERPOLATION" equiv-text="{{ activeFilterCount }}"/>)</target>
+      </trans-unit>
+      <trans-unit id="filtersBtn" datatype="html">
+        <source>Filters</source>
+        <target>Filtros</target>
+      </trans-unit>
+      <trans-unit id="filtersTitle" datatype="html">
+        <source>Filters</source>
+        <target>Filtros</target>
+      </trans-unit>
+      <trans-unit id="closeFiltersAria" datatype="html">
+        <source>Close filters</source>
+        <target>Cerrar filtros</target>
+      </trans-unit>
+      <trans-unit id="applyFiltersBtn" datatype="html">
+        <source>Apply Filters</source>
+        <target>Aplicar Filtros</target>
+      </trans-unit>
+      <trans-unit id="clearAllBtn" datatype="html">
+        <source>Clear all</source>
+        <target>Limpiar todo</target>
+      </trans-unit>
+      <trans-unit id="filterAvailability" datatype="html">
+        <source>Availability</source>
+        <target>Disponibilidad</target>
+      </trans-unit>
+      <trans-unit id="filterInStockOnly" datatype="html">
+        <source>In Stock Only</source>
+        <target>Solo en existencia</target>
+      </trans-unit>
+      <trans-unit id="filterTargetAge" datatype="html">
+        <source>Target Age</source>
+        <target>Edad objetivo</target>
+      </trans-unit>
+      <trans-unit id="filterAllAges" datatype="html">
+        <source>All Ages</source>
+        <target>Todas las edades</target>
+      </trans-unit>
+      <trans-unit id="filterPriceRange" datatype="html">
+        <source>Price Range</source>
+        <target>Rango de precio</target>
+      </trans-unit>
+      <trans-unit id="priceMinPlaceholder" datatype="html">
+        <source>Min</source>
+        <target>Mín</target>
+      </trans-unit>
+      <trans-unit id="priceMaxPlaceholder" datatype="html">
+        <source>Max</source>
+        <target>Máx</target>
+      </trans-unit>
+      <trans-unit id="applyPriceBtn" datatype="html">
+        <source>Apply</source>
+        <target>Aplicar</target>
+      </trans-unit>
+      <trans-unit id="filterSortBy" datatype="html">
+        <source>Sort By</source>
+        <target>Ordenar por</target>
+      </trans-unit>
+      <trans-unit id="sortNewest" datatype="html">
+        <source>Newest First</source>
+        <target>Más recientes</target>
+      </trans-unit>
+      <trans-unit id="sortPrice" datatype="html">
+        <source>Price</source>
+        <target>Precio</target>
+      </trans-unit>
+      <trans-unit id="sortName" datatype="html">
+        <source>Name</source>
+        <target>Nombre</target>
+      </trans-unit>
+      <trans-unit id="sortRating" datatype="html">
+        <source>Rating</source>
+        <target>Valoración</target>
+      </trans-unit>
+      <trans-unit id="sortDescending" datatype="html">
+        <source>Descending</source>
+        <target>Descendente</target>
+      </trans-unit>
+      <trans-unit id="sortAscending" datatype="html">
+        <source>Ascending</source>
+        <target>Ascendente</target>
+      </trans-unit>
+      <trans-unit id="productsFound" datatype="html">
+        <source> products found</source>
+        <target> productos encontrados</target>
+      </trans-unit>
+      <trans-unit id="soldOut" datatype="html">
+        <source>Sold Out</source>
+        <target>Agotado</target>
+      </trans-unit>
+      <trans-unit id="noResultsText" datatype="html">
+        <source>No results found for your search</source>
+        <target>No se encontraron resultados para tu búsqueda</target>
+      </trans-unit>
+      <trans-unit id="resetSearch" datatype="html">
+        <source>Reset Search</source>
+        <target>Limpiar búsqueda</target>
+      </trans-unit>
+      <trans-unit id="noResultsPrice" datatype="html">
+        <source>No products in this price range</source>
+        <target>No hay productos en este rango de precio</target>
+      </trans-unit>
+      <trans-unit id="resetPrice" datatype="html">
+        <source>Reset Price</source>
+        <target>Limpiar precio</target>
+      </trans-unit>
+      <trans-unit id="noResultsCategory" datatype="html">
+        <source>No results in this category</source>
+        <target>No hay resultados en esta categoría</target>
+      </trans-unit>
+      <trans-unit id="noResultsStock" datatype="html">
+        <source>Currently out of stock</source>
+        <target>Actualmente sin existencia</target>
+      </trans-unit>
+      <trans-unit id="showAllProducts" datatype="html">
+        <source>Show all products</source>
+        <target>Mostrar todos los productos</target>
+      </trans-unit>
+      <trans-unit id="noResultsDefault" datatype="html">
+        <source>No results found</source>
+        <target>No se encontraron resultados</target>
+      </trans-unit>
+      <trans-unit id="noResultsHint" datatype="html">
+        <source>Try adjusting your filters or search terms.</source>
+        <target>Intenta ajustar tus filtros o términos de búsqueda.</target>
+      </trans-unit>
+      <trans-unit id="seeAllProducts" datatype="html">
+        <source>See All Products</source>
+        <target>Ver todos los productos</target>
+      </trans-unit>
+      <trans-unit id="prevPageAria" datatype="html">
+        <source>Previous page</source>
+        <target>Página anterior</target>
+      </trans-unit>
+      <trans-unit id="nextPageAria" datatype="html">
+        <source>Next page</source>
+        <target>Página siguiente</target>
+      </trans-unit>
+
+      <!-- Age display labels ($localize in TS) -->
+      <trans-unit id="ageTeens" datatype="html">
+        <source>Teens</source>
+        <target>Adolescentes</target>
+      </trans-unit>
+      <trans-unit id="ageYoungAdults" datatype="html">
+        <source>Young Adults</source>
+        <target>Jóvenes</target>
+      </trans-unit>
+      <trans-unit id="ageAdults" datatype="html">
+        <source>Adults</source>
+        <target>Adultos</target>
+      </trans-unit>
+      <trans-unit id="ageAll" datatype="html">
+        <source>All Ages</source>
+        <target>Todas</target>
+      </trans-unit>
+
+      <!-- Footer link labels ($localize in TS) -->
+      <trans-unit id="footerContactUs" datatype="html">
+        <source>Contact Us</source>
+        <target>Contáctanos</target>
+      </trans-unit>
+      <trans-unit id="footerFaq" datatype="html">
+        <source>FAQ</source>
+        <target>Preguntas frecuentes</target>
+      </trans-unit>
+      <trans-unit id="footerShipping" datatype="html">
+        <source>Shipping &amp; Returns</source>
+        <target>Envíos y devoluciones</target>
+      </trans-unit>
+      <trans-unit id="footerExchange" datatype="html">
+        <source>Exchange Policy</source>
+        <target>Política de cambios</target>
+      </trans-unit>
+      <trans-unit id="footerWarranty" datatype="html">
+        <source>Product Warranty</source>
+        <target>Garantía del producto</target>
+      </trans-unit>
+      <trans-unit id="footerSizeGuide" datatype="html">
+        <source>Size Guide</source>
+        <target>Guía de tallas</target>
+      </trans-unit>
+      <trans-unit id="footerAboutUs" datatype="html">
+        <source>About Us</source>
+        <target>Sobre nosotros</target>
+      </trans-unit>
+      <trans-unit id="footerStores" datatype="html">
+        <source>Our Stores</source>
+        <target>Nuestras tiendas</target>
+      </trans-unit>
+      <trans-unit id="footerBlog" datatype="html">
+        <source>Beauty Blog</source>
+        <target>Blog de belleza</target>
+      </trans-unit>
+      <trans-unit id="footerLoyalty" datatype="html">
+        <source>Loyalty Program</source>
+        <target>Programa de lealtad</target>
+      </trans-unit>
+      <trans-unit id="footerTerms" datatype="html">
+        <source>Terms of Use</source>
+        <target>Términos de uso</target>
+      </trans-unit>
+      <trans-unit id="footerPrivacy" datatype="html">
+        <source>Privacy Policy</source>
+        <target>Política de privacidad</target>
+      </trans-unit>
+      <trans-unit id="newsletterSuccess" datatype="html">
+        <source>Subscribed successfully!</source>
+        <target>¡Suscripción exitosa!</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
