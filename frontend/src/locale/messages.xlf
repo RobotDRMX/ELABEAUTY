@@ -289,6 +289,13 @@
           <context context-type="linenumber">99,102</context>
         </context-group>
       </trans-unit>
+    <trans-unit id="search-input-placeholder" datatype="html">
+      <source>Search for products, brands, categories...</source>
+      <context-group purpose="location">
+        <context context-type="sourcefile">frontend/src/app/components/search/search.component.html</context>
+        <context context-type="linenumber">8</context>
+      </context-group>
+    </trans-unit>
     </body>
-  </file>
-</xliff>
+    </file>
+    </xliff>

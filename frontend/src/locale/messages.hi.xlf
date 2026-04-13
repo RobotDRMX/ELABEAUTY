@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="en-US" target-language="es" datatype="plaintext" original="ng2.template">
+  <file source-language="en-US" target-language="hi" datatype="plaintext" original="ng2.template">
     <body>
       <trans-unit id="heroEyebrow" datatype="html">
         <source>LUXURY MAKEUP</source>
-        <target>MAQUILLAJE DE LUJO</target>
+        <target>लक्ज़री मेकअप</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">19,20</context>
@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="heroTitle" datatype="html">
         <source> Elevate your <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;italic-serif text-primary&quot;&gt;"/>Natural Beauty<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
-        <target> Eleva tu <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;italic-serif text-primary&quot;&gt;"/>Belleza Natural<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></target>
+        <target> अपनी <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;italic-serif text-primary&quot;&gt;"/>प्राकृतिक सुंदरता<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> निखारें</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">21,23</context>
@@ -20,7 +20,7 @@
       </trans-unit>
       <trans-unit id="heroSubtitle" datatype="html">
         <source> Discover our curated collection of high-performance beauty products designed for the modern individual. </source>
-        <target> Descubre nuestra colección curada de productos de belleza de alto rendimiento diseñados para el individuo moderno. </target>
+        <target> आधुनिक व्यक्ति के लिए डिज़ाइन किए गए उच्च-प्रदर्शन सौंदर्य उत्पादों के हमारे क्यूरेटेड संग्रह की खोज करें। </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">25,26</context>
@@ -28,7 +28,7 @@
       </trans-unit>
       <trans-unit id="heroExplore" datatype="html">
         <source>Explore Shop</source>
-        <target>Explorar Tienda</target>
+        <target>शॉप एक्सप्लोर करें</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">29,30</context>
@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="heroOffers" datatype="html">
         <source> Exclusive Offers </source>
-        <target> Ofertas Exclusivas </target>
+        <target> विशेष ऑफ़र </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">31,32</context>
@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="heroProducts" datatype="html">
         <source>Products</source>
-        <target>Productos</target>
+        <target>उत्पाद</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">38,39</context>
@@ -52,7 +52,7 @@
       </trans-unit>
       <trans-unit id="heroRating" datatype="html">
         <source>Rating</source>
-        <target>Valoración</target>
+        <target>रेटिंग</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">43,44</context>
@@ -60,7 +60,7 @@
       </trans-unit>
       <trans-unit id="heroClients" datatype="html">
         <source>Clients</source>
-        <target>Clientes</target>
+        <target>ग्राहक</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">48,49</context>
@@ -68,7 +68,7 @@
       </trans-unit>
       <trans-unit id="tickerFreeShipping" datatype="html">
         <source>Free Shipping</source>
-        <target>Envío Gratis</target>
+        <target>मुफ़्त शिपिंग</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">60,61</context>
@@ -76,7 +76,7 @@
       </trans-unit>
       <trans-unit id="tickerCrueltyFree" datatype="html">
         <source>Cruelty Free</source>
-        <target>Libre de Crueldad</target>
+        <target>क्रूरता-मुक्त</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">61,62</context>
@@ -84,7 +84,7 @@
       </trans-unit>
       <trans-unit id="tickerDiscount" datatype="html">
         <source>Members Discount</source>
-        <target>Descuento Miembros</target>
+        <target>सदस्य छूट</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">62,64</context>
@@ -92,7 +92,7 @@
       </trans-unit>
       <trans-unit id="categoriesTitle" datatype="html">
         <source>Shop by Category</source>
-        <target>Comprar por Categoría</target>
+        <target>श्रेणी द्वारा खरीदारी</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">70,73</context>
@@ -100,7 +100,7 @@
       </trans-unit>
       <trans-unit id="catItems" datatype="html">
         <source>ITEMS</source>
-        <target>ARTÍCULOS</target>
+        <target>आइटम</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">83,84</context>
@@ -108,7 +108,7 @@
       </trans-unit>
       <trans-unit id="featuredTitle" datatype="html">
         <source>Featured Selection</source>
-        <target>Selección Destacada</target>
+        <target>विशेष चयन</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">94,97</context>
@@ -116,7 +116,7 @@
       </trans-unit>
       <trans-unit id="featuredSeeMore" datatype="html">
         <source>See More</source>
-        <target>Ver Más</target>
+        <target>और देखें</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">109</context>
@@ -124,7 +124,7 @@
       </trans-unit>
       <trans-unit id="footerAbout" datatype="html">
         <source>Discover the best in professional beauty and cosmetics. We offer a wide range of high-quality products to help you express your unique style.</source>
-        <target>Descubre lo mejor en belleza y cosmética profesional. Ofrecemos una amplia gama de productos de alta calidad para ayudarte a expresar tu estilo único.</target>
+        <target>पेशेवर सौंदर्य और कॉस्मेटिक्स में सर्वश्रेष्ठ की खोज करें। हम आपकी अनूठी शैली को व्यक्त करने में मदद के लिए उच्च-गुणवत्ता वाले उत्पादों की एक विस्तृत श्रृंखला प्रदान करते हैं।</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">7,8</context>
@@ -132,7 +132,7 @@
       </trans-unit>
       <trans-unit id="footerSince" datatype="html">
         <source>Empowering beauty since 2024 💄</source>
-        <target>Potenciando la belleza desde 2024 💄</target>
+        <target>2024 से सौंदर्य को सशक्त बनाना 💄</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">8,9</context>
@@ -140,7 +140,7 @@
       </trans-unit>
       <trans-unit id="footerCustomerService" datatype="html">
         <source>Customer Service</source>
-        <target>Servicio al Cliente</target>
+        <target>ग्राहक सेवा</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">21,22</context>
@@ -148,7 +148,7 @@
       </trans-unit>
       <trans-unit id="footerInformation" datatype="html">
         <source>Information</source>
-        <target>Información</target>
+        <target>जानकारी</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">29,30</context>
@@ -156,7 +156,7 @@
       </trans-unit>
       <trans-unit id="footerNewsletterTitle" datatype="html">
         <source>Newsletter</source>
-        <target>Boletín Informativo</target>
+        <target>न्यूज़लेटर</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">37,38</context>
@@ -164,7 +164,7 @@
       </trans-unit>
       <trans-unit id="footerNewsletterDesc" datatype="html">
         <source>Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.</source>
-        <target>Suscríbete para recibir ofertas especiales, obsequios gratuitos y promociones únicas.</target>
+        <target>विशेष ऑफ़र, मुफ़्त उपहार और एक बार के सौदे पाने के लिए सदस्यता लें।</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">38,39</context>
@@ -172,7 +172,7 @@
       </trans-unit>
       <trans-unit id="footerSubscribeBtn" datatype="html">
         <source>Subscribe</source>
-        <target>Suscribirse</target>
+        <target>सदस्यता लें</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">42,44</context>
@@ -180,7 +180,7 @@
       </trans-unit>
       <trans-unit id="footerPaymentMethods" datatype="html">
         <source>Payment Methods</source>
-        <target>Métodos de Pago</target>
+        <target>भुगतान विधियाँ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">47,48</context>
@@ -188,7 +188,7 @@
       </trans-unit>
       <trans-unit id="footerRights" datatype="html">
         <source>All rights reserved.</source>
-        <target>Todos los derechos reservados.</target>
+        <target>सर्वाधिकार सुरक्षित।</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">59,60</context>
@@ -196,7 +196,7 @@
       </trans-unit>
       <trans-unit id="footerMadeWith" datatype="html">
         <source>Made with <x id="START_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;lucide-icon name=&quot;heart&quot; [size]=&quot;14&quot; style=&quot;color: var(--primary-color); display: inline-flex; vertical-align: middle;&quot;&gt;"/><x id="CLOSE_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;/lucide-icon&gt;"/> for beauty lovers</source>
-        <target>Hecho con <x id="START_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;lucide-icon name=&quot;heart&quot; [size]=&quot;14&quot; style=&quot;color: var(--primary-color); display: inline-flex; vertical-align: middle;&quot;&gt;"/><x id="CLOSE_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;/lucide-icon&gt;"/> para amantes de la belleza</target>
+        <target>सौंदर्य प्रेमियों के लिए <x id="START_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;lucide-icon name=&quot;heart&quot; [size]=&quot;14&quot; style=&quot;color: var(--primary-color); display: inline-flex; vertical-align: middle;&quot;&gt;"/><x id="CLOSE_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;/lucide-icon&gt;"/> के साथ बनाया गया</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">60,62</context>
@@ -204,7 +204,7 @@
       </trans-unit>
       <trans-unit id="footerInspiredBy" datatype="html">
         <source>Inspired by</source>
-        <target>Inspirado en</target>
+        <target>प्रेरित</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">66,67</context>
@@ -212,7 +212,7 @@
       </trans-unit>
       <trans-unit id="footerOwnDev" datatype="html">
         <source>Own Development</source>
-        <target>Desarrollo Propio</target>
+        <target>स्वयं विकास</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">72,74</context>
@@ -220,7 +220,7 @@
       </trans-unit>
       <trans-unit id="footerPrivacyLink" datatype="html">
         <source>Privacy Policy</source>
-        <target>Política de Privacidad</target>
+        <target>गोपनीयता नीति</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">77,78</context>
@@ -228,7 +228,7 @@
       </trans-unit>
       <trans-unit id="footerTermsLink" datatype="html">
         <source>Terms of Use</source>
-        <target>Términos de Uso</target>
+        <target>उपयोग की शर्तें</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">78,79</context>
@@ -236,7 +236,7 @@
       </trans-unit>
       <trans-unit id="footerCookiesLink" datatype="html">
         <source>Cookies Policy</source>
-        <target>Política de Cookies</target>
+        <target>कुकीज़ नीति</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">79,82</context>
@@ -244,7 +244,7 @@
       </trans-unit>
       <trans-unit id="headerFreeShipping" datatype="html">
         <source><x id="START_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;lucide-icon name=&quot;truck&quot; [size]=&quot;14&quot;&gt;"/><x id="CLOSE_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;/lucide-icon&gt;"/> Free Shipping on all orders </source>
-        <target><x id="START_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;lucide-icon name=&quot;truck&quot; [size]=&quot;14&quot;&gt;"/><x id="CLOSE_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;/lucide-icon&gt;"/> Envío Gratis en todos los pedidos </target>
+        <target><x id="START_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;lucide-icon name=&quot;truck&quot; [size]=&quot;14&quot;&gt;"/><x id="CLOSE_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;/lucide-icon&gt;"/> सभी ऑर्डर पर मुफ़्त शिपिंग </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/header/header.component.html</context>
           <context context-type="linenumber">7,9</context>
@@ -252,7 +252,7 @@
       </trans-unit>
       <trans-unit id="themeLightTitle" datatype="html">
         <source>Light Mode</source>
-        <target>Modo Claro</target>
+        <target>लाइट मोड</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/header/header.component.html</context>
           <context context-type="linenumber">14,15</context>
@@ -260,7 +260,7 @@
       </trans-unit>
       <trans-unit id="themeDarkTitle" datatype="html">
         <source>Dark Mode</source>
-        <target>Modo Oscuro</target>
+        <target>डार्क मोड</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/header/header.component.html</context>
           <context context-type="linenumber">17,18</context>
@@ -268,7 +268,7 @@
       </trans-unit>
       <trans-unit id="accessibilityTitle" datatype="html">
         <source>♿ ACCESIBILIDAD</source>
-        <target>♿ ACCESIBILIDAD</target>
+        <target>♿ पहुंच</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/header/header.component.html</context>
           <context context-type="linenumber">21,22</context>
@@ -276,7 +276,7 @@
       </trans-unit>
       <trans-unit id="mobileMenuAriaLabel" datatype="html">
         <source>Toggle mobile menu</source>
-        <target>Alternar menú móvil</target>
+        <target>मोबाइल मेनू टॉगल करें</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/header/header.component.html</context>
           <context context-type="linenumber">47,48</context>
@@ -284,7 +284,7 @@
       </trans-unit>
       <trans-unit id="favoritesTitle" datatype="html">
         <source>Favorites</source>
-        <target>Favoritos</target>
+        <target>पसंदीदा</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/header/header.component.html</context>
           <context context-type="linenumber">64,65</context>
@@ -292,7 +292,7 @@
       </trans-unit>
       <trans-unit id="cartTitle" datatype="html">
         <source>Shopping Cart</source>
-        <target>Carrito de Compras</target>
+        <target>शॉपिंग कार्ट</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/header/header.component.html</context>
           <context context-type="linenumber">69,70</context>
@@ -300,7 +300,7 @@
       </trans-unit>
       <trans-unit id="accountTitle" datatype="html">
         <source>My Account</source>
-        <target>Mi Cuenta</target>
+        <target>मेरा खाता</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/header/header.component.html</context>
           <context context-type="linenumber">74,75</context>
@@ -308,7 +308,7 @@
       </trans-unit>
       <trans-unit id="loginLink" datatype="html">
         <source> Login </source>
-        <target> Iniciar Sesión </target>
+        <target> लॉगिन </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/header/header.component.html</context>
           <context context-type="linenumber">79,80</context>
@@ -316,7 +316,7 @@
       </trans-unit>
       <trans-unit id="loginButtonMobile" datatype="html">
         <source>Login</source>
-        <target>Iniciar Sesión</target>
+        <target>लॉगिन</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/header/header.component.html</context>
           <context context-type="linenumber">96,98</context>
@@ -324,7 +324,7 @@
       </trans-unit>
       <trans-unit id="logoutButtonMobile" datatype="html">
         <source>Logout</source>
-        <target>Cerrar Sesión</target>
+        <target>लॉगआउट</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/header/header.component.html</context>
           <context context-type="linenumber">99,102</context>
@@ -334,427 +334,423 @@
       <!-- Language switcher -->
       <trans-unit id="langEnTitle" datatype="html">
         <source>English</source>
-        <target>Inglés</target>
+        <target>अंग्रेज़ी</target>
       </trans-unit>
       <trans-unit id="langEsTitle" datatype="html">
         <source>Español</source>
-        <target>Español</target>
+        <target>स्पेनिश</target>
       </trans-unit>
 
       <!-- Mobile drawer extras -->
       <trans-unit id="mobileFavorites" datatype="html">
         <source>Favorites</source>
-        <target>Favoritos</target>
+        <target>पसंदीदा</target>
       </trans-unit>
       <trans-unit id="mobileCart" datatype="html">
         <source>Shopping Cart</source>
-        <target>Carrito de Compras</target>
+        <target>शॉपिंग कार्ट</target>
       </trans-unit>
       <trans-unit id="mobileAccount" datatype="html">
         <source>My Account</source>
-        <target>Mi Cuenta</target>
+        <target>मेरा खाता</target>
       </trans-unit>
 
       <!-- Login form -->
       <trans-unit id="loginTitle" datatype="html">
         <source>Sign In</source>
-        <target>Iniciar Sesión</target>
+        <target>साइन इन करें</target>
       </trans-unit>
       <trans-unit id="loginSubtitle" datatype="html">
         <source>Welcome back to ELA Beauty</source>
-        <target>Bienvenida de vuelta a ELA Beauty</target>
+        <target>ELA Beauty में वापस आपका स्वागत है</target>
       </trans-unit>
       <trans-unit id="emailLabel" datatype="html">
         <source>Email</source>
-        <target>Correo electrónico</target>
+        <target>ईमेल</target>
       </trans-unit>
       <trans-unit id="emailPlaceholder" datatype="html">
         <source>your@email.com</source>
-        <target>tu@correo.com</target>
+        <target>aapka@email.com</target>
       </trans-unit>
       <trans-unit id="emailRequired" datatype="html">
         <source>Email is required</source>
-        <target>El correo es obligatorio</target>
+        <target>ईमेल आवश्यक है</target>
       </trans-unit>
       <trans-unit id="emailInvalid" datatype="html">
         <source>Please enter a valid email</source>
-        <target>Ingresa un correo válido</target>
+        <target>कृपया एक वैध ईमेल दर्ज करें</target>
       </trans-unit>
       <trans-unit id="passwordLabel" datatype="html">
         <source>Password</source>
-        <target>Contraseña</target>
+        <target>पासवर्ड</target>
       </trans-unit>
       <trans-unit id="passwordPlaceholder" datatype="html">
         <source>Your password</source>
-        <target>Tu contraseña</target>
+        <target>आपका पासवर्ड</target>
       </trans-unit>
       <trans-unit id="passwordRequired" datatype="html">
         <source>Password is required</source>
-        <target>La contraseña es obligatoria</target>
+        <target>पासवर्ड आवश्यक है</target>
       </trans-unit>
       <trans-unit id="rateLimit" datatype="html">
         <source>Too many attempts. Please wait before trying again.</source>
-        <target>Demasiados intentos. Por favor espera antes de intentarlo de nuevo.</target>
+        <target>बहुत अधिक प्रयास। कृपया पुनः प्रयास करने से पहले प्रतीक्षा करें।</target>
       </trans-unit>
       <trans-unit id="submitLogin" datatype="html">
         <source>Sign In</source>
-        <target>Iniciar Sesión</target>
+        <target>साइन इन करें</target>
       </trans-unit>
       <trans-unit id="loadingText" datatype="html">
         <source>Loading…</source>
-        <target>Cargando…</target>
+        <target>लोड हो रहा है…</target>
       </trans-unit>
       <trans-unit id="biometricOr" datatype="html">
         <source>Or continue with</source>
-        <target>O continuar con</target>
+        <target>या इसके साथ जारी रखें</target>
       </trans-unit>
       <trans-unit id="passkeyBtn" datatype="html">
         <source>Passkey</source>
-        <target>Passkey</target>
+        <target>पासकी</target>
       </trans-unit>
       <trans-unit id="faceRecognitionBtn" datatype="html">
         <source>Face Recognition</source>
-        <target>Reconocimiento Facial</target>
+        <target>चेहरा पहचान</target>
       </trans-unit>
       <trans-unit id="faceHint" datatype="html">
         <source>Position your face in the camera</source>
-        <target>Coloca tu rostro frente a la cámara</target>
+        <target>अपना चेहरा कैमरे में रखें</target>
       </trans-unit>
       <trans-unit id="faceHintSmall" datatype="html">
         <source>Make sure you have good lighting and look straight ahead</source>
-        <target>Asegúrate de tener buena iluminación y mira de frente</target>
+        <target>सुनिश्चित करें कि आपके पास अच्छी रोशनी है और सीधे आगे देखें</target>
       </trans-unit>
       <trans-unit id="verifyFaceBtn" datatype="html">
         <source>Verify Face</source>
-        <target>Verificar Rostro</target>
+        <target>चेहरा सत्यापित करें</target>
       </trans-unit>
       <trans-unit id="cancelBtn" datatype="html">
         <source>Cancel</source>
-        <target>Cancelar</target>
+        <target>रद्द करें</target>
       </trans-unit>
       <trans-unit id="forgotPasswordLink" datatype="html">
         <source>Forgot your password?</source>
-        <target>¿Olvidaste tu contraseña?</target>
+        <target>पासवर्ड भूल गए?</target>
       </trans-unit>
       <trans-unit id="noAccount" datatype="html">
         <source>Don't have an account?</source>
-        <target>¿No tienes una cuenta?</target>
+        <target>खाता नहीं है?</target>
       </trans-unit>
       <trans-unit id="registerLink" datatype="html">
         <source>Create one</source>
-        <target>Crear una</target>
+        <target>बनाएं</target>
       </trans-unit>
 
       <!-- Register form -->
       <trans-unit id="registerTitle" datatype="html">
         <source>Create Account</source>
-        <target>Crear Cuenta</target>
+        <target>खाता बनाएं</target>
       </trans-unit>
       <trans-unit id="registerSubtitle" datatype="html">
         <source>Join the ELA Beauty community</source>
-        <target>Únete a la comunidad de ELA Beauty</target>
+        <target>ELA Beauty समुदाय में शामिल हों</target>
       </trans-unit>
       <trans-unit id="firstNameLabel" datatype="html">
         <source>First Name</source>
-        <target>Nombre</target>
+        <target>पहला नाम</target>
       </trans-unit>
       <trans-unit id="firstNamePlaceholder" datatype="html">
         <source>Your first name</source>
-        <target>Tu nombre</target>
+        <target>आपका पहला नाम</target>
       </trans-unit>
       <trans-unit id="paternalLabel" datatype="html">
         <source>Last Name</source>
-        <target>Apellido Paterno</target>
+        <target>उपनाम</target>
       </trans-unit>
       <trans-unit id="paternalPlaceholder" datatype="html">
         <source>Your last name</source>
-        <target>Tu apellido paterno</target>
+        <target>आपका उपनाम</target>
       </trans-unit>
       <trans-unit id="maternalLabel" datatype="html">
         <source>Second Last Name</source>
-        <target>Apellido Materno</target>
+        <target>दूसरा उपनाम</target>
       </trans-unit>
       <trans-unit id="maternalPlaceholder" datatype="html">
         <source>Optional</source>
-        <target>Opcional</target>
+        <target>वैकल्पिक</target>
       </trans-unit>
       <trans-unit id="passwordMinLength" datatype="html">
         <source>Min. 8 characters</source>
-        <target>Mín. 8 caracteres</target>
+        <target>न्यूनतम 8 वर्ण</target>
       </trans-unit>
       <trans-unit id="ruleMinLength" datatype="html">
         <source>At least 8 characters</source>
-        <target>Al menos 8 caracteres</target>
+        <target>कम से कम 8 वर्ण</target>
       </trans-unit>
       <trans-unit id="ruleUpper" datatype="html">
         <source>One uppercase letter</source>
-        <target>Una letra mayúscula</target>
+        <target>एक बड़ा अक्षर</target>
       </trans-unit>
       <trans-unit id="ruleLower" datatype="html">
         <source>One lowercase letter</source>
-        <target>Una letra minúscula</target>
+        <target>एक छोटा अक्षर</target>
       </trans-unit>
       <trans-unit id="ruleNumber" datatype="html">
         <source>One number</source>
-        <target>Un número</target>
+        <target>एक संख्या</target>
       </trans-unit>
       <trans-unit id="confirmPasswordLabel" datatype="html">
         <source>Confirm Password</source>
-        <target>Confirmar Contraseña</target>
+        <target>पासवर्ड की पुष्टि करें</target>
       </trans-unit>
       <trans-unit id="confirmPasswordPlaceholder" datatype="html">
         <source>Repeat your password</source>
-        <target>Repite tu contraseña</target>
+        <target>अपना पासवर्ड दोहराएं</target>
       </trans-unit>
       <trans-unit id="passwordsNoMatch" datatype="html">
         <source>Passwords do not match</source>
-        <target>Las contraseñas no coinciden</target>
+        <target>पासवर्ड मेल नहीं खाते</target>
       </trans-unit>
       <trans-unit id="submitRegister" datatype="html">
         <source>Create Account</source>
-        <target>Crear Cuenta</target>
+        <target>खाता बनाएं</target>
       </trans-unit>
       <trans-unit id="loadingRegister" datatype="html">
         <source>Creating account…</source>
-        <target>Creando cuenta…</target>
+        <target>खाता बनाया जा रहा है…</target>
       </trans-unit>
       <trans-unit id="alreadyAccount" datatype="html">
         <source>Already have an account?</source>
-        <target>¿Ya tienes una cuenta?</target>
-      </trans-unit>
-      <trans-unit id="loginLink" datatype="html">
-        <source>Sign In</source>
-        <target>Iniciar Sesión</target>
+        <target>पहले से खाता है?</target>
       </trans-unit>
 
       <!-- Search results page -->
       <trans-unit id="searchPageTitle" datatype="html">
         <source>Products</source>
-        <target>Productos</target>
+        <target>उत्पाद</target>
       </trans-unit>
       <trans-unit id="searchResultsFor" datatype="html">
         <source>Results for</source>
-        <target>Resultados para</target>
+        <target>के लिए परिणाम</target>
       </trans-unit>
       <trans-unit id="searchCategory" datatype="html">
         <source>Category:</source>
-        <target>Categoría:</target>
+        <target>श्रेणी:</target>
       </trans-unit>
       <trans-unit id="activeFiltersCount" datatype="html">
         <source>Active Filters (<x id="INTERPOLATION" equiv-text="{{ activeFilterCount }}"/>)</source>
-        <target>Filtros activos (<x id="INTERPOLATION" equiv-text="{{ activeFilterCount }}"/>)</target>
+        <target>सक्रिय फ़िल्टर (<x id="INTERPOLATION" equiv-text="{{ activeFilterCount }}"/>)</target>
       </trans-unit>
       <trans-unit id="filtersBtn" datatype="html">
         <source>Filters</source>
-        <target>Filtros</target>
+        <target>फ़िल्टर</target>
       </trans-unit>
       <trans-unit id="filtersTitle" datatype="html">
         <source>Filters</source>
-        <target>Filtros</target>
+        <target>फ़िल्टर</target>
       </trans-unit>
       <trans-unit id="closeFiltersAria" datatype="html">
         <source>Close filters</source>
-        <target>Cerrar filtros</target>
+        <target>फ़िल्टर बंद करें</target>
       </trans-unit>
       <trans-unit id="applyFiltersBtn" datatype="html">
         <source>Apply Filters</source>
-        <target>Aplicar Filtros</target>
+        <target>फ़िल्टर लागू करें</target>
       </trans-unit>
       <trans-unit id="clearAllBtn" datatype="html">
         <source>Clear all</source>
-        <target>Limpiar todo</target>
+        <target>सब साफ़ करें</target>
       </trans-unit>
       <trans-unit id="filterAvailability" datatype="html">
         <source>Availability</source>
-        <target>Disponibilidad</target>
+        <target>उपलब्धता</target>
       </trans-unit>
       <trans-unit id="filterInStockOnly" datatype="html">
         <source>In Stock Only</source>
-        <target>Solo en existencia</target>
+        <target>केवल स्टॉक में</target>
       </trans-unit>
       <trans-unit id="filterTargetAge" datatype="html">
         <source>Target Age</source>
-        <target>Edad objetivo</target>
+        <target>लक्षित आयु</target>
       </trans-unit>
       <trans-unit id="filterAllAges" datatype="html">
         <source>All Ages</source>
-        <target>Todas las edades</target>
+        <target>सभी आयु</target>
       </trans-unit>
       <trans-unit id="filterPriceRange" datatype="html">
         <source>Price Range</source>
-        <target>Rango de precio</target>
+        <target>मूल्य सीमा</target>
       </trans-unit>
       <trans-unit id="priceMinPlaceholder" datatype="html">
         <source>Min</source>
-        <target>Mín</target>
+        <target>न्यूनतम</target>
       </trans-unit>
       <trans-unit id="priceMaxPlaceholder" datatype="html">
         <source>Max</source>
-        <target>Máx</target>
+        <target>अधिकतम</target>
       </trans-unit>
       <trans-unit id="applyPriceBtn" datatype="html">
         <source>Apply</source>
-        <target>Aplicar</target>
+        <target>लागू करें</target>
       </trans-unit>
       <trans-unit id="filterSortBy" datatype="html">
         <source>Sort By</source>
-        <target>Ordenar por</target>
+        <target>इसके द्वारा क्रमबद्ध करें</target>
       </trans-unit>
       <trans-unit id="sortNewest" datatype="html">
         <source>Newest First</source>
-        <target>Más recientes</target>
+        <target>सबसे नया पहले</target>
       </trans-unit>
       <trans-unit id="sortPrice" datatype="html">
         <source>Price</source>
-        <target>Precio</target>
+        <target>मूल्य</target>
       </trans-unit>
       <trans-unit id="sortName" datatype="html">
         <source>Name</source>
-        <target>Nombre</target>
+        <target>नाम</target>
       </trans-unit>
       <trans-unit id="sortRating" datatype="html">
         <source>Rating</source>
-        <target>Valoración</target>
+        <target>रेटिंग</target>
       </trans-unit>
       <trans-unit id="sortDescending" datatype="html">
         <source>Descending</source>
-        <target>Descendente</target>
+        <target>अवरोही</target>
       </trans-unit>
       <trans-unit id="sortAscending" datatype="html">
         <source>Ascending</source>
-        <target>Ascendente</target>
+        <target>आरोही</target>
       </trans-unit>
       <trans-unit id="productsFound" datatype="html">
         <source> products found</source>
-        <target> productos encontrados</target>
+        <target> उत्पाद मिले</target>
       </trans-unit>
       <trans-unit id="soldOut" datatype="html">
         <source>Sold Out</source>
-        <target>Agotado</target>
+        <target>बिक गया</target>
       </trans-unit>
       <trans-unit id="noResultsText" datatype="html">
         <source>No results found for your search</source>
-        <target>No se encontraron resultados para tu búsqueda</target>
+        <target>आपकी खोज के लिए कोई परिणाम नहीं मिला</target>
       </trans-unit>
       <trans-unit id="resetSearch" datatype="html">
         <source>Reset Search</source>
-        <target>Limpiar búsqueda</target>
+        <target>खोज रीसेट करें</target>
       </trans-unit>
       <trans-unit id="noResultsPrice" datatype="html">
         <source>No products in this price range</source>
-        <target>No hay productos en este rango de precio</target>
+        <target>इस मूल्य सीमा में कोई उत्पाद नहीं</target>
       </trans-unit>
       <trans-unit id="resetPrice" datatype="html">
         <source>Reset Price</source>
-        <target>Limpiar precio</target>
+        <target>मूल्य रीसेट करें</target>
       </trans-unit>
       <trans-unit id="noResultsCategory" datatype="html">
         <source>No results in this category</source>
-        <target>No hay resultados en esta categoría</target>
+        <target>इस श्रेणी में कोई परिणाम नहीं</target>
       </trans-unit>
       <trans-unit id="noResultsStock" datatype="html">
         <source>Currently out of stock</source>
-        <target>Actualmente sin existencia</target>
+        <target>वर्तमान में स्टॉक से बाहर</target>
       </trans-unit>
       <trans-unit id="showAllProducts" datatype="html">
         <source>Show all products</source>
-        <target>Mostrar todos los productos</target>
+        <target>सभी उत्पाद दिखाएं</target>
       </trans-unit>
       <trans-unit id="noResultsDefault" datatype="html">
         <source>No results found</source>
-        <target>No se encontraron resultados</target>
+        <target>कोई परिणाम नहीं मिला</target>
       </trans-unit>
       <trans-unit id="noResultsHint" datatype="html">
         <source>Try adjusting your filters or search terms.</source>
-        <target>Intenta ajustar tus filtros o términos de búsqueda.</target>
+        <target>अपने फ़िल्टर या खोज शब्द बदलने का प्रयास करें।</target>
       </trans-unit>
       <trans-unit id="seeAllProducts" datatype="html">
         <source>See All Products</source>
-        <target>Ver todos los productos</target>
+        <target>सभी उत्पाद देखें</target>
       </trans-unit>
       <trans-unit id="prevPageAria" datatype="html">
         <source>Previous page</source>
-        <target>Página anterior</target>
+        <target>पिछला पृष्ठ</target>
       </trans-unit>
       <trans-unit id="nextPageAria" datatype="html">
         <source>Next page</source>
-        <target>Página siguiente</target>
+        <target>अगला पृष्ठ</target>
       </trans-unit>
 
-      <!-- Age display labels ($localize in TS) -->
+      <!-- Age display labels -->
       <trans-unit id="ageTeens" datatype="html">
         <source>Teens</source>
-        <target>Adolescentes</target>
+        <target>किशोर</target>
       </trans-unit>
       <trans-unit id="ageYoungAdults" datatype="html">
         <source>Young Adults</source>
-        <target>Jóvenes</target>
+        <target>युवा वयस्क</target>
       </trans-unit>
       <trans-unit id="ageAdults" datatype="html">
         <source>Adults</source>
-        <target>Adultos</target>
+        <target>वयस्क</target>
       </trans-unit>
       <trans-unit id="ageAll" datatype="html">
         <source>All Ages</source>
-        <target>Todas</target>
+        <target>सभी आयु</target>
       </trans-unit>
 
-      <!-- Footer link labels ($localize in TS) -->
+      <!-- Footer link labels -->
       <trans-unit id="footerContactUs" datatype="html">
         <source>Contact Us</source>
-        <target>Contáctanos</target>
+        <target>संपर्क करें</target>
       </trans-unit>
       <trans-unit id="footerFaq" datatype="html">
         <source>FAQ</source>
-        <target>Preguntas frecuentes</target>
+        <target>अक्सर पूछे जाने वाले प्रश्न</target>
       </trans-unit>
       <trans-unit id="footerShipping" datatype="html">
         <source>Shipping &amp; Returns</source>
-        <target>Envíos y devoluciones</target>
+        <target>शिपिंग एवं वापसी</target>
       </trans-unit>
       <trans-unit id="footerExchange" datatype="html">
         <source>Exchange Policy</source>
-        <target>Política de cambios</target>
+        <target>विनिमय नीति</target>
       </trans-unit>
       <trans-unit id="footerWarranty" datatype="html">
         <source>Product Warranty</source>
-        <target>Garantía del producto</target>
+        <target>उत्पाद वारंटी</target>
       </trans-unit>
       <trans-unit id="footerSizeGuide" datatype="html">
         <source>Size Guide</source>
-        <target>Guía de tallas</target>
+        <target>साइज़ गाइड</target>
       </trans-unit>
       <trans-unit id="footerAboutUs" datatype="html">
         <source>About Us</source>
-        <target>Sobre nosotros</target>
+        <target>हमारे बारे में</target>
       </trans-unit>
       <trans-unit id="footerStores" datatype="html">
         <source>Our Stores</source>
-        <target>Nuestras tiendas</target>
+        <target>हमारे स्टोर</target>
       </trans-unit>
       <trans-unit id="footerBlog" datatype="html">
         <source>Beauty Blog</source>
-        <target>Blog de belleza</target>
+        <target>ब्यूटी ब्लॉग</target>
       </trans-unit>
       <trans-unit id="footerLoyalty" datatype="html">
         <source>Loyalty Program</source>
-        <target>Programa de lealtad</target>
+        <target>लॉयल्टी प्रोग्राम</target>
       </trans-unit>
       <trans-unit id="footerTerms" datatype="html">
         <source>Terms of Use</source>
-        <target>Términos de uso</target>
+        <target>उपयोग की शर्तें</target>
       </trans-unit>
       <trans-unit id="footerPrivacy" datatype="html">
         <source>Privacy Policy</source>
-        <target>Política de privacidad</target>
+        <target>गोपनीयता नीति</target>
       </trans-unit>
       <trans-unit id="newsletterSuccess" datatype="html">
         <source>Subscribed successfully!</source>
-        <target>¡Suscripción exitosa!</target>
+        <target>सफलतापूर्वक सदस्यता ली गई!</target>
       </trans-unit>
       <trans-unit id="search-input-placeholder" datatype="html">
         <source>Search for products, brands, categories...</source>
-        <target>Buscar productos, marcas, categorías...</target>
+        <target>उत्पादों, ब्रांडों, श्रेणियों की खोज करें...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/components/search/search.component.html</context>
           <context context-type="linenumber">8</context>

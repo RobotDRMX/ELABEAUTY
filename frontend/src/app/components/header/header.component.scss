@@ -38,33 +38,27 @@ header {
 .lang-switcher {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
 }
 
-.lang-btn {
+.lang-select {
   background: none;
   border: none;
   font-family: inherit;
   font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
   color: var(--text-muted);
   cursor: pointer;
-  padding: 0.25rem 0.4rem;
+  padding: 0.2rem 0.3rem;
   border-radius: 4px;
-  transition: color 0.2s, background 0.2s;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: color 0.2s;
 
-  &:hover { color: var(--text-main); }
+  &:hover, &:focus { color: var(--primary-dark); }
 
-  &.active {
-    color: var(--primary-dark);
-    background: var(--primary-faded);
-  }
-}
-
-.lang-sep {
-  color: var(--border);
-  font-size: 0.6rem;
+  option { background: var(--surface); color: var(--text-main); font-size: 0.8rem; }
 }
 
 /* --- Level 2: Branding & Nav --- */
@@ -383,30 +377,26 @@ header {
 .drawer-lang-switcher {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
   padding: 1rem 2.4rem;
 }
 
-.drawer-lang-btn {
-  background: none;
-  border: 1.5px solid var(--border);
+.drawer-lang-select {
+  width: 100%;
+  background: var(--surface-low);
+  border: 1px solid var(--border);
   border-radius: 8px;
   font-family: inherit;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-main);
   cursor: pointer;
-  padding: 0.4rem 0.8rem;
-  transition: all 0.2s;
+  padding: 0.5rem 0.8rem;
+  outline: none;
+  transition: border-color 0.2s;
 
-  &:hover { color: var(--text-main); border-color: var(--primary); }
+  &:focus { border-color: var(--primary); }
 
-  &.active {
-    background: var(--primary);
-    color: #fff;
-    border-color: var(--primary);
-  }
+  option { background: var(--surface); color: var(--text-main); }
 }
 
 /* Auth buttons */

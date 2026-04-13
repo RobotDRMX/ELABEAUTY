@@ -73,6 +73,15 @@ export class AuthService {
       });
   }
 
+  /** Called by interceptor to perform a token refresh */
+  refreshToken(): Observable<{ access_token: string }> {
+    return this.http.post<{ access_token: string }>(
+      `${this.apiUrl}/refresh`,
+      {},
+      { withCredentials: true },
+    );
+  }
+
   /** Called by interceptor after a successful token refresh */
   setAccessToken(token: string) {
     this._accessToken = token;
@@ -108,7 +117,7 @@ export class AuthService {
     this.isAuthenticated.set(false);
   }
 
-  private clearStateAndRedirect() {
+  clearStateAndRedirect() {
     this.clearState();
     this.router.navigate(['/auth/login']);
   }

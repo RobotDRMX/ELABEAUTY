@@ -11,17 +11,11 @@
       <div class="utility-right">
         <!-- Language Switcher -->
         <div class="lang-switcher">
-          <button class="lang-btn" (click)="switchLanguage('en')"
-                  [class.active]="currentLocale === 'en'"
-                  i18n-title="@@langEnTitle" title="English">
-            EN
-          </button>
-          <span class="lang-sep">|</span>
-          <button class="lang-btn" (click)="switchLanguage('es')"
-                  [class.active]="currentLocale === 'es'"
-                  i18n-title="@@langEsTitle" title="Español">
-            ES
-          </button>
+          <select class="lang-select" [ngModel]="currentLocale" (ngModelChange)="switchLanguage($event)">
+            @for (lang of languages; track lang.code) {
+              <option [value]="lang.code">{{ lang.label }} – {{ lang.name }}</option>
+            }
+          </select>
         </div>
 
         <div class="theme-toggle-group">
@@ -146,9 +140,11 @@
 
     <!-- Language switcher in drawer -->
     <div class="drawer-lang-switcher">
-      <button class="drawer-lang-btn" (click)="switchLanguage('en')" [class.active]="currentLocale === 'en'">EN</button>
-      <span class="lang-sep">|</span>
-      <button class="drawer-lang-btn" (click)="switchLanguage('es')" [class.active]="currentLocale === 'es'">ES</button>
+      <select class="lang-select drawer-lang-select" [ngModel]="currentLocale" (ngModelChange)="switchLanguage($event)">
+        @for (lang of languages; track lang.code) {
+          <option [value]="lang.code">{{ lang.label }} – {{ lang.name }}</option>
+        }
+      </select>
     </div>
 
     <div class="mobile-auth">

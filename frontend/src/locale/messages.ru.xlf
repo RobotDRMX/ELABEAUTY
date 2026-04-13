@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="en-US" target-language="es" datatype="plaintext" original="ng2.template">
+  <file source-language="en-US" target-language="ru" datatype="plaintext" original="ng2.template">
     <body>
       <trans-unit id="heroEyebrow" datatype="html">
         <source>LUXURY MAKEUP</source>
-        <target>MAQUILLAJE DE LUJO</target>
+        <target>ЛЮКС МАКИЯЖ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">19,20</context>
@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="heroTitle" datatype="html">
         <source> Elevate your <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;italic-serif text-primary&quot;&gt;"/>Natural Beauty<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
-        <target> Eleva tu <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;italic-serif text-primary&quot;&gt;"/>Belleza Natural<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></target>
+        <target> Подчеркните вашу <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;italic-serif text-primary&quot;&gt;"/>Естественную Красоту<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">21,23</context>
@@ -20,7 +20,7 @@
       </trans-unit>
       <trans-unit id="heroSubtitle" datatype="html">
         <source> Discover our curated collection of high-performance beauty products designed for the modern individual. </source>
-        <target> Descubre nuestra colección curada de productos de belleza de alto rendimiento diseñados para el individuo moderno. </target>
+        <target> Откройте нашу кураторскую коллекцию высокоэффективных косметических продуктов для современного человека. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">25,26</context>
@@ -28,7 +28,7 @@
       </trans-unit>
       <trans-unit id="heroExplore" datatype="html">
         <source>Explore Shop</source>
-        <target>Explorar Tienda</target>
+        <target>Открыть Магазин</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">29,30</context>
@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="heroOffers" datatype="html">
         <source> Exclusive Offers </source>
-        <target> Ofertas Exclusivas </target>
+        <target> Эксклюзивные Предложения </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">31,32</context>
@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="heroProducts" datatype="html">
         <source>Products</source>
-        <target>Productos</target>
+        <target>Товары</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">38,39</context>
@@ -52,7 +52,7 @@
       </trans-unit>
       <trans-unit id="heroRating" datatype="html">
         <source>Rating</source>
-        <target>Valoración</target>
+        <target>Рейтинг</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">43,44</context>
@@ -60,7 +60,7 @@
       </trans-unit>
       <trans-unit id="heroClients" datatype="html">
         <source>Clients</source>
-        <target>Clientes</target>
+        <target>Клиенты</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">48,49</context>
@@ -68,7 +68,7 @@
       </trans-unit>
       <trans-unit id="tickerFreeShipping" datatype="html">
         <source>Free Shipping</source>
-        <target>Envío Gratis</target>
+        <target>Бесплатная Доставка</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">60,61</context>
@@ -76,7 +76,7 @@
       </trans-unit>
       <trans-unit id="tickerCrueltyFree" datatype="html">
         <source>Cruelty Free</source>
-        <target>Libre de Crueldad</target>
+        <target>Без Жестокости</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">61,62</context>
@@ -84,7 +84,7 @@
       </trans-unit>
       <trans-unit id="tickerDiscount" datatype="html">
         <source>Members Discount</source>
-        <target>Descuento Miembros</target>
+        <target>Скидка для Участников</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">62,64</context>
@@ -92,7 +92,7 @@
       </trans-unit>
       <trans-unit id="categoriesTitle" datatype="html">
         <source>Shop by Category</source>
-        <target>Comprar por Categoría</target>
+        <target>Покупки по Категориям</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">70,73</context>
@@ -100,7 +100,7 @@
       </trans-unit>
       <trans-unit id="catItems" datatype="html">
         <source>ITEMS</source>
-        <target>ARTÍCULOS</target>
+        <target>ТОВАРЫ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">83,84</context>
@@ -108,7 +108,7 @@
       </trans-unit>
       <trans-unit id="featuredTitle" datatype="html">
         <source>Featured Selection</source>
-        <target>Selección Destacada</target>
+        <target>Рекомендуемый Выбор</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">94,97</context>
@@ -116,7 +116,7 @@
       </trans-unit>
       <trans-unit id="featuredSeeMore" datatype="html">
         <source>See More</source>
-        <target>Ver Más</target>
+        <target>Смотреть Больше</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/body/body.component.html</context>
           <context context-type="linenumber">109</context>
@@ -124,7 +124,7 @@
       </trans-unit>
       <trans-unit id="footerAbout" datatype="html">
         <source>Discover the best in professional beauty and cosmetics. We offer a wide range of high-quality products to help you express your unique style.</source>
-        <target>Descubre lo mejor en belleza y cosmética profesional. Ofrecemos una amplia gama de productos de alta calidad para ayudarte a expresar tu estilo único.</target>
+        <target>Откройте для себя лучшее в профессиональной красоте и косметике. Мы предлагаем широкий ассортимент высококачественных продуктов, которые помогут вам выразить свой уникальный стиль.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">7,8</context>
@@ -132,7 +132,7 @@
       </trans-unit>
       <trans-unit id="footerSince" datatype="html">
         <source>Empowering beauty since 2024 💄</source>
-        <target>Potenciando la belleza desde 2024 💄</target>
+        <target>Развиваем красоту с 2024 года 💄</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">8,9</context>
@@ -140,7 +140,7 @@
       </trans-unit>
       <trans-unit id="footerCustomerService" datatype="html">
         <source>Customer Service</source>
-        <target>Servicio al Cliente</target>
+        <target>Служба Поддержки</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">21,22</context>
@@ -148,7 +148,7 @@
       </trans-unit>
       <trans-unit id="footerInformation" datatype="html">
         <source>Information</source>
-        <target>Información</target>
+        <target>Информация</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">29,30</context>
@@ -156,7 +156,7 @@
       </trans-unit>
       <trans-unit id="footerNewsletterTitle" datatype="html">
         <source>Newsletter</source>
-        <target>Boletín Informativo</target>
+        <target>Рассылка</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">37,38</context>
@@ -164,7 +164,7 @@
       </trans-unit>
       <trans-unit id="footerNewsletterDesc" datatype="html">
         <source>Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.</source>
-        <target>Suscríbete para recibir ofertas especiales, obsequios gratuitos y promociones únicas.</target>
+        <target>Подпишитесь, чтобы получать специальные предложения, бесплатные подарки и уникальные акции.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">38,39</context>
@@ -172,7 +172,7 @@
       </trans-unit>
       <trans-unit id="footerSubscribeBtn" datatype="html">
         <source>Subscribe</source>
-        <target>Suscribirse</target>
+        <target>Подписаться</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">42,44</context>
@@ -180,7 +180,7 @@
       </trans-unit>
       <trans-unit id="footerPaymentMethods" datatype="html">
         <source>Payment Methods</source>
-        <target>Métodos de Pago</target>
+        <target>Способы Оплаты</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">47,48</context>
@@ -188,7 +188,7 @@
       </trans-unit>
       <trans-unit id="footerRights" datatype="html">
         <source>All rights reserved.</source>
-        <target>Todos los derechos reservados.</target>
+        <target>Все права защищены.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">59,60</context>
@@ -196,7 +196,7 @@
       </trans-unit>
       <trans-unit id="footerMadeWith" datatype="html">
         <source>Made with <x id="START_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;lucide-icon name=&quot;heart&quot; [size]=&quot;14&quot; style=&quot;color: var(--primary-color); display: inline-flex; vertical-align: middle;&quot;&gt;"/><x id="CLOSE_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;/lucide-icon&gt;"/> for beauty lovers</source>
-        <target>Hecho con <x id="START_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;lucide-icon name=&quot;heart&quot; [size]=&quot;14&quot; style=&quot;color: var(--primary-color); display: inline-flex; vertical-align: middle;&quot;&gt;"/><x id="CLOSE_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;/lucide-icon&gt;"/> para amantes de la belleza</target>
+        <target>Сделано с <x id="START_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;lucide-icon name=&quot;heart&quot; [size]=&quot;14&quot; style=&quot;color: var(--primary-color); display: inline-flex; vertical-align: middle;&quot;&gt;"/><x id="CLOSE_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;/lucide-icon&gt;"/> для любителей красоты</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">60,62</context>
@@ -204,7 +204,7 @@
       </trans-unit>
       <trans-unit id="footerInspiredBy" datatype="html">
         <source>Inspired by</source>
-        <target>Inspirado en</target>
+        <target>Вдохновлено</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">66,67</context>
@@ -212,7 +212,7 @@
       </trans-unit>
       <trans-unit id="footerOwnDev" datatype="html">
         <source>Own Development</source>
-        <target>Desarrollo Propio</target>
+        <target>Собственная Разработка</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">72,74</context>
@@ -220,7 +220,7 @@
       </trans-unit>
       <trans-unit id="footerPrivacyLink" datatype="html">
         <source>Privacy Policy</source>
-        <target>Política de Privacidad</target>
+        <target>Политика Конфиденциальности</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">77,78</context>
@@ -228,7 +228,7 @@
       </trans-unit>
       <trans-unit id="footerTermsLink" datatype="html">
         <source>Terms of Use</source>
-        <target>Términos de Uso</target>
+        <target>Условия Использования</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">78,79</context>
@@ -236,7 +236,7 @@
       </trans-unit>
       <trans-unit id="footerCookiesLink" datatype="html">
         <source>Cookies Policy</source>
-        <target>Política de Cookies</target>
+        <target>Политика Cookies</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">79,82</context>
@@ -244,7 +244,7 @@
       </trans-unit>
       <trans-unit id="headerFreeShipping" datatype="html">
         <source><x id="START_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;lucide-icon name=&quot;truck&quot; [size]=&quot;14&quot;&gt;"/><x id="CLOSE_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;/lucide-icon&gt;"/> Free Shipping on all orders </source>
-        <target><x id="START_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;lucide-icon name=&quot;truck&quot; [size]=&quot;14&quot;&gt;"/><x id="CLOSE_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;/lucide-icon&gt;"/> Envío Gratis en todos los pedidos </target>
+        <target><x id="START_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;lucide-icon name=&quot;truck&quot; [size]=&quot;14&quot;&gt;"/><x id="CLOSE_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;/lucide-icon&gt;"/> Бесплатная доставка на все заказы </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/header/header.component.html</context>
           <context context-type="linenumber">7,9</context>
@@ -252,7 +252,7 @@
       </trans-unit>
       <trans-unit id="themeLightTitle" datatype="html">
         <source>Light Mode</source>
-        <target>Modo Claro</target>
+        <target>Светлый Режим</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/header/header.component.html</context>
           <context context-type="linenumber">14,15</context>
@@ -260,7 +260,7 @@
       </trans-unit>
       <trans-unit id="themeDarkTitle" datatype="html">
         <source>Dark Mode</source>
-        <target>Modo Oscuro</target>
+        <target>Тёмный Режим</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/header/header.component.html</context>
           <context context-type="linenumber">17,18</context>
@@ -268,7 +268,7 @@
       </trans-unit>
       <trans-unit id="accessibilityTitle" datatype="html">
         <source>♿ ACCESIBILIDAD</source>
-        <target>♿ ACCESIBILIDAD</target>
+        <target>♿ ДОСТУПНОСТЬ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/header/header.component.html</context>
           <context context-type="linenumber">21,22</context>
@@ -276,7 +276,7 @@
       </trans-unit>
       <trans-unit id="mobileMenuAriaLabel" datatype="html">
         <source>Toggle mobile menu</source>
-        <target>Alternar menú móvil</target>
+        <target>Переключить мобильное меню</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/header/header.component.html</context>
           <context context-type="linenumber">47,48</context>
@@ -284,7 +284,7 @@
       </trans-unit>
       <trans-unit id="favoritesTitle" datatype="html">
         <source>Favorites</source>
-        <target>Favoritos</target>
+        <target>Избранное</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/header/header.component.html</context>
           <context context-type="linenumber">64,65</context>
@@ -292,7 +292,7 @@
       </trans-unit>
       <trans-unit id="cartTitle" datatype="html">
         <source>Shopping Cart</source>
-        <target>Carrito de Compras</target>
+        <target>Корзина</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/header/header.component.html</context>
           <context context-type="linenumber">69,70</context>
@@ -300,7 +300,7 @@
       </trans-unit>
       <trans-unit id="accountTitle" datatype="html">
         <source>My Account</source>
-        <target>Mi Cuenta</target>
+        <target>Мой Аккаунт</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/header/header.component.html</context>
           <context context-type="linenumber">74,75</context>
@@ -308,7 +308,7 @@
       </trans-unit>
       <trans-unit id="loginLink" datatype="html">
         <source> Login </source>
-        <target> Iniciar Sesión </target>
+        <target> Войти </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/header/header.component.html</context>
           <context context-type="linenumber">79,80</context>
@@ -316,7 +316,7 @@
       </trans-unit>
       <trans-unit id="loginButtonMobile" datatype="html">
         <source>Login</source>
-        <target>Iniciar Sesión</target>
+        <target>Войти</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/header/header.component.html</context>
           <context context-type="linenumber">96,98</context>
@@ -324,7 +324,7 @@
       </trans-unit>
       <trans-unit id="logoutButtonMobile" datatype="html">
         <source>Logout</source>
-        <target>Cerrar Sesión</target>
+        <target>Выйти</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/header/header.component.html</context>
           <context context-type="linenumber">99,102</context>
@@ -334,79 +334,79 @@
       <!-- Language switcher -->
       <trans-unit id="langEnTitle" datatype="html">
         <source>English</source>
-        <target>Inglés</target>
+        <target>Английский</target>
       </trans-unit>
       <trans-unit id="langEsTitle" datatype="html">
         <source>Español</source>
-        <target>Español</target>
+        <target>Испанский</target>
       </trans-unit>
 
       <!-- Mobile drawer extras -->
       <trans-unit id="mobileFavorites" datatype="html">
         <source>Favorites</source>
-        <target>Favoritos</target>
+        <target>Избранное</target>
       </trans-unit>
       <trans-unit id="mobileCart" datatype="html">
         <source>Shopping Cart</source>
-        <target>Carrito de Compras</target>
+        <target>Корзина</target>
       </trans-unit>
       <trans-unit id="mobileAccount" datatype="html">
         <source>My Account</source>
-        <target>Mi Cuenta</target>
+        <target>Мой Аккаунт</target>
       </trans-unit>
 
       <!-- Login form -->
       <trans-unit id="loginTitle" datatype="html">
         <source>Sign In</source>
-        <target>Iniciar Sesión</target>
+        <target>Войти</target>
       </trans-unit>
       <trans-unit id="loginSubtitle" datatype="html">
         <source>Welcome back to ELA Beauty</source>
-        <target>Bienvenida de vuelta a ELA Beauty</target>
+        <target>Добро пожаловать обратно в ELA Beauty</target>
       </trans-unit>
       <trans-unit id="emailLabel" datatype="html">
         <source>Email</source>
-        <target>Correo electrónico</target>
+        <target>Эл. почта</target>
       </trans-unit>
       <trans-unit id="emailPlaceholder" datatype="html">
         <source>your@email.com</source>
-        <target>tu@correo.com</target>
+        <target>ваша@почта.com</target>
       </trans-unit>
       <trans-unit id="emailRequired" datatype="html">
         <source>Email is required</source>
-        <target>El correo es obligatorio</target>
+        <target>Эл. почта обязательна</target>
       </trans-unit>
       <trans-unit id="emailInvalid" datatype="html">
         <source>Please enter a valid email</source>
-        <target>Ingresa un correo válido</target>
+        <target>Пожалуйста, введите действительный адрес эл. почты</target>
       </trans-unit>
       <trans-unit id="passwordLabel" datatype="html">
         <source>Password</source>
-        <target>Contraseña</target>
+        <target>Пароль</target>
       </trans-unit>
       <trans-unit id="passwordPlaceholder" datatype="html">
         <source>Your password</source>
-        <target>Tu contraseña</target>
+        <target>Ваш пароль</target>
       </trans-unit>
       <trans-unit id="passwordRequired" datatype="html">
         <source>Password is required</source>
-        <target>La contraseña es obligatoria</target>
+        <target>Пароль обязателен</target>
       </trans-unit>
       <trans-unit id="rateLimit" datatype="html">
         <source>Too many attempts. Please wait before trying again.</source>
-        <target>Demasiados intentos. Por favor espera antes de intentarlo de nuevo.</target>
+        <target>Слишком много попыток. Пожалуйста, подождите перед следующей попыткой.</target>
       </trans-unit>
       <trans-unit id="submitLogin" datatype="html">
         <source>Sign In</source>
-        <target>Iniciar Sesión</target>
+        <target>Войти</target>
       </trans-unit>
       <trans-unit id="loadingText" datatype="html">
         <source>Loading…</source>
-        <target>Cargando…</target>
+        <target>Загрузка…</target>
       </trans-unit>
       <trans-unit id="biometricOr" datatype="html">
         <source>Or continue with</source>
-        <target>O continuar con</target>
+        <target>Или продолжить с</target>
       </trans-unit>
       <trans-unit id="passkeyBtn" datatype="html">
         <source>Passkey</source>
@@ -414,347 +414,347 @@
       </trans-unit>
       <trans-unit id="faceRecognitionBtn" datatype="html">
         <source>Face Recognition</source>
-        <target>Reconocimiento Facial</target>
+        <target>Распознавание Лица</target>
       </trans-unit>
       <trans-unit id="faceHint" datatype="html">
         <source>Position your face in the camera</source>
-        <target>Coloca tu rostro frente a la cámara</target>
+        <target>Расположите лицо перед камерой</target>
       </trans-unit>
       <trans-unit id="faceHintSmall" datatype="html">
         <source>Make sure you have good lighting and look straight ahead</source>
-        <target>Asegúrate de tener buena iluminación y mira de frente</target>
+        <target>Убедитесь в хорошем освещении и смотрите прямо перед собой</target>
       </trans-unit>
       <trans-unit id="verifyFaceBtn" datatype="html">
         <source>Verify Face</source>
-        <target>Verificar Rostro</target>
+        <target>Подтвердить Лицо</target>
       </trans-unit>
       <trans-unit id="cancelBtn" datatype="html">
         <source>Cancel</source>
-        <target>Cancelar</target>
+        <target>Отмена</target>
       </trans-unit>
       <trans-unit id="forgotPasswordLink" datatype="html">
         <source>Forgot your password?</source>
-        <target>¿Olvidaste tu contraseña?</target>
+        <target>Забыли пароль?</target>
       </trans-unit>
       <trans-unit id="noAccount" datatype="html">
         <source>Don't have an account?</source>
-        <target>¿No tienes una cuenta?</target>
+        <target>Нет аккаунта?</target>
       </trans-unit>
       <trans-unit id="registerLink" datatype="html">
         <source>Create one</source>
-        <target>Crear una</target>
+        <target>Создать аккаунт</target>
       </trans-unit>
 
       <!-- Register form -->
       <trans-unit id="registerTitle" datatype="html">
         <source>Create Account</source>
-        <target>Crear Cuenta</target>
+        <target>Создать Аккаунт</target>
       </trans-unit>
       <trans-unit id="registerSubtitle" datatype="html">
         <source>Join the ELA Beauty community</source>
-        <target>Únete a la comunidad de ELA Beauty</target>
+        <target>Присоединяйтесь к сообществу ELA Beauty</target>
       </trans-unit>
       <trans-unit id="firstNameLabel" datatype="html">
         <source>First Name</source>
-        <target>Nombre</target>
+        <target>Имя</target>
       </trans-unit>
       <trans-unit id="firstNamePlaceholder" datatype="html">
         <source>Your first name</source>
-        <target>Tu nombre</target>
+        <target>Ваше имя</target>
       </trans-unit>
       <trans-unit id="paternalLabel" datatype="html">
         <source>Last Name</source>
-        <target>Apellido Paterno</target>
+        <target>Фамилия</target>
       </trans-unit>
       <trans-unit id="paternalPlaceholder" datatype="html">
         <source>Your last name</source>
-        <target>Tu apellido paterno</target>
+        <target>Ваша фамилия</target>
       </trans-unit>
       <trans-unit id="maternalLabel" datatype="html">
         <source>Second Last Name</source>
-        <target>Apellido Materno</target>
+        <target>Второй Фамилия</target>
       </trans-unit>
       <trans-unit id="maternalPlaceholder" datatype="html">
         <source>Optional</source>
-        <target>Opcional</target>
+        <target>Необязательно</target>
       </trans-unit>
       <trans-unit id="passwordMinLength" datatype="html">
         <source>Min. 8 characters</source>
-        <target>Mín. 8 caracteres</target>
+        <target>Мин. 8 символов</target>
       </trans-unit>
       <trans-unit id="ruleMinLength" datatype="html">
         <source>At least 8 characters</source>
-        <target>Al menos 8 caracteres</target>
+        <target>Не менее 8 символов</target>
       </trans-unit>
       <trans-unit id="ruleUpper" datatype="html">
         <source>One uppercase letter</source>
-        <target>Una letra mayúscula</target>
+        <target>Одна заглавная буква</target>
       </trans-unit>
       <trans-unit id="ruleLower" datatype="html">
         <source>One lowercase letter</source>
-        <target>Una letra minúscula</target>
+        <target>Одна строчная буква</target>
       </trans-unit>
       <trans-unit id="ruleNumber" datatype="html">
         <source>One number</source>
-        <target>Un número</target>
+        <target>Одна цифра</target>
       </trans-unit>
       <trans-unit id="confirmPasswordLabel" datatype="html">
         <source>Confirm Password</source>
-        <target>Confirmar Contraseña</target>
+        <target>Подтвердить Пароль</target>
       </trans-unit>
       <trans-unit id="confirmPasswordPlaceholder" datatype="html">
         <source>Repeat your password</source>
-        <target>Repite tu contraseña</target>
+        <target>Повторите пароль</target>
       </trans-unit>
       <trans-unit id="passwordsNoMatch" datatype="html">
         <source>Passwords do not match</source>
-        <target>Las contraseñas no coinciden</target>
+        <target>Пароли не совпадают</target>
       </trans-unit>
       <trans-unit id="submitRegister" datatype="html">
         <source>Create Account</source>
-        <target>Crear Cuenta</target>
+        <target>Создать Аккаунт</target>
       </trans-unit>
       <trans-unit id="loadingRegister" datatype="html">
         <source>Creating account…</source>
-        <target>Creando cuenta…</target>
+        <target>Создание аккаунта…</target>
       </trans-unit>
       <trans-unit id="alreadyAccount" datatype="html">
         <source>Already have an account?</source>
-        <target>¿Ya tienes una cuenta?</target>
+        <target>Уже есть аккаунт?</target>
       </trans-unit>
       <trans-unit id="loginLink" datatype="html">
         <source>Sign In</source>
-        <target>Iniciar Sesión</target>
+        <target>Войти</target>
       </trans-unit>
 
       <!-- Search results page -->
       <trans-unit id="searchPageTitle" datatype="html">
         <source>Products</source>
-        <target>Productos</target>
+        <target>Товары</target>
       </trans-unit>
       <trans-unit id="searchResultsFor" datatype="html">
         <source>Results for</source>
-        <target>Resultados para</target>
+        <target>Результаты для</target>
       </trans-unit>
       <trans-unit id="searchCategory" datatype="html">
         <source>Category:</source>
-        <target>Categoría:</target>
+        <target>Категория:</target>
       </trans-unit>
       <trans-unit id="activeFiltersCount" datatype="html">
         <source>Active Filters (<x id="INTERPOLATION" equiv-text="{{ activeFilterCount }}"/>)</source>
-        <target>Filtros activos (<x id="INTERPOLATION" equiv-text="{{ activeFilterCount }}"/>)</target>
+        <target>Активные фильтры (<x id="INTERPOLATION" equiv-text="{{ activeFilterCount }}"/>)</target>
       </trans-unit>
       <trans-unit id="filtersBtn" datatype="html">
         <source>Filters</source>
-        <target>Filtros</target>
+        <target>Фильтры</target>
       </trans-unit>
       <trans-unit id="filtersTitle" datatype="html">
         <source>Filters</source>
-        <target>Filtros</target>
+        <target>Фильтры</target>
       </trans-unit>
       <trans-unit id="closeFiltersAria" datatype="html">
         <source>Close filters</source>
-        <target>Cerrar filtros</target>
+        <target>Закрыть фильтры</target>
       </trans-unit>
       <trans-unit id="applyFiltersBtn" datatype="html">
         <source>Apply Filters</source>
-        <target>Aplicar Filtros</target>
+        <target>Применить Фильтры</target>
       </trans-unit>
       <trans-unit id="clearAllBtn" datatype="html">
         <source>Clear all</source>
-        <target>Limpiar todo</target>
+        <target>Очистить всё</target>
       </trans-unit>
       <trans-unit id="filterAvailability" datatype="html">
         <source>Availability</source>
-        <target>Disponibilidad</target>
+        <target>Наличие</target>
       </trans-unit>
       <trans-unit id="filterInStockOnly" datatype="html">
         <source>In Stock Only</source>
-        <target>Solo en existencia</target>
+        <target>Только в наличии</target>
       </trans-unit>
       <trans-unit id="filterTargetAge" datatype="html">
         <source>Target Age</source>
-        <target>Edad objetivo</target>
+        <target>Целевой Возраст</target>
       </trans-unit>
       <trans-unit id="filterAllAges" datatype="html">
         <source>All Ages</source>
-        <target>Todas las edades</target>
+        <target>Все возрасты</target>
       </trans-unit>
       <trans-unit id="filterPriceRange" datatype="html">
         <source>Price Range</source>
-        <target>Rango de precio</target>
+        <target>Ценовой Диапазон</target>
       </trans-unit>
       <trans-unit id="priceMinPlaceholder" datatype="html">
         <source>Min</source>
-        <target>Mín</target>
+        <target>Мин</target>
       </trans-unit>
       <trans-unit id="priceMaxPlaceholder" datatype="html">
         <source>Max</source>
-        <target>Máx</target>
+        <target>Макс</target>
       </trans-unit>
       <trans-unit id="applyPriceBtn" datatype="html">
         <source>Apply</source>
-        <target>Aplicar</target>
+        <target>Применить</target>
       </trans-unit>
       <trans-unit id="filterSortBy" datatype="html">
         <source>Sort By</source>
-        <target>Ordenar por</target>
+        <target>Сортировать по</target>
       </trans-unit>
       <trans-unit id="sortNewest" datatype="html">
         <source>Newest First</source>
-        <target>Más recientes</target>
+        <target>Сначала Новые</target>
       </trans-unit>
       <trans-unit id="sortPrice" datatype="html">
         <source>Price</source>
-        <target>Precio</target>
+        <target>Цена</target>
       </trans-unit>
       <trans-unit id="sortName" datatype="html">
         <source>Name</source>
-        <target>Nombre</target>
+        <target>Название</target>
       </trans-unit>
       <trans-unit id="sortRating" datatype="html">
         <source>Rating</source>
-        <target>Valoración</target>
+        <target>Рейтинг</target>
       </trans-unit>
       <trans-unit id="sortDescending" datatype="html">
         <source>Descending</source>
-        <target>Descendente</target>
+        <target>По убыванию</target>
       </trans-unit>
       <trans-unit id="sortAscending" datatype="html">
         <source>Ascending</source>
-        <target>Ascendente</target>
+        <target>По возрастанию</target>
       </trans-unit>
       <trans-unit id="productsFound" datatype="html">
         <source> products found</source>
-        <target> productos encontrados</target>
+        <target> товаров найдено</target>
       </trans-unit>
       <trans-unit id="soldOut" datatype="html">
         <source>Sold Out</source>
-        <target>Agotado</target>
+        <target>Распродано</target>
       </trans-unit>
       <trans-unit id="noResultsText" datatype="html">
         <source>No results found for your search</source>
-        <target>No se encontraron resultados para tu búsqueda</target>
+        <target>По вашему запросу ничего не найдено</target>
       </trans-unit>
       <trans-unit id="resetSearch" datatype="html">
         <source>Reset Search</source>
-        <target>Limpiar búsqueda</target>
+        <target>Сбросить Поиск</target>
       </trans-unit>
       <trans-unit id="noResultsPrice" datatype="html">
         <source>No products in this price range</source>
-        <target>No hay productos en este rango de precio</target>
+        <target>Нет товаров в этом ценовом диапазоне</target>
       </trans-unit>
       <trans-unit id="resetPrice" datatype="html">
         <source>Reset Price</source>
-        <target>Limpiar precio</target>
+        <target>Сбросить Цену</target>
       </trans-unit>
       <trans-unit id="noResultsCategory" datatype="html">
         <source>No results in this category</source>
-        <target>No hay resultados en esta categoría</target>
+        <target>Нет результатов в этой категории</target>
       </trans-unit>
       <trans-unit id="noResultsStock" datatype="html">
         <source>Currently out of stock</source>
-        <target>Actualmente sin existencia</target>
+        <target>В настоящее время нет в наличии</target>
       </trans-unit>
       <trans-unit id="showAllProducts" datatype="html">
         <source>Show all products</source>
-        <target>Mostrar todos los productos</target>
+        <target>Показать все товары</target>
       </trans-unit>
       <trans-unit id="noResultsDefault" datatype="html">
         <source>No results found</source>
-        <target>No se encontraron resultados</target>
+        <target>Ничего не найдено</target>
       </trans-unit>
       <trans-unit id="noResultsHint" datatype="html">
         <source>Try adjusting your filters or search terms.</source>
-        <target>Intenta ajustar tus filtros o términos de búsqueda.</target>
+        <target>Попробуйте изменить фильтры или поисковые запросы.</target>
       </trans-unit>
       <trans-unit id="seeAllProducts" datatype="html">
         <source>See All Products</source>
-        <target>Ver todos los productos</target>
+        <target>Смотреть Все Товары</target>
       </trans-unit>
       <trans-unit id="prevPageAria" datatype="html">
         <source>Previous page</source>
-        <target>Página anterior</target>
+        <target>Предыдущая страница</target>
       </trans-unit>
       <trans-unit id="nextPageAria" datatype="html">
         <source>Next page</source>
-        <target>Página siguiente</target>
+        <target>Следующая страница</target>
       </trans-unit>
 
-      <!-- Age display labels ($localize in TS) -->
+      <!-- Age display labels -->
       <trans-unit id="ageTeens" datatype="html">
         <source>Teens</source>
-        <target>Adolescentes</target>
+        <target>Подростки</target>
       </trans-unit>
       <trans-unit id="ageYoungAdults" datatype="html">
         <source>Young Adults</source>
-        <target>Jóvenes</target>
+        <target>Молодые Взрослые</target>
       </trans-unit>
       <trans-unit id="ageAdults" datatype="html">
         <source>Adults</source>
-        <target>Adultos</target>
+        <target>Взрослые</target>
       </trans-unit>
       <trans-unit id="ageAll" datatype="html">
         <source>All Ages</source>
-        <target>Todas</target>
+        <target>Все</target>
       </trans-unit>
 
-      <!-- Footer link labels ($localize in TS) -->
+      <!-- Footer link labels -->
       <trans-unit id="footerContactUs" datatype="html">
         <source>Contact Us</source>
-        <target>Contáctanos</target>
+        <target>Связаться с нами</target>
       </trans-unit>
       <trans-unit id="footerFaq" datatype="html">
         <source>FAQ</source>
-        <target>Preguntas frecuentes</target>
+        <target>Частые вопросы</target>
       </trans-unit>
       <trans-unit id="footerShipping" datatype="html">
         <source>Shipping &amp; Returns</source>
-        <target>Envíos y devoluciones</target>
+        <target>Доставка &amp; Возвраты</target>
       </trans-unit>
       <trans-unit id="footerExchange" datatype="html">
         <source>Exchange Policy</source>
-        <target>Política de cambios</target>
+        <target>Политика Обмена</target>
       </trans-unit>
       <trans-unit id="footerWarranty" datatype="html">
         <source>Product Warranty</source>
-        <target>Garantía del producto</target>
+        <target>Гарантия Продукта</target>
       </trans-unit>
       <trans-unit id="footerSizeGuide" datatype="html">
         <source>Size Guide</source>
-        <target>Guía de tallas</target>
+        <target>Таблица Размеров</target>
       </trans-unit>
       <trans-unit id="footerAboutUs" datatype="html">
         <source>About Us</source>
-        <target>Sobre nosotros</target>
+        <target>О нас</target>
       </trans-unit>
       <trans-unit id="footerStores" datatype="html">
         <source>Our Stores</source>
-        <target>Nuestras tiendas</target>
+        <target>Наши Магазины</target>
       </trans-unit>
       <trans-unit id="footerBlog" datatype="html">
         <source>Beauty Blog</source>
-        <target>Blog de belleza</target>
+        <target>Блог о красоте</target>
       </trans-unit>
       <trans-unit id="footerLoyalty" datatype="html">
         <source>Loyalty Program</source>
-        <target>Programa de lealtad</target>
+        <target>Программа Лояльности</target>
       </trans-unit>
       <trans-unit id="footerTerms" datatype="html">
         <source>Terms of Use</source>
-        <target>Términos de uso</target>
+        <target>Условия использования</target>
       </trans-unit>
       <trans-unit id="footerPrivacy" datatype="html">
         <source>Privacy Policy</source>
-        <target>Política de privacidad</target>
+        <target>Политика конфиденциальности</target>
       </trans-unit>
       <trans-unit id="newsletterSuccess" datatype="html">
         <source>Subscribed successfully!</source>
-        <target>¡Suscripción exitosa!</target>
+        <target>Вы успешно подписались!</target>
       </trans-unit>
       <trans-unit id="search-input-placeholder" datatype="html">
         <source>Search for products, brands, categories...</source>
-        <target>Buscar productos, marcas, categorías...</target>
+        <target>Поиск товаров, брендов, категорий...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">frontend/src/app/components/search/search.component.html</context>
           <context context-type="linenumber">8</context>

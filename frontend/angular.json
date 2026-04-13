@@ -12,7 +12,15 @@
       "i18n": {
         "sourceLocale": "en",
         "locales": {
-          "es": "src/locale/messages.es.xlf"
+          "es": "src/locale/messages.es.xlf",
+          "de": "src/locale/messages.de.xlf",
+          "fr": "src/locale/messages.fr.xlf",
+          "hi": "src/locale/messages.hi.xlf",
+          "ja": "src/locale/messages.ja.xlf",
+          "ko": "src/locale/messages.ko.xlf",
+          "pt": "src/locale/messages.pt.xlf",
+          "ru": "src/locale/messages.ru.xlf",
+          "zh": "src/locale/messages.zh.xlf"
         }
       },
       "schematics": {
@@ -94,13 +102,13 @@
                 }
               ],
               "outputHashing": "all",
-              "localize": ["en", "es"]
+              "localize": ["en", "es", "de", "fr", "hi", "ja", "ko", "pt", "ru", "zh"]
             },
             "development": {
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
-              "localize": ["en", "es"]
+              "localize": ["en", "es", "de", "fr", "hi", "ja", "ko", "pt", "ru", "zh"]
             }
           },
           "defaultConfiguration": "production"

@@ -69,10 +69,23 @@ export class HeaderComponent {
     return document.documentElement.lang?.split('-')[0] || 'en';
   }
 
+  readonly languages = [
+    { code: 'en', label: 'EN', name: 'English' },
+    { code: 'es', label: 'ES', name: 'Español' },
+    { code: 'de', label: 'DE', name: 'Deutsch' },
+    { code: 'fr', label: 'FR', name: 'Français' },
+    { code: 'hi', label: 'HI', name: 'हिन्दी' },
+    { code: 'ja', label: 'JA', name: '日本語' },
+    { code: 'ko', label: 'KO', name: '한국어' },
+    { code: 'pt', label: 'PT', name: 'Português' },
+    { code: 'ru', label: 'RU', name: 'Русский' },
+    { code: 'zh', label: 'ZH', name: '中文' },
+  ];
+
   switchLanguage(locale: string): void {
     if (this.currentLocale === locale) return;
     // In production Angular i18n, each locale is served from /<locale>/ base path
-    const localePattern = /^\/(en|es)(\/|$)/;
+    const localePattern = /^\/(en|es|de|fr|hi|ja|ko|pt|ru|zh)(\/|$)/;
     const currentPath = window.location.pathname;
     if (localePattern.test(currentPath)) {
       window.location.href = currentPath.replace(localePattern, `/${locale}/`);
