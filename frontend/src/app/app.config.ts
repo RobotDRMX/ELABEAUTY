@@ -1,7 +1,6 @@
-import { ApplicationConfig, importProvidersFrom, provideNoopZone } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { TitleStrategy } from '@angular/router';
-import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { routes } from './app.routes';
@@ -13,7 +12,6 @@ import { I18nTitleStrategy } from './services/i18n-title.strategy';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    // provideClientHydration(),
     provideAnimations(),
     provideHttpClient(
       withFetch(),
@@ -21,6 +19,5 @@ export const appConfig: ApplicationConfig = {
     ),
     importProvidersFrom(LucideIconsModule),
     { provide: TitleStrategy, useClass: I18nTitleStrategy },
-    provideNoopZone(), // Añadir esta línea para forzar NoopNgZone
   ],
 };
