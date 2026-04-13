@@ -9,6 +9,12 @@
   "projects": {
     "frontend": {
       "projectType": "application",
+      "i18n": {
+        "sourceLocale": "en",
+        "locales": {
+          "es": "src/locale/messages.es.xlf"
+        }
+      },
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss",
