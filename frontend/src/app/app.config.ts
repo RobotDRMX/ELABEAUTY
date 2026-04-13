@@ -13,7 +13,7 @@ import { I18nTitleStrategy } from './services/i18n-title.strategy';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideClientHydration(),
+    // provideClientHydration(),
     provideAnimations(),
     provideHttpClient(
       withFetch(),

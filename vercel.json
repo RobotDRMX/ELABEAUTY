@@ -10,7 +10,7 @@
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
         { "key": "Access-Control-Allow-Origin", "value": "https://elabeauty.vercel.app" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-eval' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://medieval-lora-robot005-60906931.koyeb.app https://www.google.com/recaptcha/; frame-src https://www.google.com/recaptcha/ https://recaptcha.google.com/; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'" }
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; script-src-attr 'self' 'unsafe-inline' 'unsafe-hashes' 'sha256-MhtPZXr7+LpJUY5qtMutB+qWfQtMaPccfe7QXtCcEYc='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://medieval-lora-robot005-60906931.koyeb.app https://www.google.com/recaptcha/; frame-src https://www.google.com/recaptcha/ https://recaptcha.google.com/; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'" }
       ]
     }
   ],
@@ -21,7 +21,7 @@
     { "source": "/api/:path*", "destination": "https://medieval-lora-robot005-60906931.koyeb.app/api/:path*" },
     { "source": "/en/:path*", "destination": "/en/index.html" },
     { "source": "/es/:path*", "destination": "/es/index.html" },
-    { "source": "/(en|es)/(.*)\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|otf|json)", "destination": "/$1/$2.$3" },
+    { "source": "/(en|es)/(.*)\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|otf|json|webmanifest)", "destination": "/$1/$2.$3" },
     { "source": "/(.*)", "destination": "/en/index.html" }
   ]
 }
