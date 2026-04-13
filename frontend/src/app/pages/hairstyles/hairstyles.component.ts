@@ -74,7 +74,6 @@ export class HairstylesComponent implements OnInit, OnDestroy {
   }
 
   formatProcess(process: string): string[] {
-    return process.split('
-').filter(s => s.trim().length > 0);
+    return process.split('\n').filter(s => s.trim().length > 0);
   }
 }

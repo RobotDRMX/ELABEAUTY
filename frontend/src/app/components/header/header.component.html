@@ -3,26 +3,22 @@
   <div class="header-utility">
     <div class="container">
       <div class="utility-left">
-        <span class="promo-text">
+        <span class="promo-text" i18n="@@headerFreeShipping">
           <lucide-icon name="truck" [size]="14"></lucide-icon>
-          {{ 'header.free_shipping' | translate }}
+          Free Shipping on all orders
         </span>
       </div>
       <div class="utility-right">
-        <select class="header-select" [ngModel]="i18n.lang()" (ngModelChange)="i18n.setLang($event)">
-          @for (l of languages; track l.code) {
-            <option [value]="l.code">{{ l.flag }} {{ l.label }}</option>
-          }
-        </select>
+        <!-- Language selector removed temporarily for official i18n migration -->
         <div class="theme-toggle-group">
-          <button class="theme-toggle-btn" [class.active]="themeService.theme() === 'light'" (click)="themeService.setTheme('light')">
+          <button class="theme-toggle-btn" [class.active]="themeService.theme() === 'light'" (click)="themeService.setTheme('light')" i18n-title="@@themeLightTitle" title="Light Mode">
             <lucide-icon name="sun" [size]="14"></lucide-icon>
           </button>
-          <button class="theme-toggle-btn" [class.active]="themeService.theme() === 'dark'" (click)="themeService.setTheme('dark')">
+          <button class="theme-toggle-btn" [class.active]="themeService.theme() === 'dark'" (click)="themeService.setTheme('dark')" i18n-title="@@themeDarkTitle" title="Dark Mode">
             <lucide-icon name="moon" [size]="14"></lucide-icon>
           </button>
           <select class="header-select theme-a11y-select" [ngModel]="isA11yTheme ? themeService.theme() : ''" (ngModelChange)="$event && themeService.setTheme($event)">
-            <option value="" disabled>♿ ACCESIBILIDAD</option>
+            <option value="" disabled i18n="@@accessibilityTitle">♿ ACCESIBILIDAD</option>
             @for (t of a11yThemes; track t.value) {
               <option [value]="t.value">{{ t.label }}</option>
             }
@@ -43,12 +39,12 @@
            [queryParams]="item.queryParams || {}"
            routerLinkActive="active" 
            class="nav-link">
-          {{ item.label | translate }}
+          {{ item.label }}
         </a>
       </nav>
 
       <!-- Hamburger (Mobile) -->
-      <button class="action-item hamburger" (click)="toggleMobileMenu()">
+      <button class="action-item hamburger" (click)="toggleMobileMenu()" i18n-aria-label="@@mobileMenuAriaLabel" aria-label="Toggle mobile menu">
         <lucide-icon [name]="mobileMenuOpen() ? 'x' : 'menu'" [size]="24"></lucide-icon>
       </button>
 
@@ -65,22 +61,22 @@
           <app-search></app-search>
         </div>
 
-        <button class="action-item" (click)="openFavorites()">
+        <button class="action-item" (click)="openFavorites()" i18n-title="@@favoritesTitle" title="Favorites">
           <lucide-icon name="heart" [size]="20"></lucide-icon>
           <span class="badge" *ngIf="favoritesCount > 0">{{ favoritesCount }}</span>
         </button>
 
-        <button class="action-item" (click)="openCart()">
+        <button class="action-item" (click)="openCart()" i18n-title="@@cartTitle" title="Shopping Cart">
           <lucide-icon name="shopping-bag" [size]="20"></lucide-icon>
           <span class="badge" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
         </button>
 
-        <button class="action-item user-trigger" (click)="openAccount()" *ngIf="isLoggedIn">
+        <button class="action-item user-trigger" (click)="openAccount()" *ngIf="isLoggedIn" i18n-title="@@accountTitle" title="My Account">
           <lucide-icon name="circle-user" [size]="20"></lucide-icon>
         </button>
 
-        <a routerLink="/auth/login" class="nav-link" style="font-size: 0.7rem;" *ngIf="!isLoggedIn">
-          {{ 'header.login' | translate }}
+        <a routerLink="/auth/login" class="nav-link" style="font-size: 0.7rem;" *ngIf="!isLoggedIn" i18n="@@loginLink">
+          Login
         </a>
       </div>
 
@@ -93,14 +89,14 @@
   <div class="mobile-overlay" (click)="closeMobileMenu()"></div>
   <nav class="mobile-drawer">
     <a *ngFor="let item of navItems" [routerLink]="item.link" (click)="closeMobileMenu()" class="mobile-nav-link">
-      {{ item.label | translate }}
+      {{ item.label }}
     </a>
     <div class="mobile-drawer-divider"></div>
     <div class="mobile-auth" *ngIf="!isLoggedIn">
-      <a routerLink="/auth/login" class="btn btn-primary" (click)="closeMobileMenu()">{{ 'header.login' | translate }}</a>
+      <a routerLink="/auth/login" class="btn btn-primary" (click)="closeMobileMenu()" i18n="@@loginButtonMobile">Login</a>
     </div>
     <div class="mobile-auth" *ngIf="isLoggedIn">
-      <button class="btn btn-outline" (click)="logout(); closeMobileMenu()">{{ 'header.logout' | translate }}</button>
+      <button class="btn btn-outline" (click)="logout(); closeMobileMenu()" i18n="@@logoutButtonMobile">Logout</button>
     </div>
   </nav>
 }

@@ -6,7 +6,7 @@ import { SearchComponent } from '../search/search.component';
 import { AuthService } from '../../services/auth.service';
 import { CartService } from '../../services/cart.service';
 import { FavoritesService } from '../../services/favorites.service';
-import { ThemeService, Theme, THEME_OPTIONS } from '../../services/theme.service';
+import { ThemeService, THEME_OPTIONS } from '../../services/theme.service'; // Removed Theme type import
 import { LucideAngularModule } from 'lucide-angular';
 
 @Component({

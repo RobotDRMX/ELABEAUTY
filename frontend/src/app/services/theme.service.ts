@@ -1,6 +1,7 @@
 import { Injectable, signal, effect, Renderer2, inject, RendererFactory2 } from '@angular/core';
 
-export type ThemeType = 'light' | 'dark' | 'protanopia' | 'deuteranopia' | 'tritanopia' | 'protanomaly' | 'deuteranomaly' | 'tritanomaly' | 'achromatopsia';
+export type Theme = 'light' | 'dark';
+export type ThemeType = Theme | 'protanopia' | 'deuteranopia' | 'tritanopia' | 'protanomaly' | 'deuteranomaly' | 'tritanomaly' | 'achromatopsia';
 export type ThemeGroup = 'mode' | 'colorblind';
 
 export interface ThemeOption {

@@ -1,39 +1,35 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 import { CartService } from '../../services/cart.service';
 import { NotificationService } from '../../services/notification.service';
-import { I18nService } from '../../services/i18n.service';
-import { TranslatePipe } from '../../pipes/translate.pipe';
+import { TruncatePipe } from '../../pipes/truncate.pipe';
+import { SafeImagePipe } from '../../pipes/safe-image.pipe';
 
-export type CheckoutStep = 'address' | 'payment' | 'review' | 'success';
-export type PaymentMethod = 'card' | 'cash' | 'oxxo';
+type CheckoutStep = 'address' | 'payment' | 'review' | 'success';
+type PaymentMethod = 'card' | 'transfer' | 'paypal' | 'cash' | 'oxxo';
 
 @Component({
     selector: 'app-cart',
     standalone: true,
-    imports: [CommonModule, RouterModule, FormsModule, LucideAngularModule, TranslatePipe],
+    imports: [CommonModule, RouterModule, FormsModule, LucideAngularModule, TruncatePipe, SafeImagePipe],
     templateUrl: './cart.component.html',
     styleUrls: ['./cart.component.scss']
 })
 export class CartComponent {
     cartService = inject(CartService);
     private notif = inject(NotificationService);
-    private i18n = inject(I18nService);
 
     updatingId = signal<number | null>(null);
-
-    // Checkout modal state
     showCheckout = signal(false);
     currentStep = signal<CheckoutStep>('address');
+    paymentMethod = signal<PaymentMethod>('card');
     processingPayment = signal(false);
+    addressSubmitted = false;
     orderNumber = signal('');
 
-    addressSubmitted = false;
-
-    // Form data
     address = {
         firstName: '',
         lastName: '',
@@ -45,8 +41,6 @@ export class CartComponent {
         phone: ''
     };
 
-    paymentMethod = signal<PaymentMethod>('card');
-
     card = {
         number: '',
         name: '',
@@ -54,18 +48,28 @@ export class CartComponent {
         cvv: ''
     };
 
-    get cart() { return this.cartService.cart(); }
-    get total() { return this.cartService.totalPrice(); }
-    get finalTotal() { return this.total >= 500 ? this.total : this.total + 50; }
-    get shipping() { return this.total >= 500 ? 0 : 50; }
-    get shippingProgress(): number { return Math.min((this.total / 500) * 100, 100); }
+    cart = computed(() => this.cartService.cart());
+    total = computed(() => this.cartService.totalPrice());
+
+    shipping = computed(() => {
+        return this.total() >= 500 ? 0 : 50;
+    });
+
+    finalTotal = computed(() => {
+        return this.total() + this.shipping();
+    });
+
+    shippingProgress = computed(() => {
+        const progress = (this.total() / 500) * 100;
+        return Math.min(progress, 100);
+    });
 
     async updateQuantity(productId: number, quantity: number) {
         if (quantity === 0) {
             const confirmed = await this.notif.confirm(
-                this.i18n.t('cart.remove_confirm_title'),
-                this.i18n.t('cart.remove_confirm_msg'),
-                { confirmText: this.i18n.t('common.delete'), cancelText: this.i18n.t('common.cancel'), danger: true }
+                'Remove Item',
+                'Are you sure you want to remove this item from your cart?',
+                { confirmText: 'Delete', cancelText: 'Cancel', danger: true }
             );
             if (!confirmed) return;
             this.updatingId.set(productId);
@@ -84,97 +88,84 @@ export class CartComponent {
 
     async clearCart() {
         const ok = await this.notif.confirm(
-            '¿Vaciar carrito?',
-            'Se eliminarán todos los productos de tu carrito.',
-            { confirmText: 'Vaciar', cancelText: 'Cancelar', danger: true }
+            'Empty Cart?',
+            'All items will be removed from your cart.',
+            { confirmText: 'Empty', cancelText: 'Cancel', danger: true }
         );
         if (ok) this.cartService.clearCart();
     }
 
     checkout() {
-        this.currentStep.set('address');
         this.showCheckout.set(true);
+        this.currentStep.set('address');
     }
 
     closeCheckout() {
-        if (this.currentStep() === 'success') {
-            this.showCheckout.set(false);
-            return;
-        }
         this.showCheckout.set(false);
     }
 
-    isPhoneValid(): boolean {
-        return this.address.phone.replace(/\D/g, '').length === 10;
-    }
-
-    isAddressValid(): boolean {
-        const a = this.address;
-        return !!(a.firstName && a.lastName && a.street && a.colonia && a.city && a.state
-            && a.zip && a.zip.length === 5 && a.phone && this.isPhoneValid());
-    }
-
-    isPaymentValid(): boolean {
-        if (this.paymentMethod() === 'card') {
-            return !!(this.card.number.length >= 16 && this.card.name && this.card.expiry && this.card.cvv.length >= 3);
-        }
-        return true;
-    }
-
     goToStep(step: CheckoutStep) {
-        if (step === 'payment' && !this.isAddressValid()) {
+        if (step === 'payment') {
             this.addressSubmitted = true;
-            return;
+            if (!this.isAddressValid()) return;
         }
         this.currentStep.set(step);
     }
 
-    formatCardNumber(event: Event) {
-        const input = event.target as HTMLInputElement;
-        let value = input.value.replace(/\D/g, '').slice(0, 16);
-        value = value.replace(/(.{4})/g, '$1 ').trim();
-        this.card.number = value;
-        input.value = value;
+    isAddressValid(): boolean {
+        return !!(this.address.firstName && this.address.lastName && this.address.street && 
+               this.address.colonia && this.address.city && this.address.state && 
+               this.address.zip.length === 5 && this.isPhoneValid());
     }
 
-    formatExpiry(event: Event) {
-        const input = event.target as HTMLInputElement;
-        let value = input.value.replace(/\D/g, '').slice(0, 4);
-        if (value.length >= 2) value = value.slice(0, 2) + '/' + value.slice(2);
-        this.card.expiry = value;
-        input.value = value;
+    isPhoneValid(): boolean {
+        return this.address.phone.length >= 10;
     }
 
-    maskedCard(): string {
-        const clean = this.card.number.replace(/\s/g, '');
-        if (clean.length < 4) return '**** **** **** ****';
-        const last4 = clean.slice(-4);
+    isPaymentValid(): boolean {
+        if (this.paymentMethod() === 'card') {
+            return !!(this.card.number.length >= 16 && this.card.name && this.card.expiry.length === 5 && this.card.cvv.length >= 3);
+        }
+        return true;
+    }
+
+    formatCardNumber(event: any) {
+        let value = event.target.value.replace(/\D/g, '');
+        let formatted = value.match(/.{1,4}/g)?.join(' ') || '';
+        this.card.number = formatted.substring(0, 19);
+    }
+
+    formatExpiry(event: any) {
+        let value = event.target.value.replace(/\D/g, '');
+        if (value.length > 2) {
+            value = value.substring(0, 2) + '/' + value.substring(2, 4);
+        }
+        this.card.expiry = value.substring(0, 5);
+    }
+
+    maskedCard() {
+        if (!this.card.number) return '**** **** **** ****';
+        const last4 = this.card.number.slice(-4);
         return `**** **** **** ${last4}`;
     }
 
     async confirmOrder() {
         this.processingPayment.set(true);
-        this.currentStep.set('review');
-
-        // Simulate payment processing steps
-        await this.delay(2500);
-        this.processingPayment.set(false);
-
-        const num = Math.floor(100000 + Math.random() * 900000);
-        this.orderNumber.set(`ELA-${num}`);
-        this.currentStep.set('success');
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        this.orderNumber.set('EB-' + Math.random().toString(36).substring(2, 9).toUpperCase());
         this.cartService.clearCart();
-    }
-
-    private delay(ms: number): Promise<void> {
-        return new Promise(resolve => setTimeout(resolve, ms));
+        this.currentStep.set('success');
+        this.processingPayment.set(false);
     }
 
     paymentLabel(): string {
         const map: Record<PaymentMethod, string> = {
-            card: 'Tarjeta de crédito/débito',
-            cash: 'Efectivo en tienda',
-            oxxo: 'Pago en OXXO'
+            card: 'Credit/Debit Card',
+            transfer: 'Bank Transfer',
+            paypal: 'PayPal',
+            cash: 'Cash on Delivery',
+            oxxo: 'OXXO Pay'
         };
         return map[this.paymentMethod()];
     }

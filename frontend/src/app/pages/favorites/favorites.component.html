@@ -1,8 +1,8 @@
 <div class="favorites-page">
     <div class="container">
         <div class="favorites-header">
-            <h1>{{ 'favorites.title' | translate }}</h1>
-            <p *ngIf="favorites.length > 0">{{ 'favorites.count' | translate:{ count: favorites.length } }}</p>
+            <h1>{{ 'favorites.title' }}</h1>
+            <p *ngIf="favorites.length > 0">{{ 'favorites.count' }}</p>
         </div>
 
         <!-- Skeleton loading -->
@@ -26,7 +26,7 @@
                         <button class="remove-btn"
                             [disabled]="removingId() === fav.product.id"
                             (click)="removeFavorite(fav.product.id)"
-                            [title]="'favorites.remove' | translate">
+                            [title]="'favorites.remove'">
                             @if (removingId() === fav.product.id) {
                                 <lucide-icon name="loader-circle" [size]="16" class="spin"></lucide-icon>
                             } @else {
@@ -45,7 +45,7 @@
                             @if (addingToCartId() === fav.product.id) {
                                 <lucide-icon name="loader-circle" [size]="16" class="spin"></lucide-icon>
                             } @else {
-                                {{ fav.product.stock > 0 ? ('favorites.add_to_cart' | translate) : ('favorites.sold_out' | translate) }}
+                                {{ fav.product.stock > 0 ? ('favorites.add_to_cart') : ('favorites.sold_out') }}
                             }
                         </button>
                     </div>
@@ -55,19 +55,19 @@
             <ng-template #emptyFavs>
                 <div class="empty-state fade-in">
                     <lucide-icon name="heart" [size]="48"></lucide-icon>
-                    <h2>{{ 'favorites.empty' | translate }}</h2>
-                    <p class="favorites-hint">{{ 'favorites.empty_hint' | translate }}</p>
-                    <button class="btn-maybelline" routerLink="/busqueda">{{ 'favorites.explore' | translate }}</button>
-                    <p class="empty-categories-label">{{ 'favorites.empty_categories_hint' | translate }}</p>
+                    <h2>{{ 'favorites.empty' }}</h2>
+                    <p class="favorites-hint">{{ 'favorites.empty_hint' }}</p>
+                    <button class="btn-maybelline" routerLink="/busqueda">{{ 'favorites.explore' }}</button>
+                    <p class="empty-categories-label">{{ 'favorites.empty_categories_hint' }}</p>
                     <div class="empty-category-chips">
                         <a routerLink="/busqueda" [queryParams]="{ category: 'Labiales' }" class="category-chip">
-                            <lucide-icon name="heart" [size]="14"></lucide-icon> {{ 'categories.lips' | translate }}
+                            <lucide-icon name="heart" [size]="14"></lucide-icon> {{ 'categories.lips' }}
                         </a>
                         <a routerLink="/busqueda" [queryParams]="{ category: 'Ojos' }" class="category-chip">
-                            <lucide-icon name="eye" [size]="14"></lucide-icon> {{ 'categories.eyes' | translate }}
+                            <lucide-icon name="eye" [size]="14"></lucide-icon> {{ 'categories.eyes' }}
                         </a>
                         <a routerLink="/busqueda" [queryParams]="{ category: 'Rostro' }" class="category-chip">
-                            <lucide-icon name="palette" [size]="14"></lucide-icon> {{ 'categories.face' | translate }}
+                            <lucide-icon name="palette" [size]="14"></lucide-icon> {{ 'categories.face' }}
                         </a>
                     </div>
                 </div>

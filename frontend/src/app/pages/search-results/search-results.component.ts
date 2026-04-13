@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -12,13 +12,27 @@ import { SearchComponent } from '../../components/search/search.component';
 import { TruncatePipe } from '../../pipes/truncate.pipe';
 import { SafeImagePipe } from '../../pipes/safe-image.pipe';
 import { LucideIcons } from '../../icons.provider';
+import { listAnimation } from '../../animations/list.animations';
+import { TiltDirective } from '../../directives/tilt.directive';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-search-results',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, SearchComponent, TruncatePipe, SafeImagePipe, LucideIcons],
+  imports: [
+    CommonModule, 
+    RouterModule, 
+    FormsModule, 
+    SearchComponent, 
+    TruncatePipe, 
+    SafeImagePipe, 
+    LucideIcons, 
+    TiltDirective, 
+    ScrollingModule
+  ],
   templateUrl: './search-results.component.html',
-  styleUrls: ['./search-results.component.scss']
+  styleUrls: ['./search-results.component.scss'],
+  animations: [listAnimation]
 })
 export class SearchResultsComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
@@ -29,14 +43,14 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   private realtime = inject(RealtimeService);
   private realtimeSub?: Subscription;
 
-  products: Product[] = [];
+  products = signal<Product[]>([]);
   query: string = '';
   category: string = '';
   total: number = 0;
   page: number = 1;
   limit: number = 12;
   totalPages: number = 0;
-  isLoading: boolean = true;
+  isLoading = signal(true);
   error: string = '';
 
   drawerOpen = signal(false);
@@ -99,7 +113,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   }
 
   loadProducts() {
-    this.isLoading = true;
+    this.isLoading.set(true);
     this.error = '';
 
     const searchParams: SearchParams = {
@@ -123,15 +137,15 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
     this.productService.searchProducts(searchParams).subscribe({
       next: (response) => {
-        this.products = response.products;
+        this.products.set(response.products);
         this.total = response.total;
         this.totalPages = response.totalPages;
-        this.isLoading = false;
+        this.isLoading.set(false);
       },
       error: (error) => {
         console.error('Error loading products:', error);
         this.error = 'Error al cargar los productos. Por favor intenta nuevamente.';
-        this.isLoading = false;
+        this.isLoading.set(false);
       }
     });
   }
@@ -218,7 +232,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
   private sanitizeString(value: string | undefined): string {
     if (!value) return '';
-    // Strip HTML tags and limit length
     return value.replace(/<[^>]*>/g, '').substring(0, 200);
   }
 

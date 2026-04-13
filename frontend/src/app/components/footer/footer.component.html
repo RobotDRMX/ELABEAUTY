@@ -4,8 +4,8 @@
       <!-- Sobre ELA Beauty -->
       <div class="footer-section footer-about">
         <h3>ELA Beauty</h3>
-        <p>{{ 'footer.about' | translate }}</p>
-        <p>{{ 'footer.since' | translate }} 💄</p>
+        <p i18n="@@footerAbout">Discover the best in professional beauty and cosmetics. We offer a wide range of high-quality products to help you express your unique style.</p>
+        <p i18n="@@footerSince">Empowering beauty since 2024 💄</p>
         <div class="social-links">
           <a *ngFor="let social of socialLinks" [href]="social.url" class="social-link" [attr.aria-label]="social.name"
             target="_blank" rel="noopener noreferrer">
@@ -18,7 +18,7 @@
 
       <!-- Servicio al Cliente -->
       <div class="footer-section">
-        <h3>{{ 'footer.customer_service' | translate }}</h3>
+        <h3 i18n="@@footerCustomerService">Customer Service</h3>
         <a *ngFor="let link of customerServiceLinks" [routerLink]="link.link">
           <lucide-icon [name]="link.icon" [size]="14"></lucide-icon> {{ link.label }}
         </a>
@@ -26,7 +26,7 @@
 
       <!-- Información -->
       <div class="footer-section">
-        <h3>{{ 'footer.info' | translate }}</h3>
+        <h3 i18n="@@footerInformation">Information</h3>
         <a *ngFor="let link of infoLinks" [routerLink]="link.link">
           <lucide-icon [name]="link.icon" [size]="14"></lucide-icon> {{ link.label }}
         </a>
@@ -34,17 +34,17 @@
 
       <!-- Newsletter y Pagos -->
       <div class="footer-section">
-        <h3>{{ 'footer.newsletter' | translate }}</h3>
-        <p>{{ 'footer.newsletter_desc' | translate }}</p>
+        <h3 i18n="@@footerNewsletterTitle">Newsletter</h3>
+        <p i18n="@@footerNewsletterDesc">Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.</p>
         <form class="newsletter-form" (ngSubmit)="subscribeNewsletter()">
-          <input type="email" placeholder="Tu email" [(ngModel)]="newsletterEmail" name="email" required>
+          <input type="email" [placeholder]="'Your email'" i18n-placeholder="@@footerEmailPlaceholder" [(ngModel)]="newsletterEmail" name="email" required>
           <button type="submit">
-            <lucide-icon name="send" [size]="14"></lucide-icon> {{ 'footer.subscribe' | translate }}
+            <lucide-icon name="send" [size]="14"></lucide-icon> <span i18n="@@footerSubscribeBtn">Subscribe</span>
           </button>
         </form>
 
         <div class="payment-section">
-          <h3>{{ 'footer.payment_methods' | translate }}</h3>
+          <h3 i18n="@@footerPaymentMethods">Payment Methods</h3>
           <div class="payment-methods">
             <span *ngFor="let payment of paymentMethods" class="payment-icon">
               {{ payment.name }}
@@ -56,27 +56,27 @@
 
     <!-- Footer Bottom -->
     <div class="footer-bottom">
-      <p>&copy; {{ currentYear }} ELA Beauty. {{ 'footer.rights' | translate }}</p>
-      <p>{{ 'footer.made_with' | translate }} <lucide-icon name="heart" [size]="14" style="color: var(--primary-color); display: inline-flex; vertical-align: middle;"></lucide-icon> {{ 'footer.for_beauty' | translate }}</p>
+      <p>&copy; {{ currentYear }} ELA Beauty. <span i18n="@@footerRights">All rights reserved.</span></p>
+      <p i18n="@@footerMadeWith">Made with <lucide-icon name="heart" [size]="14" style="color: var(--primary-color); display: inline-flex; vertical-align: middle;"></lucide-icon> for beauty lovers</p>
 
       <!-- Referencia a Maybelline - Discreta y elegante -->
       <div class="design-reference">
         <p class="reference-text">
           <lucide-icon name="palette" [size]="14"></lucide-icon>
-          {{ 'footer.inspired' | translate }}
+          <span i18n="@@footerInspiredBy">Inspired by</span>
           <a href="https://www.maybelline.com" target="_blank" rel="noopener noreferrer" class="maybelline-link">
             Maybelline New York
           </a>
           |
           <lucide-icon name="code" [size]="14"></lucide-icon>
-          {{ 'footer.own_dev' | translate }}
+          <span i18n="@@footerOwnDev">Own Development</span>
         </p>
       </div>
 
       <div class="footer-links">
-        <a routerLink="/privacidad">{{ 'footer.privacy' | translate }}</a>
-        <a routerLink="/terminos-de-uso">{{ 'footer.terms' | translate }}</a>
-        <a routerLink="/cookies">{{ 'footer.cookies' | translate }}</a>
+        <a routerLink="/privacidad" i18n="@@footerPrivacyLink">Privacy Policy</a>
+        <a routerLink="/terminos-de-uso" i18n="@@footerTermsLink">Terms of Use</a>
+        <a routerLink="/cookies" i18n="@@footerCookiesLink">Cookies Policy</a>
       </div>
     </div>
   </div>

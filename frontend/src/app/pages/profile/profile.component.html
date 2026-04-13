@@ -4,8 +4,8 @@
             <div class="profile-avatar">
                 <lucide-icon name="circle-user" [size]="48"></lucide-icon>
             </div>
-            <h2>{{ 'profile.title' | translate }}</h2>
-            <p>{{ 'profile.subtitle' | translate }}</p>
+            <h2>{{ 'profile.title' }}</h2>
+            <p>{{ 'profile.subtitle' }}</p>
         </div>
 
         <!-- Skeleton while loading initial profile data -->
@@ -34,22 +34,22 @@
         <form *ngIf="!isInitialLoading" [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-form">
             <div class="row">
                 <div class="form-group col">
-                    <label>{{ 'profile.first_name' | translate }}</label>
+                    <label>{{ 'profile.first_name' }}</label>
                     <input type="text" formControlName="firstName">
                 </div>
                 <div class="form-group col">
-                    <label>{{ 'profile.paternal' | translate }}</label>
+                    <label>{{ 'profile.paternal' }}</label>
                     <input type="text" formControlName="apellidoPaterno">
                 </div>
             </div>
 
             <div class="form-group">
-                <label>{{ 'profile.maternal' | translate }}</label>
+                <label>{{ 'profile.maternal' }}</label>
                 <input type="text" formControlName="apellidoMaterno">
             </div>
 
             <div class="form-group">
-                <label>{{ 'profile.email' | translate }}</label>
+                <label>{{ 'profile.email' }}</label>
                 <input type="email" formControlName="email">
             </div>
 
@@ -57,22 +57,22 @@
             <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 
             <button type="submit" class="btn-maybelline" [disabled]="profileForm.invalid || loading">
-                {{ loading ? ('profile.saving' | translate) : ('profile.update' | translate) }}
+                {{ loading ? ('profile.saving') : ('profile.update') }}
             </button>
         </form>
 
         <div class="orders-preview mt-4">
-          <h3>{{ 'profile.order_history' | translate }}</h3>
+          <h3>{{ 'profile.order_history' }}</h3>
           <div class="no-orders">
             <lucide-icon name="clock" [size]="36"></lucide-icon>
-            <p>{{ 'profile.order_history_soon' | translate }}</p>
+            <p>{{ 'profile.order_history_soon' }}</p>
           </div>
         </div>
 
         <!-- ── Acceso Biométrico ── -->
         <div class="profile-section">
-            <h3>{{ 'profile.biometric' | translate }}</h3>
-            <p class="section-desc">{{ 'profile.biometric_desc' | translate }}</p>
+            <h3>{{ 'profile.biometric' }}</h3>
+            <p class="section-desc">{{ 'profile.biometric_desc' }}</p>
 
             <div class="biometric-options">
                 <div class="biometric-option" *ngIf="biometric.webAuthnSupported()">
@@ -119,7 +119,7 @@
                         (click)="saveFace()">
                         {{ enrollLoading ? 'Guardando...' : 'Guardar rostro' }}
                     </button>
-                    <button class="btn-ghost" (click)="cancelEnroll()">{{ 'common.cancel' | translate }}</button>
+                    <button class="btn-ghost" (click)="cancelEnroll()">{{ 'common.cancel' }}</button>
                 </div>
             </div>
 

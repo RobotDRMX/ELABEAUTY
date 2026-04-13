@@ -9,9 +9,9 @@
     </div>
     <div class="container">
       <div class="page-hero-content fade-in-up">
-        <span class="page-eyebrow"><lucide-icon name="sparkles" [size]="18"></lucide-icon> {{ 'nails.eyebrow' | translate }}</span>
-        <h1>{{ 'nails.title' | translate }}</h1>
-        <p>{{ 'nails.subtitle' | translate }}</p>
+        <span class="page-eyebrow"><lucide-icon name="sparkles" [size]="18"></lucide-icon> {{ 'nails.eyebrow' }}</span>
+        <h1>{{ 'nails.title' }}</h1>
+        <p>{{ 'nails.subtitle' }}</p>
       </div>
     </div>
   </div>
@@ -21,7 +21,7 @@
     <div class="container">
       <div class="filter-bar-inner">
         <button class="filter-chip" [class.active]="activeStyle === ''" (click)="setStyle('')">
-          <lucide-icon name="grid-2x2" [size]="16"></lucide-icon> {{ 'nails.all' | translate }}
+          <lucide-icon name="grid-2x2" [size]="16"></lucide-icon> {{ 'nails.all' }}
         </button>
         <button class="filter-chip" *ngFor="let s of styles"
                 [class.active]="activeStyle === s"
@@ -51,14 +51,14 @@
     <!-- Error -->
     <div class="error-box" *ngIf="error && !isLoading">
       <lucide-icon name="triangle-alert" [size]="24"></lucide-icon>
-      <p>{{ 'nails.error' | translate }}</p>
+      <p>{{ 'nails.error' }}</p>
     </div>
 
     <!-- Sin resultados -->
     <div class="empty-state" *ngIf="!isLoading && !error && filtered.length === 0">
       <lucide-icon name="sparkles" [size]="48"></lucide-icon>
-      <h3>{{ 'nails.no_results' | translate }}</h3>
-      <button (click)="setStyle('')">{{ 'nails.see_all' | translate }}</button>
+      <h3>{{ 'nails.no_results' }}</h3>
+      <button (click)="setStyle('')">{{ 'nails.see_all' }}</button>
     </div>
 
     <!-- Grid de diseños -->
@@ -92,20 +92,20 @@
 
           <!-- Botón ver proceso -->
           <button class="process-toggle" (click)="toggleExpand(d.id)">
-            <span>{{ expandedId === d.id ? ('hairstyles.hide_process' | translate) : ('hairstyles.show_process' | translate) }}</span>
+            <span>{{ expandedId === d.id ? ('hairstyles.hide_process') : ('hairstyles.show_process') }}</span>
             <lucide-icon [name]="expandedId === d.id ? 'chevron-up' : 'chevron-down'" [size]="16"></lucide-icon>
           </button>
 
           <!-- Panel de proceso -->
           <div class="process-panel" [class.open]="expandedId === d.id">
-            <h4><lucide-icon name="list-ordered" [size]="16"></lucide-icon> {{ 'hairstyles.process' | translate }}</h4>
+            <h4><lucide-icon name="list-ordered" [size]="16"></lucide-icon> {{ 'hairstyles.process' }}</h4>
             <ol class="process-steps">
               <li *ngFor="let step of formatProcess(d.process)">{{ step }}</li>
             </ol>
           </div>
 
           <button class="btn-agenda">
-            <lucide-icon name="calendar-check" [size]="16"></lucide-icon> {{ 'hairstyles.book' | translate }}
+            <lucide-icon name="calendar-check" [size]="16"></lucide-icon> {{ 'hairstyles.book' }}
           </button>
         </div>
 

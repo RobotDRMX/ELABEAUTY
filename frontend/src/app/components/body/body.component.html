@@ -8,44 +8,44 @@
   <!-- ===== SECTION 1: HERO (THE STATEMENT) ===== -->
   <section class="hero-elite">
     <div class="hero-bg-canvas">
-      <div class="blob blob-1"></div>
-      <div class="blob blob-2"></div>
+      <div class="blob blob-1" [style.transform]="'translateY(' + (scrollY() * 0.3) + 'px)'"></div>
+      <div class="blob blob-2" [style.transform]="'translateY(' + (scrollY() * -0.2) + 'px)'"></div>
     </div>
 
     <div class="container">
-      <div class="hero-reveal-grid">
+      <div class="hero-reveal-grid" [style.transform]="'translateY(' + (scrollY() * 0.1) + 'px)'">
         
         <div class="hero-content-box reveal">
-          <span class="eyebrow delay-1">{{ 'hero.eyebrow' | translate }}</span>
-          <h1 class="display-title delay-2">
-            {{ 'hero.title_1' | translate }} <br>
-            <span class="italic-serif text-primary">{{ 'hero.title_2' | translate }}</span>
+          <span class="eyebrow delay-1" i18n="@@heroEyebrow">LUXURY MAKEUP</span>
+          <h1 class="display-title delay-2" i18n="@@heroTitle">
+            Elevate your <br>
+            <span class="italic-serif text-primary">Natural Beauty</span>
           </h1>
-          <p class="hero-description delay-3">
-            {{ 'hero.subtitle' | translate }}
+          <p class="hero-description delay-3" i18n="@@heroSubtitle">
+            Discover our curated collection of high-performance beauty products designed for the modern individual.
           </p>
           
           <div class="hero-cta-group delay-4">
-            <a routerLink="/busqueda" class="btn btn-primary">{{ 'hero.explore' | translate }}</a>
-            <a routerLink="/busqueda" [queryParams]="{ sortBy: 'price', order: 'ASC' }" class="btn btn-outline">
-              {{ 'hero.offers' | translate }}
+            <a routerLink="/busqueda" class="btn btn-primary" i18n="@@heroExplore">Explore Shop</a>
+            <a routerLink="/busqueda" [queryParams]="{ sortBy: 'price', order: 'ASC' }" class="btn btn-outline" i18n="@@heroOffers">
+              Exclusive Offers
             </a>
           </div>
 
           <div class="hero-metrics delay-5">
             <div class="metric">
               <span class="m-val">+200</span>
-              <span class="m-label">{{ 'hero.products' | translate }}</span>
+              <span class="m-label" i18n="@@heroProducts">Products</span>
             </div>
             <div class="m-sep"></div>
             <div class="metric">
               <span class="m-val">4.9</span>
-              <span class="m-label">{{ 'hero.rating' | translate }}</span>
+              <span class="m-label" i18n="@@heroRating">Rating</span>
             </div>
             <div class="m-sep"></div>
             <div class="metric">
               <span class="m-val">+5k</span>
-              <span class="m-label">{{ 'hero.clients' | translate }}</span>
+              <span class="m-label" i18n="@@heroClients">Clients</span>
             </div>
           </div>
         </div>
@@ -57,9 +57,9 @@
   <!-- ===== PROMO BAR (THE SILK) ===== -->
   <div class="promo-ticker-elite">
     <div class="ticker-track">
-      <span *ngFor="let i of [1,2,3,4]"><lucide-icon name="truck" [size]="16"></lucide-icon> {{ 'ticker.free_shipping' | translate }}</span>
-      <span *ngFor="let i of [1,2,3,4]"><lucide-icon name="star" [size]="16"></lucide-icon> {{ 'ticker.cruelty_free' | translate }}</span>
-      <span *ngFor="let i of [1,2,3,4]"><lucide-icon name="tag" [size]="16"></lucide-icon> {{ 'ticker.discount' | translate }}</span>
+      <span *ngFor="let i of [1,2,3,4]"><lucide-icon name="truck" [size]="16"></lucide-icon> <span i18n="@@tickerFreeShipping">Free Shipping</span></span>
+      <span *ngFor="let i of [1,2,3,4]"><lucide-icon name="star" [size]="16"></lucide-icon> <span i18n="@@tickerCrueltyFree">Cruelty Free</span></span>
+      <span *ngFor="let i of [1,2,3,4]"><lucide-icon name="tag" [size]="16"></lucide-icon> <span i18n="@@tickerDiscount">Members Discount</span></span>
     </div>
   </div>
 
@@ -67,7 +67,7 @@
   <section class="section categories-elite">
     <div class="container">
       <header class="section-header text-center">
-        <h2 class="section-title reveal">{{ 'categories.title' | translate }}</h2>
+        <h2 class="section-title reveal" i18n="@@categoriesTitle">Shop by Category</h2>
       </header>
 
       <div class="category-grid-elite">
@@ -79,8 +79,8 @@
             <lucide-icon [name]="cat.icon" [size]="32"></lucide-icon>
           </div>
           <div class="cat-meta">
-            <h3>{{ cat.nameKey | translate }}</h3>
-            <span class="cat-count">{{ cat.count }} ITEMS</span>
+            <h3>{{ cat.nameKey }}</h3>
+            <span class="cat-count">{{ cat.count }} <span i18n="@@catItems">ITEMS</span></span>
           </div>
         </a>
       </div>
@@ -91,22 +91,22 @@
   <section class="section featured-elite">
     <div class="container">
       <header class="section-header text-center">
-        <h2 class="section-title reveal">{{ 'featured.title' | translate }}</h2>
+        <h2 class="section-title reveal" i18n="@@featuredTitle">Featured Selection</h2>
       </header>
 
       <div class="product-showcase-grid">
         <div *ngFor="let p of featuredProducts; let i = index" class="product-card-elite reveal" [style.animation-delay]="(i * 0.15) + 's'">
           <div class="p-image-box" [style.background]="p.gradient">
-            <span class="p-badge">{{ p.badgeKey | translate }}</span>
+            <span class="p-badge">{{ p.badgeKey }}</span>
             <lucide-icon [name]="p.icon" [size]="48" [color]="p.iconColor"></lucide-icon>
           </div>
           <div class="p-info">
-            <h3 class="p-name">{{ p.nameKey | translate }}</h3>
-            <p class="p-desc">{{ p.descKey | translate }}</p>
+            <h3 class="p-name">{{ p.nameKey }}</h3>
+            <p class="p-desc">{{ p.descKey }}</p>
             <div class="p-footer">
               <span class="p-price">${{ p.price }} MXN</span>
               <a routerLink="/busqueda" class="btn-text">
-                {{ 'featured.see_more' | translate }} <lucide-icon name="arrow-right" [size]="14"></lucide-icon>
+                <span i18n="@@featuredSeeMore">See More</span> <lucide-icon name="arrow-right" [size]="14"></lucide-icon>
               </a>
             </div>
           </div>

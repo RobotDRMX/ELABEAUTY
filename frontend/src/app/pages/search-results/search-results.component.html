@@ -1,18 +1,16 @@
 <div class="search-results-page">
   <div class="container">
     <div class="search-header">
-      <h1>{{ 'search.title' | translate }}</h1>
-      <p class="subtitle" *ngIf="query">{{ 'search.results_for' | translate }} <strong>"{{ query }}"</strong></p>
-      <p class="subtitle" *ngIf="category && !query">{{ 'search.category_label' | translate }} <strong>"{{ category }}"</strong></p>
+      <h1>Products</h1>
+      <p class="subtitle" *ngIf="query">Results for <strong>"{{ query }}"</strong></p>
+      <p class="subtitle" *ngIf="category && !query">Category: <strong>"{{ category }}"</strong></p>
     </div>
 
     <!-- Mobile filter trigger -->
     <div class="mobile-filter-bar">
       <button class="btn-secondary mobile-filter-btn" (click)="drawerOpen.set(true)">
         <lucide-icon name="sliders-horizontal" [size]="16"></lucide-icon>
-        {{ activeFilterCount > 0
-            ? ('filters.active_count' | translate:{ count: activeFilterCount })
-            : ('filters.open' | translate) }}
+        {{ activeFilterCount > 0 ? 'Active Filters (' + activeFilterCount + ')' : 'Filters' }}
       </button>
     </div>
 
@@ -27,47 +25,47 @@
         <div class="filter-overlay" (click)="drawerOpen.set(false)"></div>
         <div class="filter-drawer">
           <div class="filter-drawer-header">
-            <h3>{{ 'filters.title' | translate }}</h3>
-            <button (click)="drawerOpen.set(false)" [attr.aria-label]="'filters.close' | translate">
+            <h3>Filters</h3>
+            <button (click)="drawerOpen.set(false)" aria-label="Close filters">
               <lucide-icon name="x" [size]="20"></lucide-icon>
             </button>
           </div>
           <ng-container *ngTemplateOutlet="filterContent"></ng-container>
           <button class="btn-primary" (click)="applyFilters(); drawerOpen.set(false)">
-            {{ 'filters.apply' | translate }}
+            Apply Filters
           </button>
         </div>
       }
 
       <!-- Filter content template -->
       <ng-template #filterContent>
-        <div class="filter-section">
-          <h3>{{ 'filters.title' | translate }}</h3>
-          <button class="clear-filters-btn" (click)="clearFilters()">{{ 'filters.clear' | translate }}</button>
+        <div class="filter-section header-section">
+          <h3>Filters</h3>
+          <button class="clear-filters-btn" (click)="clearFilters()">Clear all</button>
         </div>
 
         <!-- Filtro de Disponibilidad -->
         <div class="filter-section">
-          <h4>{{ 'filters.stock' | translate }}</h4>
+          <h4>Availability</h4>
           <label class="checkbox-container">
             <input type="checkbox" [(ngModel)]="filters.onlyInStock" (change)="applyFilters()">
             <span class="checkmark"></span>
-            {{ 'filters.in_stock_only' | translate }}
+            In Stock Only
           </label>
         </div>
 
         <!-- Filtro de Edad -->
         <div class="filter-section">
-          <h4>{{ 'filters.age' | translate }}</h4>
+          <h4>Target Age</h4>
           <select class="filter-select" [(ngModel)]="filters.targetAge" (change)="applyFilters()">
-            <option value="">{{ 'filters.all_ages' | translate }}</option>
+            <option value="">All Ages</option>
             <option *ngFor="let age of ageOptions" [value]="age">{{ age }}</option>
           </select>
         </div>
 
         <!-- Filtro de Precio -->
         <div class="filter-section">
-          <h4>{{ 'filters.price_range' | translate }}</h4>
+          <h4>Price Range</h4>
           <div class="price-inputs">
             <div class="input-group">
               <span>$</span>
@@ -78,33 +76,33 @@
               <input type="number" placeholder="Max" [(ngModel)]="filters.maxPrice" (keyup.enter)="applyFilters()">
             </div>
           </div>
-          <button class="apply-price-btn" (click)="applyFilters()">{{ 'filters.apply' | translate }}</button>
+          <button class="apply-price-btn" (click)="applyFilters()">Apply</button>
         </div>
 
         <!-- Ordenamiento -->
         <div class="filter-section">
-          <h4>{{ 'filters.sort_by' | translate }}</h4>
+          <h4>Sort By</h4>
           <select class="filter-select" [(ngModel)]="filters.sortBy" (change)="applyFilters()">
-            <option value="created_at">{{ 'filters.novelty' | translate }}</option>
-            <option value="price">{{ 'filters.price' | translate }}</option>
-            <option value="name">{{ 'filters.name' | translate }}</option>
-            <option value="rating">{{ 'filters.rating' | translate }}</option>
+            <option value="created_at">Newest First</option>
+            <option value="price">Price</option>
+            <option value="name">Name</option>
+            <option value="rating">Rating</option>
           </select>
           <select class="filter-select mt-2" [(ngModel)]="filters.order" (change)="applyFilters()">
-            <option value="DESC">{{ 'filters.descending' | translate }}</option>
-            <option value="ASC">{{ 'filters.ascending' | translate }}</option>
+            <option value="DESC">Descending</option>
+            <option value="ASC">Ascending</option>
           </select>
         </div>
       </ng-template>
 
       <!-- Grid de Productos -->
       <main class="products-main">
-        <div class="results-bar">
-          <p>{{ 'search.products_found' | translate:{ count: total } }}</p>
+        <div class="results-bar" *ngIf="!isLoading()">
+          <p>{{ total }} products found</p>
         </div>
 
         <!-- Skeleton loading -->
-        <div class="skeleton-grid" *ngIf="isLoading">
+        <div class="skeleton-grid" *ngIf="isLoading()">
           <div class="skeleton-card" *ngFor="let i of [1,2,3,4,5,6,7,8]">
             <div class="skeleton-img skeleton"></div>
             <div class="skeleton-body">
@@ -125,55 +123,60 @@
         </div>
 
         <!-- Sin resultados — contextual -->
-        <div class="no-results" *ngIf="!isLoading && products.length === 0">
+        <div class="no-results" *ngIf="!isLoading() && products().length === 0">
           <div class="no-results-content">
             <lucide-icon name="search" [size]="48"></lucide-icon>
 
             @switch (emptyReason) {
               @case ('text') {
-                <h3>{{ 'search.empty_text' | translate:{ query: query } }}</h3>
+                <h3>No results found for your search</h3>
                 <button class="btn-secondary" (click)="query = ''; applyFilters()">
-                  {{ 'search.reset_text' | translate }}
+                  Reset Search
                 </button>
               }
               @case ('price') {
-                <h3>{{ 'search.empty_price' | translate }}</h3>
+                <h3>No products in this price range</h3>
                 <button class="btn-secondary" (click)="filters.minPrice = ''; filters.maxPrice = ''; applyFilters()">
-                  {{ 'search.reset_price' | translate }}
+                  Reset Price
                 </button>
               }
               @case ('category+text') {
-                <h3>{{ 'search.empty_category_text' | translate:{ category: category } }}</h3>
+                <h3>No results in this category</h3>
                 <button class="btn-secondary" (click)="query = ''; applyFilters()">
-                  {{ 'search.reset_text' | translate }}
+                  Reset Search
                 </button>
               }
               @case ('stock') {
-                <h3>{{ 'search.empty_stock' | translate }}</h3>
+                <h3>Currently out of stock</h3>
                 <button class="btn-secondary" (click)="filters.onlyInStock = false; applyFilters()">
-                  {{ 'search.empty_stock_action' | translate }}
+                  Show all products
                 </button>
               }
               @default {
-                <h3>{{ 'search.no_results' | translate }}</h3>
-                <p>{{ 'search.no_results_hint' | translate }}</p>
+                <h3>No results found</h3>
+                <p>Try adjusting your filters or search terms.</p>
               }
             }
 
-            <button class="suggestion-btn" (click)="clearFilters()">{{ 'search.see_all' | translate }}</button>
+            <button class="suggestion-btn" (click)="clearFilters()">See All Products</button>
           </div>
         </div>
 
-        <!-- Grid -->
-        <div class="products-grid" *ngIf="products.length > 0">
-          <div class="product-card" [class.out-of-stock]="product.stock === 0" *ngFor="let product of products">
+        <!-- Grid with Stagger Animation -->
+        <div class="products-grid" *ngIf="products().length > 0" [@listAnimation]="products().length">
+          <div class="product-card" 
+               [class.out-of-stock]="product.stock === 0" 
+               *ngFor="let product of products()"
+               appTilt [tiltMax]="10">
             <div class="product-image">
               <img [src]="product.image_url | safeImage" [alt]="product.name"
                 (error)="onImgError($event)">
 
-              <button class="favorite-overlay-btn" [class.active]="isFavorite(product.id)"
+              <button class="favorite-overlay-btn" 
+                [class.active]="isFavorite(product.id)"
                 [disabled]="togglingFavorite().has(product.id)"
-                (click)="toggleFavorite(product); $event.stopPropagation()">
+                (click)="toggleFavorite(product); $event.stopPropagation()"
+                [attr.aria-label]="isFavorite(product.id) ? 'Remove from favorites' : 'Add to favorites'">
                 @if (togglingFavorite().has(product.id)) {
                   <lucide-icon name="loader-circle" [size]="18" class="spin"></lucide-icon>
                 } @else {
@@ -181,7 +184,7 @@
                 }
               </button>
 
-              <div class="stock-badge" *ngIf="product.stock === 0">{{ 'search.sold_out' | translate }}</div>
+              <div class="stock-badge" *ngIf="product.stock === 0">Sold Out</div>
               <div class="age-badge">{{ product.target_age }}</div>
             </div>
 
@@ -199,7 +202,8 @@
                 <span class="product-price">{{ product.price | currency:'MXN':'symbol':'1.0-0' }}</span>
                 <button class="add-to-cart-btn"
                   [disabled]="product.stock === 0 || addingToCart().has(product.id)"
-                  (click)="addToCart(product)">
+                  (click)="addToCart(product)"
+                  [attr.aria-label]="'Add ' + product.name + ' to cart'">
                   @if (addingToCart().has(product.id)) {
                     <lucide-icon name="loader-circle" [size]="18" class="spin"></lucide-icon>
                   } @else if (justAdded().has(product.id)) {
@@ -214,8 +218,8 @@
         </div>
 
         <!-- Paginación -->
-        <div class="pagination" *ngIf="totalPages > 1">
-          <button class="page-btn" [disabled]="page === 1" (click)="changePage(page - 1)">
+        <div class="pagination" *ngIf="totalPages > 1 && !isLoading()">
+          <button class="page-btn" [disabled]="page === 1" (click)="changePage(page - 1)" aria-label="Previous page">
             <lucide-icon name="chevron-left" [size]="18"></lucide-icon>
           </button>
 
@@ -225,7 +229,7 @@
             </button>
           </div>
 
-          <button class="page-btn" [disabled]="page === totalPages" (click)="changePage(page + 1)">
+          <button class="page-btn" [disabled]="page === totalPages" (click)="changePage(page + 1)" aria-label="Next page">
             <lucide-icon name="chevron-right" [size]="18"></lucide-icon>
           </button>
         </div>

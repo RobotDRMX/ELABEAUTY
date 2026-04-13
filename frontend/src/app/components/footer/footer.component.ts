@@ -4,12 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NotificationService } from '../../services/notification.service';
 import { LucideIcons } from '../../icons.provider';
-import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, LucideIcons, TranslatePipe],
+  imports: [CommonModule, FormsModule, RouterModule, LucideIcons],
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })

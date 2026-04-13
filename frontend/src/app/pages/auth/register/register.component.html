@@ -1,83 +1,83 @@
 <div class="auth-container fade-in">
     <div class="auth-card">
         <div class="auth-header">
-            <h2>{{ 'auth.register_title' | translate }}</h2>
-            <p>{{ 'auth.register_subtitle' | translate }}</p>
+            <h2>{{ 'auth.register_title' }}</h2>
+            <p>{{ 'auth.register_subtitle' }}</p>
         </div>
 
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
             <div class="row">
                 <div class="form-group col">
-                    <label for="firstName">{{ 'auth.first_name_label' | translate }}</label>
+                    <label for="firstName">{{ 'auth.first_name_label' }}</label>
                     <input type="text" id="firstName" formControlName="firstName"
-                           [placeholder]="'auth.first_name_placeholder' | translate"
+                           [placeholder]="'auth.first_name_placeholder'"
                            autocomplete="given-name">
                 </div>
                 <div class="form-group col">
-                    <label for="apellidoPaterno">{{ 'auth.paternal_label' | translate }}</label>
+                    <label for="apellidoPaterno">{{ 'auth.paternal_label' }}</label>
                     <input type="text" id="apellidoPaterno" formControlName="apellidoPaterno"
-                           [placeholder]="'auth.paternal_placeholder' | translate"
+                           [placeholder]="'auth.paternal_placeholder'"
                            autocomplete="family-name">
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="apellidoMaterno">{{ 'auth.maternal_label' | translate }}</label>
+                <label for="apellidoMaterno">{{ 'auth.maternal_label' }}</label>
                 <input type="text" id="apellidoMaterno" formControlName="apellidoMaterno"
-                       [placeholder]="'auth.maternal_placeholder' | translate">
+                       [placeholder]="'auth.maternal_placeholder'">
             </div>
 
             <div class="form-group">
-                <label for="email">{{ 'auth.email_label' | translate }}</label>
+                <label for="email">{{ 'auth.email_label' }}</label>
                 <input type="email" id="email" formControlName="email"
-                       [placeholder]="'auth.email_placeholder' | translate"
+                       [placeholder]="'auth.email_placeholder'"
                        autocomplete="email">
             </div>
 
             <div class="form-group">
-                <label for="password">{{ 'auth.password_label' | translate }}</label>
+                <label for="password">{{ 'auth.password_label' }}</label>
                 <div class="input-password-wrap">
                     <input [type]="showPassword() ? 'text' : 'password'" id="password"
                            formControlName="password"
-                           [placeholder]="'auth.rule_min_length' | translate"
+                           [placeholder]="'auth.rule_min_length'"
                            autocomplete="new-password">
                     <button type="button" class="pw-toggle-btn"
                       (click)="showPassword.set(!showPassword())"
-                      [attr.aria-label]="(showPassword() ? 'auth.hide_password' : 'auth.show_password') | translate">
+                      [attr.aria-label]="(showPassword() ? 'auth.hide_password' : 'auth.show_password')">
                       <lucide-icon [name]="showPassword() ? 'eye-off' : 'eye'" [size]="18"></lucide-icon>
                     </button>
                 </div>
                 <ul class="password-rules" *ngIf="passwordValue.length > 0">
                     <li [class.rule-ok]="passwordRules.minLength" [class.rule-fail]="!passwordRules.minLength">
-                        {{ passwordRules.minLength ? '✓' : '✗' }} {{ 'auth.rule_min_length' | translate }}
+                        {{ passwordRules.minLength ? '✓' : '✗' }} {{ 'auth.rule_min_length' }}
                     </li>
                     <li [class.rule-ok]="passwordRules.hasUpper" [class.rule-fail]="!passwordRules.hasUpper">
-                        {{ passwordRules.hasUpper ? '✓' : '✗' }} {{ 'auth.rule_upper' | translate }}
+                        {{ passwordRules.hasUpper ? '✓' : '✗' }} {{ 'auth.rule_upper' }}
                     </li>
                     <li [class.rule-ok]="passwordRules.hasLower" [class.rule-fail]="!passwordRules.hasLower">
-                        {{ passwordRules.hasLower ? '✓' : '✗' }} {{ 'auth.rule_lower' | translate }}
+                        {{ passwordRules.hasLower ? '✓' : '✗' }} {{ 'auth.rule_lower' }}
                     </li>
                     <li [class.rule-ok]="passwordRules.hasNumber" [class.rule-fail]="!passwordRules.hasNumber">
-                        {{ passwordRules.hasNumber ? '✓' : '✗' }} {{ 'auth.rule_number' | translate }}
+                        {{ passwordRules.hasNumber ? '✓' : '✗' }} {{ 'auth.rule_number' }}
                     </li>
                 </ul>
             </div>
 
             <div class="form-group">
-                <label for="confirmPassword">{{ 'auth.confirm_password_label' | translate }}</label>
+                <label for="confirmPassword">{{ 'auth.confirm_password_label' }}</label>
                 <div class="input-password-wrap">
                     <input [type]="showConfirm() ? 'text' : 'password'" id="confirmPassword"
                            formControlName="confirmPassword"
-                           [placeholder]="'auth.confirm_password_placeholder' | translate"
+                           [placeholder]="'auth.confirm_password_placeholder'"
                            autocomplete="new-password">
                     <button type="button" class="pw-toggle-btn"
                       (click)="showConfirm.set(!showConfirm())"
-                      [attr.aria-label]="(showConfirm() ? 'auth.hide_password' : 'auth.show_password') | translate">
+                      [attr.aria-label]="(showConfirm() ? 'auth.hide_password' : 'auth.show_password')">
                       <lucide-icon [name]="showConfirm() ? 'eye-off' : 'eye'" [size]="18"></lucide-icon>
                     </button>
                 </div>
                 <span class="error-msg" *ngIf="confirmTouched && !passwordsMatch">
-                    <small>{{ 'auth.passwords_no_match' | translate }}</small>
+                    <small>{{ 'auth.passwords_no_match' }}</small>
                 </span>
             </div>
 
@@ -89,12 +89,12 @@
             </div>
 
             <button type="submit" class="btn-maybelline" [disabled]="registerForm.invalid || loading || !!successMsg">
-                {{ loading ? ('auth.loading_register' | translate) : ('auth.submit_register' | translate) }}
+                {{ loading ? ('auth.loading_register') : ('auth.submit_register') }}
             </button>
         </form>
 
         <div class="auth-footer">
-            <p>{{ 'auth.already_account' | translate }} <a routerLink="/auth/login">{{ 'auth.login_link' | translate }}</a></p>
+            <p>{{ 'auth.already_account' }} <a routerLink="/auth/login">{{ 'auth.login_link' }}</a></p>
         </div>
     </div>
 </div>

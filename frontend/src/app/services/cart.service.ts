@@ -16,16 +16,16 @@ export class CartService {
 
     cart = signal<any>(null);
 
+    items = computed(() => this.cart()?.items ?? []);
+
     itemCount = computed(() => {
-        const c = this.cart();
-        if (!c?.items) return 0;
-        return c.items.reduce((acc: number, item: any) => acc + item.quantity, 0);
+        const items = this.items();
+        return items.reduce((acc: number, item: any) => acc + item.quantity, 0);
     });
 
     totalPrice = computed(() => {
-        const c = this.cart();
-        if (!c?.items) return 0;
-        return c.items.reduce((acc: number, item: any) => acc + (item.product.price * item.quantity), 0);
+        const items = this.items();
+        return items.reduce((acc: number, item: any) => acc + (item.product.price * item.quantity), 0);
     });
 
     constructor() {

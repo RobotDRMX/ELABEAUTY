@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" target-language="es" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="heroEyebrow" datatype="html">
+        <source>LUXURY MAKEUP</source>
+        <target>MAQUILLAJE DE LUJO</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.component.html</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="heroTitle" datatype="html">
+        <source> Elevate your <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;italic-serif text-primary&quot;&gt;"/>Natural Beauty<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <target> Eleva tu <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;italic-serif text-primary&quot;&gt;"/>Belleza Natural<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.component.html</context>
+          <context context-type="linenumber">21,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="heroSubtitle" datatype="html">
+        <source> Discover our curated collection of high-performance beauty products designed for the modern individual. </source>
+        <target> Descubre nuestra colección curada de productos de belleza de alto rendimiento diseñados para el individuo moderno. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.component.html</context>
+          <context context-type="linenumber">25,26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="heroExplore" datatype="html">
+        <source>Explore Shop</source>
+        <target>Explorar Tienda</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.component.html</context>
+          <context context-type="linenumber">29,30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="heroOffers" datatype="html">
+        <source> Exclusive Offers </source>
+        <target> Ofertas Exclusivas </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.component.html</context>
+          <context context-type="linenumber">31,32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="heroProducts" datatype="html">
+        <source>Products</source>
+        <target>Productos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.component.html</context>
+          <context context-type="linenumber">38,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="heroRating" datatype="html">
+        <source>Rating</source>
+        <target>Valoración</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.component.html</context>
+          <context context-type="linenumber">43,44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="heroClients" datatype="html">
+        <source>Clients</source>
+        <target>Clientes</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.component.html</context>
+          <context context-type="linenumber">48,49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="tickerFreeShipping" datatype="html">
+        <source>Free Shipping</source>
+        <target>Envío Gratis</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.component.html</context>
+          <context context-type="linenumber">60,61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="tickerCrueltyFree" datatype="html">
+        <source>Cruelty Free</source>
+        <target>Libre de Crueldad</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.component.html</context>
+          <context context-type="linenumber">61,62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="tickerDiscount" datatype="html">
+        <source>Members Discount</source>
+        <target>Descuento Miembros</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.component.html</context>
+          <context context-type="linenumber">62,64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="categoriesTitle" datatype="html">
+        <source>Shop by Category</source>
+        <target>Comprar por Categoría</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.component.html</context>
+          <context context-type="linenumber">70,73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="catItems" datatype="html">
+        <source>ITEMS</source>
+        <target>ARTÍCULOS</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.component.html</context>
+          <context context-type="linenumber">83,84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="featuredTitle" datatype="html">
+        <source>Featured Selection</source>
+        <target>Selección Destacada</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.component.html</context>
+          <context context-type="linenumber">94,97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="featuredSeeMore" datatype="html">
+        <source>See More</source>
+        <target>Ver Más</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.component.html</context>
+          <context context-type="linenumber">109</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="footerAbout" datatype="html">
+        <source>Discover the best in professional beauty and cosmetics. We offer a wide range of high-quality products to help you express your unique style.</source>
+        <target>Descubre lo mejor en belleza y cosmética profesional. Ofrecemos una amplia gama de productos de alta calidad para ayudarte a expresar tu estilo único.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="footerSince" datatype="html">
+        <source>Empowering beauty since 2024 💄</source>
+        <target>Potenciando la belleza desde 2024 💄</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">8,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="footerCustomerService" datatype="html">
+        <source>Customer Service</source>
+        <target>Servicio al Cliente</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">21,22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="footerInformation" datatype="html">
+        <source>Information</source>
+        <target>Información</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">29,30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="footerNewsletterTitle" datatype="html">
+        <source>Newsletter</source>
+        <target>Boletín Informativo</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">37,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="footerNewsletterDesc" datatype="html">
+        <source>Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.</source>
+        <target>Suscríbete para recibir ofertas especiales, obsequios gratuitos y promociones únicas.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">38,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="footerSubscribeBtn" datatype="html">
+        <source>Subscribe</source>
+        <target>Suscribirse</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">42,44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="footerPaymentMethods" datatype="html">
+        <source>Payment Methods</source>
+        <target>Métodos de Pago</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">47,48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="footerRights" datatype="html">
+        <source>All rights reserved.</source>
+        <target>Todos los derechos reservados.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">59,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="footerMadeWith" datatype="html">
+        <source>Made with <x id="START_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;lucide-icon name=&quot;heart&quot; [size]=&quot;14&quot; style=&quot;color: var(--primary-color); display: inline-flex; vertical-align: middle;&quot;&gt;"/><x id="CLOSE_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;/lucide-icon&gt;"/> for beauty lovers</source>
+        <target>Hecho con <x id="START_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;lucide-icon name=&quot;heart&quot; [size]=&quot;14&quot; style=&quot;color: var(--primary-color); display: inline-flex; vertical-align: middle;&quot;&gt;"/><x id="CLOSE_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;/lucide-icon&gt;"/> para amantes de la belleza</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">60,62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="footerInspiredBy" datatype="html">
+        <source>Inspired by</source>
+        <target>Inspirado en</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">66,67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="footerOwnDev" datatype="html">
+        <source>Own Development</source>
+        <target>Desarrollo Propio</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">72,74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="footerPrivacyLink" datatype="html">
+        <source>Privacy Policy</source>
+        <target>Política de Privacidad</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">77,78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="footerTermsLink" datatype="html">
+        <source>Terms of Use</source>
+        <target>Términos de Uso</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">78,79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="footerCookiesLink" datatype="html">
+        <source>Cookies Policy</source>
+        <target>Política de Cookies</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">79,82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="headerFreeShipping" datatype="html">
+        <source><x id="START_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;lucide-icon name=&quot;truck&quot; [size]=&quot;14&quot;&gt;"/><x id="CLOSE_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;/lucide-icon&gt;"/> Free Shipping on all orders </source>
+        <target><x id="START_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;lucide-icon name=&quot;truck&quot; [size]=&quot;14&quot;&gt;"/><x id="CLOSE_TAG_LUCIDE_ICON" ctype="x-lucide_icon" equiv-text="&lt;/lucide-icon&gt;"/> Envío Gratis en todos los pedidos </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/header/header.component.html</context>
+          <context context-type="linenumber">7,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="themeLightTitle" datatype="html">
+        <source>Light Mode</source>
+        <target>Modo Claro</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/header/header.component.html</context>
+          <context context-type="linenumber">14,15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="themeDarkTitle" datatype="html">
+        <source>Dark Mode</source>
+        <target>Modo Oscuro</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/header/header.component.html</context>
+          <context context-type="linenumber">17,18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accessibilityTitle" datatype="html">
+        <source>♿ ACCESIBILIDAD</source>
+        <target>♿ ACCESIBILIDAD</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/header/header.component.html</context>
+          <context context-type="linenumber">21,22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="mobileMenuAriaLabel" datatype="html">
+        <source>Toggle mobile menu</source>
+        <target>Alternar menú móvil</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/header/header.component.html</context>
+          <context context-type="linenumber">47,48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="favoritesTitle" datatype="html">
+        <source>Favorites</source>
+        <target>Favoritos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/header/header.component.html</context>
+          <context context-type="linenumber">64,65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cartTitle" datatype="html">
+        <source>Shopping Cart</source>
+        <target>Carrito de Compras</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/header/header.component.html</context>
+          <context context-type="linenumber">69,70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accountTitle" datatype="html">
+        <source>My Account</source>
+        <target>Mi Cuenta</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/header/header.component.html</context>
+          <context context-type="linenumber">74,75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="loginLink" datatype="html">
+        <source> Login </source>
+        <target> Iniciar Sesión </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/header/header.component.html</context>
+          <context context-type="linenumber">79,80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="loginButtonMobile" datatype="html">
+        <source>Login</source>
+        <target>Iniciar Sesión</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/header/header.component.html</context>
+          <context context-type="linenumber">96,98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="logoutButtonMobile" datatype="html">
+        <source>Logout</source>
+        <target>Cerrar Sesión</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/header/header.component.html</context>
+          <context context-type="linenumber">99,102</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

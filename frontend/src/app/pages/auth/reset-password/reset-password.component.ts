@@ -7,6 +7,14 @@ import {
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
 import { AuthService } from '../../../services/auth.service';
+import { environment } from '../../../../environments/environment';
+
+declare const grecaptcha: {
+  execute(siteKey: string, options: { action: string }): Promise<string>;
+  ready(cb: () => void): void;
+};
+
+const RECAPTCHA_SITE_KEY = environment.recaptchaSiteKey;
 
 function passwordsMatchValidator(group: AbstractControl): ValidationErrors | null {
   const password = group.get('newPassword')?.value;
@@ -74,20 +82,19 @@ export class ResetPasswordComponent implements OnInit {
     return !!this.form.get('confirmPassword')?.touched;
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     if (this.form.invalid || !this.token_hash) return;
     this.loading = true;
     this.error   = '';
 
-    let recaptchaToken: string;
+    let recaptchaToken: string = '';
     try {
-      recaptchaToken = grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'auth_page_view' }).catch(() => ''); // Use a default empty string if grecaptcha fails
+      recaptchaToken = await grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'reset_password' });
     } catch {
-      // script still loading — will execute on submit
-      recaptchaToken = ''; // Provide a fallback value
+      // fallback if needed
     }
 
-    this.authService.resetPassword(this.token_hash, this.form.value.newPassword, recaptchaToken).subscribe({
+    this.authService.resetPassword(this.token_hash, this.form.value.newPassword).subscribe({
       next: () => {
         this.done    = true;
         this.loading = false;

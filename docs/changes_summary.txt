@@ -4,16 +4,22 @@ Current Changes:
 3. Nx integrated into the workspace.
 4. Tailwind CSS installed and configured.
 5. ThemeService created and integrated into app.component.ts.
-6. Custom I18nService removed, imports and usages replaced with static strings in inactivity.service.spec.ts, i18n-title.strategy.ts, cart.component.ts, and footer.component.ts.
-7. Most components confirmed as standalone.
+6. Custom I18nService and TranslatePipe completely removed from all components.
+7. Official Angular i18n initialized: @angular/localize installed, angular.json configured for localized builds (en, es).
+8. i18n messages extracted to src/locale/messages.xlf.
+9. Spanish translation file created: src/locale/messages.es.xlf.
+10. Most components confirmed as standalone.
+11. Implemented List Stagger Animations using @angular/animations.
+12. Added 3D Hover Tilt Effect to product cards using a custom standalone directive.
+13. Implemented Hero Parallax effect on the landing page using Angular signals and scroll events.
+14. Angular CDK installed and integrated for future utility enhancements.
 
 Pending Changes:
-1. Complete i18n migration to official Angular i18n (lazy loading, template updates, language switcher).
-2. Finalize component standalone conversion (if any remaining).
-3. Migrate state management to Angular signals.
-4. Implement animations for routes, lists, and micro-interactions.
-5. Implement advanced design elements (parallax, 3D hover cards, infinite scroll with CDK Virtual Scroll).
+1. Implement language switcher in Header using Angular's localized routing.
+2. Complete i18n tagging in remaining component templates (Login, Register, Cart, etc.).
+3. Configure development server for multi-locale support.
+4. Migrate state management to Angular signals.
+5. Implement Infinite Scroll for product listings using CDK Virtual Scroll.
 6. Address accessibility improvements (WCAG AA, ARIA, keyboard navigation).
 7. Further performance optimizations (@defer blocks, build optimizations).
 8. Ensure responsive design using Tailwind CSS.
-9. Remove the custom TranslatePipe.
