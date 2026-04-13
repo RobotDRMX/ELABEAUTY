@@ -1,7 +1,7 @@
 @import '../login/login.component.scss';
 
-/* 
-  ELA Beauty — Professional Register Refactor
+/*
+  ELA Beauty — Register page extensions
 */
 
 .row {
@@ -30,15 +30,8 @@
   }
 }
 
-.rule-ok   { color: #2f855a; }
-.rule-fail { color: var(--text-secondary); opacity: 0.6; }
-
-.error-msg {
-  font-size: 0.75rem;
-  color: #c53030;
-  margin-top: 0.5rem;
-  font-weight: 500;
-}
+.rule-ok   { color: var(--success); }
+.rule-fail { color: var(--text-muted); opacity: 0.6; }
 
 @media (max-width: 640px) {
   .row { grid-template-columns: 1fr; gap: 1.8rem; }

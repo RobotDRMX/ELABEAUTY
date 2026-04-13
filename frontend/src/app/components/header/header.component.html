@@ -9,7 +9,21 @@
         </span>
       </div>
       <div class="utility-right">
-        <!-- Language selector removed temporarily for official i18n migration -->
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+          <button class="lang-btn" (click)="switchLanguage('en')"
+                  [class.active]="currentLocale === 'en'"
+                  i18n-title="@@langEnTitle" title="English">
+            EN
+          </button>
+          <span class="lang-sep">|</span>
+          <button class="lang-btn" (click)="switchLanguage('es')"
+                  [class.active]="currentLocale === 'es'"
+                  i18n-title="@@langEsTitle" title="Español">
+            ES
+          </button>
+        </div>
+
         <div class="theme-toggle-group">
           <button class="theme-toggle-btn" [class.active]="themeService.theme() === 'light'" (click)="themeService.setTheme('light')" i18n-title="@@themeLightTitle" title="Light Mode">
             <lucide-icon name="sun" [size]="14"></lucide-icon>
@@ -31,13 +45,13 @@
   <!-- Level 2 & 3: Branding, Nav & User -->
   <div class="header-main">
     <div class="container">
-      
+
       <!-- Nav (Left) -->
       <nav class="main-nav">
-        <a *ngFor="let item of navItems" 
-           [routerLink]="item.link" 
+        <a *ngFor="let item of navItems"
+           [routerLink]="item.link"
            [queryParams]="item.queryParams || {}"
-           routerLinkActive="active" 
+           routerLinkActive="active"
            class="nav-link">
           {{ item.label }}
         </a>
@@ -88,15 +102,59 @@
 @if (mobileMenuOpen()) {
   <div class="mobile-overlay" (click)="closeMobileMenu()"></div>
   <nav class="mobile-drawer">
-    <a *ngFor="let item of navItems" [routerLink]="item.link" (click)="closeMobileMenu()" class="mobile-nav-link">
-      {{ item.label }}
-    </a>
+
+    <!-- Logo inside drawer -->
+    <div class="drawer-logo">
+      <span class="drawer-logo-text">ELA</span>
+      <span class="drawer-logo-sub">Beauty</span>
+    </div>
+
+    <!-- Navigation links -->
+    <div class="drawer-nav-section">
+      <a *ngFor="let item of navItems"
+         [routerLink]="item.link"
+         [queryParams]="item.queryParams || {}"
+         (click)="closeMobileMenu()"
+         routerLinkActive="active"
+         class="mobile-nav-link">
+        <lucide-icon [name]="item.icon" [size]="18"></lucide-icon>
+        {{ item.label }}
+      </a>
+    </div>
+
     <div class="mobile-drawer-divider"></div>
-    <div class="mobile-auth" *ngIf="!isLoggedIn">
-      <a routerLink="/auth/login" class="btn btn-primary" (click)="closeMobileMenu()" i18n="@@loginButtonMobile">Login</a>
+
+    <!-- Quick actions -->
+    <div class="drawer-actions-section">
+      <button class="mobile-action-link" (click)="openFavorites(); closeMobileMenu()">
+        <lucide-icon name="heart" [size]="18"></lucide-icon>
+        <span i18n="@@mobileFavorites">Favorites</span>
+        <span class="drawer-badge" *ngIf="favoritesCount > 0">{{ favoritesCount }}</span>
+      </button>
+      <button class="mobile-action-link" (click)="openCart(); closeMobileMenu()">
+        <lucide-icon name="shopping-bag" [size]="18"></lucide-icon>
+        <span i18n="@@mobileCart">Shopping Cart</span>
+        <span class="drawer-badge" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+      </button>
+      <button class="mobile-action-link" *ngIf="isLoggedIn" (click)="openAccount(); closeMobileMenu()">
+        <lucide-icon name="circle-user" [size]="18"></lucide-icon>
+        <span i18n="@@mobileAccount">My Account</span>
+      </button>
     </div>
-    <div class="mobile-auth" *ngIf="isLoggedIn">
-      <button class="btn btn-outline" (click)="logout(); closeMobileMenu()" i18n="@@logoutButtonMobile">Logout</button>
+
+    <div class="mobile-drawer-divider"></div>
+
+    <!-- Language switcher in drawer -->
+    <div class="drawer-lang-switcher">
+      <button class="drawer-lang-btn" (click)="switchLanguage('en')" [class.active]="currentLocale === 'en'">EN</button>
+      <span class="lang-sep">|</span>
+      <button class="drawer-lang-btn" (click)="switchLanguage('es')" [class.active]="currentLocale === 'es'">ES</button>
     </div>
+
+    <div class="mobile-auth">
+      <a *ngIf="!isLoggedIn" routerLink="/auth/login" class="btn btn-primary" (click)="closeMobileMenu()" i18n="@@loginButtonMobile">Login</a>
+      <button *ngIf="isLoggedIn" class="btn btn-outline" (click)="logout(); closeMobileMenu()" i18n="@@logoutButtonMobile">Logout</button>
+    </div>
+
   </nav>
 }

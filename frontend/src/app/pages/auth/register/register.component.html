@@ -1,100 +1,112 @@
 <div class="auth-container fade-in">
-    <div class="auth-card">
-        <div class="auth-header">
-            <h2>{{ 'auth.register_title' }}</h2>
-            <p>{{ 'auth.register_subtitle' }}</p>
-        </div>
+  <div class="auth-card">
 
-        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
-            <div class="row">
-                <div class="form-group col">
-                    <label for="firstName">{{ 'auth.first_name_label' }}</label>
-                    <input type="text" id="firstName" formControlName="firstName"
-                           [placeholder]="'auth.first_name_placeholder'"
-                           autocomplete="given-name">
-                </div>
-                <div class="form-group col">
-                    <label for="apellidoPaterno">{{ 'auth.paternal_label' }}</label>
-                    <input type="text" id="apellidoPaterno" formControlName="apellidoPaterno"
-                           [placeholder]="'auth.paternal_placeholder'"
-                           autocomplete="family-name">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="apellidoMaterno">{{ 'auth.maternal_label' }}</label>
-                <input type="text" id="apellidoMaterno" formControlName="apellidoMaterno"
-                       [placeholder]="'auth.maternal_placeholder'">
-            </div>
-
-            <div class="form-group">
-                <label for="email">{{ 'auth.email_label' }}</label>
-                <input type="email" id="email" formControlName="email"
-                       [placeholder]="'auth.email_placeholder'"
-                       autocomplete="email">
-            </div>
-
-            <div class="form-group">
-                <label for="password">{{ 'auth.password_label' }}</label>
-                <div class="input-password-wrap">
-                    <input [type]="showPassword() ? 'text' : 'password'" id="password"
-                           formControlName="password"
-                           [placeholder]="'auth.rule_min_length'"
-                           autocomplete="new-password">
-                    <button type="button" class="pw-toggle-btn"
-                      (click)="showPassword.set(!showPassword())"
-                      [attr.aria-label]="(showPassword() ? 'auth.hide_password' : 'auth.show_password')">
-                      <lucide-icon [name]="showPassword() ? 'eye-off' : 'eye'" [size]="18"></lucide-icon>
-                    </button>
-                </div>
-                <ul class="password-rules" *ngIf="passwordValue.length > 0">
-                    <li [class.rule-ok]="passwordRules.minLength" [class.rule-fail]="!passwordRules.minLength">
-                        {{ passwordRules.minLength ? '✓' : '✗' }} {{ 'auth.rule_min_length' }}
-                    </li>
-                    <li [class.rule-ok]="passwordRules.hasUpper" [class.rule-fail]="!passwordRules.hasUpper">
-                        {{ passwordRules.hasUpper ? '✓' : '✗' }} {{ 'auth.rule_upper' }}
-                    </li>
-                    <li [class.rule-ok]="passwordRules.hasLower" [class.rule-fail]="!passwordRules.hasLower">
-                        {{ passwordRules.hasLower ? '✓' : '✗' }} {{ 'auth.rule_lower' }}
-                    </li>
-                    <li [class.rule-ok]="passwordRules.hasNumber" [class.rule-fail]="!passwordRules.hasNumber">
-                        {{ passwordRules.hasNumber ? '✓' : '✗' }} {{ 'auth.rule_number' }}
-                    </li>
-                </ul>
-            </div>
-
-            <div class="form-group">
-                <label for="confirmPassword">{{ 'auth.confirm_password_label' }}</label>
-                <div class="input-password-wrap">
-                    <input [type]="showConfirm() ? 'text' : 'password'" id="confirmPassword"
-                           formControlName="confirmPassword"
-                           [placeholder]="'auth.confirm_password_placeholder'"
-                           autocomplete="new-password">
-                    <button type="button" class="pw-toggle-btn"
-                      (click)="showConfirm.set(!showConfirm())"
-                      [attr.aria-label]="(showConfirm() ? 'auth.hide_password' : 'auth.show_password')">
-                      <lucide-icon [name]="showConfirm() ? 'eye-off' : 'eye'" [size]="18"></lucide-icon>
-                    </button>
-                </div>
-                <span class="error-msg" *ngIf="confirmTouched && !passwordsMatch">
-                    <small>{{ 'auth.passwords_no_match' }}</small>
-                </span>
-            </div>
-
-            <div *ngIf="successMsg" class="alert alert-success">
-                {{ successMsg }}
-            </div>
-            <div *ngIf="error" class="alert alert-danger">
-                {{ error }}
-            </div>
-
-            <button type="submit" class="btn-maybelline" [disabled]="registerForm.invalid || loading || !!successMsg">
-                {{ loading ? ('auth.loading_register') : ('auth.submit_register') }}
-            </button>
-        </form>
-
-        <div class="auth-footer">
-            <p>{{ 'auth.already_account' }} <a routerLink="/auth/login">{{ 'auth.login_link' }}</a></p>
-        </div>
+    <div class="auth-header">
+      <h2 i18n="@@registerTitle">Create Account</h2>
+      <p i18n="@@registerSubtitle">Join the ELA Beauty community</p>
     </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <div class="row">
+        <div class="form-group col">
+          <label for="firstName" i18n="@@firstNameLabel">First Name</label>
+          <input type="text" id="firstName" formControlName="firstName"
+                 placeholder="Your first name"
+                 i18n-placeholder="@@firstNamePlaceholder"
+                 autocomplete="given-name">
+        </div>
+        <div class="form-group col">
+          <label for="apellidoPaterno" i18n="@@paternalLabel">Last Name</label>
+          <input type="text" id="apellidoPaterno" formControlName="apellidoPaterno"
+                 placeholder="Your last name"
+                 i18n-placeholder="@@paternalPlaceholder"
+                 autocomplete="family-name">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="apellidoMaterno" i18n="@@maternalLabel">Second Last Name</label>
+        <input type="text" id="apellidoMaterno" formControlName="apellidoMaterno"
+               placeholder="Optional"
+               i18n-placeholder="@@maternalPlaceholder">
+      </div>
+
+      <div class="form-group">
+        <label for="email" i18n="@@emailLabel">Email</label>
+        <input type="email" id="email" formControlName="email"
+               placeholder="your@email.com"
+               i18n-placeholder="@@emailPlaceholder"
+               autocomplete="email">
+      </div>
+
+      <div class="form-group">
+        <label for="password" i18n="@@passwordLabel">Password</label>
+        <div class="input-password-wrap">
+          <input [type]="showPassword() ? 'text' : 'password'" id="password"
+                 formControlName="password"
+                 placeholder="Min. 8 characters"
+                 i18n-placeholder="@@passwordMinLength"
+                 autocomplete="new-password">
+          <button type="button" class="pw-toggle-btn"
+            (click)="showPassword.set(!showPassword())"
+            [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'">
+            <lucide-icon [name]="showPassword() ? 'eye-off' : 'eye'" [size]="18"></lucide-icon>
+          </button>
+        </div>
+        <ul class="password-rules" *ngIf="passwordValue.length > 0">
+          <li [class.rule-ok]="passwordRules.minLength" [class.rule-fail]="!passwordRules.minLength">
+            {{ passwordRules.minLength ? '✓' : '✗' }}
+            <span i18n="@@ruleMinLength">At least 8 characters</span>
+          </li>
+          <li [class.rule-ok]="passwordRules.hasUpper" [class.rule-fail]="!passwordRules.hasUpper">
+            {{ passwordRules.hasUpper ? '✓' : '✗' }}
+            <span i18n="@@ruleUpper">One uppercase letter</span>
+          </li>
+          <li [class.rule-ok]="passwordRules.hasLower" [class.rule-fail]="!passwordRules.hasLower">
+            {{ passwordRules.hasLower ? '✓' : '✗' }}
+            <span i18n="@@ruleLower">One lowercase letter</span>
+          </li>
+          <li [class.rule-ok]="passwordRules.hasNumber" [class.rule-fail]="!passwordRules.hasNumber">
+            {{ passwordRules.hasNumber ? '✓' : '✗' }}
+            <span i18n="@@ruleNumber">One number</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword" i18n="@@confirmPasswordLabel">Confirm Password</label>
+        <div class="input-password-wrap">
+          <input [type]="showConfirm() ? 'text' : 'password'" id="confirmPassword"
+                 formControlName="confirmPassword"
+                 placeholder="Repeat your password"
+                 i18n-placeholder="@@confirmPasswordPlaceholder"
+                 autocomplete="new-password">
+          <button type="button" class="pw-toggle-btn"
+            (click)="showConfirm.set(!showConfirm())"
+            [attr.aria-label]="showConfirm() ? 'Hide password' : 'Show password'">
+            <lucide-icon [name]="showConfirm() ? 'eye-off' : 'eye'" [size]="18"></lucide-icon>
+          </button>
+        </div>
+        <span class="error-msg" *ngIf="confirmTouched && !passwordsMatch">
+          <small i18n="@@passwordsNoMatch">Passwords do not match</small>
+        </span>
+      </div>
+
+      <div *ngIf="successMsg" class="alert alert-success">{{ successMsg }}</div>
+      <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+      <button type="submit" class="btn-auth-primary" [disabled]="registerForm.invalid || loading || !!successMsg">
+        <span *ngIf="!loading" i18n="@@submitRegister">Create Account</span>
+        <span *ngIf="loading" i18n="@@loadingRegister">Creating account…</span>
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      <p>
+        <span i18n="@@alreadyAccount">Already have an account?</span>
+        <a routerLink="/auth/login" i18n="@@loginLink">Sign In</a>
+      </p>
+    </div>
+
+  </div>
 </div>

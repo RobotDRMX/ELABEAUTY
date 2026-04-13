@@ -64,6 +64,25 @@ export class HeaderComponent {
     this.mobileMenuOpen.set(false);
   }
 
+  // ── Language switcher ─────────────────────────────────────────────────────
+  get currentLocale(): string {
+    return document.documentElement.lang?.split('-')[0] || 'en';
+  }
+
+  switchLanguage(locale: string): void {
+    if (this.currentLocale === locale) return;
+    // In production Angular i18n, each locale is served from /<locale>/ base path
+    const localePattern = /^\/(en|es)(\/|$)/;
+    const currentPath = window.location.pathname;
+    if (localePattern.test(currentPath)) {
+      window.location.href = currentPath.replace(localePattern, `/${locale}/`);
+    } else {
+      // Development: store preference and reload
+      localStorage.setItem('preferred-locale', locale);
+      window.location.reload();
+    }
+  }
+
   navItems = [
     { label: 'Catalog', link: '/busqueda', icon: 'grid-2x2' }, // Static string
     { label: 'Lipsticks', link: '/busqueda', queryParams: { category: 'Labiales' }, icon: 'heart' }, // Static string

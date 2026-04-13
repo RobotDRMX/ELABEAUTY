@@ -330,6 +330,202 @@
           <context context-type="linenumber">99,102</context>
         </context-group>
       </trans-unit>
+
+      <!-- Language switcher -->
+      <trans-unit id="langEnTitle" datatype="html">
+        <source>English</source>
+        <target>Inglés</target>
+      </trans-unit>
+      <trans-unit id="langEsTitle" datatype="html">
+        <source>Español</source>
+        <target>Español</target>
+      </trans-unit>
+
+      <!-- Mobile drawer extras -->
+      <trans-unit id="mobileFavorites" datatype="html">
+        <source>Favorites</source>
+        <target>Favoritos</target>
+      </trans-unit>
+      <trans-unit id="mobileCart" datatype="html">
+        <source>Shopping Cart</source>
+        <target>Carrito de Compras</target>
+      </trans-unit>
+      <trans-unit id="mobileAccount" datatype="html">
+        <source>My Account</source>
+        <target>Mi Cuenta</target>
+      </trans-unit>
+
+      <!-- Login form -->
+      <trans-unit id="loginTitle" datatype="html">
+        <source>Sign In</source>
+        <target>Iniciar Sesión</target>
+      </trans-unit>
+      <trans-unit id="loginSubtitle" datatype="html">
+        <source>Welcome back to ELA Beauty</source>
+        <target>Bienvenida de vuelta a ELA Beauty</target>
+      </trans-unit>
+      <trans-unit id="emailLabel" datatype="html">
+        <source>Email</source>
+        <target>Correo electrónico</target>
+      </trans-unit>
+      <trans-unit id="emailPlaceholder" datatype="html">
+        <source>your@email.com</source>
+        <target>tu@correo.com</target>
+      </trans-unit>
+      <trans-unit id="emailRequired" datatype="html">
+        <source>Email is required</source>
+        <target>El correo es obligatorio</target>
+      </trans-unit>
+      <trans-unit id="emailInvalid" datatype="html">
+        <source>Please enter a valid email</source>
+        <target>Ingresa un correo válido</target>
+      </trans-unit>
+      <trans-unit id="passwordLabel" datatype="html">
+        <source>Password</source>
+        <target>Contraseña</target>
+      </trans-unit>
+      <trans-unit id="passwordPlaceholder" datatype="html">
+        <source>Your password</source>
+        <target>Tu contraseña</target>
+      </trans-unit>
+      <trans-unit id="passwordRequired" datatype="html">
+        <source>Password is required</source>
+        <target>La contraseña es obligatoria</target>
+      </trans-unit>
+      <trans-unit id="rateLimit" datatype="html">
+        <source>Too many attempts. Please wait before trying again.</source>
+        <target>Demasiados intentos. Por favor espera antes de intentarlo de nuevo.</target>
+      </trans-unit>
+      <trans-unit id="submitLogin" datatype="html">
+        <source>Sign In</source>
+        <target>Iniciar Sesión</target>
+      </trans-unit>
+      <trans-unit id="loadingText" datatype="html">
+        <source>Loading…</source>
+        <target>Cargando…</target>
+      </trans-unit>
+      <trans-unit id="biometricOr" datatype="html">
+        <source>Or continue with</source>
+        <target>O continuar con</target>
+      </trans-unit>
+      <trans-unit id="passkeyBtn" datatype="html">
+        <source>Passkey</source>
+        <target>Passkey</target>
+      </trans-unit>
+      <trans-unit id="faceRecognitionBtn" datatype="html">
+        <source>Face Recognition</source>
+        <target>Reconocimiento Facial</target>
+      </trans-unit>
+      <trans-unit id="faceHint" datatype="html">
+        <source>Position your face in the camera</source>
+        <target>Coloca tu rostro frente a la cámara</target>
+      </trans-unit>
+      <trans-unit id="faceHintSmall" datatype="html">
+        <source>Make sure you have good lighting and look straight ahead</source>
+        <target>Asegúrate de tener buena iluminación y mira de frente</target>
+      </trans-unit>
+      <trans-unit id="verifyFaceBtn" datatype="html">
+        <source>Verify Face</source>
+        <target>Verificar Rostro</target>
+      </trans-unit>
+      <trans-unit id="cancelBtn" datatype="html">
+        <source>Cancel</source>
+        <target>Cancelar</target>
+      </trans-unit>
+      <trans-unit id="forgotPasswordLink" datatype="html">
+        <source>Forgot your password?</source>
+        <target>¿Olvidaste tu contraseña?</target>
+      </trans-unit>
+      <trans-unit id="noAccount" datatype="html">
+        <source>Don't have an account?</source>
+        <target>¿No tienes una cuenta?</target>
+      </trans-unit>
+      <trans-unit id="registerLink" datatype="html">
+        <source>Create one</source>
+        <target>Crear una</target>
+      </trans-unit>
+
+      <!-- Register form -->
+      <trans-unit id="registerTitle" datatype="html">
+        <source>Create Account</source>
+        <target>Crear Cuenta</target>
+      </trans-unit>
+      <trans-unit id="registerSubtitle" datatype="html">
+        <source>Join the ELA Beauty community</source>
+        <target>Únete a la comunidad de ELA Beauty</target>
+      </trans-unit>
+      <trans-unit id="firstNameLabel" datatype="html">
+        <source>First Name</source>
+        <target>Nombre</target>
+      </trans-unit>
+      <trans-unit id="firstNamePlaceholder" datatype="html">
+        <source>Your first name</source>
+        <target>Tu nombre</target>
+      </trans-unit>
+      <trans-unit id="paternalLabel" datatype="html">
+        <source>Last Name</source>
+        <target>Apellido Paterno</target>
+      </trans-unit>
+      <trans-unit id="paternalPlaceholder" datatype="html">
+        <source>Your last name</source>
+        <target>Tu apellido paterno</target>
+      </trans-unit>
+      <trans-unit id="maternalLabel" datatype="html">
+        <source>Second Last Name</source>
+        <target>Apellido Materno</target>
+      </trans-unit>
+      <trans-unit id="maternalPlaceholder" datatype="html">
+        <source>Optional</source>
+        <target>Opcional</target>
+      </trans-unit>
+      <trans-unit id="passwordMinLength" datatype="html">
+        <source>Min. 8 characters</source>
+        <target>Mín. 8 caracteres</target>
+      </trans-unit>
+      <trans-unit id="ruleMinLength" datatype="html">
+        <source>At least 8 characters</source>
+        <target>Al menos 8 caracteres</target>
+      </trans-unit>
+      <trans-unit id="ruleUpper" datatype="html">
+        <source>One uppercase letter</source>
+        <target>Una letra mayúscula</target>
+      </trans-unit>
+      <trans-unit id="ruleLower" datatype="html">
+        <source>One lowercase letter</source>
+        <target>Una letra minúscula</target>
+      </trans-unit>
+      <trans-unit id="ruleNumber" datatype="html">
+        <source>One number</source>
+        <target>Un número</target>
+      </trans-unit>
+      <trans-unit id="confirmPasswordLabel" datatype="html">
+        <source>Confirm Password</source>
+        <target>Confirmar Contraseña</target>
+      </trans-unit>
+      <trans-unit id="confirmPasswordPlaceholder" datatype="html">
+        <source>Repeat your password</source>
+        <target>Repite tu contraseña</target>
+      </trans-unit>
+      <trans-unit id="passwordsNoMatch" datatype="html">
+        <source>Passwords do not match</source>
+        <target>Las contraseñas no coinciden</target>
+      </trans-unit>
+      <trans-unit id="submitRegister" datatype="html">
+        <source>Create Account</source>
+        <target>Crear Cuenta</target>
+      </trans-unit>
+      <trans-unit id="loadingRegister" datatype="html">
+        <source>Creating account…</source>
+        <target>Creando cuenta…</target>
+      </trans-unit>
+      <trans-unit id="alreadyAccount" datatype="html">
+        <source>Already have an account?</source>
+        <target>¿Ya tienes una cuenta?</target>
+      </trans-unit>
+      <trans-unit id="loginLink" datatype="html">
+        <source>Sign In</source>
+        <target>Iniciar Sesión</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

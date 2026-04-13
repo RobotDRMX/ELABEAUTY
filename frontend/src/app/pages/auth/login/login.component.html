@@ -2,37 +2,39 @@
   <div class="auth-card">
 
     <div class="auth-header">
-      <h2>{{ 'auth.login_title' }}</h2>
-      <p>{{ 'auth.login_subtitle' }}</p>
+      <h2 i18n="@@loginTitle">Sign In</h2>
+      <p i18n="@@loginSubtitle">Welcome back to ELA Beauty</p>
     </div>
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
       <div class="form-group">
-        <label for="email">{{ 'auth.email_label' }}</label>
+        <label for="email" i18n="@@emailLabel">Email</label>
         <input type="email" id="email" formControlName="email"
-          [placeholder]="'auth.email_placeholder'"
+          placeholder="your@email.com"
+          i18n-placeholder="@@emailPlaceholder"
           autocomplete="email">
         <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors" class="error-msg">
-          <small *ngIf="loginForm.get('email')?.errors?.['required']">{{ 'auth.email_required' }}</small>
-          <small *ngIf="loginForm.get('email')?.errors?.['email']">{{ 'auth.email_invalid' }}</small>
+          <small *ngIf="loginForm.get('email')?.errors?.['required']" i18n="@@emailRequired">Email is required</small>
+          <small *ngIf="loginForm.get('email')?.errors?.['email']" i18n="@@emailInvalid">Please enter a valid email</small>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="password">{{ 'auth.password_label' }}</label>
+        <label for="password" i18n="@@passwordLabel">Password</label>
         <div class="input-password-wrap">
           <input [type]="showPassword() ? 'text' : 'password'"
             id="password" formControlName="password"
-            [placeholder]="'auth.password_placeholder'"
+            placeholder="Your password"
+            i18n-placeholder="@@passwordPlaceholder"
             autocomplete="current-password">
           <button type="button" class="pw-toggle-btn"
             (click)="showPassword.set(!showPassword())"
-            [attr.aria-label]="(showPassword() ? 'auth.hide_password' : 'auth.show_password')">
+            [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'">
             <lucide-icon [name]="showPassword() ? 'eye-off' : 'eye'" [size]="18"></lucide-icon>
           </button>
         </div>
         <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors" class="error-msg">
-          <small *ngIf="loginForm.get('password')?.errors?.['required']">{{ 'auth.password_required' }}</small>
+          <small *ngIf="loginForm.get('password')?.errors?.['required']" i18n="@@passwordRequired">Password is required</small>
         </div>
       </div>
 
@@ -40,19 +42,20 @@
 
       <div *ngIf="countdown > 0" class="alert alert-warning countdown-alert">
         <span class="countdown-icon">⏳</span>
-        <span [innerHTML]="'auth.rate_limit'"></span>
+        <span i18n="@@rateLimit">Too many attempts. Please wait before trying again.</span>
         <div class="countdown-bar-wrap">
           <div class="countdown-bar" [style.width.%]="(countdown / 60) * 100"></div>
         </div>
       </div>
 
-      <button type="submit" class="btn-primary"
+      <button type="submit" class="btn-auth-primary"
         [disabled]="loginForm.invalid || loading || isBlocked">
-        {{ loading ? ('auth.loading') : ('auth.submit_login') }}
+        <span *ngIf="!loading" i18n="@@submitLogin">Sign In</span>
+        <span *ngIf="loading" i18n="@@loadingText">Loading…</span>
       </button>
     </form>
 
-    <div class="biometric-divider"><span>{{ 'auth.biometric_or' }}</span></div>
+    <div class="biometric-divider"><span i18n="@@biometricOr">Or continue with</span></div>
 
     <div class="biometric-buttons">
       <button *ngIf="biometric.webAuthnSupported()"
@@ -60,35 +63,39 @@
         [disabled]="loading || isBlocked"
         (click)="loginPasskey()">
         <lucide-icon name="key-round" [size]="16"></lucide-icon>
-        {{ 'auth.passkey' }}
+        <span i18n="@@passkeyBtn">Passkey</span>
       </button>
       <button class="btn-ghost" type="button"
         [disabled]="loading || isBlocked || biometricMode === 'face'"
         (click)="activateFaceLogin()">
         <lucide-icon name="camera" [size]="16"></lucide-icon>
-        {{ 'auth.face_recognition' }}
+        <span i18n="@@faceRecognitionBtn">Face Recognition</span>
       </button>
     </div>
 
     <div *ngIf="biometricMode === 'face'" class="face-panel">
       <p class="face-hint">
-        {{ 'auth.face_hint' }}<br>
-        <small>{{ 'auth.face_hint_small' }}</small>
+        <span i18n="@@faceHint">Position your face in the camera</span><br>
+        <small i18n="@@faceHintSmall">Make sure you have good lighting and look straight ahead</small>
       </p>
       <video #videoRef autoplay muted playsinline class="face-video"></video>
       <div class="face-actions">
-        <button class="btn-primary" type="button"
+        <button class="btn-auth-primary" type="button"
           [disabled]="!biometric.cameraActive() || loading || isBlocked"
           (click)="loginWithFace()">
-          {{ loading ? ('auth.loading') : ('auth.verify_face') }}
+          <span *ngIf="!loading" i18n="@@verifyFaceBtn">Verify Face</span>
+          <span *ngIf="loading" i18n="@@loadingText">Loading…</span>
         </button>
-        <button class="btn-ghost" type="button" (click)="cancelFace()">{{ 'common.cancel' }}</button>
+        <button class="btn-ghost" type="button" (click)="cancelFace()" i18n="@@cancelBtn">Cancel</button>
       </div>
     </div>
 
     <div class="auth-footer">
-      <p><a routerLink="/auth/olvide-contrasena">{{ 'auth.forgot_password' }}</a></p>
-      <p>{{ 'auth.no_account' }} <a routerLink="/auth/register">{{ 'auth.register_link' }}</a></p>
+      <p><a routerLink="/auth/olvide-contrasena" i18n="@@forgotPasswordLink">Forgot your password?</a></p>
+      <p>
+        <span i18n="@@noAccount">Don't have an account?</span>
+        <a routerLink="/auth/register" i18n="@@registerLink">Create one</a>
+      </p>
     </div>
 
   </div>

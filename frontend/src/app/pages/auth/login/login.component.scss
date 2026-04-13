@@ -1,6 +1,6 @@
-/* 
-  ELA Beauty — Professional Login Refactor
-  Minimalist Luxury Aesthetic
+/*
+  ELA Beauty — Auth Forms
+  Uses design system tokens from styles.scss
 */
 
 .auth-container {
@@ -8,26 +8,37 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--background);
+  background: var(--bg);
   padding: 4rem 2rem;
 }
 
 .auth-card {
   width: 100%;
   max-width: 480px;
-  background: var(--surface-1);
+  background: var(--surface);
   padding: 4rem;
   border-radius: 32px;
   box-shadow: var(--shadow-lg);
-  border: 1px solid var(--border-color);
-  animation: scaleIn 0.6s var(--transition-silk);
+  border: 1px solid var(--border);
+  animation: scaleIn 0.6s var(--ease-silk) both;
 }
 
 .auth-header {
   text-align: center;
   margin-bottom: 3.5rem;
-  h2 { font-family: var(--font-heading); font-size: 2.5rem; color: var(--text-primary); margin-bottom: 1rem; }
-  p { font-size: 1rem; color: var(--text-secondary); font-weight: 300; }
+
+  h2 {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    color: var(--text-main);
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1rem;
+    color: var(--text-muted);
+    font-weight: 300;
+  }
 }
 
 .auth-form {
@@ -40,14 +51,37 @@
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
-  label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-primary); }
+
+  label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-main);
+  }
+
   input {
-    width: 100%; padding: 1.1rem 1.5rem; border-radius: 12px;
-    background: var(--surface-2); border: 1.5px solid var(--border-color);
-    color: var(--text-primary); font-size: 1rem; transition: all 0.3s;
+    width: 100%;
+    padding: 1.1rem 1.5rem;
+    border-radius: 12px;
+    background: var(--surface-low);
+    border: 1.5px solid var(--border);
+    color: var(--text-main);
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.3s;
     outline: none;
-    &:focus { border-color: var(--primary-color); background: white; box-shadow: 0 0 0 4px rgba(212, 165, 165, 0.1); }
-    &::placeholder { color: var(--gray-300); }
+
+    &:focus {
+      border-color: var(--primary);
+      background: var(--surface);
+      box-shadow: 0 0 0 4px var(--primary-faded);
+    }
+
+    &::placeholder {
+      color: var(--text-muted);
+      opacity: 0.6;
+    }
   }
 }
 
@@ -55,48 +89,210 @@
   position: relative;
   display: flex;
   align-items: center;
+
   input { padding-right: 3.5rem; }
 }
 
 .pw-toggle-btn {
-  position: absolute; right: 1rem; background: none; border: none; cursor: pointer; color: var(--text-secondary);
-  display: flex; align-items: center; justify-content: center; padding: 0.5rem; border-radius: 8px;
-  &:hover { color: var(--primary-color); background: var(--gray-100); }
+  position: absolute;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.2s;
+
+  &:hover {
+    color: var(--primary);
+    background: var(--primary-faded);
+  }
 }
 
+/* Auth submit button */
+.btn-auth-primary {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.2rem;
+  border-radius: 14px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  font-size: 0.8rem;
+  font-weight: 700;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all var(--trans-fast);
+  box-shadow: 0 10px 25px -8px hsla(var(--primary-h), var(--primary-s), var(--primary-l), 0.5);
+
+  &:hover:not(:disabled) {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px -10px hsla(var(--primary-h), var(--primary-s), var(--primary-l), 0.6);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+/* Ghost button (biometrics) */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 1rem;
+  background: transparent;
+  color: var(--text-muted);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--trans-fast);
+  text-decoration: none;
+
+  &:hover:not(:disabled) {
+    border-color: var(--primary);
+    color: var(--text-main);
+    background: var(--primary-faded);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+/* Biometric section */
+.biometric-divider {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 3rem 0 2rem;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+}
+
+.biometric-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* Face panel */
+.face-panel {
+  background: var(--surface-low);
+  padding: 2.5rem;
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.face-video {
+  width: 100%;
+  border-radius: 16px;
+  border: 2px solid var(--primary-light);
+  margin-bottom: 1.5rem;
+}
+
+.face-hint {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.face-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+/* Alerts */
+.error-msg {
+  font-size: 0.75rem;
+  color: var(--error);
+  font-weight: 500;
+}
+
+.alert {
+  padding: 1.2rem 1.5rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  border: 1px solid transparent;
+}
+
+.alert-danger  { background: hsl(0, 80%, 97%); color: hsl(0, 60%, 38%); border-color: hsl(0, 60%, 88%); }
+.alert-warning { background: hsl(38, 90%, 96%); color: hsl(30, 55%, 32%); border-color: hsl(38, 60%, 84%); }
+.alert-success { background: hsl(150, 60%, 96%); color: hsl(150, 40%, 28%); border-color: hsl(150, 40%, 80%); }
+
+.countdown-alert {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+
+  .countdown-bar-wrap {
+    width: 100%;
+    height: 4px;
+    background: hsl(38, 30%, 85%);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .countdown-bar {
+    height: 100%;
+    background: hsl(30, 60%, 50%);
+    border-radius: 4px;
+    transition: width 1s linear;
+  }
+}
+
+/* Footer */
 .auth-footer {
   text-align: center;
   margin-top: 3rem;
   font-size: 0.9rem;
-  color: var(--text-secondary);
-  a { color: var(--primary-dark); font-weight: 600; text-decoration: none; &:hover { text-decoration: underline; } }
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+
+  a {
+    color: var(--primary-dark);
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 0.3rem;
+
+    &:hover { text-decoration: underline; }
+  }
 }
 
-/* --- Biometrics --- */
-.biometric-divider {
-  display: flex; align-items: center; gap: 1.5rem; margin: 3rem 0 2rem;
-  color: var(--text-secondary); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px;
-  &::before, &::after { content: ''; flex: 1; height: 1px; background: var(--border-color); }
+@media (max-width: 640px) {
+  .auth-card { padding: 2.5rem 1.5rem; border-radius: 24px; }
+  .biometric-buttons { grid-template-columns: 1fr; }
 }
-
-.biometric-buttons {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
-}
-
-.btn-biometric {
-  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-  padding: 1rem; background: transparent; color: var(--text-secondary);
-  border: 1px solid var(--border-color); border-radius: 15px; font-family: var(--font-body);
-  font-size: 0.75rem; font-weight: 500; cursor: pointer; transition: all var(--transition-fast);
-  text-decoration: none;
-  &:hover { border-color: var(--primary-color); background: white; color: var(--text-primary); }
-}
-
-.face-panel {
-  background: var(--surface-2); padding: 2.5rem; border-radius: 24px; border: 1px solid var(--border-color); text-align: center; margin-bottom: 2rem;
-}
-.face-video { width: 100%; border-radius: 16px; border: 2px solid var(--primary-light); margin-bottom: 1.5rem; }
-
-/* Alerts */
-.alert { padding: 1.2rem; border-radius: 12px; font-size: 0.9rem; border: 1px solid transparent; }
-.alert-danger { background: #fff5f5; color: #c53030; border-color: #feb2b2; }

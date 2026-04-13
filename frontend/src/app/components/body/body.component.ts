@@ -1,4 +1,4 @@
-import { Component, inject, signal, HostListener } from '@angular/core';
+import { Component, inject, signal, HostListener, AfterViewInit, OnDestroy, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { LucideIcons } from '../../icons.provider';
@@ -11,12 +11,37 @@ import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive'
   templateUrl: './body.component.html',
   styleUrls: ['./body.component.scss']
 })
-export class BodyComponent {
+export class BodyComponent implements AfterViewInit, OnDestroy {
+  private el = inject(ElementRef);
+  private revealObserver?: IntersectionObserver;
+
   scrollY = signal(0);
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
     this.scrollY.set(window.pageYOffset);
+  }
+
+  ngAfterViewInit() {
+    this.revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            this.revealObserver?.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    this.el.nativeElement.querySelectorAll('.reveal').forEach((el: Element) => {
+      this.revealObserver!.observe(el);
+    });
+  }
+
+  ngOnDestroy() {
+    this.revealObserver?.disconnect();
   }
 
   /* 

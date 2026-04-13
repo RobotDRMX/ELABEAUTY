@@ -47,7 +47,15 @@
   --trans-silk: 0.8s var(--ease-silk);
   --trans-fast: 0.3s var(--ease-silk);
 
+  /* --- Extended Brand Tokens --- */
+  --primary-light: hsl(var(--primary-h), var(--primary-s), calc(var(--primary-l) + 12%));
+  --surface-dim: hsl(var(--h), 15%, 95%);
+  --font-serif: 'Playfair Display', serif;
+
   /* --- Scale: Spacing & Shadows --- */
+  --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
+  --shadow-md: 0 12px 30px rgba(0,0,0,0.08);
+  --shadow-lg: 0 25px 60px rgba(0,0,0,0.12);
   --shadow-silk: 0 20px 40px -10px rgba(0,0,0,0.05);
   --shadow-intense: 0 30px 60px -12px rgba(0,0,0,0.1);
   
@@ -68,6 +76,7 @@
   --bg: hsl(var(--h), 5%, 8%);
   --surface: hsl(var(--h), 5%, 12%);
   --surface-low: hsl(var(--h), 5%, 15%);
+  --surface-dim: hsl(var(--h), 5%, 10%);
   --border: hsl(var(--h), 5%, 20%);
   --text-main: hsl(var(--h), 5%, 90%);
   --text-muted: hsl(var(--h), 5%, 65%);
@@ -115,6 +124,15 @@ h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 400; color
    MASTER COMPONENTS (Primitives)
    ═══════════════════════════════════════════════════ */
 
+/* Base Button */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0.9rem 2.5rem; border-radius: 60px;
+  font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em;
+  cursor: pointer; transition: all var(--trans-fast); text-decoration: none;
+  border: 1px solid transparent; font-family: inherit;
+}
+
 /* Elite Button */
 .btn-elite {
   display: inline-flex; align-items: center; justify-content: center;
@@ -150,3 +168,36 @@ h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 400; color
 .text-center { text-align: center; }
 .italic { font-style: italic; }
 .mt-section { margin-top: 10rem; }
+
+/* Fade-in utility */
+.fade-in { animation: fadeInUp 0.6s var(--ease-silk) both; }
+
+/* ═══════════════════════════════════════════════════
+   KEYFRAME ANIMATIONS
+   ═══════════════════════════════════════════════════ */
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96) translateY(12px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-100%); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33%       { transform: translateY(-20px) rotate(2deg); }
+  66%       { transform: translateY(10px) rotate(-1deg); }
+}
