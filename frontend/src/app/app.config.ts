@@ -21,5 +21,6 @@ export const appConfig: ApplicationConfig = {
     ),
     importProvidersFrom(LucideIconsModule),
     { provide: TitleStrategy, useClass: I18nTitleStrategy },
+    provideNoopZone(), // Añadir esta línea para forzar NoopNgZone
   ],
 };
