@@ -68,7 +68,9 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "ssr": false,
+            "prerender": false
           },
           "configurations": {
             "production": {
