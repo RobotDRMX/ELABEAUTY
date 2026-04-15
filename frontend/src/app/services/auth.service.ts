@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
@@ -20,7 +20,10 @@ export class AuthService {
     return this._accessToken;
   }
 
-  constructor(private http: HttpClient, private router: Router) {
+  private http = inject(HttpClient);
+  private router = inject(Router);
+
+  constructor() {
     this.checkSession();
   }
 

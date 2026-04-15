@@ -45,65 +45,63 @@
       <!-- Filter content template -->
       <ng-template #filterContent>
         <div class="filter-section header-section">
-          <h3 i18n="@@filtersTitle">Filters</h3>
-          <button class="clear-filters-btn" (click)="clearFilters()" i18n="@@clearAllBtn">Clear all</button>
+          <h3>{{ 'filters.title' | translate }}</h3>
+          <button class="clear-filters-btn" (click)="clearFilters()">{{ 'filters.clear_all' | translate }}</button>
         </div>
 
         <!-- Availability filter -->
         <div class="filter-section">
-          <h4 i18n="@@filterAvailability">Availability</h4>
+          <h4>{{ 'filters.availability' | translate }}</h4>
           <label class="checkbox-container">
             <input type="checkbox" [(ngModel)]="filters.onlyInStock" (change)="applyFilters()">
             <span class="checkmark"></span>
-            <span i18n="@@filterInStockOnly">In Stock Only</span>
+            <span>{{ 'filters.in_stock_only' | translate }}</span>
           </label>
         </div>
 
         <!-- Target age filter -->
         <div class="filter-section">
-          <h4 i18n="@@filterTargetAge">Target Age</h4>
+          <h4>{{ 'filters.target_age' | translate }}</h4>
           <select class="filter-select" [(ngModel)]="filters.targetAge" (change)="applyFilters()">
-            <option value="" i18n="@@filterAllAges">All Ages</option>
+            <option value="">{{ 'filters.age_all' | translate }}</option>
             <option *ngFor="let age of ageOptions" [value]="age">{{ ageDisplayLabels[age] }}</option>
           </select>
         </div>
 
         <!-- Price range filter -->
         <div class="filter-section">
-          <h4 i18n="@@filterPriceRange">Price Range</h4>
+          <h4>{{ 'filters.price_range' | translate }}</h4>
           <div class="price-inputs">
             <div class="input-group">
               <span>$</span>
               <input type="number"
-                placeholder="Min"
-                i18n-placeholder="@@priceMinPlaceholder"
+                [placeholder]="'filters.min' | translate"
                 [(ngModel)]="filters.minPrice"
                 (keyup.enter)="applyFilters()">
             </div>
             <div class="input-group">
               <span>$</span>
               <input type="number"
-                placeholder="Max"
-                i18n-placeholder="@@priceMaxPlaceholder"
+                [placeholder]="'filters.max' | translate"
                 [(ngModel)]="filters.maxPrice"
                 (keyup.enter)="applyFilters()">
             </div>
           </div>
-          <button class="apply-price-btn" (click)="applyFilters()" i18n="@@applyPriceBtn">Apply</button>
+          <button class="apply-price-btn" (click)="applyFilters()">{{ 'filters.apply' | translate }}</button>
         </div>
 
         <!-- Sort filter -->
         <div class="filter-section">
-          <h4 i18n="@@filterSortBy">Sort By</h4>
+          <h4>{{ 'filters.sort_by' | translate }}</h4>
           <select class="filter-select" [(ngModel)]="filters.sortBy" (change)="applyFilters()">
-            <option value="created_at" i18n="@@sortNewest">Newest First</option>
-            <option value="price" i18n="@@sortPrice">Price</option>
-            <option value="name" i18n="@@sortName">Name</option>
-            <option value="rating" i18n="@@sortRating">Rating</option>
+            <option value="created_at">{{ 'filters.sort_newest' | translate }}</option>
+            <option value="price">{{ 'filters.sort_price' | translate }}</option>
+            <option value="name">{{ 'filters.sort_name' | translate }}</option>
+            <option value="rating">{{ 'filters.sort_rating' | translate }}</option>
           </select>
           <select class="filter-select mt-2" [(ngModel)]="filters.order" (change)="applyFilters()">
-            <option value="DESC" i18n="@@sortDescending">Descending</option>
-            <option value="ASC" i18n="@@sortAscending">Ascending</option>
+            <option value="DESC">{{ 'filters.sort_desc' | translate }}</option>
+            <option value="ASC">{{ 'filters.sort_asc' | translate }}</option>
           </select>
         </div>
       </ng-template>

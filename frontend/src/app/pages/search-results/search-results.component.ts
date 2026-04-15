@@ -11,7 +11,9 @@ import { RealtimeService } from '../../services/realtime.service';
 import { SearchComponent } from '../../components/search/search.component';
 import { TruncatePipe } from '../../pipes/truncate.pipe';
 import { SafeImagePipe } from '../../pipes/safe-image.pipe';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 import { LucideIcons } from '../../icons.provider';
+import { I18nService } from '../../services/i18n.service';
 import { listAnimation } from '../../animations/list.animations';
 import { TiltDirective } from '../../directives/tilt.directive';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -28,7 +30,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     SafeImagePipe, 
     LucideIcons, 
     TiltDirective, 
-    ScrollingModule
+    ScrollingModule,
+    TranslatePipe
   ],
   templateUrl: './search-results.component.html',
   styleUrls: ['./search-results.component.scss'],
@@ -41,6 +44,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   private cartService = inject(CartService);
   private favoritesService = inject(FavoritesService);
   private realtime = inject(RealtimeService);
+  private i18n = inject(I18nService);
   private realtimeSub?: Subscription;
 
   products = signal<Product[]>([]);
@@ -61,13 +65,15 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   // DB values (must match what is stored in the database)
   ageOptions: string[] = ['Adolescentes', 'Jóvenes', 'Adultos', 'Todas'];
 
-  // Display labels for each DB value — translated via $localize
-  ageDisplayLabels: Record<string, string> = {
-    'Adolescentes': $localize`:@@ageTeens:Teens`,
-    'Jóvenes':      $localize`:@@ageYoungAdults:Young Adults`,
-    'Adultos':      $localize`:@@ageAdults:Adults`,
-    'Todas':        $localize`:@@ageAll:All Ages`,
-  };
+  // Display labels for each DB value — dynamically translated
+  get ageDisplayLabels(): Record<string, string> {
+    return {
+      'Adolescentes': this.i18n.t('filters.age_teens') || 'Teens',
+      'Jóvenes':      this.i18n.t('filters.age_young_adults') || 'Young Adults',
+      'Adultos':      this.i18n.t('filters.age_adults') || 'Adults',
+      'Todas':        this.i18n.t('filters.age_all') || 'All Ages',
+    };
+  }
 
   filters = {
     minPrice: '',

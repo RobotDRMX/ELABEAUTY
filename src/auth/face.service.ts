@@ -8,7 +8,7 @@ import { createCipheriv, createDecipheriv, randomBytes, createHash } from 'crypt
 @Injectable()
 export class FaceService {
   private readonly logger = new Logger(FaceService.name);
-  private readonly THRESHOLD = 0.55; // Umbral de similitud (menor es más estricto) — aumentado para producción
+  private readonly THRESHOLD = 0.60; // Umbral de similitud más relajado para producción
   private readonly ALGORITHM = 'aes-256-gcm';
   private readonly KEY: Buffer;
 

@@ -2,7 +2,7 @@
     <div class="container">
         <div class="cart-header">
             <h1>{{ 'cart.title' | translate }}</h1>
-            <p *ngIf="cart()?.items?.length > 0">{{ 'cart.items_count' | translate }}</p>
+            <p *ngIf="cart()?.items?.length > 0">{{ 'cart.items_count' | translate:{count: cartService.itemCount()} }}</p>
         </div>
 
         <div class="cart-container" *ngIf="cart()?.items?.length > 0; else emptyCart">
@@ -89,7 +89,7 @@
                         @if (total() < 500) {
                             <p class="shipping-progress-msg">
                                 <lucide-icon name="truck" [size]="14"></lucide-icon>
-                                {{ 'cart.shipping_progress_hint' | translate }}
+                                {{ 'cart.shipping_progress_hint' | translate:{amount: '$' + (500 - total())} }}
                             </p>
                         } @else {
                             <p class="shipping-progress-msg success">
