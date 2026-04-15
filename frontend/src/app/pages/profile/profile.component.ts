@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, inject, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { BiometricAuthService } from '../../services/biometric-auth.service';
 import { LucideIcons } from '../../icons.provider';
@@ -38,6 +38,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     constructor(
         private fb: FormBuilder,
         private authService: AuthService,
+        private router: Router,
         public biometric: BiometricAuthService,
     ) {
         this.profileForm = this.fb.group({
@@ -70,6 +71,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
                 this.isInitialLoading = false;
             }
         });
+    }
+
+    logout() {
+        this.authService.logout();
+        this.router.navigate(['/auth/login']);
     }
 
     onSubmit() {

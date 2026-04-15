@@ -54,8 +54,8 @@
             </div>
 
             <ng-template #emptyFavs>
-                <div class="empty-state fade-in">
-                    <lucide-icon name="heart" [size]="48"></lucide-icon>
+                <div class="empty-state fade-in scale-in">
+                    <lucide-icon name="heart" [size]="64"></lucide-icon>
                     <h2>{{ 'favorites.empty' | translate }}</h2>
                     <p class="favorites-hint">{{ 'favorites.empty_hint' | translate }}</p>
                     <button class="btn btn--primary" routerLink="/busqueda">{{ 'favorites.explore' | translate }}</button>

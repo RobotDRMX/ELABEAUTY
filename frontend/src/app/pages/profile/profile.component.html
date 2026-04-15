@@ -6,6 +6,10 @@
             </div>
             <h2>{{ 'profile.title' | translate }}</h2>
             <p>{{ 'profile.subtitle' | translate }}</p>
+            <button class="btn btn--outline logout-btn" (click)="logout()" style="margin-top: 1rem;">
+                <lucide-icon name="log-out" [size]="18"></lucide-icon>
+                {{ 'header.logout' | translate }}
+            </button>
         </div>
 
         <!-- Skeleton while loading initial profile data -->
@@ -119,7 +123,7 @@
                         (click)="saveFace()">
                         {{ enrollLoading ? ('profile.saving_face' | translate) : ('profile.save_face' | translate) }}
                     </button>
-                    <button class="btn btn--ghost" (click)="cancelEnroll()">{{ 'common.cancel' | translate }}</button>
+                    <button class="btn btn--ghost" (click)="cancelEnroll()">Cancelar</button>
                 </div>
             </div>
 

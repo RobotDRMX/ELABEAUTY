@@ -259,6 +259,109 @@ h1, h2, h3, h4 {
 .scale-in { animation: scaleIn 0.5s var(--ease-bounce) both; }
 
 /* ═══════════════════════════════════════════════════
+   PREMIUM EMPTY STATES
+   ═══════════════════════════════════════════════════ */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6rem 2rem;
+  background: var(--surface-1, var(--surface));
+  border-radius: 32px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color, var(--border));
+  margin: 2rem auto;
+  max-width: 800px;
+  width: 100%;
+
+  svg, lucide-icon {
+    color: var(--primary);
+    background: var(--primary-faded);
+    padding: 1.5rem;
+    border-radius: 50%;
+    margin-bottom: 2rem;
+    box-shadow: inset 0 0 0 2px var(--surface), 0 0 0 8px var(--surface-low);
+    width: 100px !important;
+    height: 100px !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  h2 {
+    font-size: var(--fs-xl);
+    margin-bottom: 1rem;
+    color: var(--heading);
+  }
+
+  p {
+    font-size: var(--fs-base);
+    color: var(--text-muted);
+    max-width: 480px;
+    margin: 0 auto 3rem;
+  }
+
+  .btn {
+    padding: 1.2rem 3.5rem;
+    font-size: 1rem;
+  }
+
+  .empty-categories-label {
+    margin-top: 4rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+  }
+}
+
+.empty-category-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+
+  .category-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 40px;
+    background: var(--surface-low);
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: 1px solid var(--border-color, var(--border));
+    transition: all 0.3s var(--ease-silk);
+
+    lucide-icon, svg {
+      width: 18px !important;
+      height: 18px !important;
+      padding: 0;
+      background: none;
+      box-shadow: none;
+      margin: 0;
+      color: var(--primary);
+    }
+
+    &:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-pink);
+
+      lucide-icon, svg { color: #fff; }
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════
    SKELETON LOADERS
    ═══════════════════════════════════════════════════ */
 
