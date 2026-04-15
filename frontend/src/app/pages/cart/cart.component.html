@@ -1,8 +1,8 @@
 <div class="cart-page">
     <div class="container">
         <div class="cart-header">
-            <h1>{{ 'cart.title' }}</h1>
-            <p *ngIf="cart()?.items?.length > 0">{{ 'cart.items_count' }}</p>
+            <h1>{{ 'cart.title' | translate }}</h1>
+            <p *ngIf="cart()?.items?.length > 0">{{ 'cart.items_count' | translate }}</p>
         </div>
 
         <div class="cart-container" *ngIf="cart()?.items?.length > 0; else emptyCart">
@@ -10,7 +10,8 @@
             <div class="cart-items">
                 <div class="cart-item" *ngFor="let item of cart().items">
                     <div class="item-image">
-                        <img [src]="item.product.image_url" [alt]="item.product.name">
+                        <img [src]="item.product.image_url" [alt]="item.product.name"
+                             (error)="$any($event.target).src = 'assets/images/no-image.svg'">
                     </div>
                     <div class="item-details">
                         <h3 routerLink="/busqueda" [queryParams]="{ q: item.product.name }">{{ item.product.name }}</h3>
@@ -20,7 +21,7 @@
                                 <button
                                   [disabled]="updatingId() === item.product.id"
                                   (click)="updateQuantity(item.product.id, item.quantity - 1)"
-                                  [title]="item.quantity === 1 ? ('cart.remove_confirm_title') : ''">
+                                  [title]="item.quantity === 1 ? ('cart.remove_confirm_title' | translate) : ''">
                                   @if (item.quantity === 1) {
                                     <lucide-icon name="trash-2" [size]="16"></lucide-icon>
                                   } @else {
@@ -36,14 +37,14 @@
                                 </span>
                                 <button
                                   [disabled]="updatingId() === item.product.id || item.quantity >= item.product.stock"
-                                  [title]="item.quantity >= item.product.stock ? ('cart.max_stock') : ''"
+                                  [title]="item.quantity >= item.product.stock ? ('cart.max_stock' | translate) : ''"
                                   (click)="updateQuantity(item.product.id, item.quantity + 1)">
                                   <lucide-icon name="plus" [size]="16"></lucide-icon>
                                 </button>
                             </div>
                             <button class="remove-btn" (click)="removeItem(item.product.id)">
                                 <lucide-icon name="trash-2" [size]="14"></lucide-icon>
-                                {{ 'cart.remove' }}
+                                {{ 'cart.remove' | translate }}
                             </button>
                         </div>
                     </div>
@@ -53,29 +54,29 @@
                     </div>
                 </div>
 
-                <button class="clear-btn" (click)="clearCart()">{{ 'cart.clear' }}</button>
+                <button class="clear-btn" (click)="clearCart()">{{ 'cart.clear' | translate }}</button>
             </div>
 
             <!-- Resumen de Compra -->
             <aside class="cart-summary">
                 <div class="summary-card">
-                    <h2>{{ 'cart.summary' }}</h2>
+                    <h2>{{ 'cart.summary' | translate }}</h2>
                     <div class="summary-row">
-                        <span>{{ 'cart.subtotal' }}</span>
+                        <span>{{ 'cart.subtotal' | translate }}</span>
                         <span>{{ total() | currency:'MXN' }}</span>
                     </div>
                     <div class="summary-row">
-                        <span>{{ 'cart.shipping' }}</span>
-                        <span class="free-shipping" *ngIf="total() >= 500">{{ 'cart.free' }}</span>
+                        <span>{{ 'cart.shipping' | translate }}</span>
+                        <span class="free-shipping" *ngIf="total() >= 500">{{ 'cart.free' | translate }}</span>
                         <span *ngIf="total() < 500">{{ 50 | currency:'MXN' }}</span>
                     </div>
                     <div class="summary-total">
-                        <span>{{ 'cart.total' }}</span>
+                        <span>{{ 'cart.total' | translate }}</span>
                         <span>{{ finalTotal() | currency:'MXN' }}</span>
                     </div>
 
-                    <button class="btn-maybelline checkout-btn" (click)="checkout()">
-                        {{ 'cart.checkout' }}
+                    <button class="btn btn--primary checkout-btn" (click)="checkout()">
+                        {{ 'cart.checkout' | translate }}
                     </button>
 
                     <div class="shipping-progress">
@@ -88,12 +89,12 @@
                         @if (total() < 500) {
                             <p class="shipping-progress-msg">
                                 <lucide-icon name="truck" [size]="14"></lucide-icon>
-                                {{ 'cart.shipping_progress_hint' }}
+                                {{ 'cart.shipping_progress_hint' | translate }}
                             </p>
                         } @else {
                             <p class="shipping-progress-msg success">
                                 <lucide-icon name="circle-check" [size]="14"></lucide-icon>
-                                {{ 'cart.shipping_achieved' }}
+                                {{ 'cart.shipping_achieved' | translate }}
                             </p>
                         }
                     </div>
@@ -107,19 +108,19 @@
                 <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
                 </svg>
-                <h2>{{ 'cart.empty' }}</h2>
-                <p>{{ 'cart.empty_hint' }}</p>
-                <button class="btn-maybelline" routerLink="/busqueda">{{ 'cart.see_products' }}</button>
-                <p class="empty-categories-label">{{ 'cart.empty_categories_hint' }}</p>
+                <h2>{{ 'cart.empty' | translate }}</h2>
+                <p>{{ 'cart.empty_hint' | translate }}</p>
+                <button class="btn btn--primary" routerLink="/busqueda">{{ 'cart.see_products' | translate }}</button>
+                <p class="empty-categories-label">{{ 'cart.empty_categories_hint' | translate }}</p>
                 <div class="empty-category-chips">
                     <a routerLink="/busqueda" [queryParams]="{ category: 'Labiales' }" class="category-chip">
-                        <lucide-icon name="heart" [size]="14"></lucide-icon> {{ 'categories.lips' }}
+                        <lucide-icon name="heart" [size]="14"></lucide-icon> {{ 'categories.lips' | translate }}
                     </a>
                     <a routerLink="/busqueda" [queryParams]="{ category: 'Ojos' }" class="category-chip">
-                        <lucide-icon name="eye" [size]="14"></lucide-icon> {{ 'categories.eyes' }}
+                        <lucide-icon name="eye" [size]="14"></lucide-icon> {{ 'categories.eyes' | translate }}
                     </a>
                     <a routerLink="/busqueda" [queryParams]="{ category: 'Rostro' }" class="category-chip">
-                        <lucide-icon name="palette" [size]="14"></lucide-icon> {{ 'categories.face' }}
+                        <lucide-icon name="palette" [size]="14"></lucide-icon> {{ 'categories.face' | translate }}
                     </a>
                 </div>
             </div>
@@ -142,7 +143,7 @@
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
                         } @else { 1 }
                     </div>
-                    <span>{{ 'checkout.step_shipping' }}</span>
+                    <span>{{ 'checkout.step_shipping' | translate }}</span>
                 </div>
                 <div class="step-line" [class.done]="stepIndex() > 0"></div>
                 <div class="step" [class.active]="stepIndex() >= 1" [class.done]="stepIndex() > 1">
@@ -151,12 +152,12 @@
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
                         } @else { 2 }
                     </div>
-                    <span>{{ 'checkout.step_payment' }}</span>
+                    <span>{{ 'checkout.step_payment' | translate }}</span>
                 </div>
                 <div class="step-line" [class.done]="stepIndex() > 1"></div>
                 <div class="step" [class.active]="stepIndex() >= 2">
                     <div class="step-dot">3</div>
-                    <span>{{ 'checkout.step_confirm' }}</span>
+                    <span>{{ 'checkout.step_confirm' | translate }}</span>
                 </div>
             </div>
             <button class="checkout-close" (click)="closeCheckout()">
@@ -170,48 +171,48 @@
         <!-- STEP 1: Dirección -->
         @if (currentStep() === 'address') {
         <div class="checkout-body">
-            <h2 class="step-title">{{ 'checkout.address_title' }}</h2>
+            <h2 class="step-title">{{ 'checkout.address_title' | translate }}</h2>
             <div class="form-grid">
                 <div class="form-group">
-                    <label>{{ 'checkout.first_name' }} *</label>
+                    <label>{{ 'checkout.first_name' | translate }} *</label>
                     <input type="text" [(ngModel)]="address.firstName" autocomplete="given-name"
-                        [placeholder]="'checkout.first_name'"
+                        [placeholder]="'checkout.first_name' | translate"
                         [class.field-error]="addressSubmitted && !address.firstName">
-                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.firstName">{{ 'checkout.required_field' }}</span>
+                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.firstName">{{ 'checkout.required_field' | translate }}</span>
                 </div>
                 <div class="form-group">
-                    <label>{{ 'checkout.last_name' }} *</label>
+                    <label>{{ 'checkout.last_name' | translate }} *</label>
                     <input type="text" [(ngModel)]="address.lastName" autocomplete="family-name"
-                        [placeholder]="'checkout.last_name'"
+                        [placeholder]="'checkout.last_name' | translate"
                         [class.field-error]="addressSubmitted && !address.lastName">
-                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.lastName">{{ 'checkout.required_field' }}</span>
+                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.lastName">{{ 'checkout.required_field' | translate }}</span>
                 </div>
                 <div class="form-group full-width">
-                    <label>{{ 'checkout.street' }} *</label>
+                    <label>{{ 'checkout.street' | translate }} *</label>
                     <input type="text" [(ngModel)]="address.street" autocomplete="street-address"
-                        [placeholder]="'checkout.street_placeholder'"
+                        [placeholder]="'checkout.street_placeholder' | translate"
                         [class.field-error]="addressSubmitted && !address.street">
-                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.street">{{ 'checkout.required_field' }}</span>
+                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.street">{{ 'checkout.required_field' | translate }}</span>
                 </div>
                 <div class="form-group">
-                    <label>{{ 'checkout.colonia' }} *</label>
+                    <label>{{ 'checkout.colonia' | translate }} *</label>
                     <input type="text" [(ngModel)]="address.colonia" autocomplete="address-level3"
-                        [placeholder]="'checkout.colonia'"
+                        [placeholder]="'checkout.colonia' | translate"
                         [class.field-error]="addressSubmitted && !address.colonia">
-                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.colonia">{{ 'checkout.required_field' }}</span>
+                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.colonia">{{ 'checkout.required_field' | translate }}</span>
                 </div>
                 <div class="form-group">
-                    <label>{{ 'checkout.city' }} *</label>
+                    <label>{{ 'checkout.city' | translate }} *</label>
                     <input type="text" [(ngModel)]="address.city" autocomplete="address-level2"
-                        [placeholder]="'checkout.city'"
+                        [placeholder]="'checkout.city' | translate"
                         [class.field-error]="addressSubmitted && !address.city">
-                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.city">{{ 'checkout.required_field' }}</span>
+                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.city">{{ 'checkout.required_field' | translate }}</span>
                 </div>
                 <div class="form-group">
-                    <label>{{ 'checkout.state' }} *</label>
+                    <label>{{ 'checkout.state' | translate }} *</label>
                     <select [(ngModel)]="address.state" autocomplete="address-level1"
                         [class.field-error]="addressSubmitted && !address.state">
-                        <option value="">{{ 'checkout.state_placeholder' }}</option>
+                        <option value="">{{ 'checkout.state_placeholder' | translate }}</option>
                         <option>Aguascalientes</option><option>Baja California</option>
                         <option>CDMX</option><option>Chihuahua</option>
                         <option>Coahuila</option><option>Colima</option>
@@ -228,30 +229,30 @@
                         <option>Veracruz</option><option>Yucatán</option>
                         <option>Zacatecas</option>
                     </select>
-                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.state">{{ 'checkout.required_field' }}</span>
+                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.state">{{ 'checkout.required_field' | translate }}</span>
                 </div>
                 <div class="form-group">
-                    <label>{{ 'checkout.zip' }} *</label>
+                    <label>{{ 'checkout.zip' | translate }} *</label>
                     <input type="text" [(ngModel)]="address.zip" autocomplete="postal-code"
                         placeholder="00000" maxlength="5"
                         [class.field-error]="addressSubmitted && (!address.zip || address.zip.length !== 5)">
-                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.zip">{{ 'checkout.required_field' }}</span>
-                    <span class="field-error-msg" *ngIf="addressSubmitted && address.zip && address.zip.length !== 5">{{ 'checkout.zip_invalid' }}</span>
+                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.zip">{{ 'checkout.required_field' | translate }}</span>
+                    <span class="field-error-msg" *ngIf="addressSubmitted && address.zip && address.zip.length !== 5">{{ 'checkout.zip_invalid' | translate }}</span>
                 </div>
                 <div class="form-group">
-                    <label>{{ 'checkout.phone' }} *</label>
+                    <label>{{ 'checkout.phone' | translate }} *</label>
                     <input type="tel" [(ngModel)]="address.phone" autocomplete="tel"
-                        [placeholder]="'checkout.phone_placeholder'"
+                        [placeholder]="'checkout.phone_placeholder' | translate"
                         [class.field-error]="addressSubmitted && !isPhoneValid()">
-                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.phone">{{ 'checkout.required_field' }}</span>
-                    <span class="field-error-msg" *ngIf="addressSubmitted && address.phone && !isPhoneValid()">{{ 'checkout.phone_invalid' }}</span>
+                    <span class="field-error-msg" *ngIf="addressSubmitted && !address.phone">{{ 'checkout.required_field' | translate }}</span>
+                    <span class="field-error-msg" *ngIf="addressSubmitted && address.phone && !isPhoneValid()">{{ 'checkout.phone_invalid' | translate }}</span>
                 </div>
             </div>
         </div>
         <div class="checkout-footer">
             <span></span>
-            <button class="btn-maybelline" (click)="goToStep('payment')">
-                {{ 'checkout.continue_payment' }}
+            <button class="btn btn--primary" (click)="goToStep('payment')">
+                {{ 'checkout.continue_payment' | translate }}
             </button>
         </div>
         }
@@ -259,7 +260,7 @@
         <!-- STEP 2: Método de pago -->
         @if (currentStep() === 'payment') {
         <div class="checkout-body">
-            <h2 class="step-title">{{ 'checkout.payment_title' }}</h2>
+            <h2 class="step-title">{{ 'checkout.payment_title' | translate }}</h2>
 
             <div class="payment-options">
                 <label class="payment-option" [class.selected]="paymentMethod() === 'card'">
@@ -268,8 +269,8 @@
                         <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
                     </svg>
                     <div>
-                        <strong>{{ 'checkout.card_option' }}</strong>
-                        <span>{{ 'checkout.card_brands' }}</span>
+                        <strong>{{ 'checkout.card_option' | translate }}</strong>
+                        <span>{{ 'checkout.card_brands' | translate }}</span>
                     </div>
                 </label>
                 <label class="payment-option" [class.selected]="paymentMethod() === 'cash'">
@@ -279,8 +280,8 @@
                         <path d="M6 12h.01M18 12h.01"/>
                     </svg>
                     <div>
-                        <strong>{{ 'checkout.cash_option' }}</strong>
-                        <span>{{ 'checkout.cash_desc' }}</span>
+                        <strong>{{ 'checkout.cash_option' | translate }}</strong>
+                        <span>{{ 'checkout.cash_desc' | translate }}</span>
                     </div>
                 </label>
                 <label class="payment-option" [class.selected]="paymentMethod() === 'oxxo'">
@@ -289,8 +290,8 @@
                         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
                     </svg>
                     <div>
-                        <strong>{{ 'checkout.oxxo_option' }}</strong>
-                        <span>{{ 'checkout.oxxo_desc' }}</span>
+                        <strong>{{ 'checkout.oxxo_option' | translate }}</strong>
+                        <span>{{ 'checkout.oxxo_desc' | translate }}</span>
                     </div>
                 </label>
             </div>
@@ -312,23 +313,23 @@
                 </div>
                 <div class="form-grid">
                     <div class="form-group full-width">
-                        <label>{{ 'checkout.card_number' }} *</label>
+                        <label>{{ 'checkout.card_number' | translate }} *</label>
                         <input type="text" [value]="card.number" (input)="formatCardNumber($event)"
                             placeholder="0000 0000 0000 0000" maxlength="19" autocomplete="cc-number">
                     </div>
                     <div class="form-group full-width">
-                        <label>{{ 'checkout.card_name' }} *</label>
+                        <label>{{ 'checkout.card_name' | translate }} *</label>
                         <input type="text" [(ngModel)]="card.name"
-                            [placeholder]="'checkout.card_name_placeholder'"
+                            [placeholder]="'checkout.card_name_placeholder' | translate"
                             style="text-transform:uppercase" autocomplete="cc-name">
                     </div>
                     <div class="form-group">
-                        <label>{{ 'checkout.card_expiry' }} *</label>
+                        <label>{{ 'checkout.card_expiry' | translate }} *</label>
                         <input type="text" [value]="card.expiry" (input)="formatExpiry($event)"
                             placeholder="MM/AA" maxlength="5" autocomplete="cc-exp">
                     </div>
                     <div class="form-group">
-                        <label>{{ 'checkout.card_cvv' }} *</label>
+                        <label>{{ 'checkout.card_cvv' | translate }} *</label>
                         <input type="password" [(ngModel)]="card.cvv" placeholder="•••" maxlength="4" autocomplete="off">
                     </div>
                 </div>
@@ -337,26 +338,26 @@
 
             @if (paymentMethod() === 'oxxo') {
             <div class="oxxo-info">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary-color)" stroke-width="1.5">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5">
                     <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
                 </svg>
-                <p>{{ 'checkout.oxxo_info' }}</p>
+                <p>{{ 'checkout.oxxo_info' | translate }}</p>
             </div>
             }
 
             @if (paymentMethod() === 'cash') {
             <div class="oxxo-info">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary-color)" stroke-width="1.5">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5">
                     <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
                 </svg>
-                <p>{{ 'checkout.cash_info' }}</p>
+                <p>{{ 'checkout.cash_info' | translate }}</p>
             </div>
             }
         </div>
         <div class="checkout-footer">
-            <button class="btn-outline" (click)="goToStep('address')">{{ 'checkout.back' }}</button>
-            <button class="btn-maybelline" [disabled]="!isPaymentValid()" (click)="goToStep('review')">
-                {{ 'checkout.review_order' }}
+            <button class="btn btn--outline" (click)="goToStep('address')">{{ 'checkout.back' | translate }}</button>
+            <button class="btn btn--primary" [disabled]="!isPaymentValid()" (click)="goToStep('review')">
+                {{ 'checkout.review_order' | translate }}
             </button>
         </div>
         }
@@ -367,29 +368,29 @@
             @if (processingPayment()) {
             <div class="processing-state">
                 <div class="processing-spinner"></div>
-                <h2>{{ 'checkout.processing' }}</h2>
-                <p>{{ 'checkout.processing_msg' }}</p>
+                <h2>{{ 'checkout.processing' | translate }}</h2>
+                <p>{{ 'checkout.processing_msg' | translate }}</p>
                 <div class="processing-steps">
                     <div class="proc-step active">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                        {{ 'checkout.proc_verifying' }}
+                        {{ 'checkout.proc_verifying' | translate }}
                     </div>
                     <div class="proc-step active">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                        {{ 'checkout.proc_processing' }}
+                        {{ 'checkout.proc_processing' | translate }}
                     </div>
                     <div class="proc-step loading">
                         <div class="mini-spinner"></div>
-                        {{ 'checkout.proc_confirming' }}
+                        {{ 'checkout.proc_confirming' | translate }}
                     </div>
                 </div>
             </div>
             } @else {
-            <h2 class="step-title">{{ 'checkout.review_title' }}</h2>
+            <h2 class="step-title">{{ 'checkout.review_title' | translate }}</h2>
             <div class="review-section">
                 <h3>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                    {{ 'checkout.shipping_address' }}
+                    {{ 'checkout.shipping_address' | translate }}
                 </h3>
                 <p>{{ address.firstName }} {{ address.lastName }}</p>
                 <p>{{ address.street }}, {{ address.colonia }}</p>
@@ -399,7 +400,7 @@
             <div class="review-section">
                 <h3>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-                    {{ 'checkout.payment_method' }}
+                    {{ 'checkout.payment_method' | translate }}
                 </h3>
                 <p>{{ paymentLabel() }}</p>
                 @if (paymentMethod() === 'card') {
@@ -409,7 +410,7 @@
             <div class="review-section">
                 <h3>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
-                    {{ 'checkout.products_count' }}
+                    {{ 'checkout.products_count' | translate }}
                 </h3>
                 <div class="review-items">
                     @for (item of cart()?.items; track item.product.id) {
@@ -420,21 +421,21 @@
                     }
                 </div>
                 <div class="review-total">
-                    <div class="review-row"><span>{{ 'cart.subtotal' }}</span><span>{{ total() | currency:'MXN' }}</span></div>
-                    <div class="review-row"><span>{{ 'cart.shipping' }}</span><span>{{ shipping() === 0 ? ('cart.free') : (shipping() | currency:'MXN') }}</span></div>
-                    <div class="review-row grand-total"><strong>{{ 'cart.total' }}</strong><strong>{{ finalTotal() | currency:'MXN' }}</strong></div>
+                    <div class="review-row"><span>{{ 'cart.subtotal' | translate }}</span><span>{{ total() | currency:'MXN' }}</span></div>
+                    <div class="review-row"><span>{{ 'cart.shipping' | translate }}</span><span>{{ shipping() === 0 ? ('cart.free' | translate) : (shipping() | currency:'MXN') }}</span></div>
+                    <div class="review-row grand-total"><strong>{{ 'cart.total' | translate }}</strong><strong>{{ finalTotal() | currency:'MXN' }}</strong></div>
                 </div>
             </div>
             }
         </div>
         @if (!processingPayment()) {
         <div class="checkout-footer">
-            <button class="btn-outline" (click)="goToStep('payment')">{{ 'checkout.back' }}</button>
-            <button class="btn-maybelline confirm-btn" (click)="confirmOrder()">
+            <button class="btn btn--outline" (click)="goToStep('payment')">{{ 'checkout.back' | translate }}</button>
+            <button class="btn btn--primary confirm-btn" (click)="confirmOrder()">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                 </svg>
-                {{ 'checkout.confirm_pay' }}
+                {{ 'checkout.confirm_pay' | translate }}
             </button>
         </div>
         }
@@ -448,25 +449,25 @@
                     <polyline points="20 6 9 17 4 12"/>
                 </svg>
             </div>
-            <h2>{{ 'checkout.success_title' }}</h2>
-            <p class="success-subtitle">{{ 'checkout.success_subtitle' }}</p>
+            <h2>{{ 'checkout.success_title' | translate }}</h2>
+            <p class="success-subtitle">{{ 'checkout.success_subtitle' | translate }}</p>
             <div class="order-number">
-                <span class="order-label">{{ 'checkout.order_label' }}</span>
+                <span class="order-label">{{ 'checkout.order_label' | translate }}</span>
                 <span class="order-code">{{ orderNumber() }}</span>
             </div>
             <p class="success-msg">
                 @if (paymentMethod() === 'card') {
-                    {{ 'checkout.success_card_msg' }}
+                    {{ 'checkout.success_card_msg' | translate }}
                 }
                 @if (paymentMethod() === 'oxxo') {
-                    {{ 'checkout.success_oxxo_msg' }}
+                    {{ 'checkout.success_oxxo_msg' | translate }}
                 }
                 @if (paymentMethod() === 'cash') {
-                    {{ 'checkout.success_cash_msg' }}
+                    {{ 'checkout.success_cash_msg' | translate }}
                 }
             </p>
             <div class="success-actions">
-                <button class="btn-maybelline" (click)="closeCheckout()" routerLink="/">{{ 'checkout.keep_shopping' }}</button>
+                <button class="btn btn--primary" (click)="closeCheckout()" routerLink="/">{{ 'checkout.keep_shopping' | translate }}</button>
             </div>
         </div>
         }

@@ -8,7 +8,7 @@ import { createCipheriv, createDecipheriv, randomBytes, createHash } from 'crypt
 @Injectable()
 export class FaceService {
   private readonly logger = new Logger(FaceService.name);
-  private readonly THRESHOLD = 0.45; // Umbral de similitud (menor es más estricto)
+  private readonly THRESHOLD = 0.55; // Umbral de similitud (menor es más estricto) — aumentado para producción
   private readonly ALGORITHM = 'aes-256-gcm';
   private readonly KEY: Buffer;
 
@@ -97,6 +97,10 @@ export class FaceService {
       try {
         const stored = this.decrypt(user.faceDescriptor!);
         const dist = this.euclideanDistance(stored, incoming);
+        // [DEBUG] Log de distancia para diagnóstico — remover en producción estable
+        this.logger.debug(
+          `[FaceService] userId=${user.id} email=${user.email} → distancia=${dist.toFixed(4)} (umbral=${this.THRESHOLD})`,
+        );
         if (dist < this.THRESHOLD && dist < bestDistance) {
           bestMatch = user;
           bestDistance = dist;
@@ -106,7 +110,11 @@ export class FaceService {
       }
     }
 
+    // [DEBUG] Resumen final para identificar por qué falla
     if (!bestMatch) {
+      this.logger.warn(
+        `[FaceService] Sin coincidencia — bestDistance=${bestDistance === Infinity ? 'N/A (sin usuarios)' : bestDistance.toFixed(4)}, umbral=${this.THRESHOLD}, email=${email ?? 'sin email'}`,
+      );
       throw new UnauthorizedException('Rostro no reconocido. Asegurate de haber registrado tu cara en tu perfil.');
     }
 

@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { BiometricAuthService } from '../../services/biometric-auth.service';
 import { LucideIcons } from '../../icons.provider';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 function passwordsMatchValidator(group: AbstractControl): ValidationErrors | null {
   const password = group.get('newPassword')?.value;
@@ -16,7 +17,7 @@ function passwordsMatchValidator(group: AbstractControl): ValidationErrors | nul
 @Component({
     selector: 'app-profile',
     standalone: true,
-    imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, LucideIcons],
+    imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, LucideIcons, TranslatePipe],
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss']
 })

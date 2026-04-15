@@ -1,8 +1,8 @@
 <div class="favorites-page">
     <div class="container">
         <div class="favorites-header">
-            <h1>{{ 'favorites.title' }}</h1>
-            <p *ngIf="favorites.length > 0">{{ 'favorites.count' }}</p>
+            <h1>{{ 'favorites.title' | translate }}</h1>
+            <p *ngIf="favorites.length > 0">{{ 'favorites.count' | translate }}</p>
         </div>
 
         <!-- Skeleton loading -->
@@ -22,11 +22,12 @@
             <div class="favorites-grid" *ngIf="favorites.length > 0; else emptyFavs">
                 <div class="fav-card" *ngFor="let fav of favorites">
                     <div class="fav-image">
-                        <img [src]="fav.product.image_url" [alt]="fav.product.name">
+                        <img [src]="fav.product.image_url" [alt]="fav.product.name"
+                             (error)="$any($event.target).src = 'assets/images/no-image.svg'">
                         <button class="remove-btn"
                             [disabled]="removingId() === fav.product.id"
                             (click)="removeFavorite(fav.product.id)"
-                            [title]="'favorites.remove'">
+                            [title]="'favorites.remove' | translate">
                             @if (removingId() === fav.product.id) {
                                 <lucide-icon name="loader-circle" [size]="16" class="spin"></lucide-icon>
                             } @else {
@@ -39,13 +40,13 @@
                         <h3 routerLink="/busqueda" [queryParams]="{ q: fav.product.name }">{{ fav.product.name }}</h3>
                         <p class="price">{{ fav.product.price | currency:'MXN' }}</p>
 
-                        <button class="btn-maybelline"
+                        <button class="btn btn--primary"
                             [disabled]="fav.product.stock === 0 || addingToCartId() === fav.product.id"
                             (click)="addToCart(fav.product)">
                             @if (addingToCartId() === fav.product.id) {
                                 <lucide-icon name="loader-circle" [size]="16" class="spin"></lucide-icon>
                             } @else {
-                                {{ fav.product.stock > 0 ? ('favorites.add_to_cart') : ('favorites.sold_out') }}
+                                {{ fav.product.stock > 0 ? ('favorites.add_to_cart' | translate) : ('favorites.sold_out' | translate) }}
                             }
                         </button>
                     </div>
@@ -55,19 +56,19 @@
             <ng-template #emptyFavs>
                 <div class="empty-state fade-in">
                     <lucide-icon name="heart" [size]="48"></lucide-icon>
-                    <h2>{{ 'favorites.empty' }}</h2>
-                    <p class="favorites-hint">{{ 'favorites.empty_hint' }}</p>
-                    <button class="btn-maybelline" routerLink="/busqueda">{{ 'favorites.explore' }}</button>
-                    <p class="empty-categories-label">{{ 'favorites.empty_categories_hint' }}</p>
+                    <h2>{{ 'favorites.empty' | translate }}</h2>
+                    <p class="favorites-hint">{{ 'favorites.empty_hint' | translate }}</p>
+                    <button class="btn btn--primary" routerLink="/busqueda">{{ 'favorites.explore' | translate }}</button>
+                    <p class="empty-categories-label">{{ 'favorites.empty_categories_hint' | translate }}</p>
                     <div class="empty-category-chips">
                         <a routerLink="/busqueda" [queryParams]="{ category: 'Labiales' }" class="category-chip">
-                            <lucide-icon name="heart" [size]="14"></lucide-icon> {{ 'categories.lips' }}
+                            <lucide-icon name="heart" [size]="14"></lucide-icon> {{ 'categories.lips' | translate }}
                         </a>
                         <a routerLink="/busqueda" [queryParams]="{ category: 'Ojos' }" class="category-chip">
-                            <lucide-icon name="eye" [size]="14"></lucide-icon> {{ 'categories.eyes' }}
+                            <lucide-icon name="eye" [size]="14"></lucide-icon> {{ 'categories.eyes' | translate }}
                         </a>
                         <a routerLink="/busqueda" [queryParams]="{ category: 'Rostro' }" class="category-chip">
-                            <lucide-icon name="palette" [size]="14"></lucide-icon> {{ 'categories.face' }}
+                            <lucide-icon name="palette" [size]="14"></lucide-icon> {{ 'categories.face' | translate }}
                         </a>
                     </div>
                 </div>

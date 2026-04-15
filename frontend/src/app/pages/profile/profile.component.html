@@ -4,8 +4,8 @@
             <div class="profile-avatar">
                 <lucide-icon name="circle-user" [size]="48"></lucide-icon>
             </div>
-            <h2>{{ 'profile.title' }}</h2>
-            <p>{{ 'profile.subtitle' }}</p>
+            <h2>{{ 'profile.title' | translate }}</h2>
+            <p>{{ 'profile.subtitle' | translate }}</p>
         </div>
 
         <!-- Skeleton while loading initial profile data -->
@@ -34,45 +34,45 @@
         <form *ngIf="!isInitialLoading" [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-form">
             <div class="row">
                 <div class="form-group col">
-                    <label>{{ 'profile.first_name' }}</label>
+                    <label>{{ 'profile.first_name' | translate }}</label>
                     <input type="text" formControlName="firstName">
                 </div>
                 <div class="form-group col">
-                    <label>{{ 'profile.paternal' }}</label>
+                    <label>{{ 'profile.paternal' | translate }}</label>
                     <input type="text" formControlName="apellidoPaterno">
                 </div>
             </div>
 
             <div class="form-group">
-                <label>{{ 'profile.maternal' }}</label>
+                <label>{{ 'profile.maternal' | translate }}</label>
                 <input type="text" formControlName="apellidoMaterno">
             </div>
 
             <div class="form-group">
-                <label>{{ 'profile.email' }}</label>
+                <label>{{ 'profile.email' | translate }}</label>
                 <input type="email" formControlName="email">
             </div>
 
             <div *ngIf="success" class="alert alert-success">{{ success }}</div>
             <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 
-            <button type="submit" class="btn-maybelline" [disabled]="profileForm.invalid || loading">
-                {{ loading ? ('profile.saving') : ('profile.update') }}
+            <button type="submit" class="btn btn--primary" [disabled]="profileForm.invalid || loading">
+                {{ loading ? ('profile.saving' | translate) : ('profile.update' | translate) }}
             </button>
         </form>
 
         <div class="orders-preview mt-4">
-          <h3>{{ 'profile.order_history' }}</h3>
+          <h3>{{ 'profile.order_history' | translate }}</h3>
           <div class="no-orders">
             <lucide-icon name="clock" [size]="36"></lucide-icon>
-            <p>{{ 'profile.order_history_soon' }}</p>
+            <p>{{ 'profile.order_history_soon' | translate }}</p>
           </div>
         </div>
 
         <!-- ── Acceso Biométrico ── -->
         <div class="profile-section">
-            <h3>{{ 'profile.biometric' }}</h3>
-            <p class="section-desc">{{ 'profile.biometric_desc' }}</p>
+            <h3>{{ 'profile.biometric' | translate }}</h3>
+            <p class="section-desc">{{ 'profile.biometric_desc' | translate }}</p>
 
             <div class="biometric-options">
                 <div class="biometric-option" *ngIf="biometric.webAuthnSupported()">
@@ -85,8 +85,8 @@
                             <small>Huella dactilar o Face ID del sistema</small>
                         </div>
                     </div>
-                    <button class="btn-outline" [disabled]="enrollLoading" (click)="enrollPasskey()">
-                        {{ enrollLoading ? 'Registrando...' : 'Registrar Passkey' }}
+                    <button class="btn btn--outline" [disabled]="enrollLoading" (click)="enrollPasskey()">
+                        {{ enrollLoading ? ('profile.registering' | translate) : ('profile.register_passkey' | translate) }}
                     </button>
                 </div>
 
@@ -96,36 +96,36 @@
                           <lucide-icon name="camera" [size]="22"></lucide-icon>
                         </span>
                         <div>
-                            <strong>Reconocimiento Facial</strong>
-                            <small>Tu cámara como segundo factor de login</small>
+                            <strong>{{ 'profile.face_recognition' | translate }}</strong>
+                            <small>{{ 'profile.face_recognition_desc' | translate }}</small>
                         </div>
                     </div>
                     <button
-                        class="btn-outline"
+                        class="btn btn--outline"
                         [disabled]="enrollLoading || enrollMode === 'face'"
                         (click)="startFaceEnroll()">
-                        Registrar Rostro
+                        {{ 'profile.register_face' | translate }}
                     </button>
                 </div>
             </div>
 
             <div *ngIf="enrollMode === 'face'" class="enroll-camera">
-                <p>Mira de frente a la cámara y pulsa <strong>Guardar rostro</strong>.</p>
+                <p>{{ 'profile.face_enroll_hint' | translate }}</p>
                 <video #enrollVideo autoplay muted playsinline class="face-video"></video>
                 <div class="face-actions">
                     <button
-                        class="btn-maybelline"
+                        class="btn btn--primary"
                         [disabled]="!biometric.cameraActive() || enrollLoading"
                         (click)="saveFace()">
-                        {{ enrollLoading ? 'Guardando...' : 'Guardar rostro' }}
+                        {{ enrollLoading ? ('profile.saving_face' | translate) : ('profile.save_face' | translate) }}
                     </button>
-                    <button class="btn-ghost" (click)="cancelEnroll()">{{ 'common.cancel' }}</button>
+                    <button class="btn btn--ghost" (click)="cancelEnroll()">{{ 'common.cancel' | translate }}</button>
                 </div>
             </div>
 
             <p *ngIf="enrollMsg"
                class="enroll-msg"
-               [style.color]="enrollMsg.startsWith('✓') ? 'green' : 'var(--primary-color)'">
+               [style.color]="enrollMsg.startsWith('✓') ? 'var(--success)' : 'var(--primary)'">
                 {{ enrollMsg }}
             </p>
         </div>

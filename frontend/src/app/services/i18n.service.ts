@@ -14,17 +14,18 @@ export const LANGUAGES: LangOption[] = [
   { code: 'en', label: 'English',    flag: '🇺🇸' },
   { code: 'fr', label: 'Français',   flag: '🇫🇷' },
   { code: 'pt', label: 'Português',  flag: '🇧🇷' },
-  { code: 'ja', label: '日本語',      flag: '🇯��' },
-  { code: 'de', label: 'Deutsch',    flag: '���🇪' },
+  { code: 'ja', label: '日本語',      flag: '🇯🇵' },
+  { code: 'de', label: 'Deutsch',    flag: '🇩🇪' },
   { code: 'ru', label: 'Русский',    flag: '🇷🇺' },
-  { code: 'ko', label: '한국어',      flag: '🇰����' },
+  { code: 'ko', label: '한국어',      flag: '🇰🇷' },
 ];
 
 @Injectable({ providedIn: 'root' })
 export class I18nService {
   lang = signal<Lang>(this.getSavedLang());
   private translations: Record<string, string> = {};
-  private loaded = signal(false);
+  /** Se incrementa cada vez que se carga un idioma; obliga al TranslatePipe (pure: false) a re-evaluarse. */
+  private loaded = signal(0);
 
   constructor(private http: HttpClient) {
     this.loadLang(this.lang());
@@ -41,16 +42,32 @@ export class I18nService {
     this.loadLang(lang);
   }
 
+  /**
+   * Construye la URL absoluta del JSON de idioma.
+   * Usa document.baseURI para obtener la raíz real del sitio,
+   * evitando que rutas localizadas como /es/carrito/ rompan la carga.
+   */
+  private resolveAssetUrl(lang: Lang): string {
+    // document.baseURI ej: "https://mi-app.vercel.app/" o "http://localhost:4200/"
+    const base = document.baseURI.endsWith('/') ? document.baseURI : document.baseURI + '/';
+    return `${base}assets/i18n/${lang}.json`;
+  }
+
   private loadLang(lang: Lang) {
-    this.http.get<Record<string, string>>(`assets/i18n/${lang}.json`).subscribe({
+    const url = this.resolveAssetUrl(lang);
+    this.http.get<Record<string, string>>(url).subscribe({
       next: (data) => {
         this.translations = data;
-        this.loaded.set(true);
+        this.loaded.update(v => v + 1);
       },
       error: () => {
         if (lang !== 'es') {
-          this.http.get<Record<string, string>>('assets/i18n/es.json').subscribe({
-            next: (data) => { this.translations = data; this.loaded.set(true); },
+          // Fallback a español
+          this.http.get<Record<string, string>>(this.resolveAssetUrl('es')).subscribe({
+            next: (data) => {
+              this.translations = data;
+              this.loaded.update(v => v + 1);
+            },
           });
         }
       },
@@ -58,6 +75,8 @@ export class I18nService {
   }
 
   t(key: string, params?: Record<string, string | number>): string {
+    // Leer loaded() para que el pipe detecte el cambio de señal
+    this.loaded();
     let text = this.translations[key] ?? key;
     if (params) {
       Object.entries(params).forEach(([k, v]) => {

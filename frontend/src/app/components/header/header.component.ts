@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
@@ -6,13 +6,15 @@ import { SearchComponent } from '../search/search.component';
 import { AuthService } from '../../services/auth.service';
 import { CartService } from '../../services/cart.service';
 import { FavoritesService } from '../../services/favorites.service';
-import { ThemeService, THEME_OPTIONS } from '../../services/theme.service'; // Removed Theme type import
+import { ThemeService, THEME_OPTIONS } from '../../services/theme.service';
+import { I18nService, Lang } from '../../services/i18n.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, SearchComponent, LucideAngularModule],
+  imports: [CommonModule, FormsModule, RouterModule, SearchComponent, LucideAngularModule, TranslatePipe],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
@@ -22,6 +24,7 @@ export class HeaderComponent {
   favoritesService = inject(FavoritesService);
   router         = inject(Router);
   themeService   = inject(ThemeService);
+  i18n           = inject(I18nService);
 
   readonly modeThemes = THEME_OPTIONS.filter(t => t.group === 'mode');
   readonly a11yThemes = THEME_OPTIONS.filter(t => t.group === 'colorblind');
@@ -64,48 +67,37 @@ export class HeaderComponent {
     this.mobileMenuOpen.set(false);
   }
 
-  // ── Language switcher ─────────────────────────────────────────────────────
+  // ── Language switcher (I18n nativo) ──────────────────────────────────────
   get currentLocale(): string {
-    return document.documentElement.lang?.split('-')[0] || 'en';
+    return this.i18n.lang();
   }
 
   readonly languages = [
-    { code: 'en', label: 'EN', name: 'English' },
-    { code: 'es', label: 'ES', name: 'Español' },
-    { code: 'de', label: 'DE', name: 'Deutsch' },
-    { code: 'fr', label: 'FR', name: 'Français' },
-    { code: 'hi', label: 'HI', name: 'हिन्दी' },
-    { code: 'ja', label: 'JA', name: '日本語' },
-    { code: 'ko', label: 'KO', name: '한국어' },
-    { code: 'pt', label: 'PT', name: 'Português' },
-    { code: 'ru', label: 'RU', name: 'Русский' },
-    { code: 'zh', label: 'ZH', name: '中文' },
+    { code: 'es' as Lang, label: 'ES', name: 'Español' },
+    { code: 'en' as Lang, label: 'EN', name: 'English' },
+    { code: 'de' as Lang, label: 'DE', name: 'Deutsch' },
+    { code: 'fr' as Lang, label: 'FR', name: 'Français' },
+    { code: 'ja' as Lang, label: 'JA', name: '日本語' },
+    { code: 'ko' as Lang, label: 'KO', name: '한국어' },
+    { code: 'pt' as Lang, label: 'PT', name: 'Português' },
+    { code: 'ru' as Lang, label: 'RU', name: 'Русский' },
   ];
 
   switchLanguage(locale: string): void {
-    if (this.currentLocale === locale) return;
-    // In production Angular i18n, each locale is served from /<locale>/ base path
-    const localePattern = /^\/(en|es|de|fr|hi|ja|ko|pt|ru|zh)(\/|$)/;
-    const currentPath = window.location.pathname;
-    if (localePattern.test(currentPath)) {
-      window.location.href = currentPath.replace(localePattern, `/${locale}/`);
-    } else {
-      // Development: store preference and reload
-      localStorage.setItem('preferred-locale', locale);
-      window.location.reload();
-    }
+    this.i18n.setLang(locale as Lang);
   }
 
-  navItems = [
-    { label: 'Catalog', link: '/busqueda', icon: 'grid-2x2' }, // Static string
-    { label: 'Lipsticks', link: '/busqueda', queryParams: { category: 'Labiales' }, icon: 'heart' }, // Static string
-    { label: 'Face', link: '/busqueda', queryParams: { category: 'Rostro' }, icon: 'palette' }, // Static string
-    { label: 'Eyes', link: '/busqueda', queryParams: { category: 'Ojos' }, icon: 'eye' }, // Static string
-    { label: 'Nails', link: '/busqueda', queryParams: { category: 'Uñas' }, icon: 'sparkles' }, // Static string
-    { label: 'Hairstyles', link: '/peinados', icon: 'scissors' }, // Static string
-    { label: 'Nail Designs', link: '/disenos-unas', icon: 'flower-2' }, // Static string
-    { label: 'Offers', link: '/busqueda', queryParams: { sortBy: 'price', order: 'ASC' }, icon: 'tag' } // Static string
-  ];
+  /** navItems como computed signal: se recalcula automáticamente al cambiar el idioma */
+  navItems = computed(() => [
+    { label: this.i18n.t('nav.catalog'),      link: '/busqueda', icon: 'grid-2x2' },
+    { label: this.i18n.t('nav.lips'),         link: '/busqueda', queryParams: { category: 'Labiales' }, icon: 'heart' },
+    { label: this.i18n.t('nav.face'),         link: '/busqueda', queryParams: { category: 'Rostro' }, icon: 'palette' },
+    { label: this.i18n.t('nav.eyes'),         link: '/busqueda', queryParams: { category: 'Ojos' }, icon: 'eye' },
+    { label: this.i18n.t('nav.nails'),        link: '/busqueda', queryParams: { category: 'Uñas' }, icon: 'sparkles' },
+    { label: this.i18n.t('nav.hairstyles'),   link: '/peinados', icon: 'scissors' },
+    { label: this.i18n.t('nav.nail_designs'), link: '/disenos-unas', icon: 'flower-2' },
+    { label: this.i18n.t('nav.offers'),       link: '/busqueda', queryParams: { sortBy: 'price', order: 'ASC' }, icon: 'tag' },
+  ]);
 
   onSearch(searchTerm: string) {
     if (searchTerm.trim()) {

@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 const SAFE_PROTOCOLS = ['http:', 'https:'];
-const DEFAULT_PLACEHOLDER = 'assets/images/product-placeholder.jpg';
+const DEFAULT_PLACEHOLDER = 'assets/images/no-image.svg';
 
 /**
  * Validates image URLs to prevent javascript: and data: protocol injection.

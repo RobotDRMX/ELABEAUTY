@@ -81,6 +81,12 @@
   --text-primary: hsl(var(--h), 10%, 10%);
   --text-secondary: hsl(var(--h), 5%, 50%);
   --background: #ffffff;
+
+  /* --- Compatibility Aliases (cart/checkout/favorites) --- */
+  --surface-1: var(--surface);
+  --surface-2: var(--surface-low);
+  --border-color: var(--border);
+  --primary-color: var(--primary);
 }
 
 /* ═══════════════════════════════════════════════════

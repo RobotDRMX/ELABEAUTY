@@ -7,6 +7,8 @@ import { CartService } from '../../services/cart.service';
 import { NotificationService } from '../../services/notification.service';
 import { TruncatePipe } from '../../pipes/truncate.pipe';
 import { SafeImagePipe } from '../../pipes/safe-image.pipe';
+import { TranslatePipe } from '../../pipes/translate.pipe';
+import { I18nService } from '../../services/i18n.service';
 
 type CheckoutStep = 'address' | 'payment' | 'review' | 'success';
 type PaymentMethod = 'card' | 'transfer' | 'paypal' | 'cash' | 'oxxo';
@@ -14,13 +16,14 @@ type PaymentMethod = 'card' | 'transfer' | 'paypal' | 'cash' | 'oxxo';
 @Component({
     selector: 'app-cart',
     standalone: true,
-    imports: [CommonModule, RouterModule, FormsModule, LucideAngularModule, TruncatePipe, SafeImagePipe],
+    imports: [CommonModule, RouterModule, FormsModule, LucideAngularModule, TruncatePipe, SafeImagePipe, TranslatePipe],
     templateUrl: './cart.component.html',
     styleUrls: ['./cart.component.scss']
 })
 export class CartComponent {
     cartService = inject(CartService);
     private notif = inject(NotificationService);
+    private i18n = inject(I18nService);
 
     updatingId = signal<number | null>(null);
     showCheckout = signal(false);
@@ -67,9 +70,9 @@ export class CartComponent {
     async updateQuantity(productId: number, quantity: number) {
         if (quantity === 0) {
             const confirmed = await this.notif.confirm(
-                'Remove Item',
-                'Are you sure you want to remove this item from your cart?',
-                { confirmText: 'Delete', cancelText: 'Cancel', danger: true }
+                this.i18n.t('cart.remove_confirm_title'),
+                this.i18n.t('cart.remove_confirm_msg'),
+                { confirmText: this.i18n.t('common.delete'), cancelText: this.i18n.t('common.cancel'), danger: true }
             );
             if (!confirmed) return;
             this.updatingId.set(productId);
@@ -88,9 +91,9 @@ export class CartComponent {
 
     async clearCart() {
         const ok = await this.notif.confirm(
-            'Empty Cart?',
-            'All items will be removed from your cart.',
-            { confirmText: 'Empty', cancelText: 'Cancel', danger: true }
+            this.i18n.t('cart.clear_confirm_title'),
+            this.i18n.t('cart.clear_confirm_msg'),
+            { confirmText: this.i18n.t('cart.clear_confirm_yes'), cancelText: this.i18n.t('common.cancel'), danger: true }
         );
         if (ok) this.cartService.clearCart();
     }
@@ -161,11 +164,11 @@ export class CartComponent {
 
     paymentLabel(): string {
         const map: Record<PaymentMethod, string> = {
-            card: 'Credit/Debit Card',
-            transfer: 'Bank Transfer',
+            card: this.i18n.t('checkout.card_option'),
+            transfer: this.i18n.t('checkout.transfer_option'),
             paypal: 'PayPal',
-            cash: 'Cash on Delivery',
-            oxxo: 'OXXO Pay'
+            cash: this.i18n.t('checkout.cash_option'),
+            oxxo: this.i18n.t('checkout.oxxo_option')
         };
         return map[this.paymentMethod()];
     }
