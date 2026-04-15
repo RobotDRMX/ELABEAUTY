@@ -1,4 +1,8 @@
 // frontend/src/app/pages/admin/layout/admin-layout.component.scss
+// Uses design system tokens defined in styles.scss
+
+$sidebar-accent: hsl(var(--primary-h, 0), var(--primary-s, 35%), calc(var(--primary-l, 74%) - 30%));
+
 .admin-shell {
   display: flex;
   min-height: 100vh;
@@ -6,10 +10,10 @@
   align-items: flex-start;
 }
 
-/* ── SIDEBAR ── */
+/* ── SIDEBAR — 260px, always dark ── */
 .admin-sidebar {
-  width: 240px;
-  background: #111111;
+  width: 260px;
+  background: #0f0f0f;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -18,34 +22,33 @@
   height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
-  transition: background 0.3s;
+  transition: background 0.3s var(--ease-silk);
 
-  // Scrollbar minimalista dentro del sidebar
-  &::-webkit-scrollbar { width: 4px; }
+  &::-webkit-scrollbar { width: 3px; }
   &::-webkit-scrollbar-track { background: transparent; }
-  &::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+  &::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 2px; }
 }
 
 .sidebar-logo-wordmark {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 3px;
-  padding: 20px 20px 16px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  gap: 4px;
+  padding: 22px 22px 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
   text-decoration: none;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: opacity 0.25s var(--ease-silk);
 
-  &:hover { opacity: 0.8; }
+  &:hover { opacity: 0.75; }
 }
 
 .sidebar-logo-ela {
   font-family: var(--font-heading);
-  font-size: 1.5rem;
+  font-size: 1.45rem;
   font-weight: 900;
   color: #ffffff;
-  letter-spacing: 5px;
+  letter-spacing: 6px;
   line-height: 1;
   text-transform: uppercase;
 }
@@ -54,34 +57,36 @@
   display: block;
   width: 100%;
   height: 2px;
-  background: #e6007e;
+  background: var(--primary, #c49a9a);
   border-radius: 1px;
 }
 
 .sidebar-logo-beauty {
   font-family: var(--font-heading);
-  font-size: 0.45rem;
-  font-weight: 400;
-  color: rgba(255,255,255,0.45);
-  letter-spacing: 8px;
+  font-size: 0.44rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 9px;
   text-transform: uppercase;
   line-height: 1;
 }
 
 .sidebar-nav {
   flex: 1;
-  padding: 10px 0;
+  padding: 12px 0;
 }
 
 .sidebar-link {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 11px 20px;
-  color: #cccccc;
+  gap: 11px;
+  padding: 11px 22px;
+  color: rgba(255,255,255,0.55);
   text-decoration: none;
-  font-size: 14px;
-  transition: background 0.2s, color 0.2s, border-left-color 0.2s;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 400;
+  transition: background 0.2s var(--ease-silk), color 0.2s, border-left-color 0.2s;
   border-left: 3px solid transparent;
   cursor: pointer;
   width: 100%;
@@ -90,52 +95,56 @@
   border-right: none;
   border-bottom: none;
   text-align: left;
+  letter-spacing: 0.01em;
 
-  i { width: 16px; text-align: center; flex-shrink: 0; }
+  lucide-icon { flex-shrink: 0; opacity: 0.7; }
 
   &:hover {
-    background: rgba(255,255,255,0.07);
-    color: #ffffff;
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.9);
+    lucide-icon { opacity: 1; }
   }
 
   &.active {
-    background: rgba(230, 0, 126, 0.1);
-    border-left-color: #e6007e;
-    color: #e6007e;
+    background: hsla(var(--primary-h, 0), var(--primary-s, 35%), 60%, 0.12);
+    border-left-color: var(--primary, #c49a9a);
+    color: var(--primary-light, #e0bfbf);
     font-weight: 600;
+    lucide-icon { opacity: 1; }
   }
 
   &--catalog {
-    color: #aaaaaa;
-    &:hover { color: #e6007e; }
+    color: rgba(255,255,255,0.4);
+    &:hover { color: var(--primary-light, #e0bfbf); }
   }
 
   &--logout {
-    color: #888;
-    font-size: 14px;
-    &:hover { color: #ff6b6b; background: rgba(255,107,107,0.08); }
+    color: rgba(255,255,255,0.35);
+    &:hover { color: #ff7b7b; background: rgba(255,107,107,0.07); }
   }
 }
 
 /* ── SIDEBAR FOOTER ── */
 .sidebar-footer {
-  padding: 10px 0 6px;
-  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 10px 0 8px;
+  border-top: 1px solid rgba(255,255,255,0.07);
 }
 
 /* ── THEME SWITCHER ── */
 .theme-switcher {
-  padding: 10px 20px 8px;
+  padding: 10px 22px 10px;
 }
 
 .theme-label {
-  display: block;
-  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-heading);
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: #666;
-  margin-bottom: 8px;
-  i { margin-right: 5px; }
+  letter-spacing: 1.2px;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 9px;
 }
 
 .theme-buttons {
@@ -145,52 +154,55 @@
 
 .theme-btn {
   flex: 1;
-  padding: 7px 0;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 6px;
-  color: #888;
-  font-size: 13px;
+  padding: 8px 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 7px;
+  color: rgba(255,255,255,0.45);
   cursor: pointer;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  transition: background 0.2s var(--ease-silk), color 0.2s, border-color 0.2s;
+  display: flex; align-items: center; justify-content: center;
 
   &:hover {
-    background: rgba(255,255,255,0.12);
-    color: #fff;
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.9);
+    border-color: rgba(255,255,255,0.2);
   }
 
   &.active {
-    background: rgba(230, 0, 126, 0.2);
-    border-color: #e6007e;
-    color: #e6007e;
+    background: hsla(var(--primary-h, 0), var(--primary-s, 35%), 60%, 0.18);
+    border-color: var(--primary, #c49a9a);
+    color: var(--primary-light, #e0bfbf);
   }
 }
 
 .theme-a11y-select {
   width: 100%;
-  margin-top: 6px;
-  padding: 6px 8px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 6px;
-  color: #888;
+  margin-top: 7px;
+  padding: 7px 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 7px;
+  color: rgba(255,255,255,0.45);
+  font-family: var(--font-body);
   font-size: 12px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  transition: background 0.2s var(--ease-silk), color 0.2s, border-color 0.2s;
+  appearance: none;
 
   &:hover {
-    background: rgba(255,255,255,0.12);
-    color: #fff;
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.9);
   }
 
   &.active {
-    background: rgba(230, 0, 126, 0.2);
-    border-color: #e6007e;
-    color: #e6007e;
+    background: hsla(var(--primary-h, 0), var(--primary-s, 35%), 60%, 0.18);
+    border-color: var(--primary, #c49a9a);
+    color: var(--primary-light, #e0bfbf);
   }
 
   option {
-    background: #1a1a1a;
+    background: #1c1c1c;
     color: #ccc;
   }
 }
@@ -202,48 +214,51 @@
   flex-direction: column;
   min-width: 0;
   min-height: 100vh;
-  background: var(--gray-100, #f5f5f5);
-  transition: background 0.3s;
+  background: var(--gray-100);
+  transition: background 0.4s var(--ease-silk);
 }
 
-/* ── TOPBAR ── */
+/* ── TOPBAR — 56px height ── */
 .admin-topbar {
-  background: var(--background, #ffffff);
-  padding: 14px 28px;
+  background: var(--background);
+  height: 56px;
+  padding: 0 28px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid var(--gray-300, #e0e0e0);
+  border-bottom: 1px solid var(--gray-300);
   box-shadow: var(--shadow-sm);
   position: sticky;
   top: 0;
   z-index: 10;
-  transition: background 0.3s, border-color 0.3s;
+  transition: background 0.4s var(--ease-silk), border-color 0.4s;
 
   &-title {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 9px;
     font-family: var(--font-heading);
     font-weight: 700;
-    font-size: 15px;
-    color: var(--text-primary, #111);
-    svg { color: #e6007e; flex-shrink: 0; }
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    color: var(--text-primary);
+    svg { color: var(--primary, #c49a9a); flex-shrink: 0; }
   }
 
   &-right {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
   }
 
   &-user {
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 14px;
-    color: var(--text-secondary, #666);
-    svg { color: #e6007e; flex-shrink: 0; }
+    gap: 7px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--text-secondary);
+    svg { color: var(--primary, #c49a9a); flex-shrink: 0; }
   }
 }
 

@@ -2,55 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 
+/*
   ============================================================
-  ELA BEAUTY — DESIGN SYSTEM 3.0 (Absolute Zero)
-  Senior Frontend Architecture | HSL Based
+  ELA BEAUTY — DESIGN SYSTEM 4.0
+  Senior Frontend Architecture | HSL Based | Montserrat + Open Sans
   ============================================================
 */
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 :root {
   /* --- HSL Color Matrix --- */
   --h: 0;      /* Global Hue (Neutral) */
   --s: 30%;    /* Global Saturation */
-  
+
   /* --- Theme Tokens (Default: Light) --- */
   --bg: hsl(var(--h), 20%, 98%);
   --surface: hsl(0, 0%, 100%);
   --surface-low: hsl(var(--h), 15%, 96%);
   --border: hsl(var(--h), 10%, 90%);
-  
+
   /* --- Brand Tokens --- */
   --primary-h: 0;
   --primary-s: 35%;
   --primary-l: 74%; /* Dusty Rose Base */
-  
+
   --primary: hsl(var(--primary-h), var(--primary-s), var(--primary-l));
   --primary-dark: hsl(var(--primary-h), var(--primary-s), calc(var(--primary-l) - 15%));
   --primary-faded: hsla(var(--primary-h), var(--primary-s), var(--primary-l), 0.15);
-  
+
   /* --- Typography & Contrast --- */
   --text-main: hsl(var(--h), 10%, 15%);
   --text-muted: hsl(var(--h), 10%, 45%);
   --heading: var(--text-main);
-  
+
   /* --- Functional --- */
   --success: hsl(150, 40%, 35%);
   --error: hsl(0, 60%, 45%);
   --z-header: 1000;
   --z-overlay: 2000;
 
-  /* --- Motion --- */
+  /* --- Motion (cubic-bezier premium) --- */
   --ease-silk: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-in-expo: cubic-bezier(0.7, 0, 0.84, 0);
   --trans-silk: 0.8s var(--ease-silk);
   --trans-fast: 0.3s var(--ease-silk);
+  --trans-bounce: 0.45s var(--ease-bounce);
 
   /* --- Extended Brand Tokens --- */
   --primary-light: hsl(var(--primary-h), var(--primary-s), calc(var(--primary-l) + 12%));
   --surface-dim: hsl(var(--h), 15%, 95%);
-  --font-serif: 'Playfair Display', serif;
+  --font-serif: 'Montserrat', sans-serif;            /* legacy alias kept for compatibility */
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Open Sans', sans-serif;
   --footer-bg: hsl(var(--h), 8%, 10%); /* Fixed dark footer — intentionally theme-independent */
 
   /* --- Scale: Spacing & Shadows --- */
@@ -59,7 +64,8 @@
   --shadow-lg: 0 25px 60px rgba(0,0,0,0.12);
   --shadow-silk: 0 20px 40px -10px rgba(0,0,0,0.05);
   --shadow-intense: 0 30px 60px -12px rgba(0,0,0,0.1);
-  
+  --shadow-pink: 0 15px 35px -10px hsla(var(--primary-h), var(--primary-s), var(--primary-l), 0.45);
+
   /* --- Fluid Typography (Senior Technique) --- */
   --fs-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.8rem);
   --fs-sm: clamp(0.85rem, 0.8rem + 0.3vw, 0.95rem);
@@ -67,6 +73,14 @@
   --fs-lg: clamp(1.2rem, 1.1rem + 0.6vw, 1.5rem);
   --fs-xl: clamp(2rem, 1.8rem + 1.5vw, 3.5rem);
   --fs-display: clamp(3rem, 2.5rem + 4vw, 6rem);
+
+  /* --- Admin Gray Scale (used by admin panels) --- */
+  --gray-100: #f5f5f5;
+  --gray-200: #ebebeb;
+  --gray-300: #d9d9d9;
+  --text-primary: hsl(var(--h), 10%, 10%);
+  --text-secondary: hsl(var(--h), 5%, 50%);
+  --background: #ffffff;
 }
 
 /* ═══════════════════════════════════════════════════
@@ -82,16 +96,23 @@
   --text-main: hsl(var(--h), 5%, 90%);
   --text-muted: hsl(var(--h), 5%, 65%);
   --primary-l: 85%;
+  /* admin overrides for dark mode */
+  --gray-100: hsl(0, 5%, 10%);
+  --gray-200: hsl(0, 5%, 15%);
+  --gray-300: hsl(0, 5%, 22%);
+  --text-primary: hsl(0, 5%, 90%);
+  --text-secondary: hsl(0, 5%, 55%);
+  --background: hsl(0, 5%, 12%);
 }
 
-/* Colorblind: Shift Hue mathematically */
-[data-theme="protanopia"]    { --primary-h: 210; }
-[data-theme="deuteranopia"]  { --primary-h: 200; }
-[data-theme="tritanopia"]    { --primary-h: 340; }
-[data-theme="protanomaly"]   { --primary-h: 205; }
-[data-theme="deuteranomaly"] { --primary-h: 195; }
-[data-theme="tritanomaly"]   { --primary-h: 350; }
-[data-theme="achromatopsia"] { --primary-s: 0%; --text-main: #000; --bg: #fff; }
+/* Colorblind: Shift Hue + Saturation for genuine accessibility */
+[data-theme="protanopia"]    { --primary-h: 210; --primary-s: 60%; }
+[data-theme="deuteranopia"]  { --primary-h: 210; --primary-s: 100%; --primary-l: 40%; } /* ≈ #0077cc */
+[data-theme="tritanopia"]    { --primary-h: 340; --primary-s: 55%; }
+[data-theme="protanomaly"]   { --primary-h: 205; --primary-s: 55%; }
+[data-theme="deuteranomaly"] { --primary-h: 210; --primary-s: 70%; --primary-l: 48%; }
+[data-theme="tritanomaly"]   { --primary-h: 350; --primary-s: 50%; }
+[data-theme="achromatopsia"] { --primary-s: 0%; --text-main: #111; --bg: #fafafa; }
 
 /* ═══════════════════════════════════════════════════
    BASE LAYER (Reset & Sanitize)
@@ -102,7 +123,7 @@
 html { scroll-behavior: smooth; font-size: 16px; }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   background-color: var(--bg);
   color: var(--text-main);
   line-height: 1.7;
@@ -110,8 +131,14 @@ body {
   transition: background-color 0.5s var(--ease-silk), color 0.5s var(--ease-silk);
 }
 
-/* Typography Editorial */
-h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 400; color: var(--heading); }
+/* Typography — Montserrat 900 for all headings */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  color: var(--heading);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
 
 /* Centering Engine */
 .container {
@@ -122,48 +149,97 @@ h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 400; color
 }
 
 /* ═══════════════════════════════════════════════════
-   MASTER COMPONENTS (Primitives)
+   MASTER COMPONENTS (Primitives) — 4 button variants
    ═══════════════════════════════════════════════════ */
 
 /* Base Button */
 .btn {
-  display: inline-flex; align-items: center; justify-content: center;
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
   padding: 0.9rem 2.5rem; border-radius: 60px;
-  font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em;
-  cursor: pointer; transition: all var(--trans-fast); text-decoration: none;
-  border: 1px solid transparent; font-family: inherit;
+  font-family: var(--font-heading); font-size: var(--fs-xs); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.2em;
+  cursor: pointer; transition: all var(--trans-bounce); text-decoration: none;
+  border: 1.5px solid transparent;
 }
 
-/* Elite Button */
+/* Elite Button (hero / CTA) */
 .btn-elite {
-  display: inline-flex; align-items: center; justify-content: center;
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
   padding: 1.2rem 3.5rem; border-radius: 60px;
-  font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.3em;
-  cursor: pointer; transition: all var(--trans-fast); text-decoration: none;
-  border: 1px solid transparent;
+  font-family: var(--font-heading); font-size: var(--fs-xs); font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.3em;
+  cursor: pointer; transition: all var(--trans-bounce); text-decoration: none;
+  border: 1.5px solid transparent;
 }
 
+/* Variant 1: Primary — brand pink fill */
 .btn-primary {
   background: var(--primary); color: #fff;
-  box-shadow: 0 15px 30px -10px hsla(var(--primary-h), var(--primary-s), var(--primary-l), 0.4);
-  &:hover { transform: translateY(-5px); background: var(--primary-dark); box-shadow: 0 25px 50px -15px hsla(var(--primary-h), var(--primary-s), var(--primary-l), 0.6); }
+  box-shadow: var(--shadow-pink);
+  &:hover {
+    transform: translateY(-4px) scale(1.02);
+    background: var(--primary-dark);
+    box-shadow: 0 25px 50px -15px hsla(var(--primary-h), var(--primary-s), var(--primary-l), 0.6);
+  }
+  &:active { transform: translateY(-1px) scale(0.99); }
 }
 
+/* Variant 2: Secondary — dark solid */
+.btn-secondary {
+  background: var(--text-main); color: var(--bg);
+  box-shadow: var(--shadow-md);
+  &:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: var(--shadow-lg);
+    opacity: 0.88;
+  }
+  &:active { transform: translateY(-1px) scale(0.99); }
+}
+
+/* Variant 3: Outline — transparent bordered */
 .btn-outline {
   background: transparent; color: var(--text-main); border-color: var(--border);
-  &:hover { border-color: var(--primary); background: var(--surface-low); transform: translateY(-2px); }
+  &:hover {
+    border-color: var(--primary);
+    background: var(--surface-low);
+    transform: translateY(-3px);
+    color: var(--primary-dark);
+  }
+}
+
+/* Variant 4: Ghost — text only, no border */
+.btn-ghost {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.9rem 2rem; border-radius: 60px;
+  font-family: var(--font-heading); font-size: var(--fs-xs); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  cursor: pointer; transition: all var(--trans-fast); text-decoration: none;
+  background: transparent; border: none; color: var(--text-muted);
+  &:hover {
+    color: var(--primary-dark);
+    background: var(--primary-faded);
+  }
 }
 
 /* Section Header */
 .section-header {
   margin-bottom: 6rem; text-align: center;
-  .eyebrow { display: block; font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.4em; text-transform: uppercase; color: var(--primary); margin-bottom: 1.5rem; }
-  .title { font-size: var(--fs-xl); }
+  .eyebrow {
+    display: block; font-family: var(--font-heading);
+    font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.4em;
+    text-transform: uppercase; color: var(--primary); margin-bottom: 1.5rem;
+  }
+  .title { font-size: var(--fs-xl); font-family: var(--font-heading); font-weight: 900; }
 }
 
 /* Animation Hooks */
-.reveal { opacity: 0; transform: translateY(30px); transition: all var(--trans-silk); }
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity var(--trans-silk), transform var(--trans-silk); }
 .reveal.active { opacity: 1; transform: translateY(0); }
+
+/* Staggered reveal delays */
+@for $i from 1 through 8 {
+  .reveal-delay-#{$i} { transition-delay: #{$i * 0.1}s; }
+}
 
 /* Global Utilities */
 .text-center { text-align: center; }
@@ -173,17 +249,51 @@ h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 400; color
 /* Fade-in utility */
 .fade-in { animation: fadeInUp 0.6s var(--ease-silk) both; }
 
+/* Scale-in utility */
+.scale-in { animation: scaleIn 0.5s var(--ease-bounce) both; }
+
+/* ═══════════════════════════════════════════════════
+   SKELETON LOADERS
+   ═══════════════════════════════════════════════════ */
+
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg,
+    var(--surface-low) 25%,
+    var(--surface-dim) 50%,
+    var(--surface-low) 75%
+  );
+  background-size: 600px 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+  border-radius: 6px;
+}
+
+.skeleton-text   { height: 0.9em; width: 80%; border-radius: 4px; }
+.skeleton-text-sm { height: 0.75em; width: 55%; border-radius: 4px; }
+.skeleton-circle { border-radius: 50%; }
+.skeleton-btn    { height: 36px; width: 90px; border-radius: 6px; }
+
+/* Skeleton table row */
+.skeleton-row td {
+  padding: 14px 16px;
+  .skeleton { display: block; }
+}
+
 /* ═══════════════════════════════════════════════════
    KEYFRAME ANIMATIONS
    ═══════════════════════════════════════════════════ */
 
 @keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.96) translateY(12px); }
+  from { opacity: 0; transform: scale(0.94) translateY(16px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
@@ -201,4 +311,9 @@ h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 400; color
   0%, 100% { transform: translateY(0px) rotate(0deg); }
   33%       { transform: translateY(-20px) rotate(2deg); }
   66%       { transform: translateY(10px) rotate(-1deg); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.6; }
 }

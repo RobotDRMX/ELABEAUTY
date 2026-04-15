@@ -10,13 +10,23 @@
     </div>
   </div>
 
-  @if (loading()) { <div class="loading">Cargando...</div> }
-  @else {
-    <table class="admin-table">
-      <thead>
-        <tr><th>Nombre</th><th>Estilo</th><th>Duración</th><th>Precio</th><th>Estado</th><th>Acciones</th></tr>
-      </thead>
-      <tbody>
+  <table class="admin-table">
+    <thead>
+      <tr><th>Nombre</th><th>Estilo</th><th>Duración</th><th>Precio</th><th>Estado</th><th>Acciones</th></tr>
+    </thead>
+    <tbody>
+      @if (loading()) {
+        @for (_ of [1,2,3,4,5]; track $index) {
+          <tr class="skeleton-row">
+            <td><span class="skeleton-cell skeleton-cell--md"></span></td>
+            <td><span class="skeleton-cell skeleton-cell--sm"></span></td>
+            <td><span class="skeleton-cell skeleton-cell--sm"></span></td>
+            <td><span class="skeleton-cell skeleton-cell--sm"></span></td>
+            <td><span class="skeleton-cell skeleton-cell--sm"></span></td>
+            <td><span class="skeleton-cell" style="width:55px"></span></td>
+          </tr>
+        }
+      } @else {
         @for (item of items(); track item.id) {
           <tr>
             <td>{{ item.name }}</td>
@@ -39,15 +49,15 @@
             </td>
           </tr>
         }
-      </tbody>
-    </table>
+      }
+    </tbody>
+  </table>
 
-    <div class="pagination">
-      <button class="btn btn--outline" [disabled]="currentPage() === 1" (click)="prevPage()">← Anterior</button>
-      <span>Página {{ currentPage() }} de {{ totalPages() }}</span>
-      <button class="btn btn--outline" [disabled]="currentPage() === totalPages()" (click)="nextPage()">Siguiente →</button>
-    </div>
-  }
+  <div class="pagination">
+    <button class="btn btn--outline" [disabled]="currentPage() === 1" (click)="prevPage()">← Anterior</button>
+    <span>Página {{ currentPage() }} de {{ totalPages() }}</span>
+    <button class="btn btn--outline" [disabled]="currentPage() === totalPages()" (click)="nextPage()">Siguiente →</button>
+  </div>
 </div>
 
 @if (showModal()) {

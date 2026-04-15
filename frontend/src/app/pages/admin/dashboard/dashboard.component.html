@@ -2,48 +2,58 @@
 <div class="dashboard">
   <h2 class="dashboard-title">Dashboard</h2>
 
-  @if (loading()) {
-    <div class="loading">Cargando...</div>
-  } @else {
-    <div class="cards-grid">
+  <!-- STAT CARDS: skeleton mientras carga -->
+  <div class="cards-grid">
+    @if (loading()) {
+      @for (_ of [1,2,3,4,5]; track $index) {
+        <div class="stat-card stat-card--skeleton">
+          <div class="stat-card__icon skeleton-cell skeleton-cell--icon"></div>
+          <div class="stat-card__info">
+            <span class="skeleton-number"></span>
+            <span class="skeleton-label"></span>
+          </div>
+        </div>
+      }
+    } @else {
       <div class="stat-card">
-        <lucide-icon name="box" [size]="24" class="stat-card__icon"></lucide-icon>
+        <lucide-icon name="box" [size]="20" class="stat-card__icon"></lucide-icon>
         <div class="stat-card__info">
           <span class="stat-card__number">{{ counts().products }}</span>
           <span class="stat-card__label">Productos</span>
         </div>
       </div>
       <div class="stat-card">
-        <lucide-icon name="scissors" [size]="24" class="stat-card__icon"></lucide-icon>
+        <lucide-icon name="scissors" [size]="20" class="stat-card__icon"></lucide-icon>
         <div class="stat-card__info">
           <span class="stat-card__number">{{ counts().hairstyles }}</span>
           <span class="stat-card__label">Peinados</span>
         </div>
       </div>
       <div class="stat-card">
-        <lucide-icon name="paintbrush" [size]="24" class="stat-card__icon"></lucide-icon>
+        <lucide-icon name="paintbrush" [size]="20" class="stat-card__icon"></lucide-icon>
         <div class="stat-card__info">
           <span class="stat-card__number">{{ counts().nailDesigns }}</span>
           <span class="stat-card__label">Diseños de Uñas</span>
         </div>
       </div>
       <div class="stat-card">
-        <lucide-icon name="sparkle" [size]="24" class="stat-card__icon"></lucide-icon>
+        <lucide-icon name="sparkle" [size]="20" class="stat-card__icon"></lucide-icon>
         <div class="stat-card__info">
           <span class="stat-card__number">{{ counts().services }}</span>
           <span class="stat-card__label">Servicios</span>
         </div>
       </div>
       <div class="stat-card">
-        <lucide-icon name="users" [size]="24" class="stat-card__icon"></lucide-icon>
+        <lucide-icon name="users" [size]="20" class="stat-card__icon"></lucide-icon>
         <div class="stat-card__info">
           <span class="stat-card__number">{{ counts().users }}</span>
           <span class="stat-card__label">Usuarios</span>
         </div>
       </div>
-    </div>
-  }
+    }
+  </div>
 
+  <!-- TABLA USUARIOS RECIENTES: skeleton mientras carga -->
   <div class="recent-users">
     <h3 class="section-title">Usuarios Recientes</h3>
     <table class="admin-table">
@@ -56,17 +66,28 @@
         </tr>
       </thead>
       <tbody>
-        @for (user of recentUsers(); track user.id) {
-          <tr>
-            <td>{{ user.email }}</td>
-            <td>{{ user.firstName }} {{ user.apellidoPaterno }}</td>
-            <td><span class="badge badge--{{ user.role }}">{{ user.role }}</span></td>
-            <td>
-              <span class="badge" [class.badge--active]="user.isActive" [class.badge--inactive]="!user.isActive">
-                {{ user.isActive ? 'Activo' : 'Inactivo' }}
-              </span>
-            </td>
-          </tr>
+        @if (loading()) {
+          @for (_ of [1,2,3,4,5]; track $index) {
+            <tr class="skeleton-row">
+              <td><span class="skeleton-cell skeleton-cell--full"></span></td>
+              <td><span class="skeleton-cell skeleton-cell--md"></span></td>
+              <td><span class="skeleton-cell skeleton-cell--sm"></span></td>
+              <td><span class="skeleton-cell skeleton-cell--sm"></span></td>
+            </tr>
+          }
+        } @else {
+          @for (user of recentUsers(); track user.id) {
+            <tr>
+              <td>{{ user.email }}</td>
+              <td>{{ user.firstName }} {{ user.apellidoPaterno }}</td>
+              <td><span class="badge badge--{{ user.role }}">{{ user.role }}</span></td>
+              <td>
+                <span class="badge" [class.badge--active]="user.isActive" [class.badge--inactive]="!user.isActive">
+                  {{ user.isActive ? 'Activo' : 'Inactivo' }}
+                </span>
+              </td>
+            </tr>
+          }
         }
       </tbody>
     </table>
