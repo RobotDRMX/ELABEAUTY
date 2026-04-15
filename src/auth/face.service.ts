@@ -2,78 +2,56 @@ import { Injectable, BadRequestException, UnauthorizedException, Logger } from '
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Not, IsNull } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
-import { createCipheriv, createDecipheriv, randomBytes } from 'crypto';
 import { User } from '../users/entities/user.entity';
+import { createCipheriv, createDecipheriv, randomBytes, createHash } from 'crypto';
 
 @Injectable()
 export class FaceService {
   private readonly logger = new Logger(FaceService.name);
-  private readonly THRESHOLD = 0.45;
-  private readonly encryptionKey: Buffer;
+  private readonly THRESHOLD = 0.45; // Umbral de similitud (menor es más estricto)
+  private readonly ALGORITHM = 'aes-256-gcm';
+  private readonly KEY: Buffer;
 
   constructor(
     @InjectRepository(User)
     private readonly userRepo: Repository<User>,
     private readonly configService: ConfigService,
   ) {
-    const keyHex = this.configService.get<string>('BIOMETRIC_ENCRYPTION_KEY');
-    if (!keyHex) {
-      throw new Error(
-        'BIOMETRIC_ENCRYPTION_KEY es obligatoria. Genera una con: node -e "console.log(require(\'crypto\').randomBytes(32).toString(\'hex\'))"',
-      );
+    const secret = this.configService.get<string>('BIOMETRIC_ENCRYPTION_KEY');
+    if (!secret) {
+      this.logger.error('BIOMETRIC_ENCRYPTION_KEY no definida');
+      throw new Error('Configuración de seguridad biométrica incompleta');
     }
-    this.encryptionKey = Buffer.from(keyHex, 'hex');
+    // Asegurar que la llave tenga 32 bytes
+    this.KEY = createHash('sha256').update(secret).digest();
   }
 
-  private encrypt(descriptor: number[]): string {
+  private encrypt(data: number[]): string {
     const iv = randomBytes(12);
-    const cipher = createCipheriv('aes-256-gcm', this.encryptionKey, iv);
-    const plaintext = JSON.stringify(descriptor);
-    const encrypted = Buffer.concat([cipher.update(plaintext, 'utf8'), cipher.final()]);
+    const cipher = createCipheriv(this.ALGORITHM, this.KEY, iv);
+    const encrypted = Buffer.concat([cipher.update(JSON.stringify(data), 'utf8'), cipher.final()]);
     const tag = cipher.getAuthTag();
-    // Format: base64(iv + tag + ciphertext)
     return Buffer.concat([iv, tag, encrypted]).toString('base64');
   }
 
-  private decrypt(stored: string): number[] {
-    // Try JSON parse first (legacy unencrypted data — migrate on next save)
-    try {
-      const parsed = JSON.parse(stored);
-      if (Array.isArray(parsed)) {
-        this.logger.warn('Descriptor biometrico en texto plano detectado. Se cifrara en la proxima escritura.');
-        return parsed;
-      }
-    } catch {
-      // Not JSON — must be encrypted
-    }
-
-    try {
-      const data = Buffer.from(stored, 'base64');
-      const iv = data.subarray(0, 12);
-      const tag = data.subarray(12, 28);
-      const ciphertext = data.subarray(28);
-
-      const decipher = createDecipheriv('aes-256-gcm', this.encryptionKey, iv);
-      decipher.setAuthTag(tag);
-      const decrypted = Buffer.concat([decipher.update(ciphertext), decipher.final()]);
-      return JSON.parse(decrypted.toString('utf8'));
-    } catch (err) {
-      this.logger.error(
-        'Error al descifrar descriptor facial. Posible corrupcion de datos o clave de cifrado incorrecta.',
-        err,
-      );
-      throw new BadRequestException(
-        'No se pudo verificar el descriptor facial. El dato puede estar corrupto o la clave de cifrado cambio. Registra tu rostro de nuevo desde tu perfil.',
-      );
-    }
+  private decrypt(combined: string): number[] {
+    const buffer = Buffer.from(combined, 'base64');
+    const iv = buffer.subarray(0, 12);
+    const tag = buffer.subarray(12, 28);
+    const encrypted = buffer.subarray(28);
+    const decipher = createDecipheriv(this.ALGORITHM, this.KEY, iv);
+    decipher.setAuthTag(tag);
+    const decrypted = decipher.update(encrypted) + decipher.final('utf8');
+    return JSON.parse(decrypted);
   }
 
-  async saveDescriptor(userId: number, descriptor: number[]): Promise<{ saved: boolean }> {
+  async saveDescriptor(userId: number, descriptor: number[]): Promise<{ message: string }> {
     if (descriptor.length !== 128) {
       throw new BadRequestException('El descriptor facial debe tener exactamente 128 valores');
     }
-    await this.userRepo.update(userId, { faceDescriptor: this.encrypt(descriptor) });
-    return { saved: true };
+    const encrypted = this.encrypt(descriptor);
+    await this.userRepo.update(userId, { faceDescriptor: encrypted });
+    return { message: 'Descriptor facial guardado correctamente' };
   }
 
   async verifyDescriptor(
@@ -86,9 +64,13 @@ export class FaceService {
     const user = await this.userRepo.findOneOrFail({ where: { id: userId } });
     if (!user.faceDescriptor) return { hasDescriptor: false, match: false };
 
-    const stored = this.decrypt(user.faceDescriptor);
-    const match = this.euclideanDistance(stored, incoming) < this.THRESHOLD;
-    return { hasDescriptor: true, match };
+    try {
+      const stored = this.decrypt(user.faceDescriptor);
+      const match = this.euclideanDistance(stored, incoming) < this.THRESHOLD;
+      return { hasDescriptor: true, match };
+    } catch {
+      return { hasDescriptor: true, match: false };
+    }
   }
 
   async findUserByFace(incoming: number[], email?: string): Promise<Omit<User, 'password'>> {
@@ -98,7 +80,6 @@ export class FaceService {
 
     let users: User[];
     if (email) {
-      // Search only the specific user (O(1) instead of O(n))
       const user = await this.userRepo.findOne({
         where: { email, faceDescriptor: Not(IsNull()), isActive: true },
       });
@@ -113,11 +94,15 @@ export class FaceService {
     let bestDistance = Infinity;
 
     for (const user of users) {
-      const stored = this.decrypt(user.faceDescriptor!);
-      const dist = this.euclideanDistance(stored, incoming);
-      if (dist < this.THRESHOLD && dist < bestDistance) {
-        bestMatch = user;
-        bestDistance = dist;
+      try {
+        const stored = this.decrypt(user.faceDescriptor!);
+        const dist = this.euclideanDistance(stored, incoming);
+        if (dist < this.THRESHOLD && dist < bestDistance) {
+          bestMatch = user;
+          bestDistance = dist;
+        }
+      } catch {
+        this.logger.warn(`[FaceService] Descriptor corrupto para userId=${user.id}, omitiendo.`);
       }
     }
 
