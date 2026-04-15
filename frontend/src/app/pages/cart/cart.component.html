@@ -237,11 +237,21 @@
                     <span class="field-error-msg" *ngIf="addressSubmitted && !address.zip">{{ 'checkout.required_field' | translate }}</span>
                     <span class="field-error-msg" *ngIf="addressSubmitted && address.zip && address.zip.length !== 5">{{ 'checkout.zip_invalid' | translate }}</span>
                 </div>
-                <div class="form-group">
+                <div class="form-group phone-group" style="grid-column: 1 / -1;">
                     <label>{{ 'checkout.phone' | translate }} *</label>
-                    <input type="tel" [(ngModel)]="address.phone" autocomplete="tel"
-                        [placeholder]="'checkout.phone_placeholder' | translate"
-                        [class.field-error]="addressSubmitted && !isPhoneValid()">
+                    <div style="display: flex; gap: 8px;">
+                        <select [(ngModel)]="address.countryCode" class="country-code-select" style="width: 120px; flex-shrink: 0;">
+                            <option value="+52">🇲🇽 +52 (MX)</option>
+                            <option value="+1">🇺🇸 +1 (US)</option>
+                            <option value="+34">🇪🇸 +34 (ES)</option>
+                            <option value="+54">🇦🇷 +54 (AR)</option>
+                            <option value="+57">🇨🇴 +57 (CO)</option>
+                        </select>
+                        <input type="tel" [(ngModel)]="address.phone" autocomplete="tel"
+                            [placeholder]="'checkout.phone_placeholder' | translate"
+                            maxlength="10" (input)="formatPhone($event)"
+                            [class.field-error]="addressSubmitted && !isPhoneValid()" style="flex: 1;">
+                    </div>
                     <span class="field-error-msg" *ngIf="addressSubmitted && !address.phone">{{ 'checkout.required_field' | translate }}</span>
                     <span class="field-error-msg" *ngIf="addressSubmitted && address.phone && !isPhoneValid()">{{ 'checkout.phone_invalid' | translate }}</span>
                 </div>
@@ -384,44 +394,64 @@
                 </div>
             </div>
             } @else {
-            <h2 class="step-title">{{ 'checkout.review_title' | translate }}</h2>
-            <div class="review-section">
-                <h3>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                    {{ 'checkout.shipping_address' | translate }}
-                </h3>
-                <p>{{ address.firstName }} {{ address.lastName }}</p>
-                <p>{{ address.street }}, {{ address.colonia }}</p>
-                <p>{{ address.city }}, {{ address.state }} {{ address.zip }}</p>
-                <p>Tel: {{ address.phone }}</p>
+            <div class="review-header-wrapper" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2 class="step-title" style="margin-bottom: 0;">{{ 'checkout.review_title' | translate }}</h2>
+                <div class="review-actions" style="display: flex; gap: 10px;">
+                    <button class="btn btn--outline" (click)="downloadReceipt('pdf')" style="padding: 0.5rem 1rem; font-size: 0.8rem; display: flex; align-items: center; gap: 5px;">
+                        <lucide-icon name="file-text" [size]="16"></lucide-icon> PDF
+                    </button>
+                    <button class="btn btn--outline" (click)="downloadReceipt('xml')" style="padding: 0.5rem 1rem; font-size: 0.8rem; display: flex; align-items: center; gap: 5px;">
+                        <lucide-icon name="file-code" [size]="16"></lucide-icon> XML
+                    </button>
+                </div>
             </div>
-            <div class="review-section">
-                <h3>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-                    {{ 'checkout.payment_method' | translate }}
-                </h3>
-                <p>{{ paymentLabel() }}</p>
-                @if (paymentMethod() === 'card') {
-                    <p class="card-masked">{{ maskedCard() }}</p>
-                }
-            </div>
-            <div class="review-section">
-                <h3>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
-                    {{ 'checkout.products_count' | translate }}
-                </h3>
-                <div class="review-items">
-                    @for (item of cart()?.items; track item.product.id) {
-                    <div class="review-item">
-                        <span>{{ item.product.name }} × {{ item.quantity }}</span>
-                        <span>{{ (item.product.price * item.quantity) | currency:'MXN' }}</span>
-                    </div>
+            
+            <div class="receipt-wrapper" id="receipt-container">
+                <div class="receipt-banner">
+                    <h3>ELA Beauty</h3>
+                    <p>Order Summary</p>
+                </div>
+                <div class="review-section">
+                    <h3>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        {{ 'checkout.shipping_address' | translate }}
+                    </h3>
+                    <p>{{ address.firstName }} {{ address.lastName }}</p>
+                    <p>{{ address.street }}, {{ address.colonia }}</p>
+                    <p>{{ address.city }}, {{ address.state }} {{ address.zip }}</p>
+                    <p>Tel: {{ address.countryCode }} {{ address.phone }}</p>
+                </div>
+                <div class="review-section">
+                    <h3>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                        {{ 'checkout.payment_method' | translate }}
+                    </h3>
+                    <p>{{ paymentLabel() }}</p>
+                    @if (paymentMethod() === 'card') {
+                        <p class="card-masked">{{ maskedCard() }}</p>
                     }
                 </div>
-                <div class="review-total">
-                    <div class="review-row"><span>{{ 'cart.subtotal' | translate }}</span><span>{{ total() | currency:'MXN' }}</span></div>
-                    <div class="review-row"><span>{{ 'cart.shipping' | translate }}</span><span>{{ shipping() === 0 ? ('cart.free' | translate) : (shipping() | currency:'MXN') }}</span></div>
-                    <div class="review-row grand-total"><strong>{{ 'cart.total' | translate }}</strong><strong>{{ finalTotal() | currency:'MXN' }}</strong></div>
+                <div class="review-section receipt-items-section">
+                    <h3>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
+                        {{ 'checkout.products_count' | translate }}
+                    </h3>
+                    <div class="review-items">
+                        @for (item of cart()?.items; track item.product.id) {
+                        <div class="review-item receipt-item">
+                            <span class="item-name">{{ item.product.name }} <small>× {{ item.quantity }}</small></span>
+                            <span class="item-amount">{{ (item.product.price * item.quantity) | currency:'MXN' }}</span>
+                        </div>
+                        }
+                    </div>
+                    <div class="review-total receipt-total">
+                        <div class="review-row receipt-row"><span>{{ 'cart.subtotal' | translate }}</span><span>{{ total() | currency:'MXN' }}</span></div>
+                        <div class="review-row receipt-row"><span>{{ 'cart.shipping' | translate }}</span><span>{{ shipping() === 0 ? ('cart.free' | translate) : (shipping() | currency:'MXN') }}</span></div>
+                        <div class="review-row grand-total receipt-grand-total"><strong>{{ 'cart.total' | translate }}</strong><strong>{{ finalTotal() | currency:'MXN' }}</strong></div>
+                    </div>
+                </div>
+                <div class="receipt-footer-msg">
+                    <p>Thank you for shopping with ELA Beauty</p>
                 </div>
             </div>
             }

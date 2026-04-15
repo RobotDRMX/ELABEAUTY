@@ -41,7 +41,8 @@ export class CartComponent {
         city: '',
         state: '',
         zip: '',
-        phone: ''
+        phone: '',
+        countryCode: '+52'
     };
 
     card = {
@@ -136,6 +137,7 @@ export class CartComponent {
         let value = event.target.value.replace(/\D/g, '');
         let formatted = value.match(/.{1,4}/g)?.join(' ') || '';
         this.card.number = formatted.substring(0, 19);
+        event.target.value = this.card.number;
     }
 
     formatExpiry(event: any) {
@@ -144,6 +146,13 @@ export class CartComponent {
             value = value.substring(0, 2) + '/' + value.substring(2, 4);
         }
         this.card.expiry = value.substring(0, 5);
+        event.target.value = this.card.expiry;
+    }
+
+    formatPhone(event: any) {
+        let value = event.target.value.replace(/\D/g, '');
+        this.address.phone = value.substring(0, 10);
+        event.target.value = this.address.phone;
     }
 
     maskedCard() {
@@ -176,5 +185,33 @@ export class CartComponent {
     stepIndex(): number {
         const map: Record<CheckoutStep, number> = { address: 0, payment: 1, review: 2, success: 3 };
         return map[this.currentStep()];
+    }
+
+    downloadReceipt(format: 'pdf' | 'xml') {
+        if (format === 'pdf') {
+            window.print();
+        } else {
+            const xmlData = `<?xml version="1.0" encoding="UTF-8"?>
+<receipt>
+    <orderNumber>${this.orderNumber() || 'DRAFT'}</orderNumber>
+    <date>${new Date().toISOString()}</date>
+    <customer>
+        <name>${this.address.firstName} ${this.address.lastName}</name>
+        <phone>${this.address.countryCode} ${this.address.phone}</phone>
+        <address>${this.address.street}, ${this.address.colonia}, ${this.address.city}, ${this.address.state} ${this.address.zip}</address>
+    </customer>
+    <paymentMethod>${this.paymentMethod()}</paymentMethod>
+    <total>${this.finalTotal()}</total>
+</receipt>`;
+            const blob = new Blob([xmlData], { type: 'application/xml' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `receipt-${this.orderNumber() || 'draft'}.xml`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
     }
 }
