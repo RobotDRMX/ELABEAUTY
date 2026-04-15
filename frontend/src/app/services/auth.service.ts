@@ -111,7 +111,8 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/reenviar-verificacion`, { email });
   }
 
-  private clearState() {
+  /** Limpia el estado en memoria. No redirige. Usado por el interceptor y checkSession. */
+  clearState() {
     this._accessToken = null;
     this.currentUser.set(null);
     this.isAuthenticated.set(false);

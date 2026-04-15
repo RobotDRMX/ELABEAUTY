@@ -4,11 +4,14 @@ import {
   ArgumentsHost,
   HttpException,
   HttpStatus,
+  Logger,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
+  private readonly logger = new Logger(GlobalExceptionFilter.name);
+
   catch(exception: unknown, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
@@ -45,8 +48,14 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       message = 'Error desconocido';
     }
 
-    if (process.env['NODE_ENV'] === 'development') {
-      console.error('[GlobalExceptionFilter]', exception);
+    // Siempre loguear errores de servidor (5xx). En dev loguear todo.
+    if (status >= 500) {
+      this.logger.error(
+        `[${request.method}] ${request.url} → ${status}`,
+        exception instanceof Error ? exception.stack : String(exception),
+      );
+    } else if (process.env['NODE_ENV'] !== 'production') {
+      this.logger.warn(`[${request.method}] ${request.url} → ${status}: ${message}`);
     }
 
     response.status(status).json({

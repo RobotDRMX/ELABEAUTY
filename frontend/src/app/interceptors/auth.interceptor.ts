@@ -1,9 +1,11 @@
-import { HttpInterceptorFn, HttpRequest, HttpHandlerFn, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpInterceptorFn,
+  HttpRequest,
+  HttpHandlerFn,
+  HttpErrorResponse,
+} from '@angular/common/http';
 import { inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Subject, catchError, switchMap, take, throwError } from 'rxjs';
-import { Router } from '@angular/router';
-import { environment } from '../../environments/environment';
 import { AuthService } from '../services/auth.service';
 
 let isRefreshing = false;
@@ -15,55 +17,53 @@ export const authInterceptor: HttpInterceptorFn = (
 ) => {
   const authService = inject(AuthService);
 
-  // Clone with credentials (for refresh_token cookie) and Authorization header
+  // Adjuntar credenciales (cookie refresh_token) y Bearer token si hay sesión activa
   let cloned = req.clone({ withCredentials: true });
-
   const token = authService.accessToken;
   if (token) {
-    cloned = cloned.clone({
-      setHeaders: { Authorization: `Bearer ${token}` },
-    });
+    cloned = cloned.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
   }
 
   return next(cloned).pipe(
     catchError((error: HttpErrorResponse) => {
-      // Handle 401 specifically for the refresh token endpoint failure
+      // ── 401 en el endpoint de refresh ────────────────────────────────────
+      // No redirigir: esto ocurre en cada carga inicial cuando no hay sesión activa.
+      // checkSession() maneja el error de forma silenciosa con clearState().
+      // Redirigir aquí causaría que el usuario sea enviado a /auth/login al abrir
+      // cualquier página pública de la app.
       if (error.status === 401 && req.url.includes('/auth/refresh')) {
-        console.error('Token refresh failed with 401. Logging out user.');
-        authService.clearStateAndRedirect(); // Ensure user is logged out and redirected
-        return throwError(() => new Error('Token refresh failed and user is logged out.'));
+        authService.clearState();
+        return throwError(() => normalizeError(error));
       }
 
-      // Handle 401 errors for other protected resources
+      // ── 401 en recursos protegidos (no es login ni register) ──────────────
+      // Intentar refrescar el token y reintentar la petición original.
       if (
         error.status === 401 &&
         !req.url.includes('/auth/login') &&
         !req.url.includes('/auth/register')
-        // No need to exclude /auth/refresh here as it's handled above
       ) {
         if (isRefreshing) {
-          // If a refresh is already in progress, wait for the new token
+          // Esperar a que el refresco en curso termine y reintentar
           return refreshSubject.pipe(
             take(1),
-            switchMap((newToken) => {
-              const retried = req.clone({
-                withCredentials: true,
-                setHeaders: { Authorization: `Bearer ${newToken}` },
-              });
-              return next(retried);
-            }),
+            switchMap((newToken) =>
+              next(
+                req.clone({
+                  withCredentials: true,
+                  setHeaders: { Authorization: `Bearer ${newToken}` },
+                }),
+              ),
+            ),
             catchError((errAfterRefresh) => {
-              // If even retrying with new token fails, log out
-              console.error('Request failed after token refresh attempt. Logging out user.');
               authService.clearStateAndRedirect();
-              return throwError(() => new Error('Authentication failed after refresh.'));
-            })
+              return throwError(() => normalizeError(errAfterRefresh));
+            }),
           );
         }
 
-        // If no refresh is in progress, attempt to refresh the token
         isRefreshing = true;
-        refreshSubject = new Subject<string>(); // Reset subject for new refresh process
+        refreshSubject = new Subject<string>();
 
         return authService.refreshToken().pipe(
           switchMap((res) => {
@@ -72,24 +72,62 @@ export const authInterceptor: HttpInterceptorFn = (
             refreshSubject.complete();
             isRefreshing = false;
 
-            const retried = req.clone({
-              withCredentials: true,
-              setHeaders: { Authorization: `Bearer ${res.access_token}` },
-            });
-            return next(retried);
+            return next(
+              req.clone({
+                withCredentials: true,
+                setHeaders: { Authorization: `Bearer ${res.access_token}` },
+              }),
+            );
           }),
           catchError((refreshError) => {
             isRefreshing = false;
             refreshSubject.error(refreshError);
-            console.error('Token refresh attempt failed. Logging out user.');
-            authService.clearStateAndRedirect(); // Ensure user is logged out and redirected
-            return throwError(() => new Error('Token refresh failed.'));
-          })
+            authService.clearStateAndRedirect();
+            return throwError(() => normalizeError(refreshError));
+          }),
         );
       }
 
-      // For errors other than 401, or if it's a 401 on login/register (which shouldn't happen as usually handled by form validation)
-      return throwError(() => error);
-    })
-    );
-    };
+      // ── Cualquier otro error ──────────────────────────────────────────────
+      return throwError(() => normalizeError(error));
+    }),
+  );
+};
+
+/**
+ * Normaliza errores HTTP para garantizar que los componentes siempre reciban
+ * un objeto con `statusCode` y `message`, incluso si la respuesta del servidor
+ * no era JSON válido (páginas HTML de error de Vercel/Koyeb/proxies).
+ */
+function normalizeError(error: HttpErrorResponse): HttpErrorResponse {
+  if (!(error instanceof HttpErrorResponse)) return error;
+
+  const body = error.error;
+
+  // Si el cuerpo ya es un objeto con message, está bien
+  if (body && typeof body === 'object' && 'message' in body) return error;
+
+  // Si el cuerpo es un string (HTML de proxy) o un SyntaxError de parseo JSON,
+  // reemplazarlo con un objeto JSON seguro
+  const isBadBody =
+    typeof body === 'string' ||
+    body instanceof SyntaxError ||
+    (body instanceof ProgressEvent);
+
+  if (isBadBody) {
+    return new HttpErrorResponse({
+      status:     error.status,
+      statusText: error.statusText,
+      url:        error.url ?? undefined,
+      error: {
+        statusCode: error.status || 0,
+        message:
+          error.status === 0
+            ? 'No se pudo conectar con el servidor. Verifica tu conexión.'
+            : `Error del servidor (${error.status})`,
+      },
+    });
+  }
+
+  return error;
+}
