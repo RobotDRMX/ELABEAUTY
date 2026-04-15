@@ -49,7 +49,8 @@
       "Bash(BASE=\"https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights\")",
       "Bash(for f:*)",
       "Bash(do echo:*)",
-      "Bash(curl -sL \"$BASE/$f\" -o \"$f\")"
+      "Bash(curl -sL \"$BASE/$f\" -o \"$f\")",
+      "Bash(python3 -c ':*)"
     ]
   }
 }
