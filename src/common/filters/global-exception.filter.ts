@@ -58,6 +58,8 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       this.logger.warn(`[${request.method}] ${request.url} → ${status}: ${message}`);
     }
 
+    // Asegurar que la respuesta sea JSON incluso si el header original no lo es
+    response.setHeader('Content-Type', 'application/json');
     response.status(status).json({
       statusCode: status,
       message,

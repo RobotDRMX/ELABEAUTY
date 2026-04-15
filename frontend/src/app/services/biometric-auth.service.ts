@@ -13,7 +13,7 @@ import { AuthService } from './auth.service';
 @Injectable({ providedIn: 'root' })
 export class BiometricAuthService {
   private readonly API = environment.apiBaseUrl + '/auth';
-  private readonly MODELS_URL = '/assets/models';
+  private readonly MODELS_URL = 'assets/models';
 
   readonly webAuthnSupported = signal(browserSupportsWebAuthn());
   readonly modelsLoaded      = signal(false);
