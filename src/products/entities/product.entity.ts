@@ -38,6 +38,21 @@ export class Product {
   @Column({ default: 'Todas' })
   target_age!: string;
 
+  // Columna generada por Postgres (ver scripts/search-setup.sql) para full-text search.
+  // select: false porque nunca se hidrata en la entidad, solo se referencia en WHERE/ORDER BY.
+  @Column({
+    type: 'tsvector',
+    select: false,
+    nullable: true,
+    asExpression: `
+      setweight(to_tsvector('spanish', coalesce(name, '')), 'A') ||
+      setweight(to_tsvector('spanish', coalesce(category, '') || ' ' || coalesce(subcategory, '')), 'B') ||
+      setweight(to_tsvector('spanish', coalesce(description, '')), 'C')
+    `,
+    generatedType: 'STORED',
+  })
+  search_vector?: string;
+
   @CreateDateColumn()
   created_at!: Date;
 

@@ -43,11 +43,26 @@ export class ProductsService {
       .createQueryBuilder('product')
       .where('product.is_active = :isActive', { isActive: true });
 
-    if (query) {
-      queryBuilder.andWhere(
-        '(product.name LIKE :query OR product.description LIKE :query OR product.category LIKE :query OR product.subcategory LIKE :query)',
-        { query: `%${query}%` }
-      );
+    // Búsqueda por relevancia: full-text search (con stemming en español) combinada
+    // con similitud de trigramas (pg_trgm) para tolerar errores tipográficos.
+    // Requiere haber corrido scripts/search-setup.sql en la base de datos.
+    const hasTextQuery = !!query;
+    if (hasTextQuery) {
+      queryBuilder
+        .andWhere(
+          `(
+            product.search_vector @@ websearch_to_tsquery('spanish', :tsQuery)
+            OR product.name % :query
+            OR product.description % :query
+            OR product.category % :query
+            OR product.subcategory % :query
+          )`,
+          { tsQuery: query, query },
+        )
+        .addSelect(
+          `ts_rank(product.search_vector, websearch_to_tsquery('spanish', :tsQuery)) + similarity(product.name, :query)`,
+          'relevance',
+        );
     }
 
     if (category) {
@@ -75,8 +90,15 @@ export class ProductsService {
     const ALLOWED_SORT_COLUMNS = ['name', 'price', 'rating', 'created_at', 'stock'];
     const safeSortBy = ALLOWED_SORT_COLUMNS.includes(sortBy ?? '') ? sortBy : 'created_at';
 
+    // Si hay texto de búsqueda y el usuario no pidió un orden explícito distinto
+    // del que aplica por default, se ordena por relevancia en lugar de created_at.
+    if (hasTextQuery && safeSortBy === 'created_at') {
+      queryBuilder.orderBy('relevance', 'DESC');
+    } else {
+      queryBuilder.orderBy(`product.${safeSortBy}`, order);
+    }
+
     const products = await queryBuilder
-      .orderBy(`product.${safeSortBy}`, order)
       .skip(skip)
       .take(limit)
       .getMany();
