@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { LucideIcons } from '../../icons.provider';
 import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
+import { OffersCarouselComponent } from '../offers-carousel/offers-carousel.component';
 
 @Component({
   selector: 'app-body',
   standalone: true,
-  imports: [CommonModule, RouterModule, LucideIcons, ScrollRevealDirective],
+  imports: [CommonModule, RouterModule, LucideIcons, ScrollRevealDirective, OffersCarouselComponent],
   templateUrl: './body.component.html',
   styleUrls: ['./body.component.scss']
 })

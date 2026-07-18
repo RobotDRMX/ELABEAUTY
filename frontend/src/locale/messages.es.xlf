@@ -752,6 +752,22 @@
         <source>Subscribed successfully!</source>
         <target>¡Suscripción exitosa!</target>
       </trans-unit>
+      <trans-unit id="offersCarouselPrev" datatype="html">
+        <source>Previous offer</source>
+        <target>Oferta anterior</target>
+      </trans-unit>
+      <trans-unit id="offersCarouselNext" datatype="html">
+        <source>Next offer</source>
+        <target>Siguiente oferta</target>
+      </trans-unit>
+      <trans-unit id="offersCarouselCta" datatype="html">
+        <source>View offer</source>
+        <target>Ver oferta</target>
+      </trans-unit>
+      <trans-unit id="offersCarouselGoTo" datatype="html">
+        <source>Go to offer</source>
+        <target>Ir a la oferta</target>
+      </trans-unit>
       <trans-unit id="search-input-placeholder" datatype="html">
         <source>Search for products, brands, categories...</source>
         <target>Buscar productos, marcas, categorías...</target>

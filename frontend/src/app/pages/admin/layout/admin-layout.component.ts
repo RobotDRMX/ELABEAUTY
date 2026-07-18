@@ -39,6 +39,7 @@ export class AdminLayoutComponent {
     { label: 'Peinados',         icon: 'scissors',    path: '/admin/peinados' },
     { label: 'Diseños de Uñas',  icon: 'paintbrush',  path: '/admin/unas' },
     { label: 'Servicios',        icon: 'sparkle',     path: '/admin/servicios' },
+    { label: 'Ofertas',          icon: 'tag',         path: '/admin/ofertas' },
     { label: 'Usuarios',         icon: 'users',       path: '/admin/usuarios' },
   ];
 }

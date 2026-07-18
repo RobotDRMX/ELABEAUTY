@@ -23,6 +23,7 @@ import { NailDesignsModule } from './nail-designs/nail-designs.module';
 import { UsersModule } from './users/users.module';
 import { AdminModule } from './admin/admin.module';
 import { EventsModule } from './events/events.module';
+import { OffersModule } from './offers/offers.module';
 
 @Module({
   imports: [
@@ -79,6 +80,7 @@ import { EventsModule } from './events/events.module';
     NailDesignsModule,
     AdminModule,
     EventsModule,
+    OffersModule,
   ],
   controllers: [AppController],
   providers: [

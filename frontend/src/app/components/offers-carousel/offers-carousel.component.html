@@ -1,0 +1,58 @@
+<section
+  class="offers-carousel-elite"
+  *ngIf="offers().length"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()"
+>
+  <div class="offers-track" [style.transform]="'translateX(-' + (activeIndex() * 100) + '%)'">
+    <div
+      class="offer-slide"
+      *ngFor="let offer of offers(); let i = index"
+      [style.backgroundImage]="'url(' + offer.image_url + ')'"
+      [attr.aria-hidden]="i !== activeIndex()"
+    >
+      <div class="offer-overlay"></div>
+      <div class="offer-content container">
+        <span class="offer-tag" *ngIf="offer.tag">{{ offer.tag }}</span>
+        <span class="offer-badge" *ngIf="offer.badge">{{ offer.badge }}</span>
+        <h2 class="offer-title">{{ offer.title }}</h2>
+        <p class="offer-subtitle" *ngIf="offer.subtitle">{{ offer.subtitle }}</p>
+        <a *ngIf="offer.cta_link" [routerLink]="offer.cta_link" class="btn btn-primary">
+          {{ offer.cta_label || defaultCtaLabel }}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <button
+    *ngIf="offers().length > 1"
+    class="offer-nav offer-nav-prev"
+    type="button"
+    (click)="prev()"
+    i18n-aria-label="@@offersCarouselPrev"
+    aria-label="Previous offer"
+  >
+    <lucide-icon name="chevron-left" [size]="20"></lucide-icon>
+  </button>
+  <button
+    *ngIf="offers().length > 1"
+    class="offer-nav offer-nav-next"
+    type="button"
+    (click)="next()"
+    i18n-aria-label="@@offersCarouselNext"
+    aria-label="Next offer"
+  >
+    <lucide-icon name="chevron-right" [size]="20"></lucide-icon>
+  </button>
+
+  <div class="offer-dots" *ngIf="offers().length > 1">
+    <button
+      *ngFor="let offer of offers(); let i = index"
+      type="button"
+      class="offer-dot"
+      [class.active]="i === activeIndex()"
+      (click)="goTo(i)"
+      [attr.aria-label]="ariaGoToLabel + ' ' + (i + 1)"
+    ></button>
+  </div>
+</section>

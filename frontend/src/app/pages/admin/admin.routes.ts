@@ -10,6 +10,7 @@ export const adminRoutes: Routes = [
       { path: 'peinados', loadComponent: () => import('./hairstyles/hairstyles.component').then(m => m.HairstylesComponent), title: 'Admin - Peinados' },
       { path: 'unas', loadComponent: () => import('./nail-designs/nail-designs.component').then(m => m.NailDesignsComponent), title: 'Admin - Diseños de Uñas' },
       { path: 'servicios', loadComponent: () => import('./services/services.component').then(m => m.ServicesComponent), title: 'Admin - Servicios' },
+      { path: 'ofertas', loadComponent: () => import('./offers/offers.component').then(m => m.OffersComponent), title: 'Admin - Ofertas' },
       { path: 'usuarios', loadComponent: () => import('./users/users.component').then(m => m.UsersComponent), title: 'Admin - Usuarios' },
     ]
   }

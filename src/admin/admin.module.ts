@@ -7,6 +7,7 @@ import { Product } from '../products/entities/product.entity';
 import { Hairstyle } from '../hairstyles/hairstyles.module';
 import { NailDesign } from '../nail-designs/nail-designs.module';
 import { Service } from '../services/entities/service.entity';
+import { Offer } from '../offers/entities/offer.entity';
 import { AdminController } from './admin.controller';
 import { AdminService } from './admin.service';
 import { AdminProductsController } from './products/admin-products.controller';
@@ -19,10 +20,12 @@ import { AdminServicesController } from './services/admin-services.controller';
 import { AdminServicesService } from './services/admin-services.service';
 import { AdminUsersController } from './users/admin-users.controller';
 import { AdminUsersService } from './users/admin-users.service';
+import { AdminOffersController } from './offers/admin-offers.controller';
+import { AdminOffersService } from './offers/admin-offers.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Product, Hairstyle, NailDesign, Service]),
+    TypeOrmModule.forFeature([User, Product, Hairstyle, NailDesign, Service, Offer]),
     AuthModule,
   ],
   controllers: [
@@ -32,6 +35,7 @@ import { AdminUsersService } from './users/admin-users.service';
     AdminNailDesignsController,
     AdminServicesController,
     AdminUsersController,
+    AdminOffersController,
   ],
   providers: [
     RolesGuard,
@@ -41,6 +45,7 @@ import { AdminUsersService } from './users/admin-users.service';
     AdminNailDesignsService,
     AdminServicesService,
     AdminUsersService,
+    AdminOffersService,
   ],
 })
 export class AdminModule {}

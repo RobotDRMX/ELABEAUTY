@@ -45,7 +45,7 @@ export class RealtimeService implements OnDestroy {
     };
 
     // Listen to all named events emitted by the backend
-    const eventTypes = ['products:updated', 'hairstyles:updated', 'nail-designs:updated', 'services:updated'];
+    const eventTypes = ['products:updated', 'hairstyles:updated', 'nail-designs:updated', 'services:updated', 'offers:updated'];
     for (const type of eventTypes) {
       this.eventSource.addEventListener(type, (e: Event) => {
         const msg = e as MessageEvent;
