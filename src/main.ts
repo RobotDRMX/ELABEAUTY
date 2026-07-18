@@ -76,8 +76,8 @@ async function bootstrap() {
         'http://localhost:4200',
         'http://localhost:4300',
       ];
-      // Allow only ela-beauty Vercel preview deployments (not arbitrary *.vercel.app)
-      const isAllowedPreview = origin && /^https:\/\/ela-beauty(-[a-z0-9]+)*\.vercel\.app$/.test(origin);
+      // Allow only elabeauty Vercel preview deployments (not arbitrary *.vercel.app)
+      const isAllowedPreview = origin && /^https:\/\/elabeauty(-[a-z0-9]+)*\.vercel\.app$/.test(origin);
       if (!origin || allowed.includes(origin) || isAllowedPreview) {
         callback(null, true);
       } else {
