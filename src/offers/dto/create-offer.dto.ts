@@ -1,4 +1,4 @@
-import { IsString, IsUrl, IsOptional, IsNumber, IsDateString, Min } from 'class-validator';
+import { IsString, IsInt, IsPositive, IsOptional, IsNumber, IsDateString, Min } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateOfferDto {
@@ -16,9 +16,10 @@ export class CreateOfferDto {
   @IsOptional()
   description?: string;
 
-  @ApiProperty({ example: 'https://ejemplo.com/oferta-verano.jpg' })
-  @IsUrl()
-  image_url!: string;
+  @ApiProperty({ example: 1, description: 'ID del producto en oferta (se usa su imagen y precio)' })
+  @IsInt()
+  @IsPositive()
+  product_id!: number;
 
   @ApiPropertyOptional({ example: 'Ver ofertas' })
   @IsString()

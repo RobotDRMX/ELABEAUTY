@@ -8,7 +8,7 @@
     <div
       class="offer-slide"
       *ngFor="let offer of offers(); let i = index"
-      [style.backgroundImage]="'url(' + offer.image_url + ')'"
+      [style.backgroundImage]="offer.product ? 'url(' + offer.product.image_url + ')' : null"
       [attr.aria-hidden]="i !== activeIndex()"
     >
       <div class="offer-overlay"></div>
@@ -17,6 +17,15 @@
         <span class="offer-badge" *ngIf="offer.badge">{{ offer.badge }}</span>
         <h2 class="offer-title">{{ offer.title }}</h2>
         <p class="offer-subtitle" *ngIf="offer.subtitle">{{ offer.subtitle }}</p>
+        <div class="offer-price" *ngIf="offer.product">
+          <ng-container *ngIf="discountPrice(offer) !== null; else regularPrice">
+            <span class="offer-price-original">${{ offer.product.price | number:'1.2-2' }}</span>
+            <span class="offer-price-discounted">${{ discountPrice(offer) | number:'1.2-2' }}</span>
+          </ng-container>
+          <ng-template #regularPrice>
+            <span class="offer-price-discounted">${{ offer.product.price | number:'1.2-2' }}</span>
+          </ng-template>
+        </div>
         <a *ngIf="offer.cta_link" [routerLink]="offer.cta_link" class="btn btn-primary">
           {{ offer.cta_label || defaultCtaLabel }}
         </a>

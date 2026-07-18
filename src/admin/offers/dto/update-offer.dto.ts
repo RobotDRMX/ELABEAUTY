@@ -1,11 +1,11 @@
-import { IsString, IsUrl, IsOptional, IsNumber, IsDateString, IsBoolean, Min } from 'class-validator';
+import { IsString, IsInt, IsPositive, IsOptional, IsNumber, IsDateString, IsBoolean, Min } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
 export class UpdateOfferDto {
   @ApiPropertyOptional({ example: 'Rebajas de Verano' }) @IsString() @IsOptional() title?: string;
   @ApiPropertyOptional({ example: 'Hasta 30% de descuento' }) @IsString() @IsOptional() subtitle?: string;
   @ApiPropertyOptional({ example: 'Válido en tienda y en línea.' }) @IsString() @IsOptional() description?: string;
-  @ApiPropertyOptional({ example: 'https://ejemplo.com/oferta.jpg' }) @IsUrl() @IsOptional() image_url?: string;
+  @ApiPropertyOptional({ example: 1 }) @IsInt() @IsPositive() @IsOptional() product_id?: number;
   @ApiPropertyOptional({ example: 'Ver ofertas' }) @IsString() @IsOptional() cta_label?: string;
   @ApiPropertyOptional({ example: '/ofertas' }) @IsString() @IsOptional() cta_link?: string;
   @ApiPropertyOptional({ example: '-30%' }) @IsString() @IsOptional() badge?: string;

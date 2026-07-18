@@ -73,6 +73,24 @@
   max-width: 480px;
 }
 
+.offer-price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+}
+
+.offer-price-original {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: line-through;
+}
+
+.offer-price-discounted {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+}
+
 .offer-nav {
   position: absolute;
   top: 50%;

@@ -16,6 +16,7 @@
     <thead>
       <tr>
         <th>Título</th>
+        <th>Producto</th>
         <th>Vigencia</th>
         <th>Orden</th>
         <th>Estado</th>
@@ -28,6 +29,7 @@
           <tr class="skeleton-row">
             <td><span class="skeleton-cell skeleton-cell--md"></span></td>
             <td><span class="skeleton-cell skeleton-cell--sm"></span></td>
+            <td><span class="skeleton-cell skeleton-cell--sm"></span></td>
             <td><span class="skeleton-cell" style="width:30px"></span></td>
             <td><span class="skeleton-cell skeleton-cell--sm"></span></td>
             <td><span class="skeleton-cell" style="width:60px"></span></td>
@@ -37,6 +39,7 @@
         @for (item of items(); track item.id) {
           <tr>
             <td>{{ item.title }}</td>
+            <td>{{ item.product?.name ?? '—' }}</td>
             <td>{{ item.start_date | date:'short' }} — {{ item.end_date | date:'short' }}</td>
             <td>{{ item.sort_order }}</td>
             <td>
@@ -99,9 +102,26 @@
           <textarea formControlName="description" class="form-control" rows="2"></textarea>
         </div>
         <div class="form-group">
-          <label>Imagen URL *</label>
-          <input formControlName="image_url" type="text" class="form-control">
+          <label>Producto *</label>
+          <select formControlName="product_id" class="form-control">
+            <option [ngValue]="''" disabled>Selecciona un producto</option>
+            @for (p of products(); track p.id) {
+              <option [ngValue]="p.id">{{ p.name }} — ${{ p.price | number:'1.2-2' }}</option>
+            }
+          </select>
         </div>
+
+        @if (selectedProduct) {
+          <div class="offer-price-preview">
+            <span class="price-original">Precio original: ${{ selectedProduct.price | number:'1.2-2' }}</span>
+            @if (discountPrice !== null) {
+              <span class="price-discounted">Precio en oferta: ${{ discountPrice | number:'1.2-2' }}</span>
+            } @else {
+              <span class="price-hint">Agrega un porcentaje en "Etiqueta (badge)" (ej. "-30%") para calcular el precio en oferta.</span>
+            }
+          </div>
+        }
+
         <div class="form-row">
           <div class="form-group">
             <label>Texto del botón</label>

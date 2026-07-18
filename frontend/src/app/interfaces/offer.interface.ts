@@ -1,9 +1,12 @@
+import { Product } from './product.interface';
+
 export interface Offer {
   id: number;
   title: string;
   subtitle?: string;
   description?: string;
-  image_url: string;
+  product_id: number;
+  product?: Product;
   cta_label?: string;
   cta_link?: string;
   badge?: string;

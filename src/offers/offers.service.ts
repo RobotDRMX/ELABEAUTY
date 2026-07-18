@@ -18,6 +18,7 @@ export class OffersService {
         start_date: LessThanOrEqual(now),
         end_date: MoreThanOrEqual(now),
       },
+      relations: ['product'],
       order: { sort_order: 'ASC', created_at: 'DESC' },
     });
   }

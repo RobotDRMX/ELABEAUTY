@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { OffersService } from '../../services/offers.service';
 import { Offer } from '../../interfaces/offer.interface';
 import { LucideIcons } from '../../icons.provider';
+import { computeDiscountPrice } from '../../utils/offer-pricing';
 
 const AUTOPLAY_MS = 6000;
 
@@ -61,6 +62,11 @@ export class OffersCarouselComponent implements OnInit, OnDestroy {
 
   onMouseLeave() {
     this.restartAutoplay();
+  }
+
+  discountPrice(offer: Offer): number | null {
+    if (!offer.product) return null;
+    return computeDiscountPrice(offer.product.price, offer.badge);
   }
 
   private startAutoplay() {

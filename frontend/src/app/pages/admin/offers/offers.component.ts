@@ -2,9 +2,11 @@ import { Component, OnInit, inject, signal, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdminOffersService } from '../services-api/admin-offers.service';
+import { AdminProductsService } from '../services-api/admin-products.service';
 import { ToastService } from '../shared/toast.service';
 import { NotificationService } from '../../../services/notification.service';
 import { LucideIcons } from '../../../icons.provider';
+import { computeDiscountPrice } from '../../../utils/offer-pricing';
 
 @Component({
   selector: 'app-admin-offers',
@@ -15,6 +17,7 @@ import { LucideIcons } from '../../../icons.provider';
 })
 export class OffersComponent implements OnInit {
   private service = inject(AdminOffersService);
+  private productsService = inject(AdminProductsService);
   private fb = inject(FormBuilder);
   protected toastService = inject(ToastService);
   private notif = inject(NotificationService);
@@ -27,6 +30,8 @@ export class OffersComponent implements OnInit {
   showInactive = signal(false);
   loading = signal(false);
 
+  products = signal<any[]>([]);
+
   showModal = signal(false);
   editingItem = signal<any>(null);
   modalError = signal('');
@@ -37,6 +42,25 @@ export class OffersComponent implements OnInit {
   ngOnInit() {
     this.buildForm();
     this.loadData();
+    this.loadProducts();
+  }
+
+  loadProducts() {
+    this.productsService.findAll(1, 100, false).subscribe({
+      next: res => this.products.set(res.data),
+      error: () => this.toastService.show('Error al cargar productos', 'error'),
+    });
+  }
+
+  get selectedProduct(): any {
+    const id = +this.form?.get('product_id')?.value;
+    return this.products().find(p => p.id === id) ?? null;
+  }
+
+  get discountPrice(): number | null {
+    const product = this.selectedProduct;
+    if (!product) return null;
+    return computeDiscountPrice(product.price, this.form?.get('badge')?.value);
   }
 
   private toDatetimeLocal(value?: string): string {
@@ -51,7 +75,7 @@ export class OffersComponent implements OnInit {
       title:       [item?.title ?? '',       Validators.required],
       subtitle:    [item?.subtitle ?? ''],
       description: [item?.description ?? ''],
-      image_url:   [item?.image_url ?? '',   Validators.required],
+      product_id:  [item?.product_id ?? '', Validators.required],
       cta_label:   [item?.cta_label ?? ''],
       cta_link:    [item?.cta_link ?? ''],
       badge:       [item?.badge ?? ''],

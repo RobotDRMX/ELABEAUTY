@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Product } from '../../products/entities/product.entity';
 
 @Entity('offers')
 export class Offer {
@@ -14,8 +15,12 @@ export class Offer {
   @Column('text', { nullable: true })
   description?: string;
 
-  @Column()
-  image_url!: string;
+  @Column({ nullable: true })
+  product_id?: number;
+
+  @ManyToOne(() => Product, { nullable: true, onDelete: 'SET NULL', eager: false })
+  @JoinColumn({ name: 'product_id' })
+  product?: Product;
 
   @Column({ nullable: true })
   cta_label?: string;
